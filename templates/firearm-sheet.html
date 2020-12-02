@@ -1,0 +1,27 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div>
+        <textarea name="data.description">{{data.description}}</textarea>
+        <table>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.calibur"}}</th>
+                <th>{{localize "dc.items.combat.firearm.speed"}}</th>
+                <th>{{localize "dc.items.combat.firearm.range"}}</th>
+                <th>{{localize "dc.items.combat.firearm.rof"}}</th>
+                <th>{{localize "dc.items.combat.firearm.ammo"}}</th>
+                <th>{{localize "dc.items.combat.firearm.damage"}}</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="data.calibur" value="{{data.calibur}}"/></td>
+                <td><input type="text" name="data.speed" value="{{data.speed}}"/></td>
+                <td><input type="text" name="data.range" value="{{data.range}}"/></td>
+                <td><input type="text" name="data.rof" value="{{data.rof}}"/></td>
+                <td><input type="text" name="data.ammo" value="{{data.ammo}}"/></td>
+                <td><input type="text" name="data.damage" value="{{data.damage}}"/></td>
+            </tr>
+        </table>
+    </div>
+</form>
