@@ -25,7 +25,8 @@
         },
         "player": {
             "templates": [
-                "core"
+                "core",
+                "attributes"
             ],
             "traits": {
                 "cognition": {
