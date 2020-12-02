@@ -41,6 +41,20 @@
                     "rof": "R.O.F",
                     "ammo": "Ammo",
                     "damage": "Damage"
+                },
+                "hex": {
+                    "level": "Level",
+                    "trait": "Trait",
+                    "hand": "Hand",
+                    "speed": "Speed",
+                    "duration": "Duration",
+                    "range": "Range"
+                },
+                "miracle": {
+                    "tn": "TN",
+                    "speed": "Speed",
+                    "duration": "Duration",
+                    "range": "Range"
                 }
             }
         }

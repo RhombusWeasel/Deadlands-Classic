@@ -445,7 +445,12 @@
         "hex": {
             "templates": [
                 "description"
-            ]
+            ],
+            "level": "1",
+            "trait": "smarts",
+            "speed": "1",
+            "duration": "",
+            "range"
         },
         "favor": {
             "templates": [
