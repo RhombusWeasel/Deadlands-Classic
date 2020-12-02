@@ -440,7 +440,11 @@
         "miracle": {
             "templates": [
                 "description"
-            ]
+            ],
+            "tn": "5",
+            "speed": "1",
+            "duration": "1 round",
+            "range": "5 yards/faith level"
         },
         "hex": {
             "templates": [
