@@ -454,7 +454,7 @@
             "trait": "smarts",
             "speed": "1",
             "duration": "",
-            "range"
+            "range": "5 yards/hex level"
         },
         "favor": {
             "templates": [
