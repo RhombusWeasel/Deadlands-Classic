@@ -18,6 +18,9 @@
 .traits {
     width: 100%;
 }
+.table-input {
+    text-align: center;
+}
 .sidebar {
     width: 33.333%;
     display: flex;
