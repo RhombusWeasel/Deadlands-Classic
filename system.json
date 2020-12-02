@@ -1,0 +1,24 @@
+{
+    "name": "deadlands_classic",
+    "title": "Deadlands Classic",
+    "description": "An implementation of a classic wild west roleplay system.",
+    "version": 0.01,
+    "minimumCoreVersion": "0.7.5",
+    "compatibleCoreVersion": "0.7.7",
+    "templateVersion": 1,
+    "author": "Pete Hunter",
+    "esmodules": ["module/deadlands.js"],
+    "styles": ["styles/player-sheet.css"],
+    "packs": [],
+    "languages": [
+      {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json"
+      }
+    ],
+    "gridDistance": 1.666667,
+    "gridUnits": "yd",
+    "primaryTokenAttribute": "wind",
+    "secondaryTokenAttribute": "rounds"
+  }
