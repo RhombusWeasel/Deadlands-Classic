@@ -20,5 +20,9 @@
     "gridDistance": 1.666667,
     "gridUnits": "yd",
     "primaryTokenAttribute": "wind",
-    "secondaryTokenAttribute": "rounds"
+    "secondaryTokenAttribute": "rounds",
+    "url": "https://github.com/RhombusWeasel/Deadlands-Classic",
+    "manifest": "https://github.com/RhombusWeasel/Deadlands-Classic/releases/download/0.0.1/system.json",
+    "download": "https://github.com/RhombusWeasel/Deadlands-Classic/releases/download/0.0.1/deadlands_classic.zip",
+    "license": "LICENSE.txt"
   }
