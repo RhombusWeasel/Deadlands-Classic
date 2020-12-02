@@ -1,0 +1,48 @@
+{
+    "dc": {
+        "settings": {},
+        "traits": {},
+        "attributes": {},
+        "actor_types": {
+            "player": "Player",
+            "npc": "NPC",
+            "mook": "Mook"
+        },
+        "skill_labels": {
+            "name": "Name",
+            "level": "Level",
+            "modifier": "Modifier",
+            "roll": "Roll"
+        },
+        "player": {
+            "core": {
+                "pace": "Pace",
+                "size": "Size",
+                "wind": "Wind",
+                "grit": "Grit",
+                "money": "Money",
+                "bounty": "Bounty"
+            }
+        },
+        "weapon_types": {
+            "none": "None",
+            "firearm": "Firearm",
+            "melee": "Melee",
+            "miracle": "Miracle",
+            "hex": "Hex",
+            "favor": "Favor"
+        },
+        "items": {
+            "combat": {
+                "firearm": {
+                    "calibur": "Calibur",
+                    "speed": "Speed",
+                    "range": "Range",
+                    "rof": "R.O.F",
+                    "ammo": "Ammo",
+                    "damage": "Damage"
+                }
+            }
+        }
+    }
+}
