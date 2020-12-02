@@ -1,0 +1,58 @@
+.player {
+    text-align: center;
+}
+.flexbox {
+    display: flex;
+    flex-direction: row;
+}
+.traitbox {
+    display: flex;
+    flex-direction: row;
+}
+.data {
+    width: 66.66%;
+}
+.core {
+    width: 100%;
+}
+.traits {
+    width: 100%;
+}
+.sidebar {
+    width: 33.333%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.h1 {
+    text-align: center; 
+}
+.actor-img {
+    width: 128px;
+}
+.trait-label {
+    font-size: large;
+    font-weight: bold;
+    padding-top: 2px;
+    float: left;
+    width: 65%;
+}
+.trait-input {
+    text-align: right;
+    display: block;
+    width: 10%;
+}
+.select {
+    border: none;
+    text-align: center;
+}
+.roll-btn {
+    border: none;
+    width: 50px;
+}
+.skill-name {
+    width: 65%;
+}
+.skill-input{
+    width: 10%;
+}
