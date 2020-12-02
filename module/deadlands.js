@@ -5,6 +5,7 @@ import actor_sheet from "./sheets/actor.js"
 async function preload_handlebars_templates() {
     const template_paths = [
         "systems/deadlands_classic/templates/partials/core.hbs",
+        "systems/deadlands_classic/templates/partials/sidebar.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
     ]
     return loadTemplates(template_paths)

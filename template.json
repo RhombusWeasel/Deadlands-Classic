@@ -31,7 +31,7 @@
             "traits": {
                 "cognition": {
                     "name": "Cognition",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -64,7 +64,7 @@
                 },
                 "deftness": {
                     "name": "Deftness",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -122,7 +122,7 @@
                 },
                 "knowledge": {
                     "name": "Knowledge",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -210,7 +210,7 @@
                 },
                 "mien": {
                     "name": "Mien",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -253,7 +253,7 @@
                 },
                 "nimbleness": {
                     "name": "Nimbleness",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -306,7 +306,7 @@
                 },
                 "quickness": {
                     "name": "Quickness",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -319,7 +319,7 @@
                 },
                 "smarts": {
                     "name": "Smarts",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -362,7 +362,7 @@
                 },
                 "spirit": {
                     "name": "Spirit",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {
@@ -380,14 +380,14 @@
                 },
                 "strength": {
                     "name": "Strength",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {}
                 },
                 "vigor": {
                     "name": "Vigor",
-                    "level": 0,
+                    "level": 1,
                     "die_type": "d4",
                     "modifier": 0,
                     "skills": {}

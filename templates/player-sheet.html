@@ -4,13 +4,6 @@
             {{> "systems/deadlands_classic/templates/partials/core.hbs"}}
             {{> "systems/deadlands_classic/templates/partials/traits.hbs"}}
         </div>
-        <div class="sidebar">
-            <h1 class="h1">
-                <div data-edit="data.name" contenteditable>
-                    {{actor.name}}
-                </div>
-            </h1>
-            <img class="actor-img" src="{{actor.img}}" data-edit="img"/>
-        </div>
+        {{> "systems/deadlands_classic/templates/partials/sidebar.hbs"}}
     </div>
 </form>
