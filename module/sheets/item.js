@@ -1,4 +1,4 @@
-export default class Firearm extends ItemSheet {
+export default class DCItem extends ItemSheet {
     get template() {
         return `systems/deadlands_classic/templates/${this.item.data.type}-sheet.html`;
     }

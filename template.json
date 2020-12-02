@@ -435,7 +435,8 @@
         "melee": {
             "templates": [
                 "description"
-            ]
+            ],
+            "damage": "1d8"
         },
         "miracle": {
             "templates": [
@@ -452,14 +453,18 @@
             ],
             "level": "1",
             "trait": "smarts",
+            "hand": "Ace",
             "speed": "1",
-            "duration": "",
+            "duration": "instant",
             "range": "5 yards/hex level"
         },
         "favor": {
             "templates": [
                 "description"
-            ]
+            ],
+            "appeasement": "1",
+            "duration": "instant",
+            "range": "5 yards/appeasement"
         }
     }
 }

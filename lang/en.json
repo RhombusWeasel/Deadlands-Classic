@@ -55,6 +55,11 @@
                     "speed": "Speed",
                     "duration": "Duration",
                     "range": "Range"
+                },
+                "favor": {
+                    "appeasement": "Appeasement",
+                    "duration": "Duration",
+                    "range": "Range"
                 }
             }
         }
