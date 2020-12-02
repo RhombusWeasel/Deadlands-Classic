@@ -64,6 +64,12 @@
                     "duration": "Duration",
                     "range": "Range"
                 }
+            },
+            "edge": {
+                "cost": "Cost"
+            },
+            "hinderance": {
+                "cost": "Cost"
             }
         }
     }

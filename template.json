@@ -411,7 +411,9 @@
             "melee",
             "miracle",
             "hex",
-            "favor"
+            "favor",
+            "edge",
+            "hinderance"
         ],
         "templates": {
             "description": {
@@ -465,6 +467,18 @@
             "appeasement": "1",
             "duration": "instant",
             "range": "5 yards/appeasement"
+        },
+        "edge": {
+            "templates":[
+                "description"
+            ],
+            "cost": "1"
+        },
+        "hinderance": {
+            "templates":[
+                "description"
+            ],
+            "cost": "-1"
         }
     }
 }
