@@ -34,6 +34,9 @@
         },
         "items": {
             "combat": {
+                "melee": {
+                    "damage": "Damage"
+                },
                 "firearm": {
                     "calibur": "Calibur",
                     "speed": "Speed",

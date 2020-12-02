@@ -1,0 +1,17 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div>
+        <textarea name="data.description">{{data.description}}</textarea>
+        <table>
+            <tr>
+                <th>{{localize "dc.items.combat.melee.damage"}}</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="data.damage" value="{{data.damage}}"/></td>
+            </tr>
+        </table>
+    </div>
+</form>
