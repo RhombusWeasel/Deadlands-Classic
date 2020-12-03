@@ -1,32 +1,37 @@
 <section>
-    <div style="align-items: center;">
-        <h1 style="text-align: center;">
-            <div data-edit="data.name" contenteditable>
-                {{actor.name}}
-            </div>
-        </h1>
-        <div style="align-items: center;"><img style="width: 128px;" src="{{actor.img}}" data-edit="img"/></div>
+    <h1 style="text-align: center; width: 100%">
+        <div data-edit="data.name" contenteditable>
+            {{actor.name}}
+        </div>
+    </h1>
+    <div style="width: 100%; flex-direction:row; align-items:center">
+        <img style="width: 128px;" src="{{actor.img}}" data-edit="img"/>
     </div>
-    <div>
+    {{#if hinderances}}
         <h1 style="text-align: center;">Hinderances</h1>
         {{#each hinderances as |hind|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{hind._id}}">
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{hind.name}}"/>
             <input style="text-align: center;" type="text" value="{{hind.data.cost}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
-    </div>
+    {{/if}}
+    {{#if edges}}
     <div>
         <h1 style="text-align: center;">Edges</h1>
         {{#each edges as |edge|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{edge._id}}">
-            <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
+            <a style="margin-top: 5px; margin-left: 2px" class="info-button"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{edge.data.cost}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if melee_weapons}}
     <div>
         <h1 style="text-align: center;">Melee Weapons</h1>
         {{#each melee_weapons as |wep|}}
@@ -35,9 +40,12 @@
             <input style="display: inline-block; width: 400%;" type="text" value="{{wep.name}}"/>
             <input style="text-align: center;" type="text" value="{{wep.data.damage}}">
             <a style="margin-top: 5px; margin-left: 2px" class="melee-attack"><i class="fas fa-user-slash"></i></a>
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if firearms}}
     <div>
         <h1 style="text-align: center;">Guns</h1>
         {{#each firearms as |gun|}}
@@ -47,9 +55,12 @@
             <input style="text-align: center;" type="text" value="{{gun.data.chamber}}/{{gun.data.max}}">
             <a style="margin-top: 5px; margin-left: 2px" class="gun-attack"><i class="fas fa-crosshairs"></i></a>
             <a style="margin-top: 5px; margin-left: 2px" class="gun-reload"><i class="fas fa-sync-alt"></i></a>
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if hexes}}
     <div>
         <h1 style="text-align: center;">Hexes</h1>
         {{#each hexes as |hex|}}
@@ -57,9 +68,12 @@
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{hex.data.damage}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if miracles}}
     <div>
         <h1 style="text-align: center;">Miracles</h1>
         {{#each miracles as |mir|}}
@@ -67,9 +81,12 @@
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{mir.data.tn}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
+    {{#if favors}}
     <div>
         <h1 style="text-align: center;">Favors</h1>
         {{#each favors as |fav|}}
@@ -77,7 +94,9 @@
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{fav.data.appeasement}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     </div>
+    {{/if}}
 </section>

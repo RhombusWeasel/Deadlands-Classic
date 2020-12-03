@@ -39,6 +39,7 @@
                 },
                 "firearm": {
                     "calibur": "Calibur",
+                    "gun_type": "Type",
                     "speed": "Speed",
                     "range": "Range",
                     "rof": "R.O.F",

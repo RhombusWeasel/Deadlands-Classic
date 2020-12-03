@@ -21,6 +21,7 @@ export default class PlayerSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".info-button").click(this._on_item_open.bind(this));
+        html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
@@ -32,7 +33,14 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        item.sheet.render(true);
+        return item.sheet.render(true);
+    }
+
+    _on_item_delete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        return this.actor.deleteOwnedItem(itemId);
     }
 
     _on_melee_attack(event) {
