@@ -16,22 +16,20 @@ export default class PlayerSheet extends ActorSheet {
         data.favors = data.items.filter(function (item) {return item.type == "favor"});
         data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"});
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
-
         return data;
     }
 
-    // activateListeners(html) {
-    //     html.find(".inline-edit").change(this._on_entry_change.bind(this))
-    //     return super.activateListeners(html);
-    // }
+    activateListeners(html) {
+        html.find(".info-button").click(this._on_item_open.bind(this));
+        return super.activateListeners(html);
+    }
 
-    // _on_entry_changed(event) {
-    //     event.preventDefault();
-    //     let element = event.currentTarget;
-    //     let itemId = element.closest(".item").dataset.itemId;
-    //     let item = this.actor.getOwnedItem(itemId);
-    //     let field = element.dataset.field;
-
-    //     return item.update({ [field]: element.value });
-    // }
+    _on_item_open(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        console.log(element.closest(".item").dataset)
+        let item = this.actor.getOwnedItem(itemId);
+        item.sheet.render(true);
+    }
 }
