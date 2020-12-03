@@ -417,7 +417,8 @@
         ],
         "templates": {
             "description": {
-                "description": ""
+                "description": "",
+                "script": ""
             }
         },
         "firearm": {
@@ -432,15 +433,13 @@
                 "value": 1,
                 "max": 1
             },
-            "damage":"3d6x=",
-            "script": ""
+            "damage":"3d6x="
         },
         "melee": {
             "templates": [
                 "description"
             ],
-            "damage": "1d8",
-            "script": ""
+            "damage": "1d8"
         },
         "miracle": {
             "templates": [
@@ -449,8 +448,7 @@
             "tn": "5",
             "speed": "1",
             "duration": "1 round",
-            "range": "5 yards/faith level",
-            "script": ""
+            "range": "5 yards/faith level"
         },
         "hex": {
             "templates": [
@@ -461,8 +459,7 @@
             "hand": "Ace",
             "speed": "1",
             "duration": "instant",
-            "range": "5 yards/hex level",
-            "script": ""
+            "range": "5 yards/hex level"
         },
         "favor": {
             "templates": [
@@ -470,22 +467,19 @@
             ],
             "appeasement": "1",
             "duration": "instant",
-            "range": "5 yards/appeasement",
-            "script": ""
+            "range": "5 yards/appeasement"
         },
         "edge": {
             "templates":[
                 "description"
             ],
-            "cost": "1",
-            "script": ""
+            "cost": "1"
         },
         "hinderance": {
             "templates":[
                 "description"
             ],
-            "cost": "-1",
-            "script": ""
+            "cost": "-1"
         }
     }
 }
