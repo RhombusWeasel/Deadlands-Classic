@@ -22,7 +22,7 @@
     "primaryTokenAttribute": "wind",
     "secondaryTokenAttribute": "rounds",
     "url": "https://github.com/RhombusWeasel/Deadlands-Classic",
-    "manifest": "https://github.com/RhombusWeasel/Deadlands-Classic/master/system.json",
+    "manifest": "https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json",
     "download": "https://github.com/RhombusWeasel/Deadlands-Classic/releases/download/0.0.3/deadlands_classic.zip",
     "license": "LICENSE.txt"
   }
