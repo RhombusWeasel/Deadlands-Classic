@@ -5,39 +5,111 @@
                 {{actor.name}}
             </div>
         </h1>
-        <img style="width: 128px;" src="{{actor.img}}" data-edit="img"/>
+        <div style="align-items: center;"><img style="width: 128px;" src="{{actor.img}}" data-edit="img"/></div>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Hinderances</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.hinderance.cost"}}</th>
+            </tr>
+            {{#each hinderances as |hind|}}
+            <tr>
+                <td><input type="text" name="data.hinderances[{{@index}}].name" value="{{hind.name}}"/></td>
+                <td><input type="text" name="data.hinderances[{{@index}}].cost" value="{{hind.cost}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Edges</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.edge.cost"}}</th>
+            </tr>
+            {{#each edges as |edge|}}
+            <tr>
+                <td><input type="text" name="data.edges[{{@index}}].name" value="{{edge.name}}"/></td>
+                <td><input type="text" name="data.edges[{{@index}}].cost" value="{{edge.cost}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Melee Weapons</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.combat.melee.damage"}}</th>
+            </tr>
+            {{#each melee_weapons as |weapon|}}
+            <tr>
+                <td><input type="text" name="data.melee_weapons[{{@index}}].name" value="{{weapon.name}}"/></td>
+                <td><input type="text" name="data.melee_weapons[{{@index}}].ammo" value="{{weapon.damage}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
     </div>
     <div>
         <h1 style="text-align: center;">Firearms</h1>
-            <table>
-                <tr>
-                    <th>{{localize "dc.skill_labels.name"}}</th>
-                    <th>{{localize "dc.items.combat.firearm.ammo"}}</th>
-                </tr>
-                {{#each firearms as |gun|}}
-                <tr>
-                    <td><input type="text" name="data.firearms[{{@index}}].name" value="{{gun.name}}"></td>
-                    <td><input type="text" name="data.firearms[{{@index}}].ammo" value="{{gun.ammo}}"></td>
-                    <td>
-                        <button id="gun_{{@index}}"><i class="fas fa-dice-d20"></i></button>
-                        <script>
-                            function callback() {
-                                let content = "";
-                                let skill_level = parseInt("{{actor.traits.deftness.skills.shootin.level}}");
-                                if (skill_level > 0){
-                                    content = "{{this.name}}: [[{{actor.traits.deftness.skills.shootin.level}}{{actor.traits.deftness.die_type}}ex + {{actor.traits.deftness.skills.shootin.modifier}} + {{actor.traits.deftness.modifier}}]]";
-                                }else{
-                                    content = "{{this.name}}: [[{{actor.traits.deftness.level}}{{actor.traits.deftness.die_type}}ex + {{actor.traits.deftness.skills.shootin.modifier}} + {{actor.traits.deftness.modifier}}]]";
-                                };
-                                ChatMessage.create({
-                                    content: content
-                                });
-                            }
-                            gun_{{@index}}.addEventListener('click', callback);
-                        </script>
-                    </td>
-                </tr>
-                {{/each}}
-            </table>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.combat.firearm.ammo"}}</th>
+            </tr>
+            {{#each firearms as |gun|}}
+            <tr>
+                <td><input type="text" name="data.firearms[{{@index}}].name" value="{{gun.name}}"/></td>
+                <td><input type="text" name="data.firearms[{{@index}}].ammo" value="{{gun.ammo}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Hexes</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.combat.hex.trait"}}</th>
+            </tr>
+            {{#each hexes as |hex|}}
+            <tr>
+                <td><input type="text" name="data.hexes[{{@index}}].name" value="{{hex.name}}"/></td>
+                <td><input type="text" name="data.hexes[{{@index}}].trait" value="{{hex.trait}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Miracles</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.combat.miracle.tn"}}</th>
+            </tr>
+            {{#each miracles as |miracle|}}
+            <tr>
+                <td><input type="text" name="data.miracle[{{@index}}].name" value="{{miracle.name}}"/></td>
+                <td><input type="text" name="data.miracle[{{@index}}].tn" value="{{miracle.tn}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    <div>
+        <h1 style="text-align: center;">Favors</h1>
+        <table>
+            <tr>
+                <th>{{localize "dc.skill_labels.name"}}</th>
+                <th>{{localize "dc.items.combat.favor.appeasement"}}</th>
+            </tr>
+            {{#each favors as |favor|}}
+            <tr>
+                <td><input type="text" name="data.favors[{{@index}}].name" value="{{favor.name}}"/></td>
+                <td><input type="text" name="data.favors[{{@index}}].appeasement" value="{{favor.appeasement}}"/></td>
+            </tr>
+            {{/each}}
+        </table>
     </div>
 </section>
