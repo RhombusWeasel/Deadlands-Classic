@@ -44,7 +44,9 @@
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{gun._id}}">
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{gun.data.damage}}">
+            <input style="text-align: center;" type="text" value="{{gun.data.chamber}}/{{gun.data.max}}">
+            <a style="margin-top: 5px; margin-left: 2px" class="gun-attack"><i class="fas fa-crosshairs"></i></a>
+            <a style="margin-top: 5px; margin-left: 2px" class="gun-reload"><i class="fas fa-sync-alt"></i></a>
         </div>
         {{/each}}
     </div>

@@ -42,8 +42,10 @@
                     "speed": "Speed",
                     "range": "Range",
                     "rof": "R.O.F",
-                    "ammo": "Ammo",
-                    "damage": "Damage"
+                    "chamber": "Chamber",
+                    "ammo": "Clip",
+                    "damage": "Damage",
+                    "off_hand": "Off Hand"
                 },
                 "hex": {
                     "level": "Level",
