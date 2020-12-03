@@ -29,16 +29,14 @@
     </div>
     <div>
         <h1 style="text-align: center;">Melee Weapons</h1>
-        <div>
-        <h1 style="text-align: center;">Melee Weapons</h1>
-            {{#each melee_weapons as |wep|}}
-            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{wep._id}}">
-                <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
-                <input style="display: inline-block; width: 400%;" type="text" value="{{wep.name}}"/>
-                <input style="text-align: center;" type="text" value="{{wep.data.damage}}">
-            </div>
-            {{/each}}
+        {{#each melee_weapons as |wep|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{wep._id}}">
+            <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
+            <input style="display: inline-block; width: 400%;" type="text" value="{{wep.name}}"/>
+            <input style="text-align: center;" type="text" value="{{wep.data.damage}}">
+            <a style="margin-top: 5px; margin-left: 2px" class="melee-attack"><i class="fas fa-user-slash"></i></a>
         </div>
+        {{/each}}
     </div>
     <div>
         <h1 style="text-align: center;">Guns</h1>

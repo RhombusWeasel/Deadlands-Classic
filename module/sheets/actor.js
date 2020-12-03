@@ -21,6 +21,7 @@ export default class PlayerSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".info-button").click(this._on_item_open.bind(this));
+        html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         return super.activateListeners(html);
     }
 
@@ -31,5 +32,28 @@ export default class PlayerSheet extends ActorSheet {
         console.log(element.closest(".item").dataset)
         let item = this.actor.getOwnedItem(itemId);
         item.sheet.render(true);
+    }
+
+    _on_melee_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        console.log(item)
+        let dmg = item.data.data.damage;
+        let act = this.getData();
+        let trait = act.data.traits.nimbleness;
+        let skill = trait.skills.fightin;
+        let lvl = skill.level
+        if (lvl == 0) {
+            lvl = trait.level
+        }
+        let roll = `
+            Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier}]] \n
+            Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]] \n
+            Location: [[d20]] \n
+        `;
+        ChatMessage.create({ content: roll});
+        console.log(item)
     }
 }
