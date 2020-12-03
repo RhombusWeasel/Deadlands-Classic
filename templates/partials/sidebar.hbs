@@ -9,33 +9,23 @@
     </div>
     <div>
         <h1 style="text-align: center;">Hinderances</h1>
-        <table>
-            <tr>
-                <th>{{localize "dc.skill_labels.name"}}</th>
-                <th>{{localize "dc.items.hinderance.cost"}}</th>
-            </tr>
-            {{#each hinderances as |hind|}}
-            <tr>
-                <td><input type="text" name="data.hinderances[{{@index}}].name" value="{{hind.name}}"/></td>
-                <td><input type="text" name="data.hinderances[{{@index}}].cost" value="{{hind.cost}}"/></td>
-            </tr>
-            {{/each}}
-        </table>
+        {{#each hinderances as |hind|}}
+        <div style="display: flex; flex-direction: row;">
+            <input class="input" style="display: inline-block; width: 400%;" type="text" value="{{hind.name}}"/>
+            <input class="input" style="text-align: center;" type="text" value="{{hind.data.cost}}">
+            <i style="padding-top: 5px" class="fas fa-info-circle info-button"></i>
+        </div>
+        {{/each}}
     </div>
     <div>
         <h1 style="text-align: center;">Edges</h1>
-        <table>
-            <tr>
-                <th>{{localize "dc.skill_labels.name"}}</th>
-                <th>{{localize "dc.items.edge.cost"}}</th>
-            </tr>
-            {{#each edges as |edge|}}
-            <tr>
-                <td><input type="text" name="data.edges[{{@index}}].name" value="{{edge.name}}"/></td>
-                <td><input type="text" name="data.edges[{{@index}}].cost" value="{{edge.cost}}"/></td>
-            </tr>
-            {{/each}}
-        </table>
+        {{#each edges as |edge|}}
+        <div style="display: flex; flex-direction: row;">
+            <input class="input" style="display: inline-block; width: 400%;" type="text" value="{{edge.name}}"/>
+            <input class="input" style="text-align: center;" type="text" value="{{edge.data.cost}}">
+            <i style="padding-top: 5px" class="fas fa-info-circle info-button"></i>
+        </div>
+        {{/each}}
     </div>
     <div>
         <h1 style="text-align: center;">Melee Weapons</h1>
@@ -46,8 +36,8 @@
             </tr>
             {{#each melee_weapons as |weapon|}}
             <tr>
-                <td><input type="text" name="data.melee_weapons[{{@index}}].name" value="{{weapon.name}}"/></td>
-                <td><input type="text" name="data.melee_weapons[{{@index}}].ammo" value="{{weapon.damage}}"/></td>
+                <td><input class="input" type="text" name="data.melee_weapons[{{@index}}].name" value="{{weapon.name}}"/></td>
+                <td><input class="input" style="text-align: center;" type="text" name="data.melee_weapons[{{@index}}].ammo" value="{{weapon.data.damage}}"/></td>
             </tr>
             {{/each}}
         </table>
@@ -61,8 +51,8 @@
             </tr>
             {{#each firearms as |gun|}}
             <tr>
-                <td><input type="text" name="data.firearms[{{@index}}].name" value="{{gun.name}}"/></td>
-                <td><input type="text" name="data.firearms[{{@index}}].ammo" value="{{gun.ammo}}"/></td>
+                <td><input class="input" type="text" name="data.firearms[{{@index}}].name" value="{{gun.name}}"/></td>
+                <td><input class="input" style="text-align: center;" type="text" name="data.firearms[{{@index}}].ammo" value="{{gun.data.ammo}}"/></td>
             </tr>
             {{/each}}
         </table>
@@ -76,8 +66,8 @@
             </tr>
             {{#each hexes as |hex|}}
             <tr>
-                <td><input type="text" name="data.hexes[{{@index}}].name" value="{{hex.name}}"/></td>
-                <td><input type="text" name="data.hexes[{{@index}}].trait" value="{{hex.trait}}"/></td>
+                <td><input class="input" type="text" name="data.hexes[{{@index}}].name" value="{{hex.name}}"/></td>
+                <td><input class="input" style="text-align: center;" type="text" name="data.hexes[{{@index}}].trait" value="{{hex.data.trait}}"/></td>
             </tr>
             {{/each}}
         </table>
@@ -91,8 +81,8 @@
             </tr>
             {{#each miracles as |miracle|}}
             <tr>
-                <td><input type="text" name="data.miracle[{{@index}}].name" value="{{miracle.name}}"/></td>
-                <td><input type="text" name="data.miracle[{{@index}}].tn" value="{{miracle.tn}}"/></td>
+                <td><input class="input" type="text" name="data.miracle[{{@index}}].name" value="{{miracle.name}}"/></td>
+                <td><input class="input" style="text-align: center;" type="text" name="data.miracle[{{@index}}].tn" value="{{miracle.data.tn}}"/></td>
             </tr>
             {{/each}}
         </table>
@@ -106,8 +96,8 @@
             </tr>
             {{#each favors as |favor|}}
             <tr>
-                <td><input type="text" name="data.favors[{{@index}}].name" value="{{favor.name}}"/></td>
-                <td><input type="text" name="data.favors[{{@index}}].appeasement" value="{{favor.appeasement}}"/></td>
+                <td><input class="input" type="text" name="data.favors[{{@index}}].name" value="{{favor.name}}"/></td>
+                <td><input class="input" style="text-align: center;" type="text" name="data.favors[{{@index}}].appeasement" value="{{favor.data.appeasement}}"/></td>
             </tr>
             {{/each}}
         </table>

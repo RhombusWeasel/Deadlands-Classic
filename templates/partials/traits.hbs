@@ -3,12 +3,12 @@
     <h1 class="h1">Traits:</h1>
     {{#each data.traits as |trait|}}
     <div class="flexbox">
-        <label class="trait-label" for="data.traits.{{@key}}.level">{{trait.name}}</label>
-        <input class="trait-input" type="text" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>
-        <input class="trait-input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/>
+        <label class="label trait-label" for="data.traits.{{@key}}.level">{{trait.name}}</label>
+        <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>
+        <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/>
         <label style="font-size: large; font-weight: bold; padding-top: 2px;; float: right;" for="data.traits.{{@key}}.modifier">+</label>
-        <input class="trait-input" type="text" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
-        <button id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></button>
+        <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
+        <button style="display:inline-block; width: 18%;" id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></button>
         <script>
             function callback() {
                 let content = "Cognition: [[{{trait.level}}{{trait.die_type}}ex + {{trait.modifier}}]]" 
@@ -29,9 +29,9 @@
             </tr>
             {{#each skills as |skill|}}
             <tr>
-                <td><input type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"/></td>
-                <td><input type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"/></td>
-                <td><input type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"/></td>
+                <td><input style="display:inline-block; text-align: left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"/></td>
+                <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"/></td>
+                <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"/></td>
                 <td><button id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></button></td>
                 <script>
                     function callback() {
