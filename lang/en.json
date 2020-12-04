@@ -21,7 +21,8 @@
                 "wind": "Wind",
                 "grit": "Grit",
                 "money": "Money",
-                "bounty": "Bounty"
+                "bounty": "Bounty",
+                "off_hand": "Off Hand"
             }
         },
         "items": {
@@ -38,6 +39,7 @@
                     "chamber": "Chamber",
                     "ammo": "Clip",
                     "damage": "Damage",
+                    "damage_bonus": "Damage Bonus",
                     "off_hand": "Off Hand"
                 },
                 "hex": {

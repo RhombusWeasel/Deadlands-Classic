@@ -143,7 +143,7 @@ export default class PlayerSheet extends ActorSheet {
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
         if (shots > 0) {
             if (item.data.data.off_hand) {
-                off_hand_mod = -6
+                off_hand_mod = act.off_hand_mod
             }
             let lvl = skill.level
             if (lvl == 0) {

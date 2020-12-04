@@ -20,7 +20,8 @@
                     "min": 0,
                     "max": 0,
                     "value": 0
-                }
+                },
+                "off_hand_modifier": -6
             }
         },
         "player": {
@@ -434,6 +435,7 @@
             "chamber": 0,
             "max": 6,
             "damage":"3d6",
+            "damage_bonus": 0,
             "off_hand": false
         },
         "melee": {
