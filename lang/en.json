@@ -24,14 +24,6 @@
                 "bounty": "Bounty"
             }
         },
-        "weapon_types": {
-            "none": "None",
-            "firearm": "Firearm",
-            "melee": "Melee",
-            "miracle": "Miracle",
-            "hex": "Hex",
-            "favor": "Favor"
-        },
         "items": {
             "combat": {
                 "melee": {
@@ -73,7 +65,17 @@
             },
             "hinderance": {
                 "cost": "Cost"
+            },
+            "chip": {
+                "value": "Value",
+                "bounty": "Bounty"
             }
+        },
+        "fate_chips": {
+            "white": "White",
+            "red": "Red",
+            "blue": "Blue",
+            "legend": "Legendary"
         }
     }
 }

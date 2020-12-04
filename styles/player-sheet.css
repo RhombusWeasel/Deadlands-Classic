@@ -10,7 +10,7 @@
     flex-direction: row;
 }
 .data {
-    width: 66.66%;
+    width: 50%;
 }
 .core {
     width: 100%;
@@ -22,7 +22,7 @@
     text-align: center;
 }
 .sidebar {
-    width: 33.333%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     align-items: center;

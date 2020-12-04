@@ -1,0 +1,19 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div>
+        <textarea name="data.description" style="height: 200px;">{{data.description}}</textarea>
+        <table>
+            <tr>
+                <th>{{localize "dc.items.chip.value"}}</th>
+                <th>{{localize "dc.items.chip.bounty"}}</th>
+            </tr>
+            <tr>
+                <td><input style="text-align: center;" type="text" name="data.value" value="{{data.value}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.bounty" value="{{data.bounty}}"/></td>
+            </tr>
+        </table>
+    </div>
+</form>

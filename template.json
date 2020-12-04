@@ -413,7 +413,8 @@
             "hex",
             "favor",
             "edge",
-            "hinderance"
+            "hinderance",
+            "chip"
         ],
         "templates": {
             "description": {
@@ -480,6 +481,13 @@
                 "description"
             ],
             "cost": "-1"
+        },
+        "chip": {
+            "templates":[
+                "description"
+            ],
+            "value": "white",
+            "bounty": 1
         }
     }
 }

@@ -7,6 +7,19 @@
     <div style="width: 100%; flex-direction:row; align-items:center">
         <img style="width: 128px;" src="{{actor.img}}" data-edit="img"/>
     </div>
+    <a><p style="text-align: center;" class="draw-fate">Draw Fate Chip</p></a>
+    {{#if fate_chips}}
+    <h2 style="text-align: center;">Fate Chips</h2>
+        {{#each fate_chips as |chip|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
+            <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
+            <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
+            <input style="text-align: center;" type="text" value="{{chip.data.bounty}}">
+            <a style="margin-top: 1px; margin-left: 2px" class="spend-fate"><i style="padding-top: 5px" class="fas fa-dollar-sign"></i></a>
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
+        </div>
+        {{/each}}
+    {{/if}}
     {{#if hinderances}}
         <h1 style="text-align: center;">Hinderances</h1>
         {{#each hinderances as |hind|}}
