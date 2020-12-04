@@ -217,7 +217,7 @@ export default class PlayerSheet extends ActorSheet {
             let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
             let r = new Roll(roll).roll()
             r.toMessage()
-            if(r._total > 5){
+            if(r._total >= 5){
                 reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
                 shots = max
             }else{
