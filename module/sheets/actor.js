@@ -1,3 +1,27 @@
+let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
+let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
+
+function new_deck(id) {
+    let deck = [];
+    let shuffled = [];
+    for (let suit = 0; suit < suits.length; suit++) {
+        for (let card = 1; card < cards.length; card++) {
+            deck.push({
+                name: `${cards[card]} of ${suits[suit]}`,
+                type: id
+            });
+        }        
+    }
+    deck.push({name: 'Joker (Red)', type: id})
+    deck.push({name: 'Joker (Black)', type: id})
+
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck
+}
+
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -17,6 +41,7 @@ export default class PlayerSheet extends ActorSheet {
         data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"});
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
         return data;
     }
 
@@ -28,6 +53,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
+        html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         return super.activateListeners(html);
     }
 
@@ -93,7 +119,7 @@ export default class PlayerSheet extends ActorSheet {
         for (let p = 0; p < percs.length; p++) {
             const el = percs[p];
             if (choice >= el.limit){
-                ChatMessage.create({ content: `Draws a ${chips[el.chip].name} fate chip`});
+                ChatMessage.create({ content: `Draws a ${chips[el.chip].name} fate chip`, whisper: ChatMessage.getWhisperRecipients('GM')});
                 return this.actor.createOwnedItem(chips[el.chip])
             }
         }
@@ -127,7 +153,11 @@ export default class PlayerSheet extends ActorSheet {
         if (lvl == 0) {
             lvl = trait.level
         }
-        let roll = `Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier}]]\nDamage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]\nLocation: [[d20]]`;
+        let roll = `
+            Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier}]]\n
+            Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]\n
+            Location: [[d20]]
+        `;
         ChatMessage.create({ content: roll});
     }
 
@@ -195,6 +225,28 @@ export default class PlayerSheet extends ActorSheet {
             }
         }
         item.update({ "data.chamber": shots});
+        ChatMessage.create({ content: reply});
+    }
+
+    _on_cast_hex(event) {
+        event.preventDefault();
+        let reply = 'You fail in your attempt to contact the Hunting Grounds.'
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let act = this.getData();
+        let deck = new_deck('huckster_deck')
+        let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
+        let r = new Roll(roll_str).roll()
+        let draw = 0
+        if (r._total >= 5) {
+            draw = 5 + (Math.floor(r._total / 5))
+            reply = `You rolled ${r._total} granting ${draw} cards.`
+        }
+        for (let i = 0; i < draw; i++) {
+            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+        }
+        r.toMessage()
         ChatMessage.create({ content: reply});
     }
 }

@@ -73,6 +73,17 @@
         {{/each}}
     </div>
     {{/if}}
+    {{#if huckster_deck}}
+        <div>
+        <h1 style="text-align: center;">Hex Hand</h1>
+        {{#each huckster_deck as |card|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+            <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
     {{#if hexes}}
     <div>
         <h1 style="text-align: center;">Hexes</h1>
@@ -80,7 +91,8 @@
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{hex._id}}">
             <a class="info-button"><i style="padding-top: 5px" class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{hex.data.damage}}">
+            <input style="text-align: center;" type="text" value="{{hex.data.trait}}">
+            <a style="margin-top: 5px; margin-left: 2px" class="sling-hex"><i class="fas fa-sync-alt"></i></a>
             <a style="margin-top: 1px; margin-left: 2px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
         </div>
         {{/each}}
