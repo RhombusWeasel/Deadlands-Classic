@@ -436,7 +436,7 @@
             "max": 6,
             "damage":"3d6",
             "damage_bonus": 0,
-            "off_hand": false
+            "off_hand": true
         },
         "melee": {
             "templates": [

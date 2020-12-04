@@ -93,6 +93,7 @@ export default class PlayerSheet extends ActorSheet {
         for (let p = 0; p < percs.length; p++) {
             const el = percs[p];
             if (choice >= el.limit){
+                ChatMessage.create({ content: `Draws a ${chips[el.chip].name} fate chip`});
                 return this.actor.createOwnedItem(chips[el.chip])
             }
         }
@@ -137,13 +138,14 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let shots = item.data.data.chamber;
         let dmg = item.data.data.damage;
+        let dmg_mod = item.data.data.damage_bonus;
         let off_hand_mod = 0
         let act = this.getData();
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
         if (shots > 0) {
             if (item.data.data.off_hand) {
-                off_hand_mod = act.off_hand_mod
+                off_hand_mod = act.off_hand_modifier
             }
             let lvl = skill.level
             if (lvl == 0) {
@@ -151,7 +153,7 @@ export default class PlayerSheet extends ActorSheet {
             }
             let roll = `
                 Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${off_hand_mod}]]\n
-                Damage: [[${dmg}x=]]\n
+                Damage: [[${dmg}x= + ${dmg_mod}]]\n
                 Location: [[d20]]
             `;
             ChatMessage.create({ content: roll});
