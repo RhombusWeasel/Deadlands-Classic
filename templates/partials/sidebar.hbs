@@ -1,4 +1,4 @@
-<section>
+<section class="form">
     <h1 style="text-align: center; width: 100%">
         <div data-edit="data.name" contenteditable>
             {{actor.name}}
@@ -7,7 +7,7 @@
     <img class="portrait" src="{{actor.img}}" data-edit="img"/>
     <a><p style="text-align: center;" class="draw-fate">Draw Fate Chip</p></a>
     {{#if fate_chips}}
-    <h2 style="text-align: center;">Fate Chips</h2>
+    <h1 style="text-align: center;">Fate Chips</h1>
         {{#each fate_chips as |chip|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
             <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
@@ -135,8 +135,6 @@
         {{/each}}
     </div>
     {{/if}}
-    <div>
-        <h1 style="text-align: center;">Inventory</h1>
-        {{editor content=data.description target=data.description button=true owner=owner editable=editable}}
-    </div>
+    <h1 style="text-align: center;">Notes</h1>
+    {{editor content=data.description target=data.description button=true owner=owner editable=editable}}
 </section>

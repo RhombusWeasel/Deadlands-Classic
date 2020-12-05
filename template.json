@@ -406,7 +406,9 @@
                 "core"
             ]
         },
-        "gm": {}
+        "gm": {
+            "combat_active": false
+        }
     },
     "Item": {
         "types": [

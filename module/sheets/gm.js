@@ -109,7 +109,7 @@ export default class GMSheet extends ActorSheet {
     _on_start_combat(event) {
         event.preventDefault();
         let act = this.getData();
-        this.actor.update({"data.combat_active": true});
+        this.actor.update({"combat_active": true});
         ChatMessage.create({ content: `Combat Begins!`});
         game.dc.combat_active = true;
         game.dc.action_deck = new_deck('action_deck');
