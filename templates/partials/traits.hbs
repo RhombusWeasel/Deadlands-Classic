@@ -12,7 +12,7 @@
             <button style="display:inline-block; width: 18%;" id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></button>
             <script>
                 function callback() {
-                    let content = "Cognition: [[{{trait.level}}{{trait.die_type}}ex + {{trait.modifier}}]]" 
+                    let content = "{{trait.name}}: [[{{trait.level}}{{trait.die_type}}ex + {{trait.modifier}}]]" 
                     ChatMessage.create({
                         content: content
                     });
@@ -33,7 +33,7 @@
                     <td><input style="display:inline-block; text-align: left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"/></td>
                     <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"/></td>
                     <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"/></td>
-                    <td><button id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></button></td>
+                    <td><a id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></a></td>
                     <script>
                         function callback() {
                             let content = "";

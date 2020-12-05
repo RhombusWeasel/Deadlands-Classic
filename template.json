@@ -3,7 +3,8 @@
         "types": [
             "player",
             "npc",
-            "mook"
+            "mook",
+            "gm"
         ],
         "templates": {
             "core": {
@@ -404,7 +405,8 @@
             "templates": [
                 "core"
             ]
-        }
+        },
+        "gm": {}
     },
     "Item": {
         "types": [

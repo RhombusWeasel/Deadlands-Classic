@@ -182,9 +182,10 @@ export default class PlayerSheet extends ActorSheet {
                 lvl = trait.level
             }
             let roll = `
+                ${item.name}: 
                 Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${off_hand_mod}]]\n
                 Damage: [[${dmg}x= + ${dmg_mod}]]\n
-                Location: [[d20]]
+                Location: [[1d20]]
             `;
             ChatMessage.create({ content: roll});
             shots = shots - 1;
