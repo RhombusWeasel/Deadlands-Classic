@@ -215,7 +215,7 @@ export default class PlayerSheet extends ActorSheet {
             if (lvl < 1){
                 roll = `${trait.level}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
             }
-            let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
+            reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
             let r = new Roll(roll).roll()
             r.toMessage()
             if(r._total >= 5){
