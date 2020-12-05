@@ -1,0 +1,23 @@
+<form class="{{cssClass}}" autocomplete="off">
+    <div class="flexbox">
+        <div class="data">
+            <a><p style="text-align: center;" class="draw-fate">Draw Fate Chip</p></a>
+            {{#if fate_chips}}
+            <h2 style="text-align: center;">Fate Chips</h2>
+                {{#each fate_chips as |chip|}}
+                <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
+                    <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
+                    <input style="text-align: center;" type="text" value="{{chip.data.bounty}}">
+                    <a style="margin-top: 1px; margin-left: 4px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
+                </div>
+                {{/each}}
+            {{/if}}
+        </div>
+        <div class="sidebar">
+            <button class="start-combat" style="text-align: center;">Start Combat</button>
+            {{#if combat_active}}
+                <button class="new-round" style="text-align: center;">New Round</button>
+            {{/if}}
+        </div>
+    </div>
+</form>

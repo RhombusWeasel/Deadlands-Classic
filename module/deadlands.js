@@ -1,6 +1,7 @@
 import {dc} from "./config.js"
 import item_sheet from "./sheets/item.js";
 import actor_sheet from "./sheets/actor.js"
+import marshal_sheet from "./sheets/gm.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
@@ -21,6 +22,11 @@ Hooks.once("init", function () {
 
     Actors.unregisterSheet("core", ActorSheet);
     Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
 
+    game.dc = {
+        combat_active: true,
+        action_deck: []
+    }
     preload_handlebars_templates();
 });
