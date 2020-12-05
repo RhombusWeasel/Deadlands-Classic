@@ -413,6 +413,7 @@
             "firearm",
             "melee",
             "miracle",
+            "trick",
             "hex",
             "favor",
             "edge",
@@ -457,6 +458,16 @@
             "speed": "1",
             "duration": "1 round",
             "range": "5 yards/faith level"
+        },
+        "trick": {
+            "templates": [
+                "description"
+            ],
+            "level": "1",
+            "trait": "smarts",
+            "speed": "1",
+            "duration": "instant",
+            "range": "5 yards/hex level"
         },
         "hex": {
             "templates": [

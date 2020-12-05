@@ -36,6 +36,7 @@ export default class PlayerSheet extends ActorSheet {
         data.firearms = data.items.filter(function (item) {return item.type == "firearm"});
         data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"});
         data.miracles = data.items.filter(function (item) {return item.type == "miracle"});
+        data.tricks = data.items.filter(function (item) {return item.type == "trick"});
         data.hexes = data.items.filter(function (item) {return item.type == "hex"});
         data.favors = data.items.filter(function (item) {return item.type == "favor"});
         data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"});
@@ -53,6 +54,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
+        html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         return super.activateListeners(html);
     }
@@ -226,6 +228,28 @@ export default class PlayerSheet extends ActorSheet {
             }
         }
         item.update({ "data.chamber": shots});
+        ChatMessage.create({ content: reply});
+    }
+
+    _on_cast_trick(event) {
+        event.preventDefault();
+        let reply = 'You fail in your attempt to contact the Hunting Grounds.'
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let act = this.getData();
+        let deck = new_deck('huckster_deck')
+        let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
+        let r = new Roll(roll_str).roll()
+        let draw = 0
+        if (r._total >= 5) {
+            draw = 1 + (Math.floor(r._total / 5))
+            reply = `You rolled ${r._total} granting ${draw} cards.`
+        }
+        for (let i = 0; i < draw; i++) {
+            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+        }
+        r.toMessage()
         ChatMessage.create({ content: reply});
     }
 
