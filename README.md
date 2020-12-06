@@ -5,6 +5,9 @@ Install with the link for system.json in the releases page in the usual Foundry 
 
 ## Marshal Sheet:
 Very simple currently, I plan on adding much more to this in time.  Buttons for starting and ending Combat and a place for you to draw Fate Chips.
+Each Character Sheet has a button to roll Quickness just under their picture, this does nothing until you hit 'Start Combat' on the Marshal Sheet.
+Once you do that button will roll their Quickness and deal the correct amount of cards to the player, these show up on the sheet just above any weapons the player has.
+There's also a button for you to draw fate chips.
 
 ## Player Sheet:
 The Character Sheet starts with just a list of skills, the core stat block and an Image.
