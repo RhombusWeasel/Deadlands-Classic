@@ -3,9 +3,16 @@ import { dc } from "../config.js";
 let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
 
+function shuffle_deck(deck) {
+    for (let i = deck.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck;
+}
+
 function new_deck(id) {
     let deck = [];
-    let shuffled = [];
     for (let suit = 0; suit < suits.length; suit++) {
         for (let card = 1; card < cards.length; card++) {
             deck.push({
@@ -16,11 +23,7 @@ function new_deck(id) {
     }
     deck.push({name: 'Joker (Red)', type: id})
     deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
+    deck = shuffle_deck(deck)
     return deck
 }
 
@@ -36,6 +39,8 @@ export default class GMSheet extends ActorSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.combat_active = game.dc.combat_active
+        console.log(data)
         return data;
     }
 
@@ -43,6 +48,8 @@ export default class GMSheet extends ActorSheet {
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".start-combat").click(this._on_start_combat.bind(this));
+        html.find(".end-combat").click(this._on_end_combat.bind(this));
+        html.find(".new-round").click(this._on_new_round.bind(this));
         return super.activateListeners(html);
     }
 
@@ -113,5 +120,29 @@ export default class GMSheet extends ActorSheet {
         ChatMessage.create({ content: `Combat Begins!`});
         game.dc.combat_active = true;
         game.dc.action_deck = new_deck('action_deck');
+        game.dc.discard_deck = [];
+        return this.render();
+    }
+
+    _on_new_round(event) {
+        event.preventDefault();
+        let act = this.getData();
+        this.actor.update({"combat_active": true});
+        ChatMessage.create({ content: `New Round! Get Down with the Quickness!`});
+        if (game.combat_shuffle || game.dc.action_deck.length < 5){
+            for (let c = 0; c < game.dc.discard_deck.length; c++) {
+                game.dc.action_deck.push(game.dc.discard_deck.pop());
+            }
+            game.dc.action_deck = shuffle_deck(game.dc.action_deck);
+        }
+        return this.render();
+    }
+
+    _on_end_combat(event) {
+        event.preventDefault();
+        ChatMessage.create({ content: `Combat Ends!`});
+        game.dc.combat_active = false;
+        game.dc.action_deck = [];
+        return this.render();
     }
 }

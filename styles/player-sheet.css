@@ -1,35 +1,5 @@
-.form {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.sheet {
-    width: 50%;
-    height: 100%;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-}
-.sheet.form {
-    display: flex;
-    flex-direction: column;
-}
-.sheet.sheet-content{
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-}
-.editor {
-    height: 100%
-}
 .player {
     text-align: center;
-}
-.portrait {
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
 }
 .flexbox {
     display: flex;
@@ -49,19 +19,24 @@
     width: 100%;
 }
 .table-input {
-
     text-align: center;
 }
 .sidebar {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
+}
+.h1 {
+    text-align: center; 
+}
+.actor-img {
+    width: 128px;
 }
 .icon-btn {
     margin-top: 5px;
     margin-left: 4px;
     margin-right: 2px;
-}
-.h1 {
-    text-align: center; 
 }
 .trait-label {
     font-size: large;

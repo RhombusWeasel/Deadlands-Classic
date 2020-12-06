@@ -25,7 +25,7 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
 
     game.dc = {
-        combat_active: true,
+        combat_active: false,
         action_deck: []
     }
     preload_handlebars_templates();

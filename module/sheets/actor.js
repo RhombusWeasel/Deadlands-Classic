@@ -43,6 +43,17 @@ export default class PlayerSheet extends ActorSheet {
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
+        data.combat_active = game.dc.combat_active
+        data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
+        if (game.dc.combat_active) {
+            this.render()
+        }else{
+            for (let c = 0; c < data.action_deck.length; c++) {
+                const card = data.action_deck[c];
+                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 500);
+            }
+            this.render()
+        }
         return data;
     }
 
@@ -50,13 +61,21 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
+        html.find(".roll-quickness").click(this._on_roll_init.bind(this));
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
+        html.find(".refresh").click(this._on_refresh.bind(this));
         return super.activateListeners(html);
+    }
+
+    _on_refresh(event) {
+        event.preventDefault();
+        this.getData();
+        this.render();
     }
 
     _on_item_open(event) {
@@ -140,6 +159,30 @@ export default class PlayerSheet extends ActorSheet {
         this.actor.update({"data.bounty.value": new_val})
         this.actor.update({"data.bounty.max": new_max})
         return this.actor.deleteOwnedItem(itemId);
+    }
+
+    _on_roll_init(event){
+        event.preventDefault();
+        let reply = `There ain't no combat right now, is ${this.actor.name} wantin' to start somethin'?`
+        if (game.dc.combat_active && game.dc.action_deck.length > 0){
+            let element = event.currentTarget;
+            let act = this.getData();
+            let trait = act.data.traits.quickness;
+            let roll = `${trait.level}${trait.die_type}ex + ${trait.modifier}`
+            let draw = 1
+            let r = new Roll(roll).roll();
+            if (r._total >= 5) {
+                draw = Math.min(1 + Math.ceil((r._total - 4) / 5), 5)
+                reply = `You get ${draw} cards`
+            }else{
+                reply = 'You draw 1 card'
+            }
+            r.toMessage({whisper: ChatMessage.getWhisperRecipients('GM')})
+            for (let i = 0; i < draw; i++) {
+                setTimeout(() => {this.actor.createOwnedItem(game.dc.action_deck.pop())}, i * 500)
+            }
+        }
+        ChatMessage.create({content: reply, whisper: ChatMessage.getWhisperRecipients('GM')});
     }
 
     _on_melee_attack(event) {
@@ -243,7 +286,7 @@ export default class PlayerSheet extends ActorSheet {
         let r = new Roll(roll_str).roll()
         let draw = 0
         if (r._total >= 5) {
-            draw = 1 + (Math.floor(r._total / 5))
+            draw = Math.floor(r._total / 5)
             reply = `You rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {

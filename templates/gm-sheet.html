@@ -8,16 +8,15 @@
                 <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
                     <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
                     <input style="text-align: center;" type="text" value="{{chip.data.bounty}}">
-                    <a style="margin-top: 1px; margin-left: 4px" class="item-delete"><i style="padding-top: 5px" class="fas fa-trash"></i></a>
+                    <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
                 </div>
                 {{/each}}
             {{/if}}
         </div>
-        <div class="sheet">
+        <div class="sidebar">
             <button class="start-combat" style="text-align: center;">Start Combat</button>
-            {{#if combat_active}}
-                <button class="new-round" style="text-align: center;">New Round</button>
-            {{/if}}
+            <button class="new-round" style="text-align: center;">New Round</button>
+            <button class="end-combat" style="text-align: center;">End Combat</button>
         </div>
     </div>
 </form>

@@ -6,24 +6,35 @@
     </h1>
     <img class="portrait" src="{{actor.img}}" data-edit="img"/>
     <a><p style="text-align: center;" class="draw-fate">Draw Fate Chip</p></a>
+    <a><p style="text-align: center;" class="roll-quickness">Roll Quickness!</p></a>
+    <a><p style="text-align: center;" class="refresh">Refresh</p></a>
     {{#if fate_chips}}
     <h1 style="text-align: center;">Fate Chips</h1>
         {{#each fate_chips as |chip|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
-            <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
-            <input style="text-align: center;" type="text" value="{{chip.data.bounty}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+            <input style="text-align: center;" type="text" value="{{this.data.bounty}}">
             <a class="spend-fate icon-btn"><i class="fas fa-dollar-sign"></i></a>
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
         {{/each}}
     {{/if}}
+    {{#if action_deck}}
+        <h1 style="text-align: center;">Combat Hand</h1>
+        {{#each action_deck as |card|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+        </div>
+        {{/each}}    
+    {{/if}}
     {{#if melee_weapons}}
     <div>
         <h1 style="text-align: center;">Melee Weapons</h1>
         {{#each melee_weapons as |wep|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{wep._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
-            <input style="display: inline-block; width: 400%;" type="text" value="{{wep.name}}"/>
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{wep.data.damage}}">
             <a class="melee-attack icon-btn"><i class="fas fa-user-slash"></i></a>
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
@@ -35,10 +46,10 @@
     <div>
         <h1 style="text-align: center;">Guns</h1>
         {{#each firearms as |gun|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{gun._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{gun.data.chamber}}/{{gun.data.max}}">
+            <input style="text-align: center;" type="text" value="{{this.data.chamber}}/{{this.data.max}}">
             <a class="gun-attack icon-btn"><i class="fas fa-crosshairs"></i></a>
             <a class="gun-reload icon-btn"><i class="fas fa-sync-alt"></i></a>
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
@@ -61,10 +72,10 @@
     <div>
         <h1 style="text-align: center;">Tricks</h1>
         {{#each tricks as |hex|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{hex._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{hex.data.trait}}">
+            <input style="text-align: center;" type="text" value="{{this.data.trait}}">
             <a class="sling-trick icon-btn"><i class="fas fa-sync-alt"></i></a>
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
@@ -75,10 +86,10 @@
     <div>
         <h1 style="text-align: center;">Hexes</h1>
         {{#each hexes as |hex|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{hex._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{hex.data.trait}}">
+            <input style="text-align: center;" type="text" value="{{this.data.trait}}">
             <a class="sling-hex icon-btn"><i class="fas fa-sync-alt"></i></a>
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
@@ -89,10 +100,10 @@
     <div>
         <h1 style="text-align: center;">Miracles</h1>
         {{#each miracles as |mir|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{mir._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{mir.data.tn}}">
+            <input style="text-align: center;" type="text" value="{{this.data.tn}}">
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
         {{/each}}
@@ -102,10 +113,23 @@
     <div>
         <h1 style="text-align: center;">Favors</h1>
         {{#each favors as |fav|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{fav._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{fav.data.appeasement}}">
+            <input style="text-align: center;" type="text" value="{{this.data.appeasement}}">
+            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
+    {{#if edges}}
+    <div>
+        <h1 style="text-align: center;">Edges</h1>
+        {{#each edges as |edge|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+            <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+            <input style="text-align: center;" type="text" value="{{this.data.cost}}">
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
         {{/each}}
@@ -114,27 +138,12 @@
     {{#if hinderances}}
         <h1 style="text-align: center;">Hinderances</h1>
         {{#each hinderances as |hind|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{hind._id}}">
-            <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
-            <input style="display: inline-block; width: 400%;" type="text" value="{{hind.name}}"/>
-            <input style="text-align: center;" type="text" value="{{hind.data.cost}}">
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
-        </div>
-        {{/each}}
-    {{/if}}
-    {{#if edges}}
-    <div>
-        <h1 style="text-align: center;">Edges</h1>
-        {{#each edges as |edge|}}
-        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{edge._id}}">
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <input style="text-align: center;" type="text" value="{{edge.data.cost}}">
+            <input style="text-align: center;" type="text" value="{{this.data.cost}}">
             <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
         </div>
         {{/each}}
-    </div>
     {{/if}}
-    <h1 style="text-align: center;">Notes</h1>
-    {{editor content=data.description target=data.description button=true owner=owner editable=editable}}
 </section>
