@@ -3,20 +3,20 @@ A system for playing Deadlands Classic in Foundry VTT.
 
 Install with the link for system.json in the releases page in the usual Foundry method.
 
-Marshal Sheet:
+##Marshal Sheet:
 Very simple currently, I plan on adding much more to this in time.  Buttons for starting and ending Combat and a place for you to draw Fate Chips.
 
-Player Sheet:
+##Player Sheet:
 The Character Sheet starts with just a list of skills, the core stat block and an Image.
 Each of the skills has a roll button which will send an inline roll to chat naming the skill clicked, enter the skill level and any modifiers.
 I split the shootin' skill into the 4 main categories, Pistol, Rifle, Shotgun and Automatic as weapons can all be given a type to determine which skill to use.
 There is a button under the image to draw a fate chip so players can do this for themselves without Marshal interaction. It will whisper a message to the Marshal whenever clicked however.  You can click the trash icon to 'Use' the chip and a message will be sent to chat saying you spent it or click the '$' icon to trade them in for bounty points which will get added to your character.
 You can add items in the usual way by dragging them onto the sheet, each adds buttons for the player to interact with it.
 
-Item Sheets:
+##Item Sheets:
 As I can't bundle any compendiums with this pack each item type has been broken down into different categories each has a page where you can enter the values for the item and add a description.  Once you've made a few items then you can start to drag and drop them onto character sheets to put a copy of the item on that character.
 
-Firearms:
+###Firearms:
 Firearms have the following attributes:
 Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
 Image           Any image you wish to add
@@ -38,7 +38,7 @@ Fire            Rolls an attack roll for the weapon using the characters stats, 
 Reload          Rolls a speed load check and adds bullets to the weapon.
 Trash           Removes the weapon from the sheet.
 
-Melee Weapons:
+###Melee Weapons:
 There are a few edge cases for melee weapons that I haven't accounted for but I am working on getting these fixed.
 Melee weapons (currently) have the following attributes:
 Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
@@ -51,7 +51,7 @@ Info            Shows the info panel for this item and lets the players modify n
 attack          Rolls an attack roll for the weapon using the characters stats, strength plus the weapon's damage and a d20 for location.
 Trash           Removes the weapon from the sheet.
 
-Tricks:
+###Tricks:
 Tricks are dealt with using the rules from Hucksters and Hexes.
 Tricks have the following attributes:
 Name            The name of the Trick
@@ -68,7 +68,7 @@ Info            Shows the info panel for this item and lets the players modify n
 Cast            Rolls the Hex's level of the Hex's trait dice then deals them the correct amount of cards from a deck.  They can trash the cards on their sheet to show them in chat.
 Trash           Removes the Hex from the sheet.
 
-Hexes:
+###Hexes:
 Hexes are dealt with using the rules from Hucksters and Hexes.
 Hexes have the following attributes:
 Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
@@ -86,7 +86,7 @@ Info            Shows the info panel for this item and lets the players modify n
 Cast            Rolls the Hex's level of the Hex's trait dice then deals them the correct amount of cards from a deck.  They can trash the cards on their sheet to show them in chat.
 Trash           Removes the Hex from the sheet.
 
-Miracles:
+###Miracles:
 Miracles have the following attributes:
 Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
 Image           Any image you wish to add
@@ -101,7 +101,7 @@ Info            Shows the info panel for this item and lets the players modify n
 Cast            Rolls a faith check against the target number listed.
 Trash           Removes the Miracle from the sheet.
 
-Favors:
+###Favors:
 Favors have the following attributes:
 Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
 Image           Any image you wish to add
