@@ -3,7 +3,7 @@ A system for playing Deadlands Classic in Foundry VTT.
 
 Install with the link for system.json in the releases page in the usual Foundry method.
 
-##Marshal Sheet:
+## Marshal Sheet:
 Very simple currently, I plan on adding much more to this in time.  Buttons for starting and ending Combat and a place for you to draw Fate Chips.
 
 ## Player Sheet:
@@ -18,18 +18,19 @@ As I can't bundle any compendiums with this pack each item type has been broken 
 
 ### Firearms:
 Firearms have the following attributes:
-Name            The name of the weapon each copy placed on a sheet is seperate so players can name their guns.
-Image           Any image you wish to add
-Description     Any text you'd like, I've been using the top paragraph on wikipedia from a given google search.
-Calibur         The calibur of bullet required.
-Type            The type of firearm, accepted values are; pistol, rifle, shotgun or automatic currently. all must be lower case.
-Speed           How many actions to fire the weapon (Depending on the version you're playing, in later versions just leave this at 1, earlier versions rifles took 2 actions to fire.)
-Range           The range increment of the weapon.
-R.O.F           The rate of fire for the weapon
-Chamber         The current number of bullets loaded
-Clip            The maximum number of bullets allowed
-Damage          The amount and die type of damage - exploding damage is handled by the system so just [x]d[y] will do.
-Damage Bonus    Specifically for the Winchester '76 which for some reason has +2 to damage rolls and is the only gun that does.
+| Name | Description|
+|Name | The name of the weapon each copy placed on a sheet is seperate so players can name their guns.|
+|Image | Any image you wish to add
+|Description | Any text you'd like, I've been using the top paragraph on wikipedia from a given google search.
+|Calibur | The calibur of bullet required.
+|Type | The type of firearm, accepted values are; pistol, rifle, shotgun or automatic currently. all must be lower case.
+|Speed | How many actions to fire the weapon (Depending on the version you're playing, in later versions just leave this at 1, earlier versions rifles took 2 actions to fire.)
+|Range | The range increment of the weapon.
+|R.O.F | The rate of fire for the weapon
+|Chamber | The current number of bullets loaded
+|Clip | The maximum number of bullets allowed
+|Damage | The amount and die type of damage - exploding damage is handled by the system so just [x]d[y] will do.
+|Damage Bonus | Specifically for the Winchester '76 which for some reason has +2 to damage rolls and is the only gun that does.
 
 Placed on a character they reveal 4 Buttons:
 Info            Shows the info panel for this item and lets the players modify names and attributes.
