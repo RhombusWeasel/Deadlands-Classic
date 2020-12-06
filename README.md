@@ -18,7 +18,8 @@ As I can't bundle any compendiums with this pack each item type has been broken 
 
 ### Firearms:
 Firearms have the following attributes:
-| Name | Description|
+| Name | Description |
+-------|--------------
 |Name | The name of the weapon each copy placed on a sheet is seperate so players can name their guns.|
 |Image | Any image you wish to add
 |Description | Any text you'd like, I've been using the top paragraph on wikipedia from a given google search.
