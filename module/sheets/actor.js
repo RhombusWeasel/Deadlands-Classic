@@ -68,6 +68,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
+        html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         return super.activateListeners(html);
     }
@@ -316,5 +317,15 @@ export default class PlayerSheet extends ActorSheet {
         }
         r.toMessage()
         ChatMessage.create({ content: reply});
+    }
+
+    _on_cast_miracle(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let act = this.getData();
+        let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
+        ChatMessage.create({ content: roll_str});
     }
 }
