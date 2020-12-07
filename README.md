@@ -49,7 +49,7 @@ There are a few edge cases for melee weapons that I haven't accounted for but I 
 Melee weapons (currently) have the following attributes:
 | Attribute  | Description |
 -------------|--------------
-|Name        | The name of the weapon each copy placed on a sheet is seperate so players can name their guns.|
+|Name        | The name of the weapon each copy placed on a sheet is seperate so players can name their knives.|
 |Image       | Any image you wish to add|
 |Description | Any text you'd like, I've been using the top paragraph on wikipedia from a given google search.|
 |Damage      | The amount and die type of damage - exploding damage and the additional strength roll are handled by the system so just [x]d[y] will do.|
