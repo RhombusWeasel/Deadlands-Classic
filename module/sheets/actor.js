@@ -41,6 +41,8 @@ export default class PlayerSheet extends ActorSheet {
         data.favors = data.items.filter(function (item) {return item.type == "favor"});
         data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"});
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
+        //this._sort_goods(data.items.filter(function (item) {return item.type == "goods"}));
+        data.goods = data.items.filter(function (item) {return item.type == "goods"});
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
         data.combat_active = game.dc.combat_active
@@ -77,6 +79,33 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         this.getData();
         this.render();
+    }
+
+    _sort_goods(goods) {
+        for (let i = goods.length - 1; i > -1; i--) {
+            try {
+                const id = goods[i]._id;
+                const name = goods[i].name;
+                let amt = parseInt(goods[i].data.amount);
+                let item = this.actor.getOwnedItem(id);
+                for (let j = i-1; j > -1; j--) {
+                    if (goods[j]){
+                        const c_id = goods[j]._id;
+                        const c_name = goods[j].name;
+                        if (c_name == name) {
+                            if (c_id != id){
+                                amt = amt + parseInt(goods[j].data.amount);
+                                item.update({"amount": amt})
+                                this.actor.deleteOwnedItem(c_id);
+                            }
+                        }
+                    }
+                }   
+            } catch (error) {
+                
+            }    
+        }
+        return goods;
     }
 
     _on_item_open(event) {

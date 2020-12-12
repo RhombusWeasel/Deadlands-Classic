@@ -71,6 +71,10 @@
             "chip": {
                 "value": "Value",
                 "bounty": "Bounty"
+            },
+            "goods": {
+                "cost": "Cost",
+                "amount": "Amount"
             }
         },
         "fate_chips": {

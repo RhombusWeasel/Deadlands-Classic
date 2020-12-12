@@ -148,4 +148,18 @@
         </div>
         {{/each}}
     {{/if}}
+    {{#if goods}}
+        <div>
+        <h1 style="text-align: center;">Goods</h1>
+        {{#each goods as |good|}}
+        <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+            <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+            <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+            <input style="text-align: center;" type="text" value="{{this.data.cost}}">
+            <input style="text-align: center;" type="text" value="{{this.data.amount}}">
+            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+        </div>
+        {{/each}}
+    </div>
+    {{/if}}
 </section>

@@ -423,7 +423,8 @@
             "chip",
             "huckster_deck",
             "action_deck",
-            "blueprint_deck"
+            "blueprint_deck",
+            "goods"
         ],
         "templates": {
             "description": {
@@ -511,6 +512,13 @@
         },
         "huckster_deck": {},
         "action_deck": {},
-        "blueprint_deck": {}
+        "blueprint_deck": {},
+        "goods": {
+            "templates": [
+                "description"
+            ],
+            "cost": "$1",
+            "amount": "1"
+        }
     }
 }
