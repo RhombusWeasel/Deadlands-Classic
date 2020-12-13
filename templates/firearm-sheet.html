@@ -28,7 +28,12 @@
                 <td><input style="text-align: center;" type="text" name="data.max" value="{{data.max}}"/></td>
                 <td><input style="text-align: center;" type="text" name="data.damage" value="{{data.damage}}"/></td>
                 <td><input style="text-align: center;" type="text" name="data.damage_bonus" value="{{data.damage_bonus}}"/></td>
-                <td><input type="checkbox" name="data.off_hand" checked="data.off_hand"/></td>
+                {{#if (eq data.off_hand true)}}
+                    <td><input type="checkbox" name="data.off_hand" checked/></td>
+                {{/if}}
+                {{#if (eq data.off_hand false)}}
+                    <td><input type="checkbox" name="data.off_hand"/></td>
+                {{/if}}
             </tr>
         </table>
     </div>
