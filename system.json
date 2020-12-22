@@ -7,8 +7,9 @@
     "compatibleCoreVersion": "0.7.8",
     "templateVersion": 1,
     "author": "Rhombus Weasel",
-    "esmodules": ["module/deadlands.js"],
+    "esmodules": ["module/deadlands.js", "module/deck.js"],
     "styles": ["styles/player-sheet.css"],
+    "socket": true,
     "packs": [],
     "languages": [
       {

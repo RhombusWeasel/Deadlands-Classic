@@ -22,7 +22,10 @@
                     "max": 0,
                     "value": 0
                 },
-                "off_hand_modifier": -6
+                "off_hand_modifier": -6,
+                "perks": {
+                    "level_headed": false
+                }
             }
         },
         "player": {
