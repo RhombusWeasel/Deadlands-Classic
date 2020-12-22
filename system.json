@@ -2,9 +2,9 @@
     "name": "deadlands_classic",
     "title": "Deadlands Classic",
     "description": "An implementation of a classic wild west roleplay system.",
-    "version": "0.0.16",
+    "version": "0.0.17",
     "minimumCoreVersion": "0.7.5",
-    "compatibleCoreVersion": "0.7.8",
+    "compatibleCoreVersion": "0.7.9",
     "templateVersion": 1,
     "author": "Rhombus Weasel",
     "esmodules": ["module/deadlands.js", "module/deck.js"],
@@ -24,6 +24,6 @@
     "secondaryTokenAttribute": "rounds",
     "url": "https://github.com/RhombusWeasel/Deadlands-Classic",
     "manifest": "https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json",
-    "download": "https://github.com/RhombusWeasel/Deadlands-Classic/releases/download/0.0.16/deadlands_classic.zip",
+    "download": "https://github.com/RhombusWeasel/Deadlands-Classic/releases/download/0.0.17/deadlands_classic.zip",
     "license": "LICENSE.txt"
   }
