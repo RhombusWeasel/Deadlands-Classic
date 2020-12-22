@@ -24,6 +24,18 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: true});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
 
+    Handlebars.registerHelper('lvl_head', function (options) {
+        if (!(game.user.isGM)) {
+            let act_data = game.actors.get(game.user.data.character);
+            if (act_data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"}).length > 0){
+                if (game.dc.level_headed_available == true) {
+                    return options.fn(this);
+                }
+            }
+            return options.inverse(this);
+        }
+    });
+
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
             case '==':
@@ -47,9 +59,5 @@ Hooks.once("init", function () {
         }
     });
 
-    game.dc = {
-        combat_active: false,
-        action_deck: []
-    }
     preload_handlebars_templates();
 });
