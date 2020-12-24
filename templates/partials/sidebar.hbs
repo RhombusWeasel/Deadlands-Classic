@@ -14,8 +14,8 @@
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.bounty}}">
-            <a class="spend-fate icon-btn"><i class="fas fa-dollar-sign"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="spend-fate icon-btn"><i class="fas fa-dollar-sign" title="Spend for Bounty"></i></a>
+            <a class="item-delete icon-btn" title="Test"><i class="fas fa-trash" title="Use in game"></i></a>
         </div>
         {{/each}}
     {{/if}}
@@ -24,12 +24,12 @@
         {{#each action_deck as |card|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <a class="aim-button icon-btn"><i class="fas fa-crosshairs"></i></a>
-            <a class="dodge-button icon-btn"><i class="fas fa-running"></i></a>
+            <a class="aim-button icon-btn"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a>
+            <a class="dodge-button icon-btn"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></a>
             {{#lvl_head}}
-                <a class="recycle-card icon-btn"><i class="fas fa-sync-alt"></i></a>
+                <a class="recycle-card icon-btn"><i class="fas fa-sync-alt" title="Cycle this card"></i></a>
             {{/lvl_head}}
-            <a class="play-card icon-btn"><i class="fas fa-hand-paper"></i></a>
+            <a class="play-card icon-btn"><i class="fas fa-hand-paper" title="Play this Card"></i></a>
         </div>
         {{/each}}
     {{/if}}
@@ -41,8 +41,8 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{wep.data.damage}}">
-            <a class="melee-attack icon-btn"><i class="fas fa-user-slash"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="melee-attack icon-btn"><i class="fas fa-user-slash" title="Attack with {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -55,9 +55,9 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.chamber}}/{{this.data.max}}">
-            <a class="gun-attack icon-btn"><i class="fas fa-crosshairs"></i></a>
-            <a class="gun-reload icon-btn"><i class="fas fa-sync-alt"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="gun-attack icon-btn"><i class="fas fa-crosshairs" title="Fire {{this.name}}"></i></a>
+            <a class="gun-reload icon-btn"><i class="fas fa-sync-alt" title="Reload {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -68,7 +68,7 @@
         {{#each huckster_deck as |card|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Show this card"></i></a>
         </div>
         {{/each}}
     </div>
@@ -81,8 +81,8 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.trait}}">
-            <a class="sling-trick icon-btn"><i class="fas fa-bahai"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="sling-trick icon-btn"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -95,8 +95,8 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.trait}}">
-            <a class="sling-hex icon-btn"><i class="fas fa-bahai"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="sling-hex icon-btn"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -109,8 +109,8 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.tn}}">
-            <a class="cast-miracle icon-btn"><i class="fas fa-pray"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="cast-miracle icon-btn"><i class="fas fa-pray" title="Cast {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -123,8 +123,8 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.appeasement}}">
-            <a class="icon-btn"><i class="fas fa-crow"></i></a>
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="icon-btn"><i class="fas fa-crow" title="Cast {{this.name}}"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -137,7 +137,7 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.cost}}">
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>
@@ -149,7 +149,7 @@
             <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.cost}}">
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     {{/if}}
@@ -162,7 +162,7 @@
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
             <input style="text-align: center;" type="text" value="{{this.data.cost}}">
             <input style="text-align: center;" type="text" value="{{this.data.amount}}">
-            <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+            <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
         </div>
         {{/each}}
     </div>

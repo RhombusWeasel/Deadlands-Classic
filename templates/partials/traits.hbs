@@ -9,7 +9,7 @@
             <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/>
             <label style="font-size: large; font-weight: bold; padding-top: 2px;; float: right;" for="data.traits.{{@key}}.modifier">+</label>
             <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
-            <a style="margin-left: 20px; margin-right: 21px; margin-top: 5px" id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></a>
+            <a style="margin-left: 20px; margin-right: 21px; margin-top: 5px" id="{{@key}}_roll" title="Roll {{this.name}}"><i class="fas fa-dice-d20"></i></a>
             <script>
                 function callback() {
                     let content = "{{trait.name}}: [[{{trait.level}}{{trait.die_type}}ex + {{trait.modifier}}]]" 
@@ -33,7 +33,7 @@
                     <td><input style="display:inline-block; text-align: left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"/></td>
                     <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"/></td>
                     <td><input style="display:inline-block; text-align: center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"/></td>
-                    <td><a style="margin-left: 20px;  margin-right: 20px;" id="{{@key}}_roll"><i class="fas fa-dice-d20"></i></a></td>
+                    <td><a style="margin-left: 20px;  margin-right: 20px;" id="{{@key}}_roll"><i class="fas fa-dice-d20" title="Roll {{this.name}}"></i></a></td>
                     <script>
                         function callback() {
                             let content = "";
