@@ -228,8 +228,8 @@ export default class PlayerSheet extends ActorSheet {
         if (bonus <= 6) {
             game.dc.aim_bonus = bonus
             reply = `Spends the ${item.name} to aim [ +${bonus} ]`;
-            this.actor.deleteOwnedItem(itemId);
         }
+        this.actor.deleteOwnedItem(itemId);
         ChatMessage.create({content: reply});
         return this.getData()
     }
