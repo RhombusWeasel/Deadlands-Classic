@@ -276,7 +276,6 @@ export default class PlayerSheet extends ActorSheet {
             game.dc.level_headed_available = false
         }
         ChatMessage.create({content: reply});
-        return this.getData()
     }
 
     _on_melee_attack(event) {
