@@ -22,7 +22,17 @@
                 "grit": "Grit",
                 "money": "Money",
                 "bounty": "Bounty",
-                "off_hand": "Off Hand"
+                "off_hand": "Off Hand",
+                "wounds": {
+                    "noggin": "Noggin",
+                    "guts": "Guts",
+                    "arm_left": "Left Arm",
+                    "arm_right": "Right Arm",
+                    "gizzards": "Gizzards",
+                    "leg_left": "Left Leg",
+                    "leg_right": "Right Leg"
+                },
+                "wound_modifier": "Wound Modifier"
             }
         },
         "items": {

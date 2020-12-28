@@ -8,6 +8,7 @@
         ],
         "templates": {
             "core": {
+                "generated": false,
                 "size": 6,
                 "pace": 4,
                 "wind": {
@@ -15,6 +16,16 @@
                     "max": 1,
                     "value": 1
                 },
+                "wounds": {
+                    "noggin": 0,
+                    "guts": 0,
+                    "arm_left": 0,
+                    "arm_right": 0,
+                    "gizzards": 0,
+                    "leg_left": 0,
+                    "leg_right": 0
+                },
+                "wound_modifier": 0,
                 "grit": 0,
                 "cash": 0,
                 "bounty": {

@@ -215,7 +215,7 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        return this.actor.deleteOwnedItem(itemId);
+        return this.actor.deleteOwnedItem(item._id);
     }
 
     _on_aim(event) {
@@ -229,9 +229,15 @@ export default class PlayerSheet extends ActorSheet {
             game.dc.aim_bonus = bonus
             reply = `Spends the ${item.name} to aim [ +${bonus} ]`;
         }
-        this.actor.deleteOwnedItem(itemId);
         ChatMessage.create({content: reply});
-        return this.getData()
+        game.socket.emit("system.deadlands_classic", {
+            operation: 'discard_card',
+            data: {
+                name: item.name,
+                type: item.type
+            }
+        });
+        return this.actor.deleteOwnedItem(itemId);
     }
 
     _on_dodge(event) {
@@ -250,6 +256,14 @@ export default class PlayerSheet extends ActorSheet {
         }
         let roll = `Dodge: [[${lvl}${trait.die_type} + ${skill.modifier}]]`;
         ChatMessage.create({content: roll});
+        game.socket.emit("system.deadlands_classic", {
+            operation: 'discard_card',
+            data: {
+                name: item.name,
+                type: item.type
+            }
+        });
+        return this.actor.deleteOwnedItem(itemId);
     }
 
     _on_recycle(event) {
@@ -276,6 +290,7 @@ export default class PlayerSheet extends ActorSheet {
             game.dc.level_headed_available = false
         }
         ChatMessage.create({content: reply});
+        return this.getData()
     }
 
     _on_melee_attack(event) {
