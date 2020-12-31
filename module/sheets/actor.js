@@ -215,7 +215,9 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        return this.actor.deleteOwnedItem(itemId);
+        console.log(`Removing ${item.name} ${itemId} ${item}`)
+        this.actor.deleteOwnedItem(itemId);
+        return this.getData();
     }
 
     _on_aim(event) {
@@ -237,7 +239,9 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        return this.actor.deleteOwnedItem(itemId);
+        console.log(`Removing ${item.name} ${itemId} ${item}`);
+        this.actor.deleteOwnedItem(itemId);
+        return this.getData();
     }
 
     _on_dodge(event) {
@@ -246,6 +250,7 @@ export default class PlayerSheet extends ActorSheet {
         ChatMessage.create({content: reply});
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
         this.actor.deleteOwnedItem(itemId);
         let act = this.getData();
         let trait = act.data.traits.nimbleness;
@@ -263,7 +268,9 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        return this.actor.deleteOwnedItem(itemId);
+        console.log(`Removing ${item.name} ${itemId} ${item}`)
+        this.actor.deleteOwnedItem(itemId);
+        return this.getData();
     }
 
     _on_recycle(event) {
