@@ -215,7 +215,7 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        return this.actor.deleteOwnedItem(item._id);
+        return this.actor.deleteOwnedItem(itemId);
     }
 
     _on_aim(event) {
