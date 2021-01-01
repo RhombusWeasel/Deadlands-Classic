@@ -59,6 +59,7 @@ let operations = {
         if (game.user.isGM) {
             game.dc.action_deck = []
             game.dc.discard_deck = []
+            game.dc.aim_bonus = 0
         }
     },
     request_cards: function(data){
@@ -77,7 +78,8 @@ let operations = {
     recieve_card: function(data){
         if (game.userId == data.user){
             let actor = game.actors.get(game.user.data.character)
-            actor.createOwnedItem(data.card);
+            let c = Math.random()
+            setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
         }
     },
     discard_card: function(data) {

@@ -65,7 +65,7 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
-                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 500);
+                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 100);
             }
         }
         return data;
@@ -216,7 +216,7 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         console.log(`Removing ${item.name} ${itemId} ${item}`)
-        this.actor.deleteOwnedItem(itemId);
+        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
 
@@ -240,7 +240,7 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         console.log(`Removing ${item.name} ${itemId} ${item}`);
-        this.actor.deleteOwnedItem(itemId);
+        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
 
@@ -269,7 +269,7 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         console.log(`Removing ${item.name} ${itemId} ${item}`)
-        this.actor.deleteOwnedItem(itemId);
+        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
 
@@ -293,7 +293,8 @@ export default class PlayerSheet extends ActorSheet {
                 }
             });
             reply = `Cycling ${item.name}.`
-            this.actor.deleteOwnedItem(itemId);
+            let c = Math.random()
+            setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
             game.dc.level_headed_available = false
         }
         ChatMessage.create({content: reply});
@@ -332,6 +333,7 @@ export default class PlayerSheet extends ActorSheet {
         let dmg_mod = item.data.data.damage_bonus;
         let off_hand_mod = 0
         let act = this.getData();
+        let wound_mod = act.data.wound_modifier
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
         if (shots > 0) {
@@ -345,7 +347,7 @@ export default class PlayerSheet extends ActorSheet {
             }
             let roll = `
                 ${item.name}: 
-                Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${off_hand_mod} + ${game.dc.aim_bonus}]]\n
+                Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${off_hand_mod} + ${game.dc.aim_bonus} + ${wound_mod}]]\n
                 Damage: [[${dmg}x= + ${dmg_mod}]]\n
                 Location: [[1d20]]
             `;
