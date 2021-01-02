@@ -29,6 +29,10 @@
     flex-direction: column;
     align-items: center;
 }
+.portrait {
+    width: 256px;
+    height: 256px;
+}
 .h1 {
     text-align: center; 
 }

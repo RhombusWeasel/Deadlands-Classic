@@ -418,7 +418,181 @@
         "mook": {
             "templates": [
                 "core"
-            ]
+            ],
+            "traits": {
+                "cognition": {
+                    "name": "Cognition",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "scrutinize": {
+                            "name": "Scrutinize",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "search": {
+                            "name": "Search",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "deftness": {
+                    "name": "Deftness",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "bow": {
+                            "name": "Bow",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "shootin_pistol": {
+                            "name": "Shootin Pistol",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "shootin_rifle": {
+                            "name": "Shootin Rifle",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "shootin_shotgun": {
+                            "name": "Shootin Shotgun",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "shootin_automatic": {
+                            "name": "Shootin Automatic",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "speed_load": {
+                            "name": "Speed Load",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "knowledge": {
+                    "name": "Knowledge",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {}
+                },
+                "mien": {
+                    "name": "Mien",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "overawe": {
+                            "name": "Overawe",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "persuasion": {
+                            "name": "Persuasion",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "nimbleness": {
+                    "name": "Nimbleness",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "dodge": {
+                            "name": "Dodge",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "fightin": {
+                            "name": "Fightin (Brawlin)",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "horse_ridin": {
+                            "name": "Horse Ridin",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "sneak": {
+                            "name": "Sneak",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "quickness": {
+                    "name": "Quickness",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "quick_draw": {
+                            "name": "Quick Draw",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "smarts": {
+                    "name": "Smarts",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "bluff": {
+                            "name": "Bluff",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "gamblin": {
+                            "name": "Gamblin",
+                            "level": 2,
+                            "modifier": 0
+                        },
+                        "ridicule": {
+                            "name": "Ridicule",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "spirit": {
+                    "name": "Spirit",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {
+                        "guts": {
+                            "name": "Guts",
+                            "level": 2,
+                            "modifier": 0
+                        }
+                    }
+                },
+                "strength": {
+                    "name": "Strength",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {}
+                },
+                "vigor": {
+                    "name": "Vigor",
+                    "level": 1,
+                    "die_type": "d4",
+                    "modifier": 0,
+                    "skills": {}
+                }
+            }
         },
         "gm": {
             "combat_active": false
