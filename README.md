@@ -16,6 +16,11 @@ I split the shootin' skill into the 4 main categories, Pistol, Rifle, Shotgun an
 There is a button under the image to draw a fate chip so players can do this for themselves without Marshal interaction. It will whisper a message to the Marshal whenever clicked however.  You can click the trash icon to 'Use' the chip and a message will be sent to chat saying you spent it or click the '$' icon to trade them in for bounty points which will get added to your character.
 You can add items in the usual way by dragging them onto the sheet, each adds buttons for the player to interact with it.
 
+## Mook Sheets:
+Mooks are an Idea I borrowed from the game Feng Shui, these are short lived combat NPC's for when you need a quick posse of Bandits or whatever.
+Each has a reduced list of skills available, just enough for combat. Make a Mook character and set the sheet to the NPC sheet and you will see a button to generate some stats for them.  You can drag weapons and other items onto a mook and they will work just the same as for players.  
+This combined with https://foundryvtt.com/packages/token-hud-wildcard/ allows you to setup a Bandit or Townsfolk class with a random token assigned every time you add one to the map, if you make sure you uncheck link actor data on the prototype token dialog you can double click these tokens to make fresh stats for each one on the sheet that opens.  These stats are stored to the token however and any changes made to them are only saved to that token.
+
 ## Item Sheets:
 As I can't bundle any compendiums with this pack each item type has been broken down into different categories each has a page where you can enter the values for the item and add a description.  Once you've made a few items then you can start to drag and drop them onto character sheets to put a copy of the item on that character.
 
