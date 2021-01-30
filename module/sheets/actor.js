@@ -42,6 +42,7 @@ export default class PlayerSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
+        data.combat_active = game.settings.get('deadlands_classic','combat_active')
         data.firearms = data.items.filter(function (item) {return item.type == "firearm"});
         data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"});
         data.miracles = data.items.filter(function (item) {return item.type == "miracle"});
@@ -54,14 +55,9 @@ export default class PlayerSheet extends ActorSheet {
         data.goods = data.items.filter(function (item) {return item.type == "goods"});
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
-        data.combat_active = game.dc.combat_active
         data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
-        data.level_headed = false
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
-        if (lh.length > 0){
-            data.level_headed = true;
-        }
-        if (game.dc.combat_active) {
+        if (data.combat_active) {
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
@@ -198,6 +194,7 @@ export default class PlayerSheet extends ActorSheet {
                     amount: draw
                 }
             });
+            this.actor.update({'data.perks.level_headed': true});
         }
         ChatMessage.create({content: reply, whisper: ChatMessage.getWhisperRecipients('GM')});
     }
@@ -279,8 +276,10 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let reply = `You have already cycled a card this round.`
-        let data = this.getData()
-        if (game.dc.level_headed_available){
+        let act = this.getData()
+        console.log(act)
+        let level_headed_available = act.data.perks.level_headed
+        if (level_headed_available){
             game.socket.emit('system.deadlands_classic', {
                 operation: 'recycle_card',
                 data:{
@@ -295,7 +294,7 @@ export default class PlayerSheet extends ActorSheet {
             reply = `Cycling ${item.name}.`
             let c = Math.random()
             setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
-            game.dc.level_headed_available = false
+            this.actor.update({'data.perks.level_headed': false});
         }
         ChatMessage.create({content: reply});
         return this.getData()

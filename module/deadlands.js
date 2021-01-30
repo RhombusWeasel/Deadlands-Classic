@@ -28,11 +28,23 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
 
+    game.settings.register('deadlands_classic', 'combat_active', {
+        name: 'Combat Active',
+        scope: 'world',     // "world" = sync to db, "client" = local storage 
+        config: false,       // false if you dont want it to show in module config
+        type: Boolean,       // Number, Boolean, String,  
+        default: false,
+        onChange: value => {
+          console.log('Combat Active: ', value)
+        }
+    });
+
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);
             if (act_data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"}).length > 0){
-                if (game.dc.level_headed_available == true) {
+                console.log(act_data);
+                if (act_data.data.data.perks.level_headed == true) {
                     return options.fn(this);
                 }
             }

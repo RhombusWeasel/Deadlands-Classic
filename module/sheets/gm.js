@@ -100,11 +100,11 @@ export default class GMSheet extends ActorSheet {
         let act = this.getData();
         this.actor.update({"combat_active": true});
         ChatMessage.create({ content: `Combat Begins!`});
-        game.dc.combat_active = true;
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
             data: {}
         });
+        game.settings.set('deadlands_classic', 'combat_active', true);
         return this.render();
     }
 
@@ -125,6 +125,7 @@ export default class GMSheet extends ActorSheet {
             operation: 'end_combat',
             data: {}
         });
+        game.settings.set('deadlands_classic', 'combat_active', false);
         return this.render();
     }
 
