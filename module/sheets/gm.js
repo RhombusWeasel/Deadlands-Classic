@@ -22,19 +22,18 @@ export default class GMSheet extends ActorSheet {
         if (data.combat_active) {
             //There must be a token in the scene owned by a player for this to work.
             let actor_list = [];
-            for (let i = 0; i < game.users.length; i++) {
-                const user = game.users[i];
+            game.users.forEach(user => {
                 if (user.data.character){
                     actor_list.push(game.actors.get(user.data.character));
                 }
-            }
+            });
             let action_list = [];
             for (let i = 0; i < actor_list.length; i++) {
                 const actor = actor_list[i];
-                let cards = actor.actor.items.filter(function (item) {return item.type == "action_deck"});
+                let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
                 for (let c = 0; c < cards.length; c++) {
                     const card = cards[c];
-                    let card_data = {'name': card.name, 'player': actor.actor.data.name};
+                    let card_data = {'name': card.name, 'player': actor.data.name};
                     action_list.push(card_data);
                 }
             }
