@@ -42,7 +42,7 @@ export default class PlayerSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.combat_active = game.settings.get('deadlands_classic','combat_active')
+        data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.firearms = data.items.filter(function (item) {return item.type == "firearm"});
         data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"});
         data.miracles = data.items.filter(function (item) {return item.type == "miracle"});

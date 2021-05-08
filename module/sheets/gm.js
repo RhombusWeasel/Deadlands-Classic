@@ -1,5 +1,10 @@
 import { dc } from "../config.js";
+let card_vals = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
+let suit_vals = ["Spades", "Hearts", "Diamonds", "Clubs"];
 
+function sort(card_pile){
+
+}
 export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -13,8 +18,46 @@ export default class GMSheet extends ActorSheet {
         data.config = CONFIG.dc;
         data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
-        data.combat_active = game.dc.combat_active
-        if (game.dc.combat_active) {
+        data.combat_active = game.settings.get('deadlands_classic','combat_active');
+        if (data.combat_active) {
+            //There must be a token in the scene owned by a player for this to work.
+            let actor_list = canvas.tokens.placeables.filter(t => t.actor.hasPlayerOwner);
+            let action_list = [];
+            for (let i = 0; i < actor_list.length; i++) {
+                const actor = actor_list[i];
+                let cards = actor.actor.items.filter(function (item) {return item.type == "action_deck"});
+                for (let c = 0; c < cards.length; c++) {
+                    const card = cards[c];
+                    let card_data = {'name': card.name, 'player': actor.actor.data.name};
+                    action_list.push(card_data);
+                }
+            }
+            console.log('Action List Pre GM', action_list);
+            for (let c = 0; c < data.action_deck.length; c++) {
+                const card = data.action_deck[c];
+                let card_data = {'name': card.name, 'player': 'GM'};
+                action_list.push(card_data);
+            }
+            console.log('Action List Post GM', action_list);
+            if (action_list.length > 0) {
+                data.action_list = [];
+                for (let card = 0; card < card_vals.length ; card++) {
+                    const cur_card = card_vals[card];
+                    for (let suit = 0; suit < suit_vals.length; suit++) {
+                        const cur_suit = suit_vals[suit];
+                        for (let chk = 0; chk < action_list.length; chk++) {
+                            const chk_card = action_list[chk].name;
+                            if( chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)' || chk_card == cur_card + ' of ' + cur_suit){
+                                data.action_list.push(action_list[chk]);
+                                //console.log('Checking ' + cur_card + ' of ' + cur_suit);
+                                //console.log('Action List Mid Sort:', data.action_list);
+                                break;
+                            }
+                        }
+                    }
+                }
+                console.log('Action List Post Sort:', data.action_list);
+            }
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
@@ -32,7 +75,14 @@ export default class GMSheet extends ActorSheet {
         html.find(".end-combat").click(this._on_end_combat.bind(this));
         html.find(".draw-card").click(this._on_draw_card.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
+        html.find(".refresh").click(this._on_refresh.bind(this));
         return super.activateListeners(html);
+    }
+
+    _on_refresh(event) {
+        event.preventDefault();
+        this.getData();
+        this.render();
     }
 
     _on_draw_fate(event) {

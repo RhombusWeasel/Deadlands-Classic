@@ -43,7 +43,6 @@ Hooks.once("init", function () {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);
             if (act_data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"}).length > 0){
-                console.log(act_data);
                 if (act_data.data.data.perks.level_headed == true) {
                     return options.fn(this);
                 }

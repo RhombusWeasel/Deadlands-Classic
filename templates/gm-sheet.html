@@ -27,6 +27,17 @@
             <button class="new-round" style="text-align: center;">New Round</button>
             <button class="end-combat" style="text-align: center;">End Combat</button>
             <button class="draw-card" style="text-align: center;">Draw Card</button>
+            <button class="refresh" style="text-align: center;">Refresh</button>
+            {{#if action_list}}
+            <h1 style="text-align: center;">Action Queue</h1>
+                {{#each action_list as |card|}}
+                <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{card._id}}">
+                    <input style="display: inline-block;" type="text" value="{{card.name}}"/>
+                    <input style="text-align: center;" type="text" value="{{card.player}}">
+                    <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
+                </div>
+                {{/each}}
+            {{/if}}
         </div>
     </div>
 </form>
