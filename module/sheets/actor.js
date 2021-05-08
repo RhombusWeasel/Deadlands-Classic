@@ -106,7 +106,9 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Discarding ${item.type} ${item.name}`});
+        ChatMessage.create({ content: `
+            Discarding ${item.type} ${item.name}
+        `});
         return this.actor.deleteOwnedItem(itemId);
     }
 
@@ -212,7 +214,6 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        console.log(`Removing ${item.name} ${itemId} ${item}`)
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
@@ -236,15 +237,12 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        console.log(`Removing ${item.name} ${itemId} ${item}`);
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
 
     _on_dodge(event) {
         event.preventDefault();
-        let reply = `tries to jump out o' the way!`
-        ChatMessage.create({content: reply});
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
@@ -256,7 +254,13 @@ export default class PlayerSheet extends ActorSheet {
         if (lvl == 0){
             lvl = trait.level;
         }
-        let roll = `Dodge: [[${lvl}${trait.die_type} + ${skill.modifier}]]`;
+        let roll = `
+            <h3 style="text-align:center">Dodge!</h3>
+            <p>${this.actor.name.split(' ')[0]} tries to jump out o' the way!</p>
+            <div>
+            Dodge: [[${lvl}${trait.die_type} + ${skill.modifier} + ${act.data.wound_modifier}]]
+            </div>
+        `;
         ChatMessage.create({content: roll});
         game.socket.emit("system.deadlands_classic", {
             operation: 'discard_card',
@@ -291,7 +295,10 @@ export default class PlayerSheet extends ActorSheet {
                     }
                 }
             });
-            reply = `Cycling ${item.name}.`
+            reply = `
+                <h3 style="text-align:center">Discard</h3>
+                <p>${this.actor.name.split(' ')[0]} discards ${item.name} hoping fer better luck next time.</p>
+            `;
             let c = Math.random()
             setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
             this.actor.update({'data.perks.level_headed': false});
@@ -314,9 +321,12 @@ export default class PlayerSheet extends ActorSheet {
             lvl = trait.level
         }
         let roll = `
-            Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus}]]\n
-            Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]\n
-            Location: [[d20]]
+            <div>
+            <h3 style="text-align:center">Fist Fight!</h3>
+            <p style="text-align:center">Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
+            <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]</p>
+            <p style="text-align:center">Location: [[1d20]]</p>
+            </div>
         `;
         game.dc.aim_bonus = 0
         ChatMessage.create({ content: roll});
@@ -345,10 +355,12 @@ export default class PlayerSheet extends ActorSheet {
                 lvl = trait.level
             }
             let roll = `
-                ${item.name}: 
-                Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${off_hand_mod} + ${game.dc.aim_bonus} + ${wound_mod}]]\n
-                Damage: [[${dmg}x= + ${dmg_mod}]]\n
-                Location: [[1d20]]
+                <div>
+                <h3 style="text-align:center">Gunfire!</h3>
+                <p style="text-align:center">Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
+                <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]</p>
+                <p style="text-align:center">Location: [[1d20]]</p>
+                </div>
             `;
             ChatMessage.create({ content: roll});
             shots = shots - 1;
@@ -390,7 +402,10 @@ export default class PlayerSheet extends ActorSheet {
             }
         }
         item.update({ "data.chamber": shots});
-        ChatMessage.create({ content: reply});
+        ChatMessage.create({ content: `
+        <h3 style="text-align:center">Reload</h3>
+            ${reply}
+        `});
     }
 
     _on_cast_trick(event) {
@@ -411,8 +426,11 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        r.toMessage()
-        ChatMessage.create({ content: reply});
+        r.toMessage();
+        ChatMessage.create({ content: `
+            <h3 style="text-align:center">Trick</h3>
+            ${reply}
+        `});
     }
 
     _on_cast_hex(event) {
@@ -434,7 +452,10 @@ export default class PlayerSheet extends ActorSheet {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
         r.toMessage()
-        ChatMessage.create({ content: reply});
+        ChatMessage.create({ content: `
+            <h3 style="text-align:center">Hex</h3>
+            ${reply}
+        `});
     }
 
     _on_cast_miracle(event) {
@@ -444,6 +465,9 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
         let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
-        ChatMessage.create({ content: roll_str});
+        ChatMessage.create({ content: `
+            <h3 style="text-align:center">Trick</h3>
+            ${roll_str}
+        `});
     }
 }

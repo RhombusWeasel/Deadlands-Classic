@@ -37,11 +37,22 @@
                     <script>
                         function callback() {
                             let content = "";
+                            console.log("Log Data: {{data.wound_modifier}}");
                             let skill_level = parseInt("{{this.level}}");
                             if (skill_level > 0){
-                                content = "{{this.name}}: [[{{this.level}}{{trait.die_type}}ex + {{this.modifier}}]]";
+                                content = `
+                                    <div>
+                                        <h3 style="text-align:center">{{this.name}}</h3>
+                                        <p style="text-align:center">[[{{this.level}}{{trait.die_type}}ex + {{this.modifier}} + {{data.wound_modifier}}]]</p>
+                                    </div>
+                                `;
                             }else{
-                                content = "{{this.name}}: [[{{trait.level}}{{trait.die_type}}ex + {{this.modifier}}]]";
+                                content = `
+                                    <div>
+                                        <h3 style="text-align:center">{{this.name}}</h3>
+                                        <p style="text-align:center">[[{{trait.level}}{{trait.die_type}}ex + {{this.modifier}} + {{data.wound_modifier}}]]</p>
+                                    </div>
+                                `;
                             };
                             ChatMessage.create({
                                 content: content
