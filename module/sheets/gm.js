@@ -23,7 +23,8 @@ export default class GMSheet extends ActorSheet {
             //There must be a token in the scene owned by a player for this to work.
             let actor_list = [];
             game.users.forEach(user => {
-                if (user.data.character){
+                if (user.active && user.data.character){
+                    console.log(user);
                     actor_list.push(game.actors.get(user.data.character));
                 }
             });
