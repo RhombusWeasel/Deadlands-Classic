@@ -38,9 +38,11 @@
         "items": {
             "combat": {
                 "melee": {
+                    "cost": "Cost",
                     "damage": "Damage"
                 },
                 "firearm": {
+                    "cost": "Cost",
                     "calibur": "Calibur",
                     "gun_type": "Type",
                     "speed": "Speed",

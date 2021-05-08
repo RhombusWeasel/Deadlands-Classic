@@ -624,6 +624,8 @@
             "templates": [
                 "description"
             ],
+            "cost": "$20.00",
+            "amount": 1,
             "calibur": ".44",
             "gun_type": "pistol",
             "speed": 1,
@@ -639,7 +641,9 @@
             "templates": [
                 "description"
             ],
-            "damage": "1d8"
+            "cost": "$10.00",
+            "amount": 1,
+            "damage": "1d4"
         },
         "miracle": {
             "templates": [
@@ -705,7 +709,7 @@
             "templates": [
                 "description"
             ],
-            "cost": "$1",
+            "cost": "$1.00",
             "amount": "1"
         }
     }
