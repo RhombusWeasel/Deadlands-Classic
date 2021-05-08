@@ -21,7 +21,13 @@ export default class GMSheet extends ActorSheet {
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         if (data.combat_active) {
             //There must be a token in the scene owned by a player for this to work.
-            let actor_list = canvas.tokens.placeables.filter(t => t.actor.hasPlayerOwner);
+            let actor_list = [];
+            for (let i = 0; i < game.users.length; i++) {
+                const user = game.users[i];
+                if (user.data.character){
+                    actor_list.push(game.actors.get(user.data.character));
+                }
+            }
             let action_list = [];
             for (let i = 0; i < actor_list.length; i++) {
                 const actor = actor_list[i];
