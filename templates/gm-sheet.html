@@ -3,15 +3,25 @@
         <div class="data">
             <a><p style="text-align: center;" class="draw-fate">Draw Fate Chip</p></a>
             {{#if fate_chips}}
-            <h2 style="text-align: center;">Fate Chips</h2>
+            <h1 style="text-align: center;">Fate Chips</h1>
+            <table>
+                <tr>
+                    <th class="fate-name">{{localize "dc.fate_chips.name"}}</th>
+                    <th class="fate-value">{{localize "dc.fate_chips.bounty"}}</th>
+                    <th class="fate-value">{{localize "dc.fate_chips.amount"}}</th>
+                    <th class="fate-value">Use</th>
+                </tr>
                 {{#each fate_chips as |chip|}}
-                <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{chip._id}}">
-                    <input style="display: inline-block; width: 400%;" type="text" value="{{chip.name}}"/>
-                    <input style="text-align: center;" type="text" value="{{chip.data.bounty}}">
-                    <a class="item-delete icon-btn"><i class="fas fa-trash"></i></a>
-                </div>
+                <tr>
+                    <td class="fate-name">{{this.name}}</td>
+                    <td class="fate-value">{{this.bounty}}</td>
+                    <td class="fate-value">{{this.amount}}</td>
+                    <td style="text-align:center" class="use-fate" data-chip="{{this.name}}"><i class="fas fa-trash" title="Use in game"></i></td>
+                </tr>
                 {{/each}}
+            </table>
             {{/if}}
+            <a><p style="text-align: center;" class="draw-card">Draw Action Card</p></a>
             {{#if action_deck}}
                 <h1 style="text-align: center;">Combat Hand</h1>
                 {{#each action_deck as |card|}}
@@ -23,11 +33,10 @@
             {{/if}}
         </div>
         <div class="data">
-            <button class="start-combat" style="text-align: center;">Start Combat</button>
-            <button class="new-round" style="text-align: center;">New Round</button>
-            <button class="end-combat" style="text-align: center;">End Combat</button>
-            <button class="draw-card" style="text-align: center;">Draw Card</button>
-            <button class="refresh" style="text-align: center;">Refresh</button>
+            <a><p style="text-align: center;" class="start-combat">Start Combat</p></a>
+            <a><p style="text-align: center;" class="new-round">New Round</p></a>
+            <a><p style="text-align: center;" class="end-combat">End Combat</p></a>
+            <a><p style="text-align: center;" class="refresh">Refresh</p></a>
             {{#if action_list}}
             <h1 style="text-align: center;">Action Queue</h1>
                 {{#each action_list as |card|}}

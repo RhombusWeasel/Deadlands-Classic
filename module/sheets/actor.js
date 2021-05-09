@@ -31,6 +31,24 @@ function new_deck(id) {
     return deck
 }
 
+function sort_deck(card_pile){
+    let r_pile = [];
+    for (let card = 0; card < cards.length ; card++) {
+        const cur_card = cards[card];
+        for (let suit = 0; suit < suits.length; suit++) {
+            const cur_suit = suits[suit];
+            for (let chk = 0; chk < card_pile.length; chk++) {
+                const chk_card = card_pile[chk].name;
+                if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
+                    r_pile.push(card_pile[chk]);
+                    break;
+                }
+            }
+        }
+    }
+    return r_pile;
+}
+
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -54,7 +72,7 @@ export default class PlayerSheet extends ActorSheet {
         data.level_headed_available = game.dc.level_headed_available
         data.goods = data.items.filter(function (item) {return item.type == "goods"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
-        data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
+        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
         let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
@@ -81,6 +99,8 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        html.find(".trait-roll").click(this._on_trait_roll.bind(this));
+        html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
@@ -99,6 +119,62 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         return super.activateListeners(html);
+    }
+
+    _on_trait_roll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log(element);
+        let trait = element.closest(".trait-roll").dataset.trait;
+        let die_type = element.closest(".trait-roll").dataset.die;
+        let mod   = element.closest(".trait-roll").dataset.mod;
+        console.log(trait, die_type, mod);
+        let wound_mod = this.actor.data.data.wound_modifier;
+        console.log(this.actor);
+        let content = "";
+        let skill_level = parseInt(this.actor.data.data.traits[trait].level);
+        content = `
+            <div>
+                <h3 style="text-align:center">${trait}</h3>
+                <p style="text-align:center">[[${skill_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
+            </div>
+        `;
+        ChatMessage.create({
+            content: content
+        });
+    }
+
+    _on_skill_roll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let trait = element.closest(".skill-roll").dataset.trait;
+        let skill = element.closest(".skill-roll").dataset.skill;
+        let mod   = element.closest(".skill-roll").dataset.mod;
+        
+        let wound_mod = this.actor.data.data.wound_modifier;
+        console.log(this.actor);
+        let content = "";
+        let skill_level = parseInt(this.actor.data.data.traits[trait].skills[skill].level);
+        let die_type    = this.actor.data.data.traits[trait].die_type
+        if (skill_level > 0){
+            content = `
+                <div>
+                    <h3 style="text-align:center">${skill}</h3>
+                    <p style="text-align:center">[[${skill_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
+                </div>
+            `;
+        }else{
+            let trait_level = parseInt(act.data.traits[trait].level);
+            content = `
+                <div>
+                    <h3 style="text-align:center">${skill}</h3>
+                    <p style="text-align:center">[[${trait_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
+                </div>
+            `;
+        };
+        ChatMessage.create({
+            content: content
+        });
     }
 
     _on_refresh(event) {
@@ -174,7 +250,6 @@ export default class PlayerSheet extends ActorSheet {
     _on_spend_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        console.log(element);
         let chip_type = element.closest(".spend-fate").dataset.chip;
         let bounty = element.closest(".spend-fate").dataset.bounty;
         let act = this.getData();
@@ -206,7 +281,6 @@ export default class PlayerSheet extends ActorSheet {
     _on_use_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        console.log(element);
         let chip_type = element.closest(".use-fate").dataset.chip;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});

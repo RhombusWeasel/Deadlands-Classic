@@ -71,7 +71,8 @@
     width: 10%;
 }
 .fate-name {
-    width: 50%
+    width: 50%;
+    text-align: center;
 }
 .fate-value {
     width: 10%;

@@ -2,12 +2,25 @@ import { dc } from "../config.js";
 let card_vals = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suit_vals = ["Spades", "Hearts", "Diamonds", "Clubs"];
 
-function sort(card_pile){
+function get_random_int(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function sort_deck(card_pile){
     let r_pile = [];
     for (let card = 0; card < card_vals.length ; card++) {
         const cur_card = card_vals[card];
         for (let suit = 0; suit < suit_vals.length; suit++) {
             const cur_suit = suit_vals[suit];
+            for (let chk = 0; chk < card_pile.length; chk++) {
+                const chk_card = card_pile[chk].name;
+                if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
+                    r_pile.push(card_pile[chk]);
+                    break;
+                }
+            }
         }
     }
     return r_pile;
@@ -24,11 +37,23 @@ export default class GMSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
-        data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
+        let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.fate_chips = [
+            {name: "White", bounty: "1", amount: 0},
+            {name: "Red", bounty: "2", amount: 0},
+            {name: "Blue", bounty: "3", amount: 0},
+            {name: "Legendary", bounty: "5", amount: 0},
+        ];
+        fate_chips.forEach(chip => {
+            data.fate_chips.forEach(stack => {
+                if (stack.name == chip.name){
+                    stack.amount += 1;
+                }
+            });
+        });
+        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         if (data.combat_active) {
-            //There must be a token in the scene owned by a player for this to work.
             let actor_list = [];
             game.users.forEach(user => {
                 if (user.active && user.data.character){
@@ -46,13 +71,11 @@ export default class GMSheet extends ActorSheet {
                     action_list.push(card_data);
                 }
             }
-            console.log('Action List Pre GM', action_list);
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
                 let card_data = {'name': card.name, 'player': 'GM'};
                 action_list.push(card_data);
             }
-            console.log('Action List Post GM', action_list);
             if (action_list.length > 0) {
                 data.action_list = [];
                 for (let card = 0; card < card_vals.length ; card++) {
@@ -61,16 +84,13 @@ export default class GMSheet extends ActorSheet {
                         const cur_suit = suit_vals[suit];
                         for (let chk = 0; chk < action_list.length; chk++) {
                             const chk_card = action_list[chk].name;
-                            if( chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)' || chk_card == cur_card + ' of ' + cur_suit){
+                            if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
                                 data.action_list.push(action_list[chk]);
-                                //console.log('Checking ' + cur_card + ' of ' + cur_suit);
-                                //console.log('Action List Mid Sort:', data.action_list);
                                 break;
                             }
                         }
                     }
                 }
-                console.log('Action List Post Sort:', data.action_list);
             }
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
@@ -83,6 +103,7 @@ export default class GMSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
+        html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".start-combat").click(this._on_start_combat.bind(this));
         html.find(".new-round").click(this._on_new_round.bind(this));
@@ -148,6 +169,35 @@ export default class GMSheet extends ActorSheet {
                 return this.actor.createOwnedItem(chips[el.chip])
             }
         }
+    }
+
+    _on_use_fate(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let chip_type = element.closest(".use-fate").dataset.chip;
+        let act = this.getData();
+        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let found = false
+        let responses = [
+            `I think you might've pissed 'im off`,
+            `Let's hope he doesn't have it in fer ya.`,
+            `I don't like it when he gets like this...`,
+        ];
+        fate_chips.forEach(chip => {
+            console.log(chip.name, chip_type);
+            if (found == false) {
+                if (chip.name == chip_type) {
+                    let r_msg = responses[get_random_int(0, responses.length - 1)]
+                    ChatMessage.create({ content: `
+                        <h3 style="text-align:center">Fate</h3>
+                        <p style="text-align:center">The Marshal uses a ${chip_type} fate chip.</p>
+                        <p style="text-align:center">${r_msg}</p>
+                    `});
+                    this.actor.deleteOwnedItem(chip._id);
+                    found = true;
+                }
+            }
+        });
     }
 
     _on_item_delete(event) {
