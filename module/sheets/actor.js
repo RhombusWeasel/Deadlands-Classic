@@ -53,9 +53,22 @@ export default class PlayerSheet extends ActorSheet {
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
         data.level_headed_available = game.dc.level_headed_available
         data.goods = data.items.filter(function (item) {return item.type == "goods"});
-        data.fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
         data.action_deck = data.items.filter(function (item) {return item.type == "action_deck"});
+        let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.fate_chips = [
+            {name: "White", bounty: "1", amount: 0},
+            {name: "Red", bounty: "2", amount: 0},
+            {name: "Blue", bounty: "3", amount: 0},
+            {name: "Legendary", bounty: "5", amount: 0},
+        ];
+        fate_chips.forEach(chip => {
+            data.fate_chips.forEach(stack => {
+                if (stack.name == chip.name){
+                    stack.amount += 1;
+                }
+            });
+        });
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
         if (data.combat_active) {
         }else{
@@ -77,6 +90,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".roll-quickness").click(this._on_roll_init.bind(this));
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
+        html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
         html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
@@ -160,16 +174,56 @@ export default class PlayerSheet extends ActorSheet {
     _on_spend_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        console.log(element);
+        let chip_type = element.closest(".spend-fate").dataset.chip;
+        let bounty = element.closest(".spend-fate").dataset.bounty;
         let act = this.getData();
-        let new_val = parseInt(act.data.bounty.value) + parseInt(item.data.data.bounty)
-        let new_max = parseInt(act.data.bounty.max) + parseInt(item.data.data.bounty)
+        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let found = false
+        fate_chips.forEach(chip => {
+            console.log(chip.name, chip_type);
+            if (found == false) {
+                if (chip.name == chip_type) {
+                    let new_val = parseInt(act.data.bounty.value) + parseInt(bounty);
+                    let new_max = parseInt(act.data.bounty.max) + parseInt(bounty);
+                    let suffix = 'points';
+                    if (bounty == '1') {
+                        suffix = 'point'
+                    }
+                    ChatMessage.create({ content: `
+                        <h3 style="text-align:center">Bounty: ${chip_type}</h3>
+                        <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
+                    `});
+                    this.actor.update({"data.bounty.value": new_val});
+                    this.actor.update({"data.bounty.max": new_max});
+                    this.actor.deleteOwnedItem(chip._id);
+                    found = true;
+                }
+            }
+        });
+    }
 
-        ChatMessage.create({ content: `Spending a ${item.name} chip for ${item.data.data.bounty} bounty points.`});
-        this.actor.update({"data.bounty.value": new_val})
-        this.actor.update({"data.bounty.max": new_max})
-        return this.actor.deleteOwnedItem(itemId);
+    _on_use_fate(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log(element);
+        let chip_type = element.closest(".use-fate").dataset.chip;
+        let act = this.getData();
+        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let found = false
+        fate_chips.forEach(chip => {
+            console.log(chip.name, chip_type);
+            if (found == false) {
+                if (chip.name == chip_type) {
+                    ChatMessage.create({ content: `
+                        <h3 style="text-align:center">Fate</h3>
+                        <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
+                    `});
+                    this.actor.deleteOwnedItem(chip._id);
+                    found = true;
+                }
+            }
+        });
     }
 
     _on_roll_init(event){

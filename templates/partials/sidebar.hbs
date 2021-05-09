@@ -10,6 +10,27 @@
     <a><p style="text-align: center;" class="refresh">Refresh</p></a>
     {{#if fate_chips}}
     <h1 style="text-align: center;">Fate Chips</h1>
+    <table>
+        <tr>
+            <th class="fate-name">{{localize "dc.fate_chips.name"}}</th>
+            <th class="fate-value">{{localize "dc.fate_chips.bounty"}}</th>
+            <th class="fate-value">{{localize "dc.fate_chips.amount"}}</th>
+            <th class="fate-value">$</th>
+            <th class="fate-value">Use</th>
+        </tr>
+        {{#each fate_chips as |chip|}}
+        <tr>
+            <td class="fate-name">{{this.name}}</td>
+            <td class="fate-value">{{this.bounty}}</td>
+            <td class="fate-value">{{this.amount}}</td>
+            <td class="spend-fate" data-chip="{{this.name}}" data-bounty="{{this.bounty}}"><i class="fas fa-dollar-sign" title="Spend for Bounty"></i></td>
+            <td class="use-fate" data-chip="{{this.name}}"><i class="fas fa-trash" title="Use in game"></i></td>
+        </tr>
+        {{/each}}
+    </table>
+    {{/if}}
+    {{#if fate_chips_old}}
+    <h1 style="text-align: center;">Fate Chips</h1>
         {{#each fate_chips as |chip|}}
         <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
             <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>

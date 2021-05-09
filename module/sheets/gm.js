@@ -3,8 +3,16 @@ let card_vals = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "
 let suit_vals = ["Spades", "Hearts", "Diamonds", "Clubs"];
 
 function sort(card_pile){
-
+    let r_pile = [];
+    for (let card = 0; card < card_vals.length ; card++) {
+        const cur_card = card_vals[card];
+        for (let suit = 0; suit < suit_vals.length; suit++) {
+            const cur_suit = suit_vals[suit];
+        }
+    }
+    return r_pile;
 }
+
 export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {

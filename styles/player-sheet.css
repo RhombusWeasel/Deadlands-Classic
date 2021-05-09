@@ -70,3 +70,10 @@
 .skill-input{
     width: 10%;
 }
+.fate-name {
+    width: 50%
+}
+.fate-value {
+    width: 10%;
+    text-align: center;
+}

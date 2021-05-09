@@ -90,6 +90,9 @@
             }
         },
         "fate_chips": {
+            "name": "Chip",
+            "bounty": "BP",
+            "amount": "Amt",
             "white": "White",
             "red": "Red",
             "blue": "Blue",
