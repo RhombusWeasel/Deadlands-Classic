@@ -1,0 +1,190 @@
+<section class="form">
+    <div>
+        {{#if gen_deck}}
+            <h2 style="text-align: center;">The Hand You Wuz Dealt</h2>
+            <table>
+            {{#each gen_deck as |card|}}
+                <tr class="item" data-itemId="{{this._id}}">
+                    <td class="combat-hand-name">{{this.name}}</td>
+                    <td class="combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
+                    <td class="combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                </tr>
+            {{/each}}
+            </table>
+        {{else}}
+            <h2 style="text-align: center;">The Hand You Wuz Dealt</h2>
+            <a style="text-align: center;" class="draw-gen-cards">Draw from the deck of fate?</a>
+        {{/if}}
+        {{#if fate_chips}}
+        <h2 style="text-align: center;">Fate Chips</h2>
+        <table>
+            {{#each fate_chips as |chip|}}
+            <tr>
+                <td class="fate-name">{{this.name}}</td>
+                <td class="fate-value">{{this.bounty}}</td>
+                <td class="fate-value">{{this.amount}}</td>
+                <td style="text-align:center" class="spend-fate" data-chip="{{this.name}}" data-bounty="{{this.bounty}}"><i class="fas fa-dollar-sign" title="Spend for Bounty"></i></td>
+                <td style="text-align:center" class="use-fate" data-chip="{{this.name}}"><i class="fas fa-trash" title="Use in game"></i></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+        {{#if action_deck}}
+            <h2 style="text-align: center;">Combat Hand</h2>
+            <table>
+            {{#each action_deck as |card|}}
+                <tr data-itemId="{{this._id}}">
+                <td class="combat-hand-name">{{this.name}}</td>
+                <td class="combat-hand-btn aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></td>
+                <td class="combat-hand-btn dodge-button"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></td>
+                {{#lvl_head}}
+                    <td class="combat-hand-btn recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></td>
+                {{/lvl_head}}
+                <td class="combat-hand-btn play-card icon-btn"><i class="fas fa-hand-paper" title="Play this Card"></i></td>
+                </tr>
+            {{/each}}
+            </table>
+        {{/if}}
+        {{#if melee_weapons}}
+        <div>
+            <h2 style="text-align: center;">Melee Weapons</h2>
+            <table>
+            {{#each melee_weapons as |wep|}}
+                <tr class="item" data-itemId="{{this._id}}">
+                    <td class="info-button"  style="text-align: center;"><a><i class="fas fa-info-circle"></i></a></td>
+                    <td class="combat-hand-name">{{this.name}}</td>
+                    <td class="combat-hand-btn" style="text-align: center;">{{wep.data.damage}}</td>
+                    <td class="combat-hand-btn" style="text-align: center;"><a class="melee-attack"><i class="fas fa-user-slash" title="Attack with {{this.name}}"></i></a></td>
+                    <td class="combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if firearms}}
+        <div>
+            <h2 style="text-align: center;">Guns</h2>
+            <table>
+            {{#each firearms as |gun|}}
+                <tr class="item" data-itemId="{{this._id}}">
+                    <td><a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a></td>
+                    <td class="combat-hand-name">{{this.name}}</td>
+                    <td style="text-align: center;">{{this.data.chamber}}/{{this.data.max}}</td>
+                    <td><a class="gun-attack icon-btn"><i class="fas fa-crosshairs" title="Fire {{this.name}}"></i></a></td>
+                    <td><a class="gun-reload icon-btn"><i class="fas fa-sync-alt" title="Reload {{this.name}}"></i></a></td>
+                    <td><a class="item-delete icon-btn"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if huckster_deck}}
+        <div>
+            <h1 style="text-align: center;">Hex Hand</h1>
+            <table>
+            {{#each huckster_deck as |card|}}
+                <tr class="item" data-itemId="{{this._id}}">
+                    <td class="combat-hand-name">{{this.name}}</td>
+                    <td ><a class="item-delete icon-btn"><i class="fas fa-trash" title="Show this card"></i></a></td>
+                </tr>
+            </div>
+            {{/each}}
+            </table>
+        </div>
+        {{/if}}
+        {{#if tricks}}
+        <div>
+            <h1 style="text-align: center;">Tricks</h1>
+            {{#each tricks as |hex|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.trait}}">
+                <a class="sling-trick icon-btn"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a>
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if hexes}}
+        <div>
+            <h1 style="text-align: center;">Hexes</h1>
+            {{#each hexes as |hex|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.trait}}">
+                <a class="sling-hex icon-btn"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a>
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if miracles}}
+        <div>
+            <h1 style="text-align: center;">Miracles</h1>
+            {{#each miracles as |mir|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.tn}}">
+                <a class="cast-miracle icon-btn"><i class="fas fa-pray" title="Cast {{this.name}}"></i></a>
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if favors}}
+        <div>
+            <h1 style="text-align: center;">Favors</h1>
+            {{#each favors as |fav|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.appeasement}}">
+                <a class="icon-btn"><i class="fas fa-crow" title="Cast {{this.name}}"></i></a>
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if edges}}
+        <div>
+            <h1 style="text-align: center;">Edges</h1>
+            {{#each edges as |edge|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.cost}}">
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+        {{#if hinderances}}
+            <h1 style="text-align: center;">Hinderances</h1>
+            {{#each hinderances as |hind|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.cost}}">
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        {{/if}}
+        {{#if goods}}
+            <div>
+            <h1 style="text-align: center;">Goods</h1>
+            {{#each goods as |good|}}
+            <div style="display: flex; flex-direction: row;" class="item" data-itemId="{{this._id}}">
+                <a class="info-button icon-btn"><i class="fas fa-info-circle"></i></a>
+                <input style="display: inline-block; width: 400%;" type="text" value="{{this.name}}"/>
+                <input style="text-align: center;" type="text" value="{{this.data.cost}}">
+                <input style="text-align: center;" type="text" value="{{this.data.amount}}">
+                <a class="item-delete icon-btn"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a>
+            </div>
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</section>
