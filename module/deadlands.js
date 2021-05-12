@@ -1,6 +1,7 @@
 import {dc} from "./config.js"
 import item_sheet from "./sheets/item.js";
 import actor_sheet from "./sheets/actor.js"
+import generator_sheet from "./sheets/generator.js"
 import marshal_sheet from "./sheets/gm.js"
 import mook_sheet from "./sheets/mook.js"
 
@@ -9,6 +10,9 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/core.hbs",
         "systems/deadlands_classic/templates/partials/mook-core.hbs",
         "systems/deadlands_classic/templates/partials/sidebar.hbs",
+        "systems/deadlands_classic/templates/partials/generator-core.hbs",
+        "systems/deadlands_classic/templates/partials/generator-traits.hbs",
+        "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
     ]
@@ -24,7 +28,8 @@ Hooks.once("init", function () {
     Items.registerSheet("deadlands_classic", item_sheet, { makeDefault: true});
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: false});
+    Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: true});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
 
@@ -46,6 +51,39 @@ Hooks.once("init", function () {
                 if (act_data.data.data.perks.level_headed == true) {
                     return options.fn(this);
                 }
+            }
+            return options.inverse(this);
+        }
+    });
+
+    Handlebars.registerHelper('has_bounty', function (val, type, options) {
+        if (!(game.user.isGM)) {
+            let v = parseInt(val);
+            let cost = v + 1;
+            if (type == 'trait'){
+                cost = cost * 2
+            }
+            let act_data = game.actors.get(game.user.data.character);
+            if (act_data.data.data.bounty.value >= cost){
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        }
+    });
+
+    Handlebars.registerHelper('die_upgrade', function (val, options) {
+        if (!(game.user.isGM)) {
+            let upgrades = {
+                d4:  {next: "d6", cost: 18},
+                d6:  {next: "d8", cost: 24},
+                d8:  {next: "d10", cost: 30},
+                d10: {next: "d12", cost: 36},
+                d12: {next: "d12+2", cost: 40},
+            };
+            let cost = upgrades[val].cost
+            let act_data = game.actors.get(game.user.data.character);
+            if (act_data.data.data.bounty.value >= cost){
+                return options.fn(this);
             }
             return options.inverse(this);
         }

@@ -44,6 +44,13 @@
                 "core",
                 "attributes"
             ],
+            "generator": {
+                "hand": [],
+                "dice": [],
+                "s_points": 0,
+                "h_points": 0,
+                "e_points": 0
+            },
             "traits": {
                 "cognition": {
                     "name": "Cognition",
@@ -600,6 +607,7 @@
     },
     "Item": {
         "types": [
+            "gen_deck",
             "firearm",
             "melee",
             "miracle",
@@ -704,6 +712,10 @@
         },
         "huckster_deck": {},
         "action_deck": {},
+        "gen_deck": {
+            "die_type":"d4",
+            "level":1
+        },
         "blueprint_deck": {},
         "goods": {
             "templates": [

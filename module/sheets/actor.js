@@ -39,7 +39,17 @@ function sort_deck(card_pile){
             const cur_suit = suits[suit];
             for (let chk = 0; chk < card_pile.length; chk++) {
                 const chk_card = card_pile[chk].name;
-                if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
+                if (cur_card == 'Joker') {
+                    if (chk_card == 'Joker (Red)') {
+                        card_pile[chk].name += ' HooWEE!'
+                        r_pile.push(card_pile[chk]);
+                        break;
+                    }else if(chk_card == 'Joker (Black)') {
+                        card_pile[chk].name += ' RuhRoh!'
+                        r_pile.push(card_pile[chk]);
+                        break;
+                    }
+                }else if(chk_card == cur_card + ' of ' + cur_suit){
                     r_pile.push(card_pile[chk]);
                     break;
                 }
@@ -100,7 +110,10 @@ export default class PlayerSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".trait-roll").click(this._on_trait_roll.bind(this));
+        html.find(".trait-buff").click(this._on_trait_buff.bind(this));
+        html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
+        html.find(".skill-buff").click(this._on_skill_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
@@ -125,9 +138,9 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         console.log(element);
-        let trait = element.closest(".trait-roll").dataset.trait;
-        let die_type = element.closest(".trait-roll").dataset.die;
-        let mod   = element.closest(".trait-roll").dataset.mod;
+        let trait = element.closest(".trait-data").dataset.trait;
+        let die_type = element.closest(".trait-data").dataset.die;
+        let mod   = element.closest(".trait-data").dataset.mod;
         console.log(trait, die_type, mod);
         let wound_mod = this.actor.data.data.wound_modifier;
         console.log(this.actor);
@@ -144,13 +157,56 @@ export default class PlayerSheet extends ActorSheet {
         });
     }
 
+    _on_trait_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let trait = element.closest(".trait-data").dataset.trait;
+        let level = parseInt(element.closest(".trait-data").dataset.level);
+        let cost = (level + 1) * 2;
+        let bounty = this.actor.data.data.bounty.value;
+        let traits = {};
+        traits[trait] = {
+            level: level + 1
+        };
+        if (bounty >= cost){
+            console.log(`Attempting to increase ${trait} level from ${level} to ${level + 1}`);
+            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            this.actor.update({data: {traits: traits}});
+        }
+    }
+
+    _on_die_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let trait = element.closest(".trait-data").dataset.trait;
+        let die = element.closest(".trait-data").dataset.die;
+        let upgrades = {
+            d4:  {next: "d6", cost: 18},
+            d6:  {next: "d8", cost: 24},
+            d8:  {next: "d10", cost: 30},
+            d10: {next: "d12", cost: 36},
+            d12: {next: "d12+2", cost: 40},
+        };
+        let cost = upgrades[die].cost;
+        let bounty = this.actor.data.data.bounty.value;
+        let traits = {}
+        traits[trait] = {
+            die_type: upgrades[die].next
+        }
+        if (bounty >= cost){
+            console.log(`Attempting to increase ${trait} die type from ${die} to ${upgrades[die].next}`);
+            this.actor.update({data: {bounty: {value: bounty - cost}}})
+            this.actor.update({data: {traits: traits}})
+        }
+    }
+
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let trait = element.closest(".skill-roll").dataset.trait;
-        let skill = element.closest(".skill-roll").dataset.skill;
-        let mod   = element.closest(".skill-roll").dataset.mod;
-        
+        let trait = element.closest(".skill-data").dataset.trait;
+        let skill = element.closest(".skill-data").dataset.skill;
+        let mod   = element.closest(".skill-data").dataset.mod;
+        console.log(element);
         let wound_mod = this.actor.data.data.wound_modifier;
         console.log(this.actor);
         let content = "";
@@ -164,7 +220,7 @@ export default class PlayerSheet extends ActorSheet {
                 </div>
             `;
         }else{
-            let trait_level = parseInt(act.data.traits[trait].level);
+            let trait_level = parseInt(this.actor.data.data.traits[trait].level);
             content = `
                 <div>
                     <h3 style="text-align:center">${skill}</h3>
@@ -175,6 +231,14 @@ export default class PlayerSheet extends ActorSheet {
         ChatMessage.create({
             content: content
         });
+    }
+
+    _on_skill_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let trait = element.closest(".skill-data").dataset.trait;
+        let skill = element.closest(".skill-data").dataset.skill;
+        let level = element.closest(".skill-data").dataset.level;
     }
 
     _on_refresh(event) {

@@ -5,12 +5,8 @@
     display: flex;
     flex-direction: row;
 }
-.traitbox {
-    display: flex;
-    flex-direction: row;
-}
 .sheet {
-    width: 70%;
+    width: 100%;
 }
 .data {
     width: 50%;
@@ -25,13 +21,13 @@
     text-align: center;
 }
 .sidebar {
-    display: flex;
-    flex-direction: column;
+    width:100%;
     align-items: center;
 }
 .portrait {
-    width: 256px;
-    height: 256px;
+    align-self: center;
+    width: 128px;
+    height: 128px;
 }
 .h1 {
     text-align: center; 
@@ -75,6 +71,18 @@
     text-align: center;
 }
 .fate-value {
+    width: 10%;
+    text-align: center;
+}
+.combat-hand-header {
+    width: 70%;
+    text-align: center;
+}
+.combat-hand-name {
+    width: 70%;
+}
+
+.combat-hand-btn {
     width: 10%;
     text-align: center;
 }

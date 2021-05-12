@@ -10,8 +10,8 @@
         },
         "skill_labels": {
             "name": "Name",
-            "level": "Level",
-            "modifier": "Modifier",
+            "level": "Lvl",
+            "modifier": "Mod",
             "roll": "Roll"
         },
         "player": {

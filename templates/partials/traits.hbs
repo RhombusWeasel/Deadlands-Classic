@@ -1,38 +1,38 @@
 <section>
 <div class="traits">
-    <h1 class="h1">Traits:</h1>
-    <div style="overflow-y: auto;">
+    <h2 class="h1">Skills 'n' Such</h2>
+    <div style="overflow-y:scroll; height:500px">
         {{#each data.traits as |trait|}}
-        <div class="flexbox">
-            <label class="label trait-label" for="data.traits.{{@key}}.level">{{trait.name}}</label>
-            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>
-            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/>
-            <label style="font-size: large; font-weight: bold; padding-top: 2px;; float: right;" for="data.traits.{{@key}}.modifier">+</label>
-            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
-            <td style="text-align:center;"><a><i class="fas fa-dice-d20 trait-roll" data-trait="{{@key}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}" title="Roll {{this.name}}"></i></a></td>
-            <script>
-                function callback() {
-                    let content = "{{trait.name}}: [[{{trait.level}}{{trait.die_type}}ex + {{trait.modifier}}]]" 
-                    ChatMessage.create({
-                        content: content
-                    });
-                }
-            </script>
+        <div class="flexbox trait-data" data-trait="{{@key}}" data-level="{{trait.level}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}">
+            <a class="trait-label trait-roll">{{trait.name}}</a>
+            <p style="align-self: flex-end;">{{trait.level}}</p>
+            {{#has_bounty trait.level 'trait'}}
+            <a style="align-self: flex-end;" class="trait-buff"><i class="fas fa-plus-square"></i></a>
+            {{/has_bounty}}
+            <p style="align-self: flex-end;">{{trait.die_type}}</p>
+            {{#die_upgrade trait.die_type}}
+            <a style="align-self: flex-end;" class="die-buff"><i class="fas fa-plus-square"></i></a>
+            {{/die_upgrade}}
+            <p style="align-self: flex-end;"> + {{trait.modifier}}</p>
         </div>
         <div>
             <table>
+                <!--
                 <tr>
                     <th class="skill-name" >{{localize "dc.skill_labels.name"}}</th>
                     <th class="skill-input">{{localize "dc.skill_labels.level"}}</th>
+                    <th class="skill-input">BP</th>
                     <th class="skill-input">{{localize "dc.skill_labels.modifier"}}</th>
-                    <th>{{localize "dc.skill_labels.roll"}}</th>
                 </tr>
+                -->
                 {{#each skills as |skill|}}
-                <tr>
-                    <td style="text-align:left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}">{{this.name}}</td>
-                    <td style="text-align:center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}">{{this.level}}</td>
-                    <td style="text-align:center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}">{{this.modifier}}</td>
-                    <td style="text-align:center;" class="skill-roll" data-trait="{{@../key}}" data-skill="{{@key}}" data-mod="{{this.modifier}}"><a><i class="fas fa-dice-d20" title="Roll {{this.name}}"></i></a></td>
+                <tr class="skill-data" data-trait="{{@../key}}" data-skill="{{@key}}" data-level="{{this.level}}" data-mod="{{this.modifier}}">
+                    <td style="text-align:left;" class="skill-roll"><a>{{this.name}}</a></td>
+                    <td style="text-align:center;">{{this.level}}</td>
+                    {{#has_bounty this.level 'skill'}}
+                    <td style="text-align:center;" class="skill-buff" ><a><i class="fas fa-plus-square"></i></a></td>
+                    {{/has_bounty}}
+                    <td style="text-align:center;">{{this.modifier}}</td>
                 </tr>
                 {{/each}}
             </table>

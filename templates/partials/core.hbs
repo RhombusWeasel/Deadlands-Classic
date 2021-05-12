@@ -1,33 +1,52 @@
 <section>
     <div class="core">
-        <h1 class="h1">Core:</h1>
-        <table>
-            <tr>
-                <th>{{localize "dc.player.core.pace"}}</th>
-                <th>{{localize "dc.player.core.size"}}</th>
-                <th>{{localize "dc.player.core.wind"}}</th>
-                <th>{{localize "dc.player.core.grit"}}</th>
-            </tr>
-            <tr>
-                <td><input style="text-align: center;" type="text" name="data.pace" value="{{data.pace}}"/></td>
-                <td><input style="text-align: center; " type="text" name="data.size" value="{{data.size}}"/></td>
-                <td><input style="text-align: center; width: 45%" type="text" name="data.wind.value" value="{{data.wind.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.wind.max" value="{{data.wind.max}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.grit" value="{{data.grit}}"/></td>
-            </tr>
-            <tr>
-                <th>{{localize "dc.player.core.money"}}</th>
-                <th>{{localize "dc.player.core.bounty"}}</th>
-                <th>{{localize "dc.player.core.off_hand"}}</th>
-                <th>{{localize "dc.player.core.wound_modifier"}}</th>
-            </tr>
-            <tr>
-                <td><input style="text-align: center;" type="text" name="data.cash" value="{{data.cash}}"/></td>
-                <td><input style="text-align: center; width: 45%" type="text" name="data.bounty.value" value="{{data.bounty.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.bounty.max" value="{{data.bounty.max}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.off_hand_modifier" value="{{data.off_hand_modifier}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.wound_modifier" value="{{data.wound_modifier}}"/></td>
-            </tr>
-        </table>
-        <h1 class="h1">Wounds:</h1>
+        <div class="flexbox">
+            <div style="width:70%">
+            <h1 class="h1">Core:</h1>
+            <table>
+                <tr>
+                    <th>{{localize "dc.player.core.pace"}}</th>
+                    <th>{{localize "dc.player.core.size"}}</th>
+                    <th>{{localize "dc.player.core.wind"}}</th>
+                    <th>{{localize "dc.player.core.grit"}}</th>
+                </tr>
+                <tr>
+                    <td><input style="text-align: center;" type="text" name="data.pace" value="{{data.pace}}"/></td>
+                    <td><input style="text-align: center; " type="text" name="data.size" value="{{data.size}}"/></td>
+                    <td><input style="text-align: center; width: 45%" type="text" name="data.wind.value" value="{{data.wind.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.wind.max" value="{{data.wind.max}}"/></td>
+                    <td><input style="text-align: center;" type="text" name="data.grit" value="{{data.grit}}"/></td>
+                </tr>
+                <tr>
+                    <th>{{localize "dc.player.core.money"}}</th>
+                    <th>{{localize "dc.player.core.bounty"}}</th>
+                    <th>{{localize "dc.player.core.off_hand"}}</th>
+                    <th>{{localize "dc.player.core.wound_modifier"}}</th>
+                </tr>
+                <tr>
+                    <td><input style="text-align: center;" type="text" name="data.cash" value="{{data.cash}}"/></td>
+                    <td><input style="text-align: center; width: 45%" type="text" name="data.bounty.value" value="{{data.bounty.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.bounty.max" value="{{data.bounty.max}}"/></td>
+                    <td><input style="text-align: center;" type="text" name="data.off_hand_modifier" value="{{data.off_hand_modifier}}"/></td>
+                    <td><input style="text-align: center;" type="text" name="data.wound_modifier" value="{{data.wound_modifier}}"/></td>
+                </tr>
+            </table>
+            </div>
+            <div>
+                <h1 style="text-align: center; width: 100%">
+                    <div data-edit="name" contenteditable="">{{actor.name}}</div>
+                </h1>
+                <div style="display: flex; flex-direction:row">
+                    <img class="portrait" src="{{actor.img}}" data-edit="img"/>
+                    <div style="display: flex; flex-direction:column">
+                        <a style="text-align: center;"><p class="draw-fate">Draw Fate Chip</p></a>
+                        <a style="text-align: center;"><p class="roll-quickness">Roll Quickness!</p></a>
+                        <a style="text-align: center;"><p class="refresh">Refresh</p></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <h2 class="h1">Wounds:</h2>
         <table>
             <tr>
                 <th>{{localize "dc.player.core.wounds.noggin"}}</th>
