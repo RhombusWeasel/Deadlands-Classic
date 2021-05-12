@@ -4,16 +4,16 @@
     <div style="overflow-y:scroll; height:500px">
         {{#each data.traits as |trait|}}
         <div class="flexbox trait-data" data-trait="{{@key}}" data-level="{{trait.level}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}">
-            <a class="trait-label trait-roll">{{trait.name}}</a>
-            <p style="align-self: flex-end;">{{trait.level}}</p>
+            <a class="perc70 trait-label trait-roll">{{trait.name}}</a>
+            <p class="perc10 center">{{trait.level}}</p>
             {{#has_bounty trait.level 'trait'}}
-            <a style="align-self: flex-end;" class="trait-buff"><i class="fas fa-plus-square"></i></a>
+            <a class="perc10 center trait-buff"><i class="fas fa-plus-square"></i></a>
             {{/has_bounty}}
-            <p style="align-self: flex-end;">{{trait.die_type}}</p>
+            <p class="perc10 center">{{trait.die_type}}</p>
             {{#die_upgrade trait.die_type}}
-            <a style="align-self: flex-end;" class="die-buff"><i class="fas fa-plus-square"></i></a>
+            <a class="perc10 center die-buff"><i class="fas fa-plus-square"></i></a>
             {{/die_upgrade}}
-            <p style="align-self: flex-end;"> + {{trait.modifier}}</p>
+            <p class="perc10 center"> + {{trait.modifier}}</p>
         </div>
         <div>
             <table>
@@ -27,12 +27,12 @@
                 -->
                 {{#each skills as |skill|}}
                 <tr class="skill-data" data-trait="{{@../key}}" data-skill="{{@key}}" data-level="{{this.level}}" data-mod="{{this.modifier}}">
-                    <td style="text-align:left;" class="skill-roll"><a>{{this.name}}</a></td>
-                    <td style="text-align:center;">{{this.level}}</td>
+                    <td class="perc80"><a class="skill-roll">{{this.name}}</a></td>
+                    <td class="perc10 center">{{this.level}}</td>
                     {{#has_bounty this.level 'skill'}}
-                    <td style="text-align:center;" class="skill-buff" ><a><i class="fas fa-plus-square"></i></a></td>
+                    <td class="perc10 center"><a class="skill-buff"><i class="fas fa-plus-square"></i></a></td>
                     {{/has_bounty}}
-                    <td style="text-align:center;">{{this.modifier}}</td>
+                    <td class="perc10 center">{{this.modifier}}</td>
                 </tr>
                 {{/each}}
             </table>

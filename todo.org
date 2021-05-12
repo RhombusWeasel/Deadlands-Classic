@@ -4,22 +4,23 @@
 *** TODO Display [0/3]
 **** TODO Core [0/1]
 ***** TODO remove input boxes from core stats
-**** TODO Sidebar [1/3]
+**** TODO Sidebar [3/4]
+***** TODO Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
 ***** DONE Stack fate chips in groups to save space.
-***** TODO Icons for table entries not glowing when hovered.
-***** TODO Update sidebar entries using table format. [2/12]
+***** DONE Icons for table entries not glowing when hovered.
+***** DONE Update sidebar entries using table format. [12/12]
 ******* DONE Fate Chips
 ******* DONE Action Deck
-******* TODO Melee Weapons
-******* TODO Guns
-******* TODO Huckster
-******* TODO Tricks
-******* TODO Hexes
-******* TODO Miracles
-******* TODO Favors
-******* TODO Edges
-******* TODO Hinderances
-******* TODO Goods
+******* DONE Melee Weapons
+******* DONE Guns
+******* DONE Huckster
+******* DONE Tricks
+******* DONE Hexes
+******* DONE Miracles
+******* DONE Favors
+******* DONE Edges
+******* DONE Hinderances
+******* DONE Goods
 **** TODO Traits [0/1]
 ***** TODO Get Trait/Die Type/Skill increase buttons to line up properly
 ** GM Sheet

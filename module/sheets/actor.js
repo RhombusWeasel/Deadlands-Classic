@@ -45,7 +45,7 @@ function sort_deck(card_pile){
                         r_pile.push(card_pile[chk]);
                         break;
                     }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' RuhRoh!'
+                        card_pile[chk].name += ' Dang it!'
                         r_pile.push(card_pile[chk]);
                         break;
                     }
@@ -81,7 +81,7 @@ export default class PlayerSheet extends ActorSheet {
         data.edges = data.items.filter(function (item) {return item.type == "edge"});
         data.level_headed_available = game.dc.level_headed_available
         data.goods = data.items.filter(function (item) {return item.type == "goods"});
-        data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
+        data.huckster_deck = sort_deck(data.items.filter(function (item) {return item.type == "huckster_deck"}));
         data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
         let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.fate_chips = [
@@ -314,8 +314,8 @@ export default class PlayerSheet extends ActorSheet {
     _on_spend_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let chip_type = element.closest(".spend-fate").dataset.chip;
-        let bounty = element.closest(".spend-fate").dataset.bounty;
+        let chip_type = element.closest(".fate-data").dataset.chip;
+        let bounty = element.closest(".fate-data").dataset.bounty;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         let found = false
@@ -345,7 +345,7 @@ export default class PlayerSheet extends ActorSheet {
     _on_use_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let chip_type = element.closest(".use-fate").dataset.chip;
+        let chip_type = element.closest(".fate-data").dataset.chip;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         let found = false
