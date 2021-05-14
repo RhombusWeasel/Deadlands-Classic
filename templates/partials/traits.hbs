@@ -26,7 +26,7 @@
                 </tr>
                 -->
                 {{#each skills as |skill|}}
-                <tr class="skill-data" data-trait="{{@../key}}" data-skill="{{@key}}" data-level="{{this.level}}" data-mod="{{this.modifier}}">
+                <tr class="skill-data" data-trait="{{@../key}}" data-skill="{{@key}}" data-level="{{skill.level}}" data-mod="{{skill.modifier}}">
                     <td class="perc80"><a class="skill-roll">{{this.name}}</a></td>
                     <td class="perc10 center">{{this.level}}</td>
                     {{#has_bounty this.level 'skill'}}

@@ -238,7 +238,32 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let trait = element.closest(".skill-data").dataset.trait;
         let skill = element.closest(".skill-data").dataset.skill;
-        let level = element.closest(".skill-data").dataset.level;
+        let level = parseInt(element.closest(".skill-data").dataset.level);
+        let mod = parseInt(element.closest(".skill-data").dataset.mod);
+        console.log(trait,skill,level,mod);
+        let cost = level + 1
+        if (level + 1 > 5) {
+            cost = cost * 2
+        }
+        let bounty = this.actor.data.data.bounty.value;
+        if (bounty >= cost){
+            console.log(bounty, cost);
+            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            let traits = {}
+            traits[trait] = {skills: {}}
+            traits[trait].skills[skill] = {
+                level: level + 1,
+                modifier: mod
+            }
+            if(level + 1 == 1){
+                console.log('Adding modifier for first level skill.')
+                traits[trait].skills[skill].modifier = mod + 8
+            }
+            console.log(`Attempting to increase ${skill} level from ${level} to ${traits[trait].skills[skill].level}`);
+            console.log('Before:', this.actor.data.data.traits[trait].skills[skill].level, this.actor.data.data.traits[trait].skills[skill].modifier);
+            this.actor.update({data: {traits: traits}});
+            console.log('After:', this.actor.data.data.traits[trait].skills[skill].level, this.actor.data.data.traits[trait].skills[skill].modifier);
+        }
     }
 
     _on_refresh(event) {
