@@ -8,9 +8,9 @@ Needs socket listener setting up to pass the data around.
 *** TODO Display [0/3]
 **** TODO Core [0/1]
 ***** TODO remove input boxes from core stats
-**** TODO Sidebar [3/5]
-***** TODO Skill increment buttons currently not working.
+**** TODO Sidebar [4/5]
 ***** TODO Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
+***** DONE Skill increment buttons currently not working.
 ***** DONE Stack fate chips in groups to save space.
 ***** DONE Icons for table entries not glowing when hovered.
 ***** DONE Update sidebar entries using table format. [12/12]
