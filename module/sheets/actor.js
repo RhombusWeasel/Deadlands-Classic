@@ -679,7 +679,6 @@ export default class PlayerSheet extends ActorSheet {
                 </div>
                 `;
             }else{
-                console.log(r);
                 roll += '<p>You missed</p>'
             }
             ChatMessage.create({content: roll});
