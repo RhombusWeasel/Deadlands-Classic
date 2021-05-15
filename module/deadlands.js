@@ -89,6 +89,21 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('hex_bounty', function (val, options) {
+        if (!(game.user.isGM)) {
+            let v = parseInt(val);
+            let cost = v + 1;
+            if(v >= 5){
+                cost *= 2;
+            }
+            let act_data = game.actors.get(game.user.data.character);
+            if (act_data.data.data.bounty.value >= cost){
+                return options.fn(this);
+            }
+            return options.inverse(this);
+        }
+    });
+
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
             case '==':

@@ -5,10 +5,12 @@
 Needs socket listener setting up to pass the data around.
 * Sheets
 ** Character Sheet [0/1]
-*** TODO Display [0/3]
+*** TODO Display [0/4]
 **** TODO Core [0/1]
 ***** TODO remove input boxes from core stats
-**** TODO Sidebar [4/5]
+**** TODO Sidebar [4/7]
+***** TODO Weapon damage being calculated incorrectly.
+***** TODO Melee damage is a strength CHECK + wep dmg NOT strength + wep dmg
 ***** TODO Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
 ***** DONE Skill increment buttons currently not working.
 ***** DONE Stack fate chips in groups to save space.

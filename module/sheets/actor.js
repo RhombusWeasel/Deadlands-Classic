@@ -1,5 +1,6 @@
 let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
+let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
 
 let percs = [
     {limit: 99, chip:3},
@@ -63,7 +64,7 @@ export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/player-sheet.html`,
-            classes: ["player-sheet"]
+            classes: ["player-sheet", "doc"]
         });
     }
 
@@ -125,7 +126,8 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
-        html.find(".gun-attack").click(this._on_gun_attack.bind(this));
+        //html.find(".gun-attack").click(this._on_gun_attack.bind(this));
+        html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
@@ -392,7 +394,8 @@ export default class PlayerSheet extends ActorSheet {
     _on_roll_init(event){
         event.preventDefault();
         let reply = `There ain't no combat right now, is ${this.actor.name} wantin' to start somethin'?`
-        if (game.dc.combat_active == true) {
+        let data = this.getData();
+        if (data.combat_active == true) {
             let element = event.currentTarget;
             let act = this.getData();
             let trait = act.data.traits.quickness;
@@ -541,7 +544,7 @@ export default class PlayerSheet extends ActorSheet {
             <div>
             <h3 style="text-align:center">Fist Fight!</h3>
             <p style="text-align:center">Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
-            <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]</p>
+            <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}ex + ${dmg}x=]]</p>
             <p style="text-align:center">Location: [[1d20]]</p>
             </div>
         `;
@@ -575,11 +578,111 @@ export default class PlayerSheet extends ActorSheet {
                 <div>
                 <h3 style="text-align:center">Gunfire!</h3>
                 <p style="text-align:center">Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
-                <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}x= + ${dmg}x=]]</p>
+                <p style="text-align:center">Damage: [[${dmg}x=]]</p>
                 <p style="text-align:center">Location: [[1d20]]</p>
                 </div>
             `;
             ChatMessage.create({ content: roll});
+            shots = shots - 1;
+            game.dc.aim_bonus = 0;
+        }else{
+            ChatMessage.create({ content: `Click... Click Click! Looks like you're empty partner`});
+        }
+        item.update({ "data.chamber": shots});
+    }
+
+    _on_firearm_attack(event){
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let shots = item.data.data.chamber;
+        let dmg = item.data.data.damage;
+        let dmg_mod = item.data.data.damage_bonus;
+        let off_hand_mod = 0
+        let act = this.getData();
+        let wound_mod = act.data.wound_modifier
+        let trait = act.data.traits.deftness;
+        let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
+        if (shots > 0) {
+            if (item.data.data.off_hand) {
+                console.log(act)
+                off_hand_mod = act.data.off_hand_modifier
+            }
+            let lvl = skill.level
+            if (lvl == 0) {
+                lvl = trait.level
+            }
+            let roll = `
+                <div>
+                    <h3 style="text-align:center">Gunfire!</h3>
+            `
+            let mods = game.actors.getName('Marshal').data.data.modifiers;
+            let tn = 5;
+            for (const [key, mod] of Object.entries(mods)){
+                if (mod.active) {
+                    tn -= mod.mod;
+                }
+            }
+            let shootin = `${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}`
+            let raise = 0;
+            let s = new Roll(shootin).roll();
+            roll += `
+                    <p style="text-align:center">Target ${tn}</p>
+                    <p style="text-align:center">You rolled ${s._total}</p>
+            `
+            if (s._total >= tn) {
+                raise = Math.floor((s._total - tn) / 5);
+                if (raise == 1){
+                    roll += `
+                    <p style="text-align:center">a success and 1 raise.</p>
+                    `;
+                }else{
+                    roll += `
+                    <p style="text-align:center">a success and ${raise} raises.</p>
+                    `;
+                }
+                let loc = new Roll('1d20').roll();
+                let tot = loc._total - 1;
+                roll += `
+                    <p style="text-align:center">Location: ${locations[tot]}</p>
+                    <table>
+                `
+                let found = []
+                for (let i = 0; i < locations.length; i++) {
+                    if (i >= tot - (raise * 2) && i <= tot + (raise * 2)){
+                        if (found.includes(locations[i])) {
+                            console.log(locations[i]);
+                        }else{
+                            roll += `
+                        <tr class="location" data-loc="${locations[i]}">
+                            <td style="text-align:center">${locations[i]}</td>
+                        </tr>
+                            `
+                            found.push(locations[i]);
+                        }
+                    }
+                }
+                roll += `
+                    </table>
+                `
+                let dmg_split = dmg.split('d');
+                let amt = parseInt(dmg_split[0]);
+                let die = parseInt(dmg_split[1]);
+                if (found.includes('Noggin')) {
+                    amt += 2
+                }else if (found.includes('Gizzards')) {
+                    amt += 1
+                }
+                roll += `
+                    <p style="text-align:center">Damage: [[${amt}d${die}x= + ${dmg_mod}]]</p>
+                </div>
+                `;
+            }else{
+                console.log(r);
+                roll += '<p>You missed</p>'
+            }
+            ChatMessage.create({content: roll});
             shots = shots - 1;
             game.dc.aim_bonus = 0;
         }else{
@@ -643,11 +746,14 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        r.toMessage();
-        ChatMessage.create({ content: `
-            <h3 style="text-align:center">Trick</h3>
-            ${reply}
-        `});
+        //r.toMessage();
+        ChatMessage.create({ 
+            content: `
+                <h3 style="text-align:center">Trick</h3>
+                <p style="text-align:center">${reply}</p>
+            `,
+            whisper: ChatMessage.getWhisperRecipients('GM')
+        });
     }
 
     _on_cast_hex(event) {
@@ -668,10 +774,10 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        r.toMessage()
+        //r.toMessage()
         ChatMessage.create({ content: `
             <h3 style="text-align:center">Hex</h3>
-            ${reply}
+            <p style="text-align:center">${reply}</p>
         `});
     }
 

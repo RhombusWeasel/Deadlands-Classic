@@ -1,3 +1,36 @@
+.center{
+    text-align: center;
+}
+.right{
+    text-align: right;
+}
+.perc90 {
+    width: 90%
+}
+.perc80 {
+    width: 80%
+}
+.perc70 {
+    width: 70%
+}
+.perc60 {
+    width: 60%
+}
+.perc50 {
+    width: 50%
+}
+.perc40 {
+    width: 40%
+}
+.perc30 {
+    width: 30%
+}
+.perc20 {
+    width: 20%
+}
+.perc10 {
+    width: 10%
+}
 .player {
     text-align: center;
 }
@@ -71,39 +104,6 @@
 .fate-value {
     width: 10%;
     text-align: center;
-}
-.center{
-    text-align: center;
-}
-.right{
-    text-align: right;
-}
-.perc90 {
-    width: 90%
-}
-.perc80 {
-    width: 80%
-}
-.perc70 {
-    width: 70%
-}
-.perc60 {
-    width: 60%
-}
-.perc50 {
-    width: 50%
-}
-.perc40 {
-    width: 40%
-}
-.perc30 {
-    width: 30%
-}
-.perc20 {
-    width: 20%
-}
-.perc10 {
-    width: 10%
 }
 .combat-hand-header {
     width: 70%;

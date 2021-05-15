@@ -1,6 +1,6 @@
 import { dc } from "../config.js";
-let card_vals = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suit_vals = ["Spades", "Hearts", "Diamonds", "Clubs"];
+let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
+let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
 
 function get_random_int(min, max) {
     min = Math.ceil(min);
@@ -10,13 +10,23 @@ function get_random_int(min, max) {
 
 function sort_deck(card_pile){
     let r_pile = [];
-    for (let card = 0; card < card_vals.length ; card++) {
-        const cur_card = card_vals[card];
-        for (let suit = 0; suit < suit_vals.length; suit++) {
-            const cur_suit = suit_vals[suit];
+    for (let card = 0; card < cards.length ; card++) {
+        const cur_card = cards[card];
+        for (let suit = 0; suit < suits.length; suit++) {
+            const cur_suit = suits[suit];
             for (let chk = 0; chk < card_pile.length; chk++) {
                 const chk_card = card_pile[chk].name;
-                if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
+                if (cur_card == 'Joker') {
+                    if (chk_card == 'Joker (Red)') {
+                        card_pile[chk].name += ' HooWEE!'
+                        r_pile.push(card_pile[chk]);
+                        break;
+                    }else if(chk_card == 'Joker (Black)') {
+                        card_pile[chk].name += ' Yee Haw!'
+                        r_pile.push(card_pile[chk]);
+                        break;
+                    }
+                }else if(chk_card == cur_card + ' of ' + cur_suit){
                     r_pile.push(card_pile[chk]);
                     break;
                 }
@@ -26,11 +36,18 @@ function sort_deck(card_pile){
     return r_pile;
 }
 
+function new_modifier(name, mod) {
+    return {
+        name: name,
+        mod: mod
+    };
+}
+
 export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/gm-sheet.html`,
-            classes: ["player-sheet"]
+            classes: ["doc"]
         });
     }
 
@@ -52,12 +69,18 @@ export default class GMSheet extends ActorSheet {
             });
         });
         data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
+        data.modifiers = this.actor.data.data.modifiers;
+        data.tn = 5;
+        for (const [key, mod] of Object.entries(data.modifiers)){
+            if (mod.active) {
+                data.tn -= mod.mod;
+            }
+        }
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         if (data.combat_active) {
             let actor_list = [];
             game.users.forEach(user => {
                 if (user.active && user.data.character){
-                    console.log(user);
                     actor_list.push(game.actors.get(user.data.character));
                 }
             });
@@ -78,10 +101,10 @@ export default class GMSheet extends ActorSheet {
             }
             if (action_list.length > 0) {
                 data.action_list = [];
-                for (let card = 0; card < card_vals.length ; card++) {
-                    const cur_card = card_vals[card];
-                    for (let suit = 0; suit < suit_vals.length; suit++) {
-                        const cur_suit = suit_vals[suit];
+                for (let card = 0; card < cards.length ; card++) {
+                    const cur_card = cards[card];
+                    for (let suit = 0; suit < suits.length; suit++) {
+                        const cur_suit = suits[suit];
                         for (let chk = 0; chk < action_list.length; chk++) {
                             const chk_card = action_list[chk].name;
                             if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
