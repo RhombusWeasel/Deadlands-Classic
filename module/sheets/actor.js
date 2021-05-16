@@ -60,6 +60,19 @@ function sort_deck(card_pile){
     return r_pile;
 }
 
+function compareObjects(object1, object2, key) {
+    const obj1 = object1[key].toUpperCase();
+    const obj2 = object2[key].toUpperCase();
+
+    if (obj1 < obj2) {
+        return -1;
+    }
+    if (obj1 > obj2) {
+        return 1;
+    }
+    return 0;
+}
+
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -72,16 +85,16 @@ export default class PlayerSheet extends ActorSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.firearms = data.items.filter(function (item) {return item.type == "firearm"});
-        data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"});
-        data.miracles = data.items.filter(function (item) {return item.type == "miracle"});
-        data.tricks = data.items.filter(function (item) {return item.type == "trick"});
-        data.hexes = data.items.filter(function (item) {return item.type == "hex"});
-        data.favors = data.items.filter(function (item) {return item.type == "favor"});
-        data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"});
-        data.edges = data.items.filter(function (item) {return item.type == "edge"});
+        data.firearms = data.items.filter(function (item) {return item.type == "firearm"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.miracles = data.items.filter(function (item) {return item.type == "miracle"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.tricks = data.items.filter(function (item) {return item.type == "trick"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.hexes = data.items.filter(function (item) {return item.type == "hex"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.favors = data.items.filter(function (item) {return item.type == "favor"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.edges = data.items.filter(function (item) {return item.type == "edge"}).sort((a, b) => {return compareObjects(a, b, 'name')});
         data.level_headed_available = game.dc.level_headed_available
-        data.goods = data.items.filter(function (item) {return item.type == "goods"});
+        data.goods = data.items.filter(function (item) {return item.type == "goods"}).sort((a, b) => {return compareObjects(a, b, 'name')});
         data.huckster_deck = sort_deck(data.items.filter(function (item) {return item.type == "huckster_deck"}));
         data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
         let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
@@ -115,6 +128,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
+        html.find(".magic-buff").click(this._on_magic_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
@@ -126,7 +140,6 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
-        //html.find(".gun-attack").click(this._on_gun_attack.bind(this));
         html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
@@ -242,14 +255,12 @@ export default class PlayerSheet extends ActorSheet {
         let skill = element.closest(".skill-data").dataset.skill;
         let level = parseInt(element.closest(".skill-data").dataset.level);
         let mod = parseInt(element.closest(".skill-data").dataset.mod);
-        console.log(trait,skill,level,mod);
         let cost = level + 1
         if (level + 1 > 5) {
-            cost = cost * 2
+            cost *= 2
         }
         let bounty = this.actor.data.data.bounty.value;
         if (bounty >= cost){
-            console.log(bounty, cost);
             this.actor.update({data: {bounty: {value: bounty - cost}}});
             let traits = {}
             traits[trait] = {skills: {}}
@@ -258,13 +269,29 @@ export default class PlayerSheet extends ActorSheet {
                 modifier: mod
             }
             if(level + 1 == 1){
-                console.log('Adding modifier for first level skill.')
                 traits[trait].skills[skill].modifier = mod + 8
             }
-            console.log(`Attempting to increase ${skill} level from ${level} to ${traits[trait].skills[skill].level}`);
-            console.log('Before:', this.actor.data.data.traits[trait].skills[skill].level, this.actor.data.data.traits[trait].skills[skill].modifier);
             this.actor.update({data: {traits: traits}});
-            console.log('After:', this.actor.data.data.traits[trait].skills[skill].level, this.actor.data.data.traits[trait].skills[skill].modifier);
+        }
+    }
+
+    _on_magic_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let name = item.name;
+        let level = parseInt(item.data.data.level);
+        let bounty = this.actor.data.data.bounty.value;
+        let cost = level + 1
+        console.log(`Attempting to increase ${name}`);
+        if (level >= 5) {
+            cost *= 2
+        }
+        console.log(name, level, bounty, cost, item,);
+        if (bounty >= cost) {
+            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            item.update({'data.level': level + 1});
         }
     }
 
@@ -517,13 +544,16 @@ export default class PlayerSheet extends ActorSheet {
             });
             reply = `
                 <h3 style="text-align:center">Discard</h3>
-                <p>${this.actor.name.split(' ')[0]} discards ${item.name} hoping fer better luck next time.</p>
+                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping fer better luck next time.</p>
             `;
             let c = Math.random()
             setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
             this.actor.update({'data.perks.level_headed': false});
         }
-        ChatMessage.create({content: reply});
+        ChatMessage.create({ content: `
+            <h3 style="text-align:center">Level Headed</h3>
+            <p>${reply}</p>
+        `});
         return this.getData()
     }
 
@@ -550,45 +580,6 @@ export default class PlayerSheet extends ActorSheet {
         `;
         game.dc.aim_bonus = 0
         ChatMessage.create({ content: roll});
-    }
-
-    _on_gun_attack(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        let shots = item.data.data.chamber;
-        let dmg = item.data.data.damage;
-        let dmg_mod = item.data.data.damage_bonus;
-        let off_hand_mod = 0
-        let act = this.getData();
-        let wound_mod = act.data.wound_modifier
-        let trait = act.data.traits.deftness;
-        let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
-        if (shots > 0) {
-            if (item.data.data.off_hand) {
-                console.log(act)
-                off_hand_mod = act.data.off_hand_modifier
-            }
-            let lvl = skill.level
-            if (lvl == 0) {
-                lvl = trait.level
-            }
-            let roll = `
-                <div>
-                <h3 style="text-align:center">Gunfire!</h3>
-                <p style="text-align:center">Shootin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
-                <p style="text-align:center">Damage: [[${dmg}x=]]</p>
-                <p style="text-align:center">Location: [[1d20]]</p>
-                </div>
-            `;
-            ChatMessage.create({ content: roll});
-            shots = shots - 1;
-            game.dc.aim_bonus = 0;
-        }else{
-            ChatMessage.create({ content: `Click... Click Click! Looks like you're empty partner`});
-        }
-        item.update({ "data.chamber": shots});
     }
 
     _on_firearm_attack(event){
@@ -685,9 +676,14 @@ export default class PlayerSheet extends ActorSheet {
             shots = shots - 1;
             game.dc.aim_bonus = 0;
         }else{
-            ChatMessage.create({ content: `Click... Click Click! Looks like you're empty partner`});
+            ChatMessage.create({content: `
+                <h2 style="text-align:center">Out of Ammo!</h2>
+                <p style="text-align:center">Click...</p>
+                <p style="text-align:center">Click Click!</p>
+                <p style="text-align:center">Looks like you're empty partner.</p>
+            `});
         }
-        item.update({ "data.chamber": shots});
+        item.update({"data.chamber": shots});
     }
 
     _on_gun_reload(event) {
@@ -696,35 +692,53 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        let shots = item.data.data.chamber;
+        let shots = parseInt(item.data.data.chamber);
         let max = item.data.data.max;
+        let ammo = this.actor.items.find(i => i.name == item.data.data.calibur) ;
+        console.log(max);
         if (shots >= max) {
             reply = 'Your gun is full of ammo!';
             shots = max;
         }else{
+            max -= shots;
+            console.log('- shots remaining.', max);
             let act = this.getData();
             let trait = act.data.traits.deftness;
             let skill = trait.skills.speed_load;
             let lvl = skill.level;
-            let roll = `${lvl}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
-            if (lvl < 1){
-                roll = `${trait.level}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
-            }
-            reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
-            let r = new Roll(roll).roll()
-            r.toMessage()
-            if(r._total >= 5){
-                reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
-                shots = max
+            if (ammo){
+                if (ammo.data.data.amount <= max) {
+                    max = ammo.data.data.amount;
+                    console.log('less ammo than needed.', max);
+                }
+                let roll = `${lvl}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
+                if (lvl < 1){
+                    roll = `${trait.level}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
+                }
+                reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
+                let r = new Roll(roll).roll()
+                r.toMessage({rollMode: 'gmroll'})
+                if(r._total >= 5){
+                    reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
+                    shots += max
+                }else{
+                    max = 1;
+                    shots += max;
+                    console.log('Failed check.', max);
+                }
+                ammo.update({"data.amount": ammo.data.data.amount - max});
+                item.update({"data.chamber": shots});
             }else{
-                shots = Math.min(shots + 1, max)
+                reply = `Looks like you ain't got no more ${ammo.name} left, I hope you brought another gun!`
             }
         }
-        item.update({ "data.chamber": shots});
-        ChatMessage.create({ content: `
-        <h3 style="text-align:center">Reload</h3>
-            ${reply}
-        `});
+        ChatMessage.create({
+            content: `
+                <h3 style="text-align:center">Reload</h3>
+                <p style="text-align:center">${reply}</p>
+            `,
+            whisper: ChatMessage.getWhisperRecipients('GM')
+        });
     }
 
     _on_cast_trick(event) {
@@ -745,7 +759,7 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        //r.toMessage();
+        r.toMessage({rollMode: 'gmroll'});
         ChatMessage.create({ 
             content: `
                 <h3 style="text-align:center">Trick</h3>
@@ -773,11 +787,14 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        //r.toMessage()
-        ChatMessage.create({ content: `
-            <h3 style="text-align:center">Hex</h3>
-            <p style="text-align:center">${reply}</p>
-        `});
+        r.toMessage({rollMode: 'gmroll'})
+        ChatMessage.create({
+            content: `
+                <h3 style="text-align:center">Hex</h3>
+                <p style="text-align:center">${reply}</p>
+            `,
+            whisper: ChatMessage.getWhisperRecipients('GM')
+        });
     }
 
     _on_cast_miracle(event) {
@@ -787,9 +804,12 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
         let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
-        ChatMessage.create({ content: `
-            <h3 style="text-align:center">Trick</h3>
-            ${roll_str}
-        `});
+        ChatMessage.create({ 
+            content: `
+                <h3 style="text-align:center">Miracle</h3>
+                <p style="text-align:center">${roll_str}</p>
+            `,
+            whisper: ChatMessage.getWhisperRecipients('GM')
+        });
     }
 }

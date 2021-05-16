@@ -8,10 +8,12 @@ Needs socket listener setting up to pass the data around.
 *** TODO Display [0/4]
 **** TODO Core [0/1]
 ***** TODO remove input boxes from core stats
-**** TODO Sidebar [4/7]
-***** TODO Weapon damage being calculated incorrectly.
-***** TODO Melee damage is a strength CHECK + wep dmg NOT strength + wep dmg
-***** TODO Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
+**** TODO Sidebar [8/9]
+***** TODO Add range modifier to firearm display if token has target
+***** DONE Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
+***** DONE Add global combat modifiers to all die rolls
+***** DONE Weapon damage being calculated incorrectly.
+***** DONE Melee damage is a strength CHECK + wep dmg NOT strength + wep dmg
 ***** DONE Skill increment buttons currently not working.
 ***** DONE Stack fate chips in groups to save space.
 ***** DONE Icons for table entries not glowing when hovered.

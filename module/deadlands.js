@@ -57,18 +57,16 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('has_bounty', function (val, type, options) {
-        if (!(game.user.isGM)) {
-            let v = parseInt(val);
-            let cost = v + 1;
-            if (type == 'trait'){
-                cost = cost * 2
-            }
-            let act_data = game.actors.get(game.user.data.character);
-            if (act_data.data.data.bounty.value >= cost){
-                return options.fn(this);
-            }
-            return options.inverse(this);
+        let v = parseInt(val);
+        let cost = v + 1;
+        if (type == 'trait' || (type == 'skill' && v >= 5)){
+            cost = cost * 2
         }
+        let act_data = game.actors.get(game.user.data.character);
+        if (act_data.data.data.bounty.value >= cost){
+            return options.fn(this);
+        }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('die_upgrade', function (val, options) {

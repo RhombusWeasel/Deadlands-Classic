@@ -97,23 +97,7 @@
 .skill-input{
     width: 10%;
 }
-.fate-name {
-    width: 50%;
-    text-align: center;
-}
-.fate-value {
-    width: 10%;
-    text-align: center;
-}
-.combat-hand-header {
-    width: 70%;
-    text-align: center;
-}
-.combat-hand-name {
-    width: 70%;
-}
-
-.combat-hand-btn {
-    width: 10%;
-    text-align: center;
+.trait-plus {
+    margin-top: 2%;
+    margin-left: 2%;
 }

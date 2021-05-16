@@ -29,6 +29,7 @@
                     "arm_left": "Left Arm",
                     "arm_right": "Right Arm",
                     "gizzards": "Gizzards",
+                    "lower_guts": "Lower Guts",
                     "leg_left": "Left Leg",
                     "leg_right": "Right Leg"
                 },

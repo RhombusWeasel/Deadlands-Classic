@@ -86,6 +86,9 @@
             <tr class="item" data-itemId="{{this._id}}">
                 <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc40">{{this.name}}</td>
+                {{#has_bounty this.data.level 'skill'}}
+                <td class="perc10 right"><a class="magic-buff">[+]</a></td>
+                {{/has_bounty}}
                 <td class="perc10">[{{this.data.level}}]</td>
                 <td class="perc20 center">{{this.data.trait}}</td>
                 <td class="perc10 center"><a class="sling-trick"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a></td>
@@ -103,6 +106,9 @@
             <tr class="item" data-itemId="{{this._id}}">
                 <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc40">{{this.name}}</td>
+                {{#has_bounty this.data.level 'skill'}}
+                <td class="perc10 right"><a class="magic-buff">[+]</a></td>
+                {{/has_bounty}}
                 <td class="perc10">[{{this.data.level}}]</td>
                 <td class="perc20 center">{{this.data.trait}}</td>
                 <td class="perc10 center"><a class="sling-hex"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a></td>
@@ -179,9 +185,9 @@
             {{#each goods as |good|}}
             <tr class="item" data-itemId="{{this._id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc60">{{this.name}}</td>
+                <td class="perc50">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.cost}}</td>
-                <td class="perc10 center">{{this.data.amount}}</td>
+                <td class="perc20 center">{{this.data.amount}}</td>
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
             {{/each}}

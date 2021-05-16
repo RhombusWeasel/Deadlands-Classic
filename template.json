@@ -22,6 +22,17 @@
                     "arm_left": 0,
                     "arm_right": 0,
                     "gizzards": 0,
+                    "lower_guts": 0,
+                    "leg_left": 0,
+                    "leg_right": 0
+                },
+                "armour": {
+                    "noggin": 0,
+                    "guts": 0,
+                    "arm_left": 0,
+                    "arm_right": 0,
+                    "gizzards": 0,
+                    "lower_guts": 0,
                     "leg_left": 0,
                     "leg_right": 0
                 },
