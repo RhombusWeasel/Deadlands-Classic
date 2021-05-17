@@ -5,33 +5,33 @@
             <h1 class="h1">Core:</h1>
             <table>
                 <tr>
-                    <th>{{localize "dc.player.core.pace"}}</th>
-                    <th>{{localize "dc.player.core.size"}}</th>
-                    <th>{{localize "dc.player.core.wind"}}</th>
-                    <th>{{localize "dc.player.core.grit"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.pace"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.size"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.wind"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.grit"}}</th>
                 </tr>
                 <tr>
-                    <td><input style="text-align: center;" type="text" name="data.pace" value="{{data.pace}}"/></td>
-                    <td><input style="text-align: center; " type="text" name="data.size" value="{{data.size}}"/></td>
-                    <td><input style="text-align: center; width: 45%" type="text" name="data.wind.value" value="{{data.wind.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.wind.max" value="{{data.wind.max}}"/></td>
-                    <td><input style="text-align: center;" type="text" name="data.grit" value="{{data.grit}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.pace" value="{{data.pace}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.size" value="{{data.size}}"/></td>
+                    <td class="perc25 center"><input style="width: 45%;" type="text" name="data.wind.value" value="{{data.wind.value}}"/>/<input style="width: 45%;" type="text" name="data.wind.max" value="{{data.wind.max}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.grit" value="{{data.grit}}"/></td>
                 </tr>
                 <tr>
-                    <th>{{localize "dc.player.core.money"}}</th>
-                    <th>{{localize "dc.player.core.bounty"}}</th>
-                    <th>{{localize "dc.player.core.off_hand"}}</th>
-                    <th>{{localize "dc.player.core.wound_modifier"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.money"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.bounty"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.off_hand"}}</th>
+                    <th class="perc25 center">{{localize "dc.player.core.wound_modifier"}}</th>
                 </tr>
                 <tr>
-                    <td><input style="text-align: center;" type="text" name="data.cash" value="{{data.cash}}"/></td>
-                    <td><input style="text-align: center; width: 45%" type="text" name="data.bounty.value" value="{{data.bounty.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.bounty.max" value="{{data.bounty.max}}"/></td>
-                    <td><input style="text-align: center;" type="text" name="data.off_hand_modifier" value="{{data.off_hand_modifier}}"/></td>
-                    <td><input style="text-align: center;" type="text" name="data.wound_modifier" value="{{data.wound_modifier}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.cash" value="{{data.cash}}"/></td>
+                    <td class="perc25 center"><input style="width: 45%" type="text" name="data.bounty.value" value="{{data.bounty.value}}"/>/<input style="width: 45%" type="text" name="data.bounty.max" value="{{data.bounty.max}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.off_hand_modifier" value="{{data.off_hand_modifier}}"/></td>
+                    <td class="perc25 center"><input type="text" name="data.wound_modifier" value="{{data.wound_modifier}}"/></td>
                 </tr>
             </table>
             </div>
             <div>
-                <h1 style="text-align: center; width: 100%">
+                <h1 style="text-align: center;">
                     <div data-edit="name" contenteditable="">{{actor.name}}</div>
                 </h1>
                 <div style="display: flex; flex-direction:row">

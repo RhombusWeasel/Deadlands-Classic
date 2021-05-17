@@ -73,6 +73,19 @@ function compareObjects(object1, object2, key) {
     return 0;
 }
 
+function get_target() {
+    for (let t = 0; t < canvas.tokens.placeables.length; t++) {
+        let tgt = canvas.tokens.placeables[t]
+        console.log('Target Search:', tgt)
+        for (let u of tgt.targeted) {
+            if (u._id == game.user._id) {
+                return tgt;
+            }
+        }
+    }
+    return false;
+}
+
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -595,6 +608,36 @@ export default class PlayerSheet extends ActorSheet {
         let wound_mod = act.data.wound_modifier
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
+        let target = get_target()
+        if (target == false) {
+            console.log('DC:', 'Target not found.');
+            return;
+        }
+        //Currently not allowing players to shoot party members or bystanders, add an opt out button to these messages.
+        if (!(game.user.isGM)) {
+            if (target.data.disposition == 1) {
+                ChatMessage.create({
+                    content: `
+                        <h3 style="text-align:center">Friendly Fire!</h3>
+                        <p style="text-align:center">You need to pick a HOSTILE target to shoot at.</p>
+                    `,
+                    whisper: ChatMessage.getWhisperRecipients('GM')
+                });
+                return;
+            }else if (target.data.disposition == 0) {
+                ChatMessage.create({
+                    content: `
+                        <h3 style="text-align:center">Bystander!</h3>
+                        <p style="text-align:center">You're about to shoot a neutral third party, maybe select a HOSTILE target to shoot at?</p>
+                    `,
+                    whisper: ChatMessage.getWhisperRecipients('GM')
+                });
+                return;
+            }
+        }
+        let dist = Math.floor(canvas.grid.measureDistance(this.actor.token, target));
+        let range_mod = Math.max(Math.floor(dist / parseInt(item.data.data.range)) - 1, 0);
+        console.log(dist);
         if (shots > 0) {
             if (item.data.data.off_hand) {
                 console.log(act)
@@ -606,10 +649,12 @@ export default class PlayerSheet extends ActorSheet {
             }
             let roll = `
                 <div>
-                    <h3 style="text-align:center">Gunfire!</h3>
+                    <h2 style="text-align:center">Gunfire!</h2>
+                    <p style="text-align:center">${this.actor.name} fires their ${item.name} at ${target.name}</p>
+                    <p style="text-align:center">That's about ${Math.floor(dist)} yards! [-${range_mod}]</p>
             `
             let mods = game.actors.getName('Marshal').data.data.modifiers;
-            let tn = 5;
+            let tn = 5 + range_mod;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     tn -= mod.mod;
@@ -618,6 +663,7 @@ export default class PlayerSheet extends ActorSheet {
             let shootin = `${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}`
             let raise = 0;
             let s = new Roll(shootin).roll();
+            s.toMessage({rollMode: 'gmroll'})
             roll += `
                     <p style="text-align:center">Target ${tn}</p>
                     <p style="text-align:center">You rolled ${s._total}</p>
@@ -634,6 +680,7 @@ export default class PlayerSheet extends ActorSheet {
                     `;
                 }
                 let loc = new Roll('1d20').roll();
+                loc.toMessage({rollMode: 'gmroll'});
                 let tot = loc._total - 1;
                 roll += `
                     <p style="text-align:center">Location: ${locations[tot]}</p>
@@ -665,16 +712,31 @@ export default class PlayerSheet extends ActorSheet {
                 }else if (found.includes('Gizzards')) {
                     amt += 1
                 }
+                let d_form = `${amt}d${die}x= + ${dmg_mod}`
+                let d_roll = new Roll(d_form).roll()
+                d_roll.toMessage({rollMode: 'gmroll'});
+                let wounds = Math.floor(d_roll._total / target.actor.data.data.size);
                 roll += `
-                    <p style="text-align:center">Damage: [[${amt}d${die}x= + ${dmg_mod}]]</p>
+                    <p style="text-align:center">Damage: ${d_roll._total}</p>
+                    <p style="text-align:center">Wounds: ${wounds}</p>
                 </div>
                 `;
+                if (wounds > 0 && target.isPlayer) {
+                    ChatMessage.create({
+                        content: `
+                            <h3 style="text-align:center">Damage</h3>
+                            <p style="text-align:center">You take ${wounds} wounds to the ${locations[tot]}</p>
+                        `,
+                        whisper: ChatMessage.getWhisperRecipients(target.name);
+                    });
+                }
             }else{
-                roll += '<p>You missed</p>'
+                roll += '<p style="text-align:center">You missed</p>'
             }
             ChatMessage.create({content: roll});
             shots = shots - 1;
             game.dc.aim_bonus = 0;
+            item.update({"data.chamber": shots});
         }else{
             ChatMessage.create({content: `
                 <h2 style="text-align:center">Out of Ammo!</h2>
@@ -683,7 +745,6 @@ export default class PlayerSheet extends ActorSheet {
                 <p style="text-align:center">Looks like you're empty partner.</p>
             `});
         }
-        item.update({"data.chamber": shots});
     }
 
     _on_gun_reload(event) {
