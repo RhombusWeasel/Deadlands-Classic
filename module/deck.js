@@ -32,17 +32,36 @@ function new_deck(id) {
     return deck
 }
 
-function send_card(user, card) {
+function send_card(data) {
     game.socket.emit("system.deadlands_classic", {
         operation: "recieve_card",
-        data: {
-            user: user,
-            card: card
-        }
+        data: data
     });
 }
 
+function build_damage_dialog(char, data, saved) {
+    let form = `
+        <form>
+            <div id="data" data-wounds="${data.wounds}" data-char="${char.name}" data-loc="${data.loc_key}">
+                <h1 style="text-align: center;">Damage!</h1>
+    `;
+    if (data.wounds == 1){
+        form += `
+                <p style="text-align: center;">${char.name} has taken 1 wound to the ${data.loc_label}</p>
+        `;
+    }else{
+        form += `
+                <p style="text-align: center;">${char.name} has taken ${data.wounds} wounds to the ${data.loc_label}</p>
+        `;
+    }
+    return form += `
+            </div>
+        </form>
+    `;
+}
+
 let operations = {
+    //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
     },
@@ -64,21 +83,22 @@ let operations = {
     },
     request_cards: function(data){
         if (game.user.isGM) {
-            let user = data.user
             let cards = data.amount
-            if (game.dc.action_deck.length < cards){
+            if (game.dc.action_deck.length <= cards){
                 restore_discard()
             }
             for (let i=0; i<cards; i++){
-                let card = game.dc.action_deck.pop();
-                send_card(user, card)
+                data.card = game.dc.action_deck.pop();
+                send_card(data)
             }
         };
     },
     recieve_card: function(data){
         if (game.userId == data.user){
-            let actor = game.actors.get(game.user.data.character)
-            let c = Math.random()
+            console.log(data);
+            let actor = game.actors.getName(data.char);
+            console.log(actor);
+            let c = Math.random();
             setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
         }
     },
@@ -96,12 +116,61 @@ let operations = {
         }
     },
     recycle_card: function(data) {
-        let user = data.user;
-        let card = data.card;
         if (game.user.isGM) {
-            game.dc.action_discard.push(card)
-            let new_card = game.dc.action_deck.pop()
-            send_card(user, new_card)
+            game.dc.action_discard.push(data.card)
+            data.card = game.dc.action_deck.pop()
+            send_card(data);
+        }
+    },
+    request_dodge: function(data) {
+
+    },
+    apply_damage: function(data) {
+        let char = game.actors.getName(data.char);
+        if (char.owner) {
+            let form = new Dialog({
+                title: `You've been hit!`,
+                content: build_damage_dialog(char, data, 0),
+                buttons: {
+                    take: {
+                        label: 'Take Damage.',
+                        callback: (html) => {
+                            let el = document.getElementById('data');
+                            console.log(el);
+                            let name = el.dataset.char;
+                            let wounds = parseInt(el.dataset.wounds);
+                            let loc = el.dataset.loc;
+                            let char = game.actors.getName(name);
+                            let current = parseInt(char.data.data.wounds[loc]) || 0;
+                            let w_data = {data: {wounds: {[loc]: current + wounds}}};
+                            char.update(w_data);
+                            let highest = 0
+                            Object.keys(char.data.data.wounds).forEach(function(key) {
+                                if (char.data.data.wounds[key] >= highest) {
+                                    highest = char.data.data.wounds[key]
+                                }
+                            });
+                            let m_data = {data: {wound_modifier: highest * -1}}
+                            char.update(m_data);
+                        }
+                    }
+                },
+                close: () => {
+                    console.log('Damage Dialog Closed');
+                }
+            });
+            form.render(true);
+        }
+    },
+    enemy_damage: function(data) {
+        console.log(data);
+        let char = canvas.tokens.placeables.find(i => i.data._id == data.id);
+        console.log(char);
+        if (game.user.isGM) {
+            let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
+            let updata = {data: {wounds: {[data.loc_key]: current + data.wounds}}};
+            console.log(updata);
+            char.actor.update(updata);
         }
     }
 }

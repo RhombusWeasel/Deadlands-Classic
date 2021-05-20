@@ -1,7 +1,7 @@
 let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
 let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
-
+let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
 let percs = [
     {limit: 99, chip:3},
     {limit: 88, chip:2},
@@ -387,7 +387,6 @@ export default class PlayerSheet extends ActorSheet {
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         let found = false
         fate_chips.forEach(chip => {
-            console.log(chip.name, chip_type);
             if (found == false) {
                 if (chip.name == chip_type) {
                     let new_val = parseInt(act.data.bounty.value) + parseInt(bounty);
@@ -453,6 +452,7 @@ export default class PlayerSheet extends ActorSheet {
                 operation: "request_cards",
                 data: {
                     user: game.userId,
+                    char: this.actor.name,
                     amount: draw
                 }
             });
@@ -608,6 +608,7 @@ export default class PlayerSheet extends ActorSheet {
         let wound_mod = act.data.wound_modifier
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
+        let token = canvas.tokens.placeables.find(i => i.name == this.actor.name);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
@@ -635,12 +636,11 @@ export default class PlayerSheet extends ActorSheet {
                 return;
             }
         }
-        let dist = Math.floor(canvas.grid.measureDistance(this.actor.token, target));
+        console.log(token, target);
+        let dist = Math.floor(canvas.grid.measureDistance(token, target));
         let range_mod = Math.max(Math.floor(dist / parseInt(item.data.data.range)) - 1, 0);
-        console.log(dist);
         if (shots > 0) {
             if (item.data.data.off_hand) {
-                console.log(act)
                 off_hand_mod = act.data.off_hand_modifier
             }
             let lvl = skill.level
@@ -686,34 +686,35 @@ export default class PlayerSheet extends ActorSheet {
                     <p style="text-align:center">Location: ${locations[tot]}</p>
                     <table>
                 `
-                let found = []
+                let found = [];
                 for (let i = 0; i < locations.length; i++) {
                     if (i >= tot - (raise * 2) && i <= tot + (raise * 2)){
                         if (found.includes(locations[i])) {
-                            console.log(locations[i]);
                         }else{
                             roll += `
                         <tr class="location" data-loc="${locations[i]}">
                             <td style="text-align:center">${locations[i]}</td>
                         </tr>
-                            `
+                            `;
                             found.push(locations[i]);
                         }
                     }
                 }
                 roll += `
                     </table>
-                `
+                `;
                 let dmg_split = dmg.split('d');
                 let amt = parseInt(dmg_split[0]);
                 let die = parseInt(dmg_split[1]);
                 if (found.includes('Noggin')) {
-                    amt += 2
+                    tot = 19;
+                    amt += 2;
                 }else if (found.includes('Gizzards')) {
-                    amt += 1
+                    tot = 8;
+                    amt += 1;
                 }
                 let d_form = `${amt}d${die}x= + ${dmg_mod}`
-                let d_roll = new Roll(d_form).roll()
+                let d_roll = new Roll(d_form).roll();
                 d_roll.toMessage({rollMode: 'gmroll'});
                 let wounds = Math.floor(d_roll._total / target.actor.data.data.size);
                 roll += `
@@ -721,15 +722,21 @@ export default class PlayerSheet extends ActorSheet {
                     <p style="text-align:center">Wounds: ${wounds}</p>
                 </div>
                 `;
-                if (wounds > 0 && target.isPlayer) {
-                    ChatMessage.create({
-                        content: `
-                            <h3 style="text-align:center">Damage</h3>
-                            <p style="text-align:center">You take ${wounds} wounds to the ${locations[tot]}</p>
-                        `,
-                        whisper: ChatMessage.getWhisperRecipients(target.name);
-                    });
+                let op = 'enemy_damage';
+                if (wounds > 0 && target.actor.isPC) {
+                    op = 'apply_damage';
                 }
+                console.log(target, loc_lookup[tot]);
+                game.socket.emit("system.deadlands_classic", {
+                    operation: op,
+                    data: {
+                        char: target.name,
+                        wounds: wounds,
+                        id: target.data._id,
+                        loc_key: loc_lookup[tot],
+                        loc_label: locations[tot]
+                    }
+                });
             }else{
                 roll += '<p style="text-align:center">You missed</p>'
             }

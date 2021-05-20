@@ -44,6 +44,17 @@ Hooks.once("init", function () {
         }
     });
 
+    game.settings.register('deadlands_classic', 'updated_unskilled_checked', {
+        name: 'Combat Active',
+        scope: 'world',
+        config: true,
+        type: Boolean,  
+        default: false,
+        onChange: value => {
+          console.log('Updated unskilled checks: ', value)
+        }
+    });
+
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);
