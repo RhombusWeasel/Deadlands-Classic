@@ -19,6 +19,19 @@ async function preload_handlebars_templates() {
     return loadTemplates(template_paths)
 }
 
+function get_token_count(t) {
+    let count = 0;
+    let tokens = canvas.tokens.placeables;
+    tokens.forEach(tkn => {
+        console.log(tkn.name, t.name);
+        if (tkn.name.search(t.name) != -1) {
+            console.log('Match!');
+            count += 1;
+        }
+    });
+    return count;
+}
+
 Hooks.once("init", function () {
     console.log("DC | Initializing Deadlands Classic.");
 
@@ -139,4 +152,18 @@ Hooks.once("init", function () {
     });
 
     preload_handlebars_templates();
+});
+
+Hooks.on('preCreateToken', function () {
+    console.log('W00T', arguments);
+    let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
+    let amt = get_token_count(same);
+    arguments[1].name += ` ${amt}`
+});
+
+Hooks.on('hoverToken', function () {
+    let tkn = arguments[0]
+    if (tkn.data.name != tkn.actor.name) {
+        tkn.actor.update({name: tkn.data.name})
+    }
 });

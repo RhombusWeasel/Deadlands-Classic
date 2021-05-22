@@ -1,7 +1,7 @@
 let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
-let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
+let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
+let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
 let percs = [
     {limit: 99, chip:3},
     {limit: 88, chip:2},
@@ -76,9 +76,21 @@ function compareObjects(object1, object2, key) {
 function get_target() {
     for (let t = 0; t < canvas.tokens.placeables.length; t++) {
         let tgt = canvas.tokens.placeables[t]
-        console.log('Target Search:', tgt)
         for (let u of tgt.targeted) {
             if (u._id == game.user._id) {
+                return tgt;
+            }
+        }
+    }
+    return false;
+}
+
+function get_token(act) {
+    let owned = canvas.tokens.placeables.find(i => i.owner == true);
+    for (let t = 0; t < owned.length; t++) {
+        let tgt = owned[t]
+        if (tgt.owner) {
+            if (tgt.name == act.name){
                 return tgt;
             }
         }
@@ -608,7 +620,7 @@ export default class PlayerSheet extends ActorSheet {
         let wound_mod = act.data.wound_modifier
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
-        let token = canvas.tokens.placeables.find(i => i.name == this.actor.name);
+        let token = canvas.tokens.placeables.find(i => i.data._id == this.actor.token.data._id);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
@@ -638,6 +650,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         console.log(token, target);
         let dist = Math.floor(canvas.grid.measureDistance(token, target));
+        console.log('Range:', dist);
         let range_mod = Math.max(Math.floor(dist / parseInt(item.data.data.range)) - 1, 0);
         if (shots > 0) {
             if (item.data.data.off_hand) {
@@ -710,7 +723,7 @@ export default class PlayerSheet extends ActorSheet {
                     tot = 19;
                     amt += 2;
                 }else if (found.includes('Gizzards')) {
-                    tot = 8;
+                    tot = 9;
                     amt += 1;
                 }
                 let d_form = `${amt}d${die}x= + ${dmg_mod}`
@@ -723,20 +736,22 @@ export default class PlayerSheet extends ActorSheet {
                 </div>
                 `;
                 let op = 'enemy_damage';
-                if (wounds > 0 && target.actor.isPC) {
-                    op = 'apply_damage';
-                }
-                console.log(target, loc_lookup[tot]);
-                game.socket.emit("system.deadlands_classic", {
-                    operation: op,
-                    data: {
-                        char: target.name,
-                        wounds: wounds,
-                        id: target.data._id,
-                        loc_key: loc_lookup[tot],
-                        loc_label: locations[tot]
+                if (wounds > 0) {
+                    if (target.actor.isPC) {
+                        op = 'apply_damage';
                     }
-                });
+                    console.log(target, loc_lookup[tot]);
+                    game.socket.emit("system.deadlands_classic", {
+                        operation: op,
+                        data: {
+                            char: target.name,
+                            wounds: wounds,
+                            id: target.data._id,
+                            loc_key: loc_lookup[tot],
+                            loc_label: locations[tot]
+                        }
+                    });
+                }
             }else{
                 roll += '<p style="text-align:center">You missed</p>'
             }
@@ -816,16 +831,16 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck')
-        let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
-        let r = new Roll(roll_str).roll()
-        let draw = 0
+        let deck = new_deck('huckster_deck');
+        let roll_str = `${act.data.traits[item.data.data.trait].level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`;
+        let r = new Roll(roll_str).roll();
+        let draw = 0;
         if (r._total >= 5) {
             draw = Math.floor(r._total / 5)
             reply = `You rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
-            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500);
         }
         r.toMessage({rollMode: 'gmroll'});
         ChatMessage.create({ 
