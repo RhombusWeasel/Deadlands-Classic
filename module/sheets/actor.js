@@ -620,7 +620,7 @@ export default class PlayerSheet extends ActorSheet {
         let wound_mod = act.data.wound_modifier
         let trait = act.data.traits.deftness;
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
-        let token = canvas.tokens.placeables.find(i => i.data._id == this.actor.token.data._id);
+        let token = canvas.tokens.placeables.find(i => i.data.name == this.actor.name);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
