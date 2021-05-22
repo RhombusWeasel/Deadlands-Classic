@@ -162,8 +162,10 @@ Hooks.on('preCreateToken', function () {
 });
 
 Hooks.on('hoverToken', function () {
-    let tkn = arguments[0]
-    if (tkn.data.name != tkn.actor.name) {
-        tkn.actor.update({name: tkn.data.name})
+    if (game.user.isGM) {
+        let tkn = arguments[0]
+        if (tkn.data.name != tkn.actor.name) {
+            tkn.actor.update({name: tkn.data.name})
+        }
     }
 });
