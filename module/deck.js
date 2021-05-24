@@ -513,9 +513,141 @@ let operations = {
                 content: build_damage_dialog(char, data, 0),
                 buttons: {
                     white: {
-                        label: 'Spend White Chip [1]',
+                        label: 'White [1]',
                         callback: () => {
                             let val = 1
+                            let el = document.getElementById('data');
+                            let name = el.dataset.char;
+                            let wounds = parseInt(el.dataset.wounds);
+                            let loc_key = el.dataset.loc_key;
+                            let loc_label = el.dataset.loc_label;
+                            let soak = el.dataset.soak;
+                            let char = game.actors.getName(name);
+                            let itemId = false;
+                            for (let item of char.items.values()) {
+                                if(item.name == 'White' && item.type == 'chip') {
+                                    itemId = item._id;
+                                }
+                            }
+                            if (itemId) {
+                                char.deleteOwnedItem(itemId);
+                                soak += val
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }else{
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    red: {
+                        label: 'Red [2]',
+                        callback: () => {
+                            let val = 2
+                            let el = document.getElementById('data');
+                            let name = el.dataset.char;
+                            let wounds = parseInt(el.dataset.wounds);
+                            let loc_key = el.dataset.loc_key;
+                            let loc_label = el.dataset.loc_label;
+                            let soak = el.dataset.soak;
+                            let char = game.actors.getName(name);
+                            let itemId = false;
+                            for (let item of char.items.values()) {
+                                if(item.name == 'White' && item.type == 'chip') {
+                                    itemId = item._id;
+                                }
+                            }
+                            if (itemId) {
+                                char.deleteOwnedItem(itemId);
+                                soak += val
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }else{
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    blue: {
+                        label: 'Blue [3]',
+                        callback: () => {
+                            let val = 3
+                            let el = document.getElementById('data');
+                            let name = el.dataset.char;
+                            let wounds = parseInt(el.dataset.wounds);
+                            let loc_key = el.dataset.loc_key;
+                            let loc_label = el.dataset.loc_label;
+                            let soak = el.dataset.soak;
+                            let char = game.actors.getName(name);
+                            let itemId = false;
+                            for (let item of char.items.values()) {
+                                if(item.name == 'White' && item.type == 'chip') {
+                                    itemId = item._id;
+                                }
+                            }
+                            if (itemId) {
+                                char.deleteOwnedItem(itemId);
+                                soak += val
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }else{
+                                game.socket.emit('system.deadlands_classic', {
+                                    operation: 'soak', 
+                                    data: {
+                                        target: name,
+                                        wounds: wounds,
+                                        loc_key: loc_key,
+                                        loc_label: loc_label,
+                                        soak: soak
+                                    }
+                                });
+                            }
+                        }
+                    },
+                    legend: {
+                        label: 'Legendary [5]',
+                        callback: () => {
+                            let val = 5
                             let el = document.getElementById('data');
                             let name = el.dataset.char;
                             let wounds = parseInt(el.dataset.wounds);
