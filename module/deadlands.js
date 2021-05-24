@@ -22,13 +22,15 @@ async function preload_handlebars_templates() {
 function get_token_count(t) {
     let count = 0;
     let tokens = canvas.tokens.placeables;
-    tokens.forEach(tkn => {
-        console.log(tkn.name, t.name);
-        if (tkn.name.search(t.name) != -1) {
-            console.log('Match!');
-            count += 1;
-        }
-    });
+    if (tokens) {
+        tokens.forEach(tkn => {
+            console.log(tkn.name, t.name);
+            if (tkn.name.search(t.name) != -1) {
+                console.log('Match!');
+                count += 1;
+            }
+        });
+    }
     return count;
 }
 

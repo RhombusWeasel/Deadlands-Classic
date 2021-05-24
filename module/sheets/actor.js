@@ -11,6 +11,13 @@ let percs = [
 
 let aim_bonus = 0
 
+function emit(op, data) {
+    game.socket.emit("system.deadlands_classic", {
+        operation: op,
+        data: data
+    });
+}
+
 function new_deck(id) {
     let deck = [];
     let shuffled = [];
@@ -586,187 +593,38 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        let dmg = item.data.data.damage;
-        let act = this.getData();
-        let trait = act.data.traits.nimbleness;
-        let skill = trait.skills.fightin;
-        let lvl = skill.level
-        if (lvl == 0) {
-            lvl = trait.level
+        let target = get_target()
+        if (target == false) {
+            console.log('DC:', 'Target not found.');
+            return;
         }
-        let roll = `
-            <div>
-            <h3 style="text-align:center">Fist Fight!</h3>
-            <p style="text-align:center">Brawlin: [[${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}]]</p>
-            <p style="text-align:center">Damage: [[${act.data.traits.strength.level}${act.data.traits.strength.die_type}ex + ${dmg}x=]]</p>
-            <p style="text-align:center">Location: [[1d20]]</p>
-            </div>
-        `;
-        game.dc.aim_bonus = 0
-        ChatMessage.create({ content: roll});
+        emit("check_target",
+            {
+                type: 'melee',
+                attacker: this.actor.name,
+                target: target.name,
+                weapon: itemId,
+            }
+        );
     }
 
     _on_firearm_attack(event){
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        let shots = item.data.data.chamber;
-        let dmg = item.data.data.damage;
-        let dmg_mod = item.data.data.damage_bonus;
-        let off_hand_mod = 0
-        let act = this.getData();
-        let wound_mod = act.data.wound_modifier
-        let trait = act.data.traits.deftness;
-        let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
-        let token = canvas.tokens.placeables.find(i => i.data.name == this.actor.name);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
             return;
         }
-        //Currently not allowing players to shoot party members or bystanders, add an opt out button to these messages.
-        if (!(game.user.isGM)) {
-            if (target.data.disposition == 1) {
-                ChatMessage.create({
-                    content: `
-                        <h3 style="text-align:center">Friendly Fire!</h3>
-                        <p style="text-align:center">You need to pick a HOSTILE target to shoot at.</p>
-                    `,
-                    whisper: ChatMessage.getWhisperRecipients('GM')
-                });
-                return;
-            }else if (target.data.disposition == 0) {
-                ChatMessage.create({
-                    content: `
-                        <h3 style="text-align:center">Bystander!</h3>
-                        <p style="text-align:center">You're about to shoot a neutral third party, maybe select a HOSTILE target to shoot at?</p>
-                    `,
-                    whisper: ChatMessage.getWhisperRecipients('GM')
-                });
-                return;
+        emit("check_target",
+            {
+                type: 'ranged',
+                attacker: this.actor.name,
+                target: target.name,
+                weapon: itemId,
             }
-        }
-        console.log(token, target);
-        let dist = Math.floor(canvas.grid.measureDistance(token, target));
-        console.log('Range:', dist);
-        let range_mod = Math.max(Math.floor(dist / parseInt(item.data.data.range)) - 1, 0);
-        if (shots > 0) {
-            if (item.data.data.off_hand) {
-                off_hand_mod = act.data.off_hand_modifier
-            }
-            let lvl = skill.level
-            if (lvl == 0) {
-                lvl = trait.level
-            }
-            let roll = `
-                <div>
-                    <h2 style="text-align:center">Gunfire!</h2>
-                    <p style="text-align:center">${this.actor.name} fires their ${item.name} at ${target.name}</p>
-                    <p style="text-align:center">That's about ${Math.floor(dist)} yards! [-${range_mod}]</p>
-            `
-            let mods = game.actors.getName('Marshal').data.data.modifiers;
-            let tn = 5 + range_mod;
-            for (const [key, mod] of Object.entries(mods)){
-                if (mod.active) {
-                    tn -= mod.mod;
-                }
-            }
-            let shootin = `${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${this.actor.data.data.wound_modifier}`
-            let raise = 0;
-            let s = new Roll(shootin).roll();
-            s.toMessage({rollMode: 'gmroll'})
-            roll += `
-                    <p style="text-align:center">Target ${tn}</p>
-                    <p style="text-align:center">You rolled ${s._total}</p>
-            `
-            if (s._total >= tn) {
-                raise = Math.floor((s._total - tn) / 5);
-                if (raise == 1){
-                    roll += `
-                    <p style="text-align:center">a success and 1 raise.</p>
-                    `;
-                }else{
-                    roll += `
-                    <p style="text-align:center">a success and ${raise} raises.</p>
-                    `;
-                }
-                let loc = new Roll('1d20').roll();
-                loc.toMessage({rollMode: 'gmroll'});
-                let tot = loc._total - 1;
-                roll += `
-                    <p style="text-align:center">Location: ${locations[tot]}</p>
-                    <table>
-                `
-                let found = [];
-                for (let i = 0; i < locations.length; i++) {
-                    if (i >= tot - (raise * 2) && i <= tot + (raise * 2)){
-                        if (found.includes(locations[i])) {
-                        }else{
-                            roll += `
-                        <tr class="location" data-loc="${locations[i]}">
-                            <td style="text-align:center">${locations[i]}</td>
-                        </tr>
-                            `;
-                            found.push(locations[i]);
-                        }
-                    }
-                }
-                roll += `
-                    </table>
-                `;
-                let dmg_split = dmg.split('d');
-                let amt = parseInt(dmg_split[0]);
-                let die = parseInt(dmg_split[1]);
-                if (found.includes('Noggin')) {
-                    tot = 19;
-                    amt += 2;
-                }else if (found.includes('Gizzards')) {
-                    tot = 9;
-                    amt += 1;
-                }
-                let d_form = `${amt}d${die}x= + ${dmg_mod}`
-                let d_roll = new Roll(d_form).roll();
-                d_roll.toMessage({rollMode: 'gmroll'});
-                let wounds = Math.floor(d_roll._total / target.actor.data.data.size);
-                roll += `
-                    <p style="text-align:center">Damage: ${d_roll._total}</p>
-                    <p style="text-align:center">Wounds: ${wounds}</p>
-                </div>
-                `;
-                let op = 'enemy_damage';
-                if (wounds > 0) {
-                    if (target.actor.isPC) {
-                        op = 'apply_damage';
-                    }
-                    console.log(target, loc_lookup[tot]);
-                    game.socket.emit("system.deadlands_classic", {
-                        operation: op,
-                        data: {
-                            char: target.name,
-                            wounds: wounds,
-                            id: target.data._id,
-                            loc_key: loc_lookup[tot],
-                            loc_label: locations[tot]
-                        }
-                    });
-                }
-            }else{
-                roll += '<p style="text-align:center">You missed</p>'
-            }
-            ChatMessage.create({content: roll});
-            shots = shots - 1;
-            game.dc.aim_bonus = 0;
-            item.update({"data.chamber": shots});
-        }else{
-            ChatMessage.create({content: `
-                <h2 style="text-align:center">Out of Ammo!</h2>
-                <p style="text-align:center">Click...</p>
-                <p style="text-align:center">Click Click!</p>
-                <p style="text-align:center">Looks like you're empty partner.</p>
-            `});
-        }
+        );
     }
 
     _on_gun_reload(event) {
