@@ -230,7 +230,7 @@ let operations = {
         if (game.user.isGM) {
             game.dc.action_discard.push(data.card)
             data.card = game.dc.action_deck.pop()
-            emit('recieve_card',data);
+            emit('recieve_card', data);
         }
     },
     check_target: function(data) {
@@ -569,7 +569,7 @@ let operations = {
                             let char = game.actors.getName(name);
                             let itemId = false;
                             for (let item of char.items.values()) {
-                                if(item.name == 'White' && item.type == 'chip') {
+                                if(item.name == 'Red' && item.type == 'chip') {
                                     itemId = item._id;
                                 }
                             }
@@ -613,7 +613,7 @@ let operations = {
                             let char = game.actors.getName(name);
                             let itemId = false;
                             for (let item of char.items.values()) {
-                                if(item.name == 'White' && item.type == 'chip') {
+                                if(item.name == 'Blue' && item.type == 'chip') {
                                     itemId = item._id;
                                 }
                             }
@@ -657,7 +657,7 @@ let operations = {
                             let char = game.actors.getName(name);
                             let itemId = false;
                             for (let item of char.items.values()) {
-                                if(item.name == 'White' && item.type == 'chip') {
+                                if(item.name == 'Legendary' && item.type == 'chip') {
                                     itemId = item._id;
                                 }
                             }
@@ -698,7 +698,17 @@ let operations = {
                             let char = game.actors.getName(name);
                             console.log('take_damage:', data, char);
                             let current = parseInt(char.data.data.wounds[loc]) || 0;
-                            let w_data = {data: {wounds: {[loc]: current + wounds}}};
+                            let wind_roll = new Roll(`${wounds}d6`).roll();
+                            let w_data = {
+                                data: {
+                                    wind: {
+                                        value: char.data.data.wind.value - wind_roll._total
+                                    },
+                                    wounds: {
+                                        [loc]: current + wounds
+                                    }
+                                }
+                            };
                             char.update(w_data);
                             let highest = 0
                             Object.keys(char.data.data.wounds).forEach(function(key) {
