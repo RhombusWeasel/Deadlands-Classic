@@ -454,6 +454,10 @@ let operations = {
                         console.log('proceed_attack: Location:', loc_lookup.indexOf(loc_key));
                         console.log('proceed_attack:', data);
                         let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
+                        if (data.type == 'melee') {
+                            let str = atk.actor.data.data.traits.strength
+                            dmg_formula += ` + ${str.level}${str.die_type}ex`
+                        }
                         let dmg_roll = new Roll(dmg_formula).roll();
                         dmg_roll.toMessage({rollMode: 'gmroll'});
                         data.damage = dmg_roll._total;
