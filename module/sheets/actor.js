@@ -105,6 +105,62 @@ function get_token(act) {
     return false;
 }
 
+function check_roll(roll, tn, mod) {
+    console.log(roll);
+    let r_data = {
+        success: false,
+        tn: tn,
+        total: roll._total,
+        raises: 0,
+        pass: 0,
+        ones: 0,
+    }
+    roll.terms[0].results.forEach(die => {
+        if (die.result + mod >= tn) {
+            r_data.pass += 1
+        }else if (die.result == 1) {
+            r_data.ones += 1
+        }
+    });
+    if (r_data.pass > r_data.ones && roll._total >= tn) {
+        r_data.success = true;
+        r_data.raises = Math.floor((roll._total - tn) / 5);
+    }
+    return r_data;
+}
+
+function build_skill_template(data, roll_data) {
+    let r_str = `
+        <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
+        <h2 style="text-align:center">${roll_data.total}</h2>
+    `;
+    if (roll_data.success) {
+        //Winning
+        if (roll_data.raises == 1) {
+            r_str += `
+                <p style="text-align:center">${data.name} passed with a raise</p>
+            `;
+        }else if (roll_data.raises > 0) {
+            r_str += `
+                <p style="text-align:center">${data.name} passed with ${roll_data.raises} raises</p>
+            `;
+        }else{
+            r_str += `
+                <p style="text-align:center">${data.name} passed</p>
+            `;
+        }
+    }else if (roll_data.ones > roll_data.pass) {
+        r_str += `
+            <p style="text-align:center">${data.name} critically failed!</p>
+        `;
+    }else{
+        r_str += `
+            <p style="text-align:center">${data.name} failed.</p>
+        `;
+    }
+    return r_str;
+}
+
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -182,26 +238,32 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     _on_trait_roll(event) {
-        event.preventDefault();
         let element = event.currentTarget;
-        console.log(element);
-        let trait = element.closest(".trait-data").dataset.trait;
-        let die_type = element.closest(".trait-data").dataset.die;
-        let mod   = element.closest(".trait-data").dataset.mod;
-        console.log(trait, die_type, mod);
-        let wound_mod = this.actor.data.data.wound_modifier;
-        console.log(this.actor);
-        let content = "";
-        let skill_level = parseInt(this.actor.data.data.traits[trait].level);
-        content = `
-            <div>
-                <h3 style="text-align:center">${trait}</h3>
-                <p style="text-align:center">[[${skill_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
-            </div>
-        `;
-        ChatMessage.create({
-            content: content
-        });
+        let trait_name = element.closest(".trait-data").dataset.trait;
+        if (game.user.isPC) {
+            emit('check_tn', {
+                type: 'trait',
+                name: this.actor.name,
+                trait: trait,
+            });
+        }else{
+            let trait = this.actor.data.data.traits[trait_name];
+            let data = {
+                type: 'trait',
+                skill_name: trait.name,
+                tn: 7,
+                name: this.actor.name
+            };
+            let lvl = trait.level;
+            let die = trait.die_type;
+            let mod = trait.modifier;
+            let wound_mod = this.actor.data.data.wound_modifier;
+            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let roll = new Roll(formula).roll();
+            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            ChatMessage.create({content: build_skill_template(data, r_data)});
+            roll.toMessage({rollMode: 'gmroll'});
+        }
     }
 
     _on_trait_buff(event) {
@@ -246,38 +308,40 @@ export default class PlayerSheet extends ActorSheet {
             this.actor.update({data: {traits: traits}})
         }
     }
-
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let trait = element.closest(".skill-data").dataset.trait;
-        let skill = element.closest(".skill-data").dataset.skill;
-        let mod   = element.closest(".skill-data").dataset.mod;
-        console.log(element);
-        let wound_mod = this.actor.data.data.wound_modifier;
-        console.log(this.actor);
-        let content = "";
-        let skill_level = parseInt(this.actor.data.data.traits[trait].skills[skill].level);
-        let die_type    = this.actor.data.data.traits[trait].die_type
-        if (skill_level > 0){
-            content = `
-                <div>
-                    <h3 style="text-align:center">${skill}</h3>
-                    <p style="text-align:center">[[${skill_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
-                </div>
-            `;
+        let tra = element.closest(".skill-data").dataset.trait;
+        let skl = element.closest(".skill-data").dataset.skill;
+        if (game.user.isPC) {
+            emit('check_tn', {
+                type: 'skill',
+                name: this.actor.name,
+                trait: tra,
+                skill: skl
+            });
         }else{
-            let trait_level = parseInt(this.actor.data.data.traits[trait].level);
-            content = `
-                <div>
-                    <h3 style="text-align:center">${skill}</h3>
-                    <p style="text-align:center">[[${trait_level}${die_type}ex + ${mod} + ${wound_mod}]]</p>
-                </div>
-            `;
-        };
-        ChatMessage.create({
-            content: content
-        });
+            let trait = this.actor.data.data.traits[tra];
+            let skill = trait.skills[skl];
+            let data = {
+                type: 'skill',
+                skill_name: skill.name,
+                tn: 7,
+                name: this.actor.name
+            };
+            let lvl = skill.level;
+            let die = trait.die_type;
+            let mod = skill.modifier;
+            let wound_mod = this.actor.data.data.wound_modifier;
+            if (lvl == 0) {
+                lvl = trait.level;
+            }
+            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let roll = new Roll(formula).roll();
+            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            ChatMessage.create({content: build_skill_template(data, r_data)});
+            roll.toMessage({rollMode: 'gmroll'});
+        }
     }
 
     _on_skill_buff(event) {

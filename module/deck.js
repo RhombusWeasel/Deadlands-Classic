@@ -69,6 +69,17 @@ function emit(op, data) {
     });
 }
 
+function get_tn() {
+    let mods = game.actors.getName('Marshal').data.data.modifiers;
+    let tn = 5;
+    for (const [key, mod] of Object.entries(mods)){
+        if (mod.active) {
+            tn -= mod.mod;
+        }
+    }
+    return tn;
+}
+
 function check_roll(roll, tn, mod) {
     console.log(roll);
     let r_data = {
@@ -91,6 +102,38 @@ function check_roll(roll, tn, mod) {
         r_data.raises = Math.floor((roll._total - tn) / 5);
     }
     return r_data;
+}
+
+function build_skill_template(data, roll_data) {
+    let r_str = `
+        <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
+        <h2 style="text-align:center">${roll_data.total}</h2>
+    `;
+    if (roll_data.success) {
+        //Winning
+        if (roll_data.raises == 1) {
+            r_str += `
+                <p style="text-align:center">${data.name} passed with a raise</p>
+            `;
+        }else if (roll_data.raises > 0) {
+            r_str += `
+                <p style="text-align:center">${data.name} passed with ${roll_data.raises} raises</p>
+            `;
+        }else{
+            r_str += `
+                <p style="text-align:center">${data.name} passed</p>
+            `;
+        }
+    }else if (roll_data.ones > roll_data.pass) {
+        r_str += `
+            <p style="text-align:center">${data.name} critically failed!</p>
+        `;
+    }else{
+        r_str += `
+            <p style="text-align:center">${data.name} failed.</p>
+        `;
+    }
+    return r_str;
 }
 
 function build_friendly_fire_dialog(data) {
@@ -231,6 +274,53 @@ let operations = {
             game.dc.action_discard.push(data.card)
             data.card = game.dc.action_deck.pop()
             emit('recieve_card', data);
+        }
+    },
+    check_tn: function(data) {
+        if (game.user.isGM) {
+            data.tn = get_tn();
+            if (data.type == 'skill') {
+                emit('skill_check', data);
+            }else{
+                emit('trait_check', data);
+            }
+        }
+    },
+    trait_check: function(data) {
+        let char = game.actors.getName(data.name);
+        if (char.owner) {
+            let trait = char.data.data.traits[data.trait];
+            let lvl = trait.level;
+            let die = trait.die_type;
+            let mod = trait.modifier;
+            let wound_mod = char.data.data.wound_modifier;
+            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let roll = new Roll(formula).roll();
+            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            data.skill_name = trait.name
+            ChatMessage.create({content: build_skill_template(data, r_data)});
+            roll.toMessage({rollMode: 'gmroll'});
+        }
+    },
+    skill_check: function(data) {
+        let char = game.actors.getName(data.name);
+        console.log(data, char);
+        if (char.owner) {
+            let trait = char.data.data.traits[data.trait];
+            let skill = trait.skills[data.skill];
+            let lvl = skill.level;
+            let die = trait.die_type;
+            let mod = skill.modifier;
+            let wound_mod = char.data.data.wound_modifier;
+            if (lvl == 0) {
+                lvl = trait.level;
+            }
+            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let roll = new Roll(formula).roll();
+            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            data.skill_name = skill.name
+            ChatMessage.create({content: build_skill_template(data, r_data)});
+            roll.toMessage({rollMode: 'gmroll'});
         }
     },
     check_target: function(data) {
