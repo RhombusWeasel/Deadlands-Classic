@@ -732,17 +732,17 @@ let operations = {
     enemy_damage: function(data) {
         let char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
         if (game.user.isGM) {
-            console.log('enemy_damage:', char.actor.data.data.wounds);
+            console.log('enemy_damage:', data, char);
             let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
             let w_data = {
                 data: {
                     wind: {
-                        value: char.data.data.wind.value - wind_roll._total
+                        value: char.actor.data.data.wind.value - wind_roll._total
                     },
                     wounds: {
-                        [loc]: current + data.wounds
+                        [data.loc_key]: current + data.wounds
                     }
                 }
             };

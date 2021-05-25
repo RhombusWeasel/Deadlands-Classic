@@ -158,9 +158,12 @@ Hooks.once("init", function () {
 
 Hooks.on('preCreateToken', function () {
     console.log('W00T', arguments);
-    let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
-    let amt = get_token_count(same);
-    arguments[1].name += ` ${amt}`
+    let act = game.actors.getName(arguments[1].name);
+    if (!(act.isPC)) {
+        let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
+        let amt = get_token_count(same);
+        arguments[1].name += ` ${amt}`
+    }
 });
 
 Hooks.on('hoverToken', function () {
