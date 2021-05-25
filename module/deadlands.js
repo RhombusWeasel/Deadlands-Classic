@@ -26,7 +26,7 @@ function get_token_count(t) {
         tokens.forEach(tkn => {
             console.log(tkn.name, t.name);
             if (tkn.name.search(t.name) != -1) {
-                console.log('Match!');
+                console.log('Match!', tkn.name.search(t.name));
                 count += 1;
             }
         });
@@ -161,7 +161,7 @@ Hooks.on('preCreateToken', function () {
     let act = game.actors.getName(arguments[1].name);
     if (!(act.isPC)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
-        let amt = get_token_count(same);
+        let amt = get_token_count(act);
         arguments[1].name += ` ${amt}`
     }
 });
