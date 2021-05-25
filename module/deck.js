@@ -734,7 +734,7 @@ let operations = {
         if (game.user.isGM) {
             console.log('enemy_damage:', char.actor.data.data.wounds);
             let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
-            let wind_roll = new Roll(`${wounds}d6`).roll();
+            let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
             let w_data = {
                 data: {
@@ -742,7 +742,7 @@ let operations = {
                         value: char.data.data.wind.value - wind_roll._total
                     },
                     wounds: {
-                        [loc]: current + wounds
+                        [loc]: current + data.wounds
                     }
                 }
             };
