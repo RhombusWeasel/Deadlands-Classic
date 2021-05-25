@@ -715,6 +715,9 @@ let operations = {
                                 }
                             };
                             char.update(w_data);
+                            if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
+                                char.toggleOverlay('icons/svg/skull.svg');
+                            }
                             let highest = 0
                             Object.keys(char.data.data.wounds).forEach(function(key) {
                                 if (char.data.data.wounds[key] >= highest) {
@@ -750,6 +753,9 @@ let operations = {
                     }
                 }
             };
+            if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
+                char.toggleOverlay('icons/svg/skull.svg');
+            }
             char.actor.update(w_data);
             let highest = 0;
             Object.keys(char.actor.data.data.wounds).forEach(function(key) {
