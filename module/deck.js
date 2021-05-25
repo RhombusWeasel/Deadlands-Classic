@@ -699,6 +699,7 @@ let operations = {
                             console.log('take_damage:', data, char);
                             let current = parseInt(char.data.data.wounds[loc]) || 0;
                             let wind_roll = new Roll(`${wounds}d6`).roll();
+                            wind_roll.toMessage({rollMode: 'gmroll'});
                             let w_data = {
                                 data: {
                                     wind: {
@@ -733,8 +734,19 @@ let operations = {
         if (game.user.isGM) {
             console.log('enemy_damage:', char.actor.data.data.wounds);
             let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
-            let updata = {data: {wounds: {[data.loc_key]: current + data.wounds}}};
-            char.actor.update(updata);
+            let wind_roll = new Roll(`${wounds}d6`).roll();
+            wind_roll.toMessage({rollMode: 'gmroll'});
+            let w_data = {
+                data: {
+                    wind: {
+                        value: char.data.data.wind.value - wind_roll._total
+                    },
+                    wounds: {
+                        [loc]: current + wounds
+                    }
+                }
+            };
+            char.actor.update(w_data);
             let highest = 0;
             Object.keys(char.actor.data.data.wounds).forEach(function(key) {
                 if (char.actor.data.data.wounds[key] >= highest) {
