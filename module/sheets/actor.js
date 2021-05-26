@@ -734,7 +734,7 @@ export default class PlayerSheet extends ActorSheet {
                 ammo.update({"data.amount": ammo.data.data.amount - max});
                 item.update({"data.chamber": shots});
             }else{
-                reply = `Looks like you ain't got no more ${ammo.name} left, I hope you brought another gun!`
+                reply = `Looks like you ain't got no more ammo left, I hope you brought another gun!`
             }
         }
         ChatMessage.create({

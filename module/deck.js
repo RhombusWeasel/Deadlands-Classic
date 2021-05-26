@@ -499,7 +499,7 @@ let operations = {
                         data.tn -= mod.mod;
                     }
                 }
-                let atk_mod = trait.modifier + skill.modifier + game.dc.aim_bonus + wound_mod;
+                let atk_mod = parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(game.dc.aim_bonus) + parseInt(wound_mod);
                 let atk_formula = `${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${wound_mod}`
                 let atk_roll = new Roll(atk_formula).roll();
                 let atk_data = check_roll(atk_roll, data.tn, atk_mod);
