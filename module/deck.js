@@ -963,6 +963,25 @@ let operations = {
         if (game.user.isGM) {
             emit('roll_damage', data);
         }else if (atk.owner) {
+            let itm = atk.actor.getOwnedItem(data.weapon);
+            data.weapon_name = itm.name;
+            let shots = 1;
+            if (data.type == 'ranged') {
+                shots = itm.data.data.chamber;
+            }
+            if (shots < 1) {
+                //Out of ammo
+                ChatMessage.create({content: `
+                    <h2 style="text-align:center">Out of Ammo!</h2>
+                    <p style="text-align:center">Click...</p>
+                    <p style="text-align:center">Click Click!</p>
+                    <p style="text-align:center">Looks like you're empty partner.</p>
+                `});
+                return;
+            }
+            shots = shots - 1;
+            game.dc.aim_bonus = 0;
+            itm.update({"data.chamber": shots});
             if (data.hit_roll < data.tn) {
                 //Missed
                 let msg = `
@@ -986,25 +1005,6 @@ let operations = {
                 `});
                 return;
             }
-            let itm = atk.actor.getOwnedItem(data.weapon);
-            data.weapon_name = itm.name;
-            let shots = 1;
-            if (data.type == 'ranged') {
-                shots = itm.data.data.chamber;
-            }
-            if (shots < 1) {
-                //Out of ammo
-                ChatMessage.create({content: `
-                    <h2 style="text-align:center">Out of Ammo!</h2>
-                    <p style="text-align:center">Click...</p>
-                    <p style="text-align:center">Click Click!</p>
-                    <p style="text-align:center">Looks like you're empty partner.</p>
-                `});
-                return;
-            }
-            shots = shots - 1;
-            game.dc.aim_bonus = 0;
-            itm.update({"data.chamber": shots})
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             let dmg = itm.data.data.damage.split('d');
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
