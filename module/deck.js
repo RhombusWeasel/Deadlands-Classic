@@ -927,6 +927,7 @@ let operations = {
                 });
                 form.render(true);
             }else{
+                data.dodge_roll = 0;
                 emit('roll_to_hit', data);
             }
         }
