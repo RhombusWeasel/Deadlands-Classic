@@ -1002,6 +1002,9 @@ let operations = {
                 `});
                 return;
             }
+            shots = shots - 1;
+            game.dc.aim_bonus = 0;
+            itm.update({"data.chamber": shots})
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             let dmg = itm.data.data.damage.split('d');
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
