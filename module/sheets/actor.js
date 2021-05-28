@@ -240,18 +240,19 @@ export default class PlayerSheet extends ActorSheet {
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
-        if (game.user.isPC) {
+        if (this.actor.isPC) {
             emit('check_tn', {
                 type: 'trait',
-                name: this.actor.name,
-                trait: trait,
+                roller: this.actor.name,
+                trait: trait_name,
+                modifier: 0
             });
         }else{
             let trait = this.actor.data.data.traits[trait_name];
             let data = {
                 type: 'trait',
                 skill_name: trait.name,
-                tn: 7,
+                tn: 5,
                 name: this.actor.name
             };
             let lvl = trait.level;
@@ -313,12 +314,13 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
-        if (game.user.isPC) {
+        if (this.actor.isPC) {
             emit('check_tn', {
                 type: 'skill',
-                name: this.actor.name,
+                roller: this.actor.name,
                 trait: tra,
-                skill: skl
+                skill: skl,
+                modifier: 0
             });
         }else{
             let trait = this.actor.data.data.traits[tra];
@@ -681,7 +683,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("check_target",
+        emit("declare_attack",
             {
                 type: 'ranged',
                 attacker: this.actor.name,
