@@ -891,6 +891,7 @@ let operations = {
                                         dat[key] = value;
                                     }
                                 }
+                                let itm = char.actor.deleteOwnedItem(data.card_id);
                                 console.log('check_dodge', dat);
                                 emit('skill_roll', dat);
                             }
