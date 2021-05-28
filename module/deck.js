@@ -866,6 +866,7 @@ let operations = {
                 }
             }
             cards = sort_deck(cards);
+            console.log('dodge:', cards);
             if (cards.length > 0) {
                 data.card_name = cards[0].name
                 data.card_id = cards[0]._id
@@ -891,7 +892,7 @@ let operations = {
                                         dat[key] = value;
                                     }
                                 }
-                                let itm = char.actor.deleteOwnedItem(data.card_id);
+                                char.actor.deleteOwnedItem(dat.card_id);
                                 console.log('check_dodge', dat);
                                 emit('skill_roll', dat);
                             }
