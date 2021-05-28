@@ -866,9 +866,9 @@ let operations = {
                 }
             }
             cards = sort_deck(cards);
-            data.card_name = cards[0].name
-            data.card_id = cards[0]._id
             if (cards.length > 0) {
+                data.card_name = cards[0].name
+                data.card_id = cards[0]._id
                 let form = new Dialog({
                     title: `Dodge!`,
                     content: build_dodge_dialog(data),
@@ -926,6 +926,8 @@ let operations = {
                     }
                 });
                 form.render(true);
+            }else{
+                emit('roll_to_hit', data);
             }
         }
     },
