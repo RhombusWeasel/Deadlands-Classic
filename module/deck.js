@@ -937,7 +937,7 @@ let operations = {
         if (char.actor.isPC && game.user.isGM) {
             emit('roll_to_hit', data);
         }else if(!(char.actor.isPC) && game.user.isGM){
-            emit('proceed_attack', data);
+            operations.proceed_attack(data);
         }else if (char.owner) {
             data.roller = data.attacker
             data.next_op = 'roll_damage'
