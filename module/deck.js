@@ -908,23 +908,23 @@ let operations = {
                         no: {
                             label: 'Take yer chances.',
                             callback: () => {
-                                let d = document.getElementById('data');
-                                let dat = {};
-                                for (let [key, value] of Object.entries(d.dataset)) {
-                                    if (key == 'weapon'){
-                                        dat[key] = value;
-                                    }else if (parseInt(value)) {
-                                        dat[key] = parseInt(value);
-                                    }else if (value == 'true') {
-                                        dat[key] = true;
-                                    }else if (value == 'false') {
-                                        dat[key] = false;
-                                    }else {
-                                        dat[key] = value;
-                                    }
-                                }
-                                console.log('check_dodge', dat);
-                                emit('roll_to_hit', dat);
+                                // let d = document.getElementById('data');
+                                // let dat = {};
+                                // for (let [key, value] of Object.entries(d.dataset)) {
+                                //     if (key == 'weapon'){
+                                //         dat[key] = value;
+                                //     }else if (parseInt(value)) {
+                                //         dat[key] = parseInt(value);
+                                //     }else if (value == 'true') {
+                                //         dat[key] = true;
+                                //     }else if (value == 'false') {
+                                //         dat[key] = false;
+                                //     }else {
+                                //         dat[key] = value;
+                                //     }
+                                // }
+                                console.log('check_dodge', data);
+                                emit('roll_to_hit', data);
                             }
                         }
                     },
