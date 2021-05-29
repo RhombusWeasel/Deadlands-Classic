@@ -878,51 +878,21 @@ let operations = {
                         yes: {
                             label: 'Dodge',
                             callback: () => {
-                                let d = document.getElementById('data');
-                                let dat = {};
-                                for (let [key, value] of Object.entries(d.dataset)) {
-                                    if (key == 'weapon'){
-                                        dat[key] = value;
-                                    }else if (parseInt(value)) {
-                                        dat[key] = parseInt(value);
-                                    }else if (value == 'true') {
-                                        dat[key] = true;
-                                    }else if (value == 'false') {
-                                        dat[key] = false;
-                                    }else {
-                                        dat[key] = value;
-                                    }
-                                }
                                 game.socket.emit("system.deadlands_classic", {
                                     operation: 'discard_card',
                                     data: {
-                                        name: dat.card_name,
+                                        name: data.card_name,
                                         type: 'action_deck'
                                     }
                                 });
-                                char.actor.deleteOwnedItem(dat.card_id);
-                                console.log('check_dodge', dat);
-                                emit('skill_roll', dat);
+                                char.actor.deleteOwnedItem(data.card_id);
+                                console.log('check_dodge', data);
+                                emit('skill_roll', data);
                             }
                         },
                         no: {
                             label: 'Take yer chances.',
                             callback: () => {
-                                // let d = document.getElementById('data');
-                                // let dat = {};
-                                // for (let [key, value] of Object.entries(d.dataset)) {
-                                //     if (key == 'weapon'){
-                                //         dat[key] = value;
-                                //     }else if (parseInt(value)) {
-                                //         dat[key] = parseInt(value);
-                                //     }else if (value == 'true') {
-                                //         dat[key] = true;
-                                //     }else if (value == 'false') {
-                                //         dat[key] = false;
-                                //     }else {
-                                //         dat[key] = value;
-                                //     }
-                                // }
                                 console.log('check_dodge', data);
                                 emit('roll_to_hit', data);
                             }
