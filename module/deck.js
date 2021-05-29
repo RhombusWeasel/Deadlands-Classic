@@ -324,7 +324,7 @@ function build_damage_dialog(char, data, saved) {
 }
 
 function spend_fate_chip(data, label) {
-    let char = game.actors.getName(data.target);
+    let char = game.actors.getName(data.roller);
     for (let item of char.items.values()) {
         if(item.name == label && item.type == 'chip') {
             char.deleteOwnedItem(item._id);
