@@ -852,13 +852,6 @@ let operations = {
         if (game.user.isGM) {
             emit('check_dodge', data);
         }else if (char.owner) {
-            data.next_op = 'roll_to_hit'
-            data.write_value = 'dodge_roll'
-            data.trait = 'nimbleness'
-            data.skill = 'dodge'
-            data.roller = data.target
-            data.tn = 0
-            data.modifier = 0
             let cards = [];
             for (let item of char.actor.items.values()) {
                 if (item.type == 'action_deck') {
@@ -868,6 +861,13 @@ let operations = {
             cards = sort_deck(cards);
             console.log('dodge:', cards);
             if (cards.length > 0) {
+                data.next_op = 'roll_to_hit'
+                data.write_value = 'dodge_roll'
+                data.trait = 'nimbleness'
+                data.skill = 'dodge'
+                data.roller = data.target
+                data.tn = 0
+                data.modifier = 0
                 data.card_name = cards[0].name
                 data.card_id = cards[0]._id
                 let form = new Dialog({
@@ -918,7 +918,7 @@ let operations = {
                                 console.log('check_dodge', dat);
                                 game.socket.emit("system.deadlands_classic", {
                                     operation: 'roll_to_hit',
-                                    data: d
+                                    data: dat
                                 });
                             }
                         }
