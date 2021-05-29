@@ -309,6 +309,7 @@ export default class PlayerSheet extends ActorSheet {
             this.actor.update({data: {traits: traits}})
         }
     }
+
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
@@ -664,7 +665,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("check_target",
+        emit("declare_attack",
             {
                 type: 'melee',
                 attacker: this.actor.name,
