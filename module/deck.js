@@ -364,6 +364,7 @@ function battle_report(data) {
     `;
     if (data.type == 'ranged'){
         msg += `
+            <h3 style="text-align:center">Range: ${data.range} [${data.range_mod}]</h3>
             <p style="text-align:center">${data.attacker} fired their ${data.weapon_name} at ${data.target}</p>
         `;
     }else{
@@ -705,10 +706,11 @@ let operations = {
             if (data.type == 'ranged') {
                 let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
                 let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
+                data.range = dist;
                 data.range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
                 data.modifier -= data.range_mod;
-                data.trait = 'deftness'
-                data.skill = 'shootin_' + itm.data.data.gun_type
+                data.trait = 'deftness';
+                data.skill = 'shootin_' + itm.data.data.gun_type;
             }
             if (itm.data.data.off_hand) {
                 data.modifier += char.actor.data.data.off_hand_modifier;
