@@ -125,7 +125,7 @@ function evaluate_roll(data) {
     data.ones = 0;
     for (let i = 0; i < data.amt; i++) {
         const res = data.results[i]
-        if (res + data.modifier > data.tn) {
+        if (res + data.modifier >= data.tn) {
             data.pass += 1;
         }else if (res == 1) {
             data.ones += 1;
@@ -156,7 +156,7 @@ function build_skill_template(data) {
         for (let i = 0; i < data.roll.amt; i++) {
             const res = data.roll.results[i];
             if(res){
-                if (res + data.modifier > data.tn) {
+                if (res + data.modifier >= data.tn) {
                     r_str += `
                         <td style="color: green">${res}</td>
                     `;
