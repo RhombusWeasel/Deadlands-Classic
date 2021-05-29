@@ -770,7 +770,7 @@ let operations = {
             if (shots < 1) {
                 //Out of ammo
                 ChatMessage.create({content: `
-                    <h2 style="text-align:center">Out of Ammo!</h2>
+                    <h3 style="text-align:center">Out of Ammo!</h3>
                     <p style="text-align:center">Click...</p>
                     <p style="text-align:center">Click Click!</p>
                     <p style="text-align:center">Looks like you're empty partner.</p>
@@ -783,7 +783,7 @@ let operations = {
             if (data.hit_roll < data.tn) {
                 //Missed
                 let msg = `
-                    <h2 style="text-align:center">Attack! [${data.tn}]</h2>
+                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
                     <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
                 `;
                 if (data.roll.ones > data.roll.pass) {
@@ -797,7 +797,7 @@ let operations = {
             if (data.hit_roll < data.dodge_roll) {
                 //Dodged
                 ChatMessage.create({content: `
-                    <h2 style="text-align:center">Attack! [${data.tn}]</h2>
+                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
                     <p style="text-align:center">${data.attacker} attacked ${data.target} but missed.</p>
                     <p style="text-align:center">They saw it coming and managed to dodge.</p>
                 `});
