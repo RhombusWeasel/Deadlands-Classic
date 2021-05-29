@@ -1106,12 +1106,12 @@ let operations = {
                 char.toggleEffect('icons/svg/blood.svg', {active: true});
             }
             if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
-                char.toggleEffect('icons/svg/skull.svg');
+                char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (data.loc_key in critical) {
                 if (current + data.wounds >= 5) {
-                    char.toggleEffect('icons/svg/skull.svg');
+                    char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                 }
             }
             char.actor.update(w_data);
