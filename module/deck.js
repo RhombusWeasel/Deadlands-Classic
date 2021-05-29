@@ -164,6 +164,10 @@ function build_skill_template(data) {
                     r_str += `
                         <td style="color: red">${res}</td>
                     `;
+                }else {
+                    r_str += `
+                        <td>${res}</td>
+                    `;
                 }
             }
         }
