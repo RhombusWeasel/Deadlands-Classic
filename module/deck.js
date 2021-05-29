@@ -147,15 +147,18 @@ function build_skill_template(data) {
     console.log('build_skill_temlpate', data);
     let r_str = `
         <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
+        <h3 style="text-align:center">Modifier: ${data.modifier}</h3>
         <h3 style="text-align:center">${data.roll.total}</h3>
         <table style="table-layout: fixed;">
             <tr style="text-align:center">
         `;
         for (let i = 0; i < data.roll.amt; i++) {
             const res = data.roll.results[i];
-            r_str += `
-                <td>${res}</td>
-            `;
+            if(res){
+                r_str += `
+                    <td>${res}</td>
+                `;
+            }
         }
         r_str += `
             </tr>
@@ -494,7 +497,7 @@ let operations = {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
                                 data.roll.results.unshift(res);
-                                data.roll.amt += 1
+                                data.roll.amt += 1;
                                 data.roll = evaluate_roll(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
