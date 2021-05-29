@@ -1,5 +1,6 @@
 let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
 let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
+let bounty = {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5};
 let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
 let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
 
@@ -352,7 +353,7 @@ function spend_fate_chip(data, label) {
 
 function soak_damage(data, label){
     if (spend_fate_chip(data, label)){
-        data.wounds -= item.data.bounty
+        data.wounds -= bounty[label]
     }
     return data;
 }
@@ -492,7 +493,6 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
-                            let char = game.actors.getName(data.roller);
                             if (spend_fate_chip(data, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
@@ -507,7 +507,6 @@ let operations = {
                     red: {
                         label: 'Red',
                         callback: () => {
-                            let char = game.actors.getName(data.roller);
                             if (spend_fate_chip(data, 'Red')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
@@ -524,10 +523,11 @@ let operations = {
                     blue: {
                         label: 'Blue',
                         callback: () => {
-                            let char = game.actors.getName(data.roller);
                             if (spend_fate_chip(data, 'Blue')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
+                                let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
+                                data.roll.results[index] += result;
                                 data.roll.total += result;
                                 data.roll.results.push(result);
                                 data.roll = evaluate_roll(data.roll);
