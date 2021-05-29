@@ -870,6 +870,7 @@ let operations = {
                 data.modifier = 0
                 data.card_name = cards[0].name
                 data.card_id = cards[0]._id
+                console.log('dodge:', data)
                 let form = new Dialog({
                     title: `Dodge!`,
                     content: build_dodge_dialog(data),
@@ -892,6 +893,13 @@ let operations = {
                                         dat[key] = value;
                                     }
                                 }
+                                game.socket.emit("system.deadlands_classic", {
+                                    operation: 'discard_card',
+                                    data: {
+                                        name: dat.card_name,
+                                        type: 'action_deck'
+                                    }
+                                });
                                 char.actor.deleteOwnedItem(dat.card_id);
                                 console.log('check_dodge', dat);
                                 emit('skill_roll', dat);
