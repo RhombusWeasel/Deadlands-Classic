@@ -106,7 +106,7 @@ function new_roll(data) {
         }
         r_data.results.push(die.result);
     });
-    if (r_data.pass > r_data.ones && roll._total >= data.tn) {
+    if (r_data.pass >= r_data.ones && r_data.total >= data.tn) {
         r_data.success = true;
         r_data.raises = Math.floor((roll._total - r_data.tn) / 5);
     }
@@ -120,20 +120,25 @@ function new_roll(data) {
 }
 
 function evaluate_roll(data) {
+    data.pass = 0;
+    data.ones = 0;
     for (let i = 0; i < data.amt; i++) {
         const res = data.results[i]
-        if (data.result + data.modifier > data.tn) {
+        if (res + data.modifier > data.tn) {
             data.pass += 1;
-        }else if (result == 1) {
+        }else if (res == 1) {
             data.ones += 1;
         }
+        if (res + data.modifier > data.total) {
+            data.total = res + data.modifier
+        }
     }
-    if (data.pass > r_data.ones) {
+    if (data.pass > data.ones) {
         data.crit_fail = false;
     }
-    if (data.pass > data.ones && data.total >= tn) {
+    if (data.pass > data.ones && data.total >= data.tn) {
         data.success = true;
-        data.raises = Math.floor((data.total - tn) / 5);
+        data.raises = Math.floor((data.total - data.tn) / 5);
     }
     return data;
 }
@@ -141,12 +146,12 @@ function evaluate_roll(data) {
 function build_skill_template(data) {
     console.log('build_skill_temlpate', data);
     let r_str = `
-        <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
-        <h2 style="text-align:center">${data.roll.total}</h2>
-        <table>
+        <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
+        <h3 style="text-align:center">${data.roll.total}</h3>
+        <table style="table-layout: fixed;">
             <tr style="text-align:center">
         `;
-        for (let i = 0; i < data.roll.results.length; i++) {
+        for (let i = 0; i < data.roll.amt; i++) {
             const res = data.roll.results[i];
             r_str += `
                 <td>${res}</td>
@@ -230,9 +235,9 @@ function build_data_div(data) {
 function build_roll_dialog(data) {
     let form = `
         <form>
-            ${build_data_div(data)}
+            <div>
                 <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
-                <table>
+                <table style="table-layout: fixed;">
                     <tr style="text-align:center">
     `;
     for (let i = 0; i < data.roll.results.length; i++) {
@@ -274,7 +279,7 @@ function build_roll_dialog(data) {
 function build_friendly_fire_dialog(data) {
     return `
     <form>
-        ${build_data_div(data)}
+        <div>
             <h2 style="text-align: center;">Friendly Fire!</h2>
             <p style="text-align: center;">${data.target} is not attacking you!</p>
             <p style="text-align: center;">You can continue but you'll become wanted and have a bounty placed on your head.</p>
@@ -464,8 +469,8 @@ let operations = {
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
-                                let result = roll._total;
-                                data.roll.results.unshift(result);
+                                let res = roll._total;
+                                data.roll.results.unshift(res);
                                 data.roll.amt += 1
                                 data.roll = evaluate_roll(data.roll);
                                 emit('confirm_result', data);
@@ -474,7 +479,7 @@ let operations = {
                                 `});
                                 roll.toMessage({rollMode: 'gmroll'});
                             }else{
-                                ChatMessage.create({content: build_no_fate_chip_message('blue')});
+                                ChatMessage.create({content: build_no_fate_chip_message('white')});
                                 emit('confirm_result', data);
                             }
                         },
@@ -552,14 +557,13 @@ let operations = {
                     confirm: {
                         label: 'Confirm',
                         callback: () => {
-                            console.log('confirm:', dat);
                             if (data.next_op) {
                                 if(data.write_value) {
                                     data[data.write_value] = data.roll.total
                                 }
                                 emit(data.next_op, data);
+                                ChatMessage.create({content: build_skill_template(data)});
                             }else{
-                                console.log(data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }
                         }
@@ -917,7 +921,6 @@ let operations = {
             let dmg = itm.data.data.damage.split('d');
             let dmg_mod = itm.data.data.damage_bonus || 0;
             let off_hand_mod = 0;
-            let wound_mod = atk.actor.data.data.wound_modifier;
             if(data.type == 'ranged') {
                 let dist = Math.floor(canvas.grid.measureDistance(atk, tgt));
                 trait = atk.actor.data.data.traits.deftness;
@@ -940,21 +943,21 @@ let operations = {
                         data.tn -= mod.mod;
                     }
                 }
-                let atk_mod = parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(game.dc.aim_bonus) + parseInt(wound_mod);
-                let atk_formula = `${lvl}${trait.die_type}ex + ${trait.modifier} + ${skill.modifier} + ${game.dc.aim_bonus} + ${wound_mod}`
-                let atk_roll = new Roll(atk_formula).roll();
-                let atk_data = check_roll(atk_roll, data.tn, atk_mod);
-                data.result = atk_roll._total;
-                atk_roll.toMessage({rollMode: 'gmroll'});
-                console.log('proceed_attack: Roll Data:', atk_data);
-                if (atk_data.success) {
-                    if (atk_roll._total > data.dodge_roll) {
+                data.roller = data.attacker;
+                data.trait = 'deftness';
+                data.skill = "shootin_".concat(itm.data.data.gun_type);
+                data.amt = lvl;
+                data.dice = trait.die_type;
+                let atk_roll = new_roll(data);
+                data.result = atk_roll.total;
+                if (atk_roll.success) {
+                    if (atk_roll.total > data.dodge_roll) {
                         //Location roll
                         let loc_roll = new Roll('1d20').roll();
                         loc_roll.toMessage({rollMode: 'gmroll'});
                         let tot = loc_roll._total - 1;
                         let found = [];
-                        let range = atk_data.raises * 2
+                        let range = atk_roll.raises * 2
                         for (let i = 0; i < locations.length; i++) {
                             if (i >= tot - range && i <= tot + range && i < 19){
                                 if (!(found.includes(loc_lookup[i]))) {
@@ -1016,7 +1019,7 @@ let operations = {
                         <h2 style="text-align:center">Attack! [${data.tn}]</h2>
                         <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
                     `;
-                    if (atk_data.ones > atk_data.pass) {
+                    if (atk_roll.ones > atk_roll.pass) {
                         msg += `
                         <p style="text-align:center">It was a critical failure!</p>
                         `;
