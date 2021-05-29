@@ -744,7 +744,8 @@ let operations = {
             if (data.type == 'ranged') {
                 let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
                 let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
-                data.modifier += Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
+                data.range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
+                data.modifier -= data.range_mod;
                 data.trait = 'deftness'
                 data.skill = 'shootin_' + itm.data.data.gun_type
             }
