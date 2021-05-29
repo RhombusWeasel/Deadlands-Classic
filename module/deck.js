@@ -805,7 +805,7 @@ let operations = {
             //Damage
             let amt = parseInt(dmg[0]);
             let die = Math.max(parseInt(dmg[1]) - data.av, 4);
-            if (found.includes('noggin')) {
+            if (found.includes('noggin') || loc_roll._total == 20) {
                 data.loc_key = 'noggin';
                 data.loc_label = 'Noggin';
                 amt += 2;
