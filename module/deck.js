@@ -156,9 +156,15 @@ function build_skill_template(data) {
         for (let i = 0; i < data.roll.amt; i++) {
             const res = data.roll.results[i];
             if(res){
-                r_str += `
-                    <td>${res}</td>
-                `;
+                if (res + data.modifier > data.tn) {
+                    r_str += `
+                        <td style="color: green">${res}</td>
+                    `;
+                }else if (res == 1) {
+                    r_str += `
+                        <td style="color: red">${res}</td>
+                    `;
+                }
             }
         }
         r_str += `
