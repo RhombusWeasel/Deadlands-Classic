@@ -190,14 +190,14 @@ function build_skill_template(data) {
 
 function build_no_fate_chip_message(col) {
     return `
-        <h2 style="text-align:center">Fate</h2>
+        <h3 style="text-align:center">Fate</h3>
         <p style="text-align:center">You have no ${col} fate chips.</p>
     `;
 }
 
 function build_marshal_draw_message(col) {
     return `
-        <h2 style="text-align:center">Fate</h2>
+        <h3 style="text-align:center">Fate</h3>
         <p style="text-align:center">The Marshal may draw a fate chip.</p>
     `;
 }
@@ -325,7 +325,7 @@ function build_damage_dialog(char, data, saved) {
 
 function spend_fate_chip_message(data, label) {
     return `
-        <h2 style="text-align:center">Fate</h2>
+        <h3 style="text-align:center">Fate</h3>
         <p style="text-align:center">${data.target} spends a ${label} fate chip.</p>
     `;
 }
@@ -346,7 +346,7 @@ function soak_damage(data, label){
 
 function battle_report(data) {
     let msg =  `
-        <h2 style="text-align:center">Combat Report:</h2>
+        <h3 style="text-align:center">Combat Report:</h3>
     `;
     if (data.type == 'ranged'){
         msg += `
@@ -785,7 +785,7 @@ let operations = {
                     <h2 style="text-align:center">Attack! [${data.tn}]</h2>
                     <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
                 `;
-                if (atk_data.ones > atk_data.pass) {
+                if (data.roll.ones > data.roll.pass) {
                     msg += `
                     <p style="text-align:center">It was a critical failure!</p>
                     `;
