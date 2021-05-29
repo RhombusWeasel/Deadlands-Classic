@@ -364,7 +364,7 @@ function battle_report(data) {
     `;
     if (data.type == 'ranged'){
         msg += `
-            <h3 style="text-align:center">Range: ${data.range} [${data.range_mod}]</h3>
+            <h3 style="text-align:center">Range: ${data.range} yards [-${data.range_mod}]</h3>
             <p style="text-align:center">${data.attacker} fired their ${data.weapon_name} at ${data.target}</p>
         `;
     }else{
@@ -375,6 +375,11 @@ function battle_report(data) {
     if (data.dodge_roll > 0) {
         msg += `
             <p style="text-align:center">${data.target} tries to dodge but can't get out of the way!</p>
+        `;
+    }
+    if (data.av) {
+        msg += `
+            <p style="text-align:center">Their armour reduced the damage!</p>
         `;
     }
     if (data.wounds == 1) {
@@ -785,10 +790,10 @@ let operations = {
             let loc_key = found[found.length - 1];
             console.log('roll_damage: Location:', loc_key);
             //Armour Check
-            let av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
+            data.av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
             //Damage
             let amt = parseInt(dmg[0]);
-            let die = Math.max(parseInt(dmg[1]) - av, 4);
+            let die = Math.max(parseInt(dmg[1]) - data.av, 4);
             if (found.includes('noggin')) {
                 data.loc_key = 'noggin';
                 data.loc_label = 'Noggin';
