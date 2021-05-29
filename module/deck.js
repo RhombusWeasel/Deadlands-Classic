@@ -1072,22 +1072,14 @@ let operations = {
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
                                 soak += val
-                                emit('soak', {
-                                    target: name,
-                                    wounds: wounds,
-                                    loc_key: loc_key,
-                                    loc_label: loc_label,
-                                    soak: soak
-                                });
-                            }else{
-                                emit('soak', {
-                                    target: name,
-                                    wounds: wounds,
-                                    loc_key: loc_key,
-                                    loc_label: loc_label,
-                                    soak: soak
-                                });
                             }
+                            emit('soak', {
+                                target: name,
+                                wounds: wounds,
+                                loc_key: loc_key,
+                                loc_label: loc_label,
+                                soak: soak
+                            });
                         }
                     },
                     red: {
@@ -1110,28 +1102,14 @@ let operations = {
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
                                 soak += val
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
-                                });
-                            }else{
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
-                                });
                             }
+                            emit('soak', {
+                                target: name,
+                                wounds: wounds,
+                                loc_key: loc_key,
+                                loc_label: loc_label,
+                                soak: soak
+                            });
                         }
                     },
                     blue: {
@@ -1154,28 +1132,14 @@ let operations = {
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
                                 soak += val
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
-                                });
-                            }else{
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
-                                });
                             }
+                            emit('soak', {
+                                target: name,
+                                wounds: wounds,
+                                loc_key: loc_key,
+                                loc_label: loc_label,
+                                soak: soak
+                            });
                         }
                     },
                     legend: {
@@ -1225,37 +1189,8 @@ let operations = {
                     take: {
                         label: 'Take Damage.',
                         callback: (html) => {
-                            let el = document.getElementById('data');
-                            let name = el.dataset.char;
-                            let wounds = parseInt(el.dataset.wounds);
-                            let loc = el.dataset.loc_key;
-                            let char = game.actors.getName(name);
-                            console.log('take_damage:', data, char);
-                            let current = parseInt(char.data.data.wounds[loc]) || 0;
-                            let wind_roll = new Roll(`${wounds}d6`).roll();
-                            wind_roll.toMessage({rollMode: 'gmroll'});
-                            let w_data = {
-                                data: {
-                                    wind: {
-                                        value: char.data.data.wind.value - wind_roll._total
-                                    },
-                                    wounds: {
-                                        [loc]: current + wounds
-                                    }
-                                }
-                            };
-                            char.update(w_data);
-                            if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
-                                char.toggleOverlay('icons/svg/skull.svg');
-                            }
-                            let highest = 0
-                            Object.keys(char.data.data.wounds).forEach(function(key) {
-                                if (char.data.data.wounds[key] >= highest) {
-                                    highest = char.data.data.wounds[key]
-                                }
-                            });
-                            let m_data = {data: {wound_modifier: highest * -1}}
-                            char.update(m_data);
+                            data.wounds -= data.soak;
+                            emit('enemy_damage', data);
                         }
                     }
                 },
@@ -1286,16 +1221,17 @@ let operations = {
             if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleOverlay('icons/svg/skull.svg');
             }
+            let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
+            if (data.loc_key in critical) {
+                if (current + data.wounds >= 5) {
+                    char.toggleOverlay('icons/svg/skull.svg');
+                }
+            }
             char.actor.update(w_data);
             let highest = 0;
             Object.keys(char.actor.data.data.wounds).forEach(function(key) {
                 if (char.actor.data.data.wounds[key] >= highest) {
                     highest = char.actor.data.data.wounds[key];
-                }
-                if (key == 'noggin' || key == 'guts' || key == 'lower_guts' || key == 'gizzards') {
-                    if (char.actor.data.data.wounds[key] >= 5) {
-                        char.toggleOverlay('icons/svg/skull.svg');
-                    }
                 }
             });
             let m_data = {data: {wound_modifier: highest * -1}};
