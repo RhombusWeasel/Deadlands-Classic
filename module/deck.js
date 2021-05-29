@@ -689,6 +689,7 @@ let operations = {
                             label: 'Take yer chances.',
                             callback: () => {
                                 console.log('check_dodge', data);
+                                data.dodge_roll = 0;
                                 emit('roll_to_hit', data);
                             }
                         }
