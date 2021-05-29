@@ -1103,7 +1103,7 @@ let operations = {
                 }
             };
             if (data.wounds > 0) {
-                token.toggleEffect('icons/svg/blood.svg');
+                char.toggleEffect('icons/svg/blood.svg');
             }
             if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg');
