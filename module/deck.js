@@ -1089,7 +1089,9 @@ let operations = {
     enemy_damage: function(data) {
         let char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
         if (!(char)) {
-            emit('enemy_damage', data);
+            ChatMessage.create({ content: `
+                Target Not Found!
+            `});
         }
         if (game.user.isGM) {
             console.log('enemy_damage:', data, char);
