@@ -97,10 +97,11 @@ function new_roll(data) {
     };
     let roll = new Roll(`${data.amt}${data.dice}ex + ${data.modifier}`).roll();
     r_data.total = roll._total;
+    let count = 0
     roll.terms[0].results.forEach(die => {
-        if (die.result + data.modifier >= data.tn) {
+        if (die.result + data.modifier >= data.tn && count < r_data.amt) {
             r_data.pass += 1;
-        }else if (die.result == 1) {
+        }else if (die.result == 1 && count < r_data.amt) {
             r_data.ones += 1;
         }
         r_data.results.push(die.result);
@@ -118,47 +119,23 @@ function new_roll(data) {
     return r_data;
 }
 
-function add_die(data) {
-    let roll = new Roll(`1${data.sides} + ${data.modifier}`).roll();
-    let result = roll.terms[0].results[0]
-    data.results.push(result);
-    if (result + mod > data.tn) {
-        data.pass += 1;
-    }else if (result == 1) {
-        data.ones += 1;
+function evaluate_roll(data) {
+    for (let i = 0; i < data.amt; i++) {
+        const res = data.results[i]
+        if (data.result + data.modifier > data.tn) {
+            data.pass += 1;
+        }else if (result == 1) {
+            data.ones += 1;
+        }
     }
     if (data.pass > r_data.ones) {
         data.crit_fail = false;
     }
-    data.total = Math.max(roll._total, data.total);
     if (data.pass > data.ones && data.total >= tn) {
-        r_data.success = true;
-        r_data.raises = Math.floor((data.total - tn) / 5);
+        data.success = true;
+        data.raises = Math.floor((data.total - tn) / 5);
     }
-}
-
-function check_roll(roll, tn, mod) {
-    console.log(roll);
-    let r_data = {
-        success: false,
-        tn: tn,
-        total: roll._total,
-        raises: 0,
-        pass: 0,
-        ones: 0,
-    };
-    roll.terms[0].results.forEach(die => {
-        if (die.result + mod >= tn) {
-            r_data.pass += 1
-        }else if (die.result == 1) {
-            r_data.ones += 1
-        }
-    });
-    if (r_data.pass > r_data.ones && roll._total >= tn) {
-        r_data.success = true;
-        r_data.raises = Math.floor((roll._total - tn) / 5);
-    }
-    return r_data;
+    return data;
 }
 
 function build_skill_template(data) {
@@ -476,125 +453,36 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
-                            let d = document.getElementById('data');
-                            let dat = {};
-                            for (let [key, value] of Object.entries(d.dataset)) {
-                                if (key == 'weapon'){
-                                    dat[key] = value;
-                                }else if (parseInt(value)) {
-                                    dat[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat[key] = true;
-                                }else if (value == 'false') {
-                                    dat[key] = false;
-                                }else {
-                                    dat[key] = value;
-                                }
-                            }
-                            console.log('confirm:', dat);
-                            let r = document.getElementById('roll');
-                            dat.roll = {};
-                            for (let [key, value] of Object.entries(r.dataset)) {
-                                if (parseInt(value)) {
-                                    dat.roll[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat.roll[key] = true;
-                                }else if (value == 'false') {
-                                    dat.roll[key] = false;
-                                }else {
-                                    dat.roll[key] = value;
-                                }
-                            }
-                            dat.roll.results = []
-                            let res = document.getElementById('results');
-                            for (let [key, value] of Object.entries(res.dataset)) {
-                                dat.roll.results.push(parseInt(value));
-                            }
-                            console.log('spend_white:', dat);
-                            let char = game.actors.getName(dat.roller);
-                            console.log('spend_white:', char);
+                            let char = game.actors.getName(data.roller);
                             let itemId = false;
                             for (let item of char.items.values()) {
                                 if(item.name == 'White' && item.type == 'chip') {
-                                    console.log('spend_white:', item.name, item._id);
                                     itemId = item._id;
                                     break;
                                 }
                             }
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
-                                console.log('spend_white', dat.roll.dice, dat.modifier);
-                                let roll = new Roll(`1${dat.roll.dice} + ${dat.modifier}`).roll();
-                                let result = roll.terms[0].results[0].result;
-                                console.log('spend_white', roll, dat);
-                                dat.roll.results.push(result);
-                                console.log('spend_white', dat);
-                                if (result + parseInt(dat.modifier) > dat.tn) {
-                                    dat.roll.pass += 1;
-                                }else if (result == 1) {
-                                    dat.roll.ones += 1;
-                                }
-                                if (dat.roll.pass > dat.roll.ones) {
-                                    dat.roll.crit_fail = false;
-                                }
-                                dat.roll.total = Math.max(roll._total, dat.roll.total);
-                                if (dat.roll.pass > dat.roll.ones && dat.roll.total >= dat.tn) {
-                                    dat.roll.success = true;
-                                    dat.roll.raises = Math.floor((dat.roll.total - dat.tn) / 5);
-                                }
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
+                                let result = roll._total;
+                                data.roll.results.unshift(result);
+                                data.roll.amt += 1
+                                data.roll = evaluate_roll(data.roll);
+                                emit('confirm_result', data);
+                                ChatMessage.create({content: `
+                                    <h3 style="text-align:center">${data.roller} used a white chip.</h3>
+                                `});
                                 roll.toMessage({rollMode: 'gmroll'});
                             }else{
-                                ChatMessage.create({content: build_no_fate_chip_message('white')});
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                ChatMessage.create({content: build_no_fate_chip_message('blue')});
+                                emit('confirm_result', data);
                             }
                         },
                     },
                     red: {
                         label: 'Red',
                         callback: () => {
-                            let d = document.getElementById('data');
-                            let dat = {};
-                            for (let [key, value] of Object.entries(d.dataset)) {
-                                if (key == 'weapon'){
-                                    dat[key] = value;
-                                }else if (parseInt(value)) {
-                                    dat[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat[key] = true;
-                                }else if (value == 'false') {
-                                    dat[key] = false;
-                                }else {
-                                    dat[key] = value;
-                                }
-                            }
-                            console.log('confirm:', dat);
-                            let r = document.getElementById('roll');
-                            dat.roll = {};
-                            for (let [key, value] of Object.entries(r.dataset)) {
-                                if (parseInt(value)) {
-                                    dat.roll[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat.roll[key] = true;
-                                }else if (value == 'false') {
-                                    dat.roll[key] = false;
-                                }else {
-                                    dat.roll[key] = value;
-                                }
-                            }
-                            dat.roll.results = []
-                            let res = document.getElementById('results');
-                            for (let [key, value] of Object.entries(res.dataset)) {
-                                dat.roll.results.push(parseInt(value));
-                            }
-                            console.log('spend_red:', dat);
-                            let char = game.actors.getName(dat.roller);
+                            let char = game.actors.getName(data.roller);
                             let itemId = false;
                             for (let item of char.items.values()) {
                                 if(item.name == 'Red' && item.type == 'chip') {
@@ -604,74 +492,29 @@ let operations = {
                             }
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
-                                let roll = new Roll(`1${dat.roll.dice} + ${dat.modifier}`).roll();
+                                let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
-                                dat.roll.results.push(result);
-                                dat.roll.total += result;
-                                if (dat.roll.total + parseInt(dat.modifier) > dat.tn) {
-                                    dat.roll.pass += 1;
-                                }
-                                if (dat.roll.pass > dat.roll.ones) {
-                                    dat.roll.crit_fail = false;
-                                }
-                                if (dat.roll.pass > dat.roll.ones && dat.roll.total >= dat.tn) {
-                                    dat.roll.success = true;
-                                    dat.roll.raises = Math.floor((dat.roll.total - dat.tn) / 5);
-                                }
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
+                                data.roll.results[index] += result;
+                                data.roll.total += result;
+                                data.roll.results.push(result);
+                                data.roll = evaluate_roll(data.roll);
+                                emit('confirm_result', data);
+                                ChatMessage.create({content: `
+                                    <h3 style="text-align:center">${data.roller} used a red chip.</h3>
+                                    <p style="text-align:center">The Marshal may draw a fate chip.</p>
+                                `});
                                 roll.toMessage({rollMode: 'gmroll'});
-                                ChatMessage.create({content: build_marshal_draw_message()});
                             }else{
                                 ChatMessage.create({content: build_no_fate_chip_message('red')});
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                emit('confirm_result', data);
                             }
                         },
                     },
                     blue: {
                         label: 'Blue',
                         callback: () => {
-                            let d = document.getElementById('data');
-                            let dat = {};
-                            for (let [key, value] of Object.entries(d.dataset)) {
-                                if (key == 'weapon'){
-                                    dat[key] = value;
-                                }else if (parseInt(value)) {
-                                    dat[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat[key] = true;
-                                }else if (value == 'false') {
-                                    dat[key] = false;
-                                }else {
-                                    dat[key] = value;
-                                }
-                            }
-                            console.log('confirm:', dat);
-                            let r = document.getElementById('roll');
-                            dat.roll = {};
-                            for (let [key, value] of Object.entries(r.dataset)) {
-                                if (parseInt(value)) {
-                                    dat.roll[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat.roll[key] = true;
-                                }else if (value == 'false') {
-                                    dat.roll[key] = false;
-                                }else {
-                                    dat.roll[key] = value;
-                                }
-                            }
-                            dat.roll.results = []
-                            let res = document.getElementById('results');
-                            for (let [key, value] of Object.entries(res.dataset)) {
-                                dat.roll.results.push(parseInt(value));
-                            }
-                            console.log('spend_red:', dat);
-                            let char = game.actors.getName(dat.roller);
+                            let char = game.actors.getName(data.roller);
                             let itemId = false;
                             for (let item of char.items.values()) {
                                 if(item.name == 'Blue' && item.type == 'chip') {
@@ -681,80 +524,43 @@ let operations = {
                             }
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
-                                let roll = new Roll(`1${dat.roll.dice} + ${dat.modifier}`).roll();
+                                let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
-                                dat.roll.results.push(result);
-                                dat.roll.total += result;
-                                if (dat.roll.total + parseInt(dat.modifier) > dat.tn) {
-                                    dat.roll.pass += 1;
+                                data.roll.results.push(result);
+                                data.roll.total += result;
+                                if (data.roll.total + parseInt(data.modifier) > data.tn) {
+                                    data.roll.pass += 1;
                                 }
-                                if (dat.roll.pass > dat.roll.ones) {
-                                    dat.roll.crit_fail = false;
+                                if (data.roll.pass > data.roll.ones) {
+                                    data.roll.crit_fail = false;
                                 }
-                                if (dat.roll.pass > dat.roll.ones && dat.roll.total >= dat.tn) {
-                                    dat.roll.success = true;
-                                    dat.roll.raises = Math.floor((dat.roll.total - dat.tn) / 5);
+                                if (data.roll.pass > data.roll.ones && data.roll.total >= data.tn) {
+                                    data.roll.success = true;
+                                    data.roll.raises = Math.floor((data.roll.total - data.tn) / 5);
                                 }
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                ChatMessage.create({content: `
+                                    <h3 style="text-align:center">${data.roller} spent a blue chip.</h3>
+                                `});
+                                emit('confirm_result', data);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }else{
                                 ChatMessage.create({content: build_no_fate_chip_message('blue')});
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'confirm_result',
-                                    data: dat
-                                });
+                                emit('confirm_result', data);
                             }
                         },
                     },
                     confirm: {
                         label: 'Confirm',
                         callback: () => {
-                            let d = document.getElementById('data');
-                            let dat = {};
-                            for (let [key, value] of Object.entries(d.dataset)) {
-                                if (key == 'weapon'){
-                                    dat[key] = value;
-                                }else if (parseInt(value)) {
-                                    dat[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat[key] = true;
-                                }else if (value == 'false') {
-                                    dat[key] = false;
-                                }else {
-                                    dat[key] = value;
-                                }
-                            }
                             console.log('confirm:', dat);
-                            let r = document.getElementById('roll');
-                            dat.roll = {};
-                            for (let [key, value] of Object.entries(r.dataset)) {
-                                if (parseInt(value)) {
-                                    dat.roll[key] = parseInt(value);
-                                }else if (value == 'true') {
-                                    dat.roll[key] = true;
-                                }else if (value == 'false') {
-                                    dat.roll[key] = false;
-                                }else {
-                                    dat.roll[key] = value;
+                            if (data.next_op) {
+                                if(data.write_value) {
+                                    data[data.write_value] = data.roll.total
                                 }
-                            }
-                            dat.roll.results = []
-                            let res = document.getElementById('results');
-                            for (let [key, value] of Object.entries(res.dataset)) {
-                                dat.roll.results.push(parseInt(value));
-                            }
-                            console.log('confirm:', dat);
-                            if (dat.next_op) {
-                                if(dat.write_value) {
-                                    dat[dat.write_value] = dat.roll.total
-                                }
-                                emit(dat.next_op, dat);
+                                emit(data.next_op, data);
                             }else{
-                                console.log(dat);
-                                ChatMessage.create({content: build_skill_template(dat)});
+                                console.log(data);
+                                ChatMessage.create({content: build_skill_template(data)});
                             }
                         }
                     }
@@ -810,25 +616,10 @@ let operations = {
                         yes: {
                             label: 'Screw it!',
                             callback: () => {
-                                let d = document.getElementById('data');
-                                let dat = {};
-                                for (let [key, value] of Object.entries(d.dataset)) {
-                                    if (key == 'weapon'){
-                                        dat[key] = value;
-                                    }else if (parseInt(value)) {
-                                        dat[key] = parseInt(value);
-                                    }else if (value == 'true') {
-                                        dat[key] = true;
-                                    }else if (value == 'false') {
-                                        dat[key] = false;
-                                    }else {
-                                        dat[key] = value;
-                                    }
-                                }
                                 if (tgt.actor.isPC) {
-                                    emit('check_dodge', dat);
+                                    emit('check_dodge', data);
                                 }else{
-                                    emit('roll_to_hit', dat);
+                                    emit('roll_to_hit', data);
                                 }
                             }
                         },
@@ -1108,123 +899,6 @@ let operations = {
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
             if (char.owner) {
                 emit('check_target', data);
-            }
-        }
-    },
-    warn_law: function(data) {
-        let char = canvas.tokens.placeables.find(i => i.name == data.attacker);
-        if (char.owner) {
-            let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            if (tgt.data.disposition != -1) {
-                let form = new Dialog({
-                    title: `Breakin' the Law!`,
-                    content: build_friendly_fire_dialog(data, sort_deck(cards)),
-                    buttons: {
-                        yes: {
-                            label: 'Screw it!',
-                            callback: () => {
-                                let el = document.getElementById('data');
-                                let d = {
-                                    type: el.dataset.typ,
-                                    attacker: el.dataset.atk,
-                                    target: el.dataset.tgt,
-                                    weapon: el.dataset.wep,
-                                }
-                                emit('attack', d);
-                            }
-                        },
-                        no: {
-                            label: '[slowly put gun away]',
-                            callback: () => {
-                                let el = document.getElementById('data');
-                                let d = {
-                                    type: el.dataset.typ,
-                                    attacker: el.dataset.atk,
-                                    target: el.dataset.tgt,
-                                    weapon: el.dataset.wep,
-                                }
-                            }
-                        }
-                    },
-                    close: () => {
-                        console.log('Friendly Fire Dialog Closed');
-                    }
-                });
-                form.render(true);
-            }
-        }
-    },
-    attack: function(data) {
-        let char = canvas.tokens.placeables.find(i => i.name == data.target);
-        if (char.owner) {
-            let cards = [];
-            for (let item of char.actor.items.values()) {
-                if (item.type == 'action_deck') {
-                    cards.push(item);
-                }
-            }
-            if (cards.length > 0) {
-                let form = new Dialog({
-                    title: `Dodge!`,
-                    content: build_dodge_dialog(data, sort_deck(cards)),
-                    buttons: {
-                        yes: {
-                            label: 'Dodge',
-                            callback: () => {
-                                let el = document.getElementById('data');
-                                let crd = el.dataset.crd;
-                                let cid = el.dataset.cid;
-                                let d = {
-                                    type: el.dataset.typ,
-                                    attacker: el.dataset.atk,
-                                    target: el.dataset.tgt,
-                                    weapon: el.dataset.wep,
-                                }
-                                let chr = game.actors.getName(d.target);
-                                let trt = chr.data.data.traits.nimbleness;
-                                let dge = trt.skills.dodge;
-                                let lvl = dge.level;
-                                let die = trt.die_type;
-                                if (lvl == 0) {
-                                    lvl = trt.level;
-                                }
-                                let frm = `${lvl}${die}ex + ${dge.modifier} + ${chr.data.data.wound_modifier}`;
-                                let rll = new Roll(frm).roll();
-                                d.dodge = rll._total;
-                                chr.deleteOwnedItem(cid);
-                                rll.toMessage({rollMode: 'gmroll'});
-                                game.socket.emit("system.deadlands_classic", {
-                                    operation: 'proceed_attack',
-                                    data: d
-                                });
-                            }
-                        },
-                        no: {
-                            label: 'Take yer chances.',
-                            callback: () => {
-                                let el = document.getElementById('data');
-                                let d = {
-                                    type: el.dataset.typ,
-                                    attacker: el.dataset.atk,
-                                    target: el.dataset.tgt,
-                                    weapon: el.dataset.wep,
-                                    dodge: 0
-                                }
-                                game.socket.emit("system.deadlands_classic", {
-                                    operation: 'proceed_attack',
-                                    data: d
-                                });
-                            }
-                        }
-                    },
-                    close: () => {
-                        console.log('Dodge Dialog Closed');
-                    }
-                });
-                form.render(true);
-            }else{
-                data.dodge_roll = 0
-                emit('proceed_attack', data);
             }
         }
     },
