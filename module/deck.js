@@ -949,6 +949,7 @@ let operations = {
                 data.skill = "shootin_".concat(itm.data.data.gun_type);
                 data.amt = lvl;
                 data.dice = trait.die_type;
+                data.write_value = 'hit_roll'
                 let atk_roll = new_roll(data);
                 data.result = atk_roll.total;
                 if (atk_roll.success) {
@@ -1071,26 +1072,20 @@ let operations = {
                             if (itemId) {
                                 char.deleteOwnedItem(itemId);
                                 soak += val
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
+                                emit('soak', {
+                                    target: name,
+                                    wounds: wounds,
+                                    loc_key: loc_key,
+                                    loc_label: loc_label,
+                                    soak: soak
                                 });
                             }else{
-                                game.socket.emit('system.deadlands_classic', {
-                                    operation: 'soak', 
-                                    data: {
-                                        target: name,
-                                        wounds: wounds,
-                                        loc_key: loc_key,
-                                        loc_label: loc_label,
-                                        soak: soak
-                                    }
+                                emit('soak', {
+                                    target: name,
+                                    wounds: wounds,
+                                    loc_key: loc_key,
+                                    loc_label: loc_label,
+                                    soak: soak
                                 });
                             }
                         }
@@ -1296,6 +1291,11 @@ let operations = {
             Object.keys(char.actor.data.data.wounds).forEach(function(key) {
                 if (char.actor.data.data.wounds[key] >= highest) {
                     highest = char.actor.data.data.wounds[key];
+                }
+                if (key == 'noggin' || key == 'guts' || key == 'lower_guts' || key == 'gizzards') {
+                    if (char.actor.data.data.wounds[key] >= 5) {
+                        char.toggleOverlay('icons/svg/skull.svg');
+                    }
                 }
             });
             let m_data = {data: {wound_modifier: highest * -1}};
