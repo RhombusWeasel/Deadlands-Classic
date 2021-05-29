@@ -329,7 +329,7 @@ export default class PlayerSheet extends ActorSheet {
             let data = {
                 type: 'skill',
                 skill_name: skill.name,
-                tn: 7,
+                tn: 5,
                 name: this.actor.name
             };
             let lvl = skill.level;

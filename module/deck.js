@@ -176,7 +176,7 @@ function build_skill_template(data) {
                 <p style="text-align:center">${data.roller} passed</p>
             `;
         }
-    }else if (data.roll.crit_fail) {
+    }else if (data.roll.ones > data.roll.pass) {
         r_str += `
             <p style="text-align:center">${data.roller} critically failed!</p>
         `;
@@ -260,7 +260,7 @@ function build_roll_dialog(data) {
                 <p style="text-align:center">You passed with ${data.roll.raises} raises.</p>
             `;
         }
-    }else if (data.roll.crit_fail) {
+    }else if (data.roll.ones > data.roll.pass) {
         form += `
                 <h2 style="text-align:center">Critical Failure!</h2>
         `;
