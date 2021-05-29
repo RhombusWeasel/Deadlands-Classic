@@ -1028,6 +1028,7 @@ let operations = {
     apply_damage: function(data) {
         let char = game.actors.getName(data.target);
         if (char.owner) {
+            data.roller = data.target;
             let form = new Dialog({
                 title: `You've been hit!`,
                 content: build_damage_dialog(char, data, 0),
