@@ -323,25 +323,35 @@ function build_damage_dialog(char, data, saved) {
     `;
 }
 
-function spend_fate_chip_message(data, label) {
-    return `
-        <h3 style="text-align:center">Fate</h3>
-        <p style="text-align:center">${data.target} spends a ${label} fate chip.</p>
-    `;
+function spend_fate_chip(data, label) {
+    let char = game.actors.getName(data.target);
+    for (let item of char.items.values()) {
+        if(item.name == label && item.type == 'chip') {
+            char.deleteOwnedItem(item._id);
+            let reply = `
+                <h3 style="text-align:center">Fate</h3>
+                <p style="text-align:center">${data.target} spends a ${label} fate chip.</p>
+            `
+            if (label == 'Red'){
+                reply += `
+                    <p style="text-align:center">The Marshal may draw a fate chip.</p>
+                `;
+            }
+            ChatMessage.create({content: reply});
+            return true;
+        }
+    }
+    ChatMessage.create({content: `
+        <h3 style="text-align:center">${data.roller} has no ${label} chips.</h3>
+    `});
+    return false;
 }
 
 function soak_damage(data, label){
-    let char = game.actors.getName(data.target);
-    let itemId = false;
-    for (let item of char.items.values()) {
-        if(item.name == label && item.type == 'chip') {
-            console.log('soak_damage', item);
-            char.deleteOwnedItem(item._id);
-            ChatMessage.create({content: spend_fate_chip_message(data, label)});
-            data.wounds -= item.data.bounty
-            return data;
-        }
+    if (spend_fate_chip(data, label)){
+        data.wounds -= item.data.bounty
     }
+    return data;
 }
 
 function battle_report(data) {
@@ -480,44 +490,22 @@ let operations = {
                         label: 'White',
                         callback: () => {
                             let char = game.actors.getName(data.roller);
-                            let itemId = false;
-                            for (let item of char.items.values()) {
-                                if(item.name == 'White' && item.type == 'chip') {
-                                    itemId = item._id;
-                                    break;
-                                }
-                            }
-                            if (itemId) {
-                                char.deleteOwnedItem(itemId);
+                            if (spend_fate_chip(data, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
                                 data.roll.results.unshift(res);
                                 data.roll.amt += 1
                                 data.roll = evaluate_roll(data.roll);
-                                emit('confirm_result', data);
-                                ChatMessage.create({content: `
-                                    <h3 style="text-align:center">${data.roller} used a white chip.</h3>
-                                `});
                                 roll.toMessage({rollMode: 'gmroll'});
-                            }else{
-                                ChatMessage.create({content: build_no_fate_chip_message('white')});
-                                emit('confirm_result', data);
                             }
+                            emit('confirm_result', data);
                         },
                     },
                     red: {
                         label: 'Red',
                         callback: () => {
                             let char = game.actors.getName(data.roller);
-                            let itemId = false;
-                            for (let item of char.items.values()) {
-                                if(item.name == 'Red' && item.type == 'chip') {
-                                    itemId = item._id;
-                                    break;
-                                }
-                            }
-                            if (itemId) {
-                                char.deleteOwnedItem(itemId);
+                            if (spend_fate_chip(data, 'Red')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
@@ -525,54 +513,24 @@ let operations = {
                                 data.roll.total += result;
                                 data.roll.results.push(result);
                                 data.roll = evaluate_roll(data.roll);
-                                emit('confirm_result', data);
-                                ChatMessage.create({content: `
-                                    <h3 style="text-align:center">${data.roller} used a red chip.</h3>
-                                    <p style="text-align:center">The Marshal may draw a fate chip.</p>
-                                `});
                                 roll.toMessage({rollMode: 'gmroll'});
-                            }else{
-                                ChatMessage.create({content: build_no_fate_chip_message('red')});
-                                emit('confirm_result', data);
                             }
+                            emit('confirm_result', data);
                         },
                     },
                     blue: {
                         label: 'Blue',
                         callback: () => {
                             let char = game.actors.getName(data.roller);
-                            let itemId = false;
-                            for (let item of char.items.values()) {
-                                if(item.name == 'Blue' && item.type == 'chip') {
-                                    itemId = item._id;
-                                    break;
-                                }
-                            }
-                            if (itemId) {
-                                char.deleteOwnedItem(itemId);
+                            if (spend_fate_chip(data, 'Blue')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
-                                data.roll.results.push(result);
                                 data.roll.total += result;
-                                if (data.roll.total + parseInt(data.modifier) > data.tn) {
-                                    data.roll.pass += 1;
-                                }
-                                if (data.roll.pass > data.roll.ones) {
-                                    data.roll.crit_fail = false;
-                                }
-                                if (data.roll.pass > data.roll.ones && data.roll.total >= data.tn) {
-                                    data.roll.success = true;
-                                    data.roll.raises = Math.floor((data.roll.total - data.tn) / 5);
-                                }
-                                ChatMessage.create({content: `
-                                    <h3 style="text-align:center">${data.roller} spent a blue chip.</h3>
-                                `});
-                                emit('confirm_result', data);
+                                data.roll.results.push(result);
+                                data.roll = evaluate_roll(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
-                            }else{
-                                ChatMessage.create({content: build_no_fate_chip_message('blue')});
-                                emit('confirm_result', data);
                             }
+                            emit('confirm_result', data);
                         },
                     },
                     confirm: {
