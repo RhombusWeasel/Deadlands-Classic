@@ -1102,13 +1102,16 @@ let operations = {
                     }
                 }
             };
+            if (data.wounds > 0) {
+                token.toggleEffect('icons/svg/blood.svg');
+            }
             if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
-                char.toggleOverlay('icons/svg/skull.svg');
+                char.toggleEffect('icons/svg/skull.svg');
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (data.loc_key in critical) {
                 if (current + data.wounds >= 5) {
-                    char.toggleOverlay('icons/svg/skull.svg');
+                    char.toggleEffect('icons/svg/skull.svg');
                 }
             }
             char.actor.update(w_data);
