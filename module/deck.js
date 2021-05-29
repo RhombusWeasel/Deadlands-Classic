@@ -330,7 +330,7 @@ function spend_fate_chip(data, label) {
             char.deleteOwnedItem(item._id);
             let reply = `
                 <h3 style="text-align:center">Fate</h3>
-                <p style="text-align:center">${data.target} spends a ${label} fate chip.</p>
+                <p style="text-align:center">${data.roller} spends a ${label} fate chip.</p>
             `
             if (label == 'Red'){
                 reply += `
