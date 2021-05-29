@@ -440,12 +440,16 @@ let operations = {
         if (game.user.isGM) {
             if (data.name == "Joker (Black)") {
                 ChatMessage.create({ content: `
-                    <h2 style="text-align: center;">Black Joker!</h2>
+                    <h3 style="text-align: center;">Black Joker!</h3>
                     <p style="text-align: center;">You lose your next highest card.</p>
                     <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
                     <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
                 `});
                 game.dc.combat_shuffle = true
+            }else{
+                ChatMessage.create({ content: `
+                    ${game.user.character} plays ${item.name}
+                `});
             }
             game.dc.action_discard.push(data)
         }
@@ -661,14 +665,11 @@ let operations = {
                         yes: {
                             label: 'Dodge',
                             callback: () => {
-                                game.socket.emit("system.deadlands_classic", {
-                                    operation: 'discard_card',
-                                    data: {
-                                        name: data.card_name,
-                                        type: 'action_deck'
-                                    }
+                                emit('discard_card', {
+                                    name: data.card_name,
+                                    type: 'action_deck'
                                 });
-                                char.actor.deleteOwnedItem(data.card_id);
+                                setTimeout(() => {char.actor.deleteOwnedItem(data.card_id)}, 500);
                                 console.log('check_dodge', data);
                                 emit('skill_roll', data);
                             }
@@ -1087,6 +1088,9 @@ let operations = {
     },
     enemy_damage: function(data) {
         let char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
+        if (!(char)) {
+            emit('enemy_damage', data);
+        }
         if (game.user.isGM) {
             console.log('enemy_damage:', data, char);
             let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
@@ -1107,11 +1111,13 @@ let operations = {
             }
             if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                char.toggleEffect('icons/svg/blood.svg', {active: false});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (data.loc_key in critical) {
                 if (current + data.wounds >= 5) {
                     char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                    char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
             char.actor.update(w_data);

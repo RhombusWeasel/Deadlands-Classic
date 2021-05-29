@@ -552,7 +552,6 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Playing ${item.name}`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'discard_card',
             data: {
