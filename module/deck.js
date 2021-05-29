@@ -924,10 +924,7 @@ let operations = {
                                     }
                                 }
                                 console.log('check_dodge', dat);
-                                game.socket.emit("system.deadlands_classic", {
-                                    operation: 'roll_to_hit',
-                                    data: dat
-                                });
+                                emit('roll_to_hit', dat);
                             }
                         }
                     },
