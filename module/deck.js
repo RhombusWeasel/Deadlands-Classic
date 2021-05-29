@@ -1155,7 +1155,7 @@ let operations = {
     soak: function(data) {
         if (game.user.isGM) {
             console.log('soak:', data);
-            if (data.soak < data.wounds) {
+            if (data.wounds > 0) {
                 emit('apply_damage', data);
             }
         }
