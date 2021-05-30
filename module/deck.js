@@ -378,9 +378,9 @@ function battle_report(data) {
                 <th>TN</th>
             </tr>
             <tr>
-                <td>${data.hit_roll}</th>
-                <td>${data.dodge_roll}</th>
-                <td>${data.tn}</th>
+                <td>${data.hit_roll}</td>
+                <td>${data.dodge_roll}</td>
+                <td>${data.tn}</td>
             </tr>
         </table>
     `;
