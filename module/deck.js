@@ -373,14 +373,14 @@ function battle_report(data) {
         <h3 style="text-align:center">Combat Report:</h3>
         <table>
             <tr style="text-align:center table-layout: fixed;">
-                <th>Shootin'</th>
-                <th>Dodge</th>
-                <th>TN</th>
+                <th style="text-align:center">Shootin'</th>
+                <th style="text-align:center">Dodge</th>
+                <th style="text-align:center">TN</th>
             </tr>
-            <tr style="text-align:center">
-                <td>${data.hit_roll}</td>
-                <td>${data.dodge_roll}</td>
-                <td>${data.tn}</td>
+            <tr style="text-align:center table-layout: fixed;">
+                <td style="text-align:center">${data.hit_roll}</td>
+                <td style="text-align:center">${data.dodge_roll}</td>
+                <td style="text-align:center">${data.tn}</td>
             </tr>
         </table>
     `;
