@@ -443,20 +443,12 @@ let operations = {
             if (game.dc.action_deck.length <= cards){
                 restore_discard()
             }
+            let actor = game.actors.getName(data.char);
             for (let i=0; i<cards; i++){
                 data.card = game.dc.action_deck.pop();
-                emit('recieve_card', data);
+                setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
             }
         };
-    },
-    recieve_card: function(data){
-        if (game.userId == data.user){
-            console.log(data);
-            let actor = game.actors.getName(data.char);
-            console.log(actor);
-            let c = Math.random();
-            setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
-        }
     },
     discard_card: function(data) {
         if (game.user.isGM) {
@@ -480,7 +472,8 @@ let operations = {
         if (game.user.isGM) {
             game.dc.action_discard.push(data.card)
             data.card = game.dc.action_deck.pop()
-            emit('recieve_card', data);
+            let actor = game.actors.getName(data.char);
+            setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
         }
     },
     //SKILL ROLL OPERATIONS

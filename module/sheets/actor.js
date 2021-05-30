@@ -680,7 +680,7 @@ export default class PlayerSheet extends ActorSheet {
             });
             reply = `
                 <h3 style="text-align:center">Discard</h3>
-                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping fer better luck next time.</p>
+                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
             `;
             let c = Math.random()
             setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
