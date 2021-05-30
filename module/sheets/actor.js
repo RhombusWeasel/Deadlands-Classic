@@ -672,6 +672,7 @@ export default class PlayerSheet extends ActorSheet {
                 data:{
                     _id : itemId,
                     user: game.userId,
+                    char: this.actor.name,
                     card: {
                         name: item.name,
                         type: item.type
