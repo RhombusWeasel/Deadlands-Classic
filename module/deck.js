@@ -371,6 +371,18 @@ function soak_damage(data, label){
 function battle_report(data) {
     let msg =  `
         <h3 style="text-align:center">Combat Report:</h3>
+        <table>
+            <tr>
+                <th>Shootin'</th>
+                <th>Dodge</th>
+                <th>TN</th>
+            </tr>
+            <tr>
+                <td>${data.hit_roll}</th>
+                <td>${data.dodge_roll}</th>
+                <td>${data.tn}</th>
+            </tr>
+        </table>
     `;
     if (data.type == 'ranged'){
         msg += `
@@ -950,7 +962,8 @@ let operations = {
                 data.skill = "shootin_".concat(itm.data.data.gun_type);
                 data.amt = lvl;
                 data.dice = trait.die_type;
-                data.write_value = 'hit_roll'
+                data.write_value = 'hit_roll';
+                data.modifier = 0;
                 let atk_roll = new_roll(data);
                 data.result = atk_roll.total;
                 if (atk_roll.success) {
