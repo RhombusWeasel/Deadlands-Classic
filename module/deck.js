@@ -372,12 +372,12 @@ function battle_report(data) {
     let msg =  `
         <h3 style="text-align:center">Combat Report:</h3>
         <table>
-            <tr>
+            <tr style="text-align:center">
                 <th>Shootin'</th>
                 <th>Dodge</th>
                 <th>TN</th>
             </tr>
-            <tr>
+            <tr style="text-align:center">
                 <td>${data.hit_roll}</td>
                 <td>${data.dodge_roll}</td>
                 <td>${data.tn}</td>
