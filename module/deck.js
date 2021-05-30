@@ -372,7 +372,7 @@ function battle_report(data) {
     let msg =  `
         <h3 style="text-align:center">Combat Report:</h3>
         <table>
-            <tr style="text-align:center">
+            <tr style="text-align:center table-layout: fixed;">
                 <th>Shootin'</th>
                 <th>Dodge</th>
                 <th>TN</th>
