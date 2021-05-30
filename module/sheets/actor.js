@@ -9,7 +9,8 @@ let percs = [
     {limit: 0, chip:0},
 ];
 
-let aim_bonus = 0
+let trait_scroll = 0;
+let item_scroll = 0;
 
 function emit(op, data) {
     game.socket.emit("system.deadlands_classic", {
@@ -234,6 +235,43 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+
+        if (!(game.dc.collapse)) {
+            game.dc.collapse = []
+        }
+        var coll = document.getElementsByClassName("collapsible");
+        for (let i = 0; i < coll.length; i++) {
+            if (!(game.dc.collapse[i])) {
+                game.dc.collapse[i] = false
+            }
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (!(game.dc.collapse[i])) {
+                    content.style.maxHeight = null;
+                    game.dc.collapse[i] = true;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    game.dc.collapse[i] = false;
+                }
+            });
+            if (game.dc.collapse[i]) {
+                coll[i].nextElementSibling.style.maxHeight = null;
+            } else {
+                coll[i].nextElementSibling.style.maxHeight = coll[i].nextElementSibling.scrollHeight + "px";
+            }
+        }
+
+        var traits = document.getElementsByClassName("trait_scroller");
+        traits[0].addEventListener("scroll", () => {
+            game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
+        });
+        traits[0].scrollTop = game.dc.trait_scroll;
+        var items = document.getElementsByClassName("item_scroller");
+        items[0].addEventListener("scroll", () => {
+            game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
+        });
+        items[0].scrollTop = game.dc.item_scroll;
         return super.activateListeners(html);
     }
 

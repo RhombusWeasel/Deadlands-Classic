@@ -1,8 +1,10 @@
 <section class="form typed">
     <h2 class="center">Trappin's</h2>
-    <div style="overflow-y:scroll; height:300px">
-        {{#if fate_chips}}
+    <div class="scroller item_scroller">
+        <a class="center"><p class="refresh">Refresh</p></a>
         <h2 class="center">Fate Chips</h2>
+        <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
+        {{#if fate_chips}}
         <table>
             {{#each fate_chips as |chip|}}
             <tr class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
@@ -15,8 +17,9 @@
             {{/each}}
         </table>
         {{/if}}
-        {{#if action_deck}}
         <h2 style="text-align: center;">Combat Hand</h2>
+        <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
+        {{#if action_deck}}
         <table>
         {{#each action_deck as |card|}}
             <tr class="item" data-itemId="{{this._id}}">

@@ -1,7 +1,7 @@
 <section>
 <div class="traits typed">
     <h2 class="h1">Skills 'n' Such</h2>
-    <div style="overflow-y:scroll; height:300px">
+    <div class="scroller trait_scroller">
     {{#each data.traits as |trait|}}
         <table>
             <tr class="trait-data" data-trait="{{@key}}" data-level="{{trait.level}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}">
