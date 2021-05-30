@@ -935,13 +935,15 @@ let operations = {
             let dmg = itm.data.data.damage.split('d');
             let dmg_mod = itm.data.data.damage_bonus || 0;
             let off_hand_mod = 0;
+            let dist = Math.floor(canvas.grid.measureDistance(atk, tgt));
+            data.range = dist;
             if(data.type == 'ranged') {
-                let dist = Math.floor(canvas.grid.measureDistance(atk, tgt));
                 trait = atk.actor.data.data.traits.deftness;
                 skill = trait.skills["shootin_".concat(itm.data.data.gun_type)];
                 shots = itm.data.data.chamber;
                 range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
             }
+            data.range_mod = range_mod;
             if (shots > 0) {
                 if (itm.data.data.off_hand) {
                     off_hand_mod = atk.actor.data.off_hand_modifier
@@ -965,6 +967,7 @@ let operations = {
                 data.write_value = 'hit_roll';
                 data.modifier = 0;
                 let atk_roll = new_roll(data);
+                data.hit_roll = atk_roll.total;
                 data.result = atk_roll.total;
                 if (atk_roll.success) {
                     if (atk_roll.total > data.dodge_roll) {
