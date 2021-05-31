@@ -371,14 +371,16 @@ function soak_damage(data, label){
 function battle_report(data) {
     let msg =  `
         <h3 style="text-align:center">Combat Report:</h3>
-        <table>
+        <table style="table-layout: fixed;">
             <tr style="text-align:center table-layout: fixed;">
-                <th style="text-align:center">Shootin'</th>
+                <th style="text-align:center">Attack</th>
+                <th style="text-align:center">Mod</th>
                 <th style="text-align:center">Dodge</th>
                 <th style="text-align:center">TN</th>
             </tr>
             <tr style="text-align:center table-layout: fixed;">
                 <td style="text-align:center">${data.hit_roll}</td>
+                <td style="text-align:center">${data.modifier}</td>
                 <td style="text-align:center">${data.dodge_roll}</td>
                 <td style="text-align:center">${data.tn}</td>
             </tr>
@@ -470,7 +472,8 @@ let operations = {
                 game.dc.combat_shuffle = true
             }else{
                 ChatMessage.create({ content: `
-                    ${game.user.character} plays ${item.name}
+                    <h3 style="text-align: center;">Action Deck</h3>
+                    <p style="text-align: center;">${data.char} plays ${data.name}</p>
                 `});
             }
             game.dc.action_discard.push(data)
@@ -505,7 +508,6 @@ let operations = {
             if (data.amt == 0) {
                 data.amt = trait.level
             }
-            console.log('skill_roll:', trait.modifier, skill.modifier, char.data.data.wound_modifier);
             data.modifier += parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(char.data.data.wound_modifier);
             data.roll = new_roll(data);
             emit('confirm_result', data);
@@ -591,6 +593,10 @@ let operations = {
         }
     },
     //NEW COMBAT OPERATIONS
+    //prompt turn is sent by the GM to the players.
+    prompt_turn: function(data) {
+
+    },
     //declare an attack is emitted by players to a gm
     declare_attack: function(data) {
         if (game.user.isGM) {
@@ -689,7 +695,8 @@ let operations = {
                             callback: () => {
                                 emit('discard_card', {
                                     name: data.card_name,
-                                    type: 'action_deck'
+                                    type: 'action_deck',
+                                    char: data.target
                                 });
                                 setTimeout(() => {char.actor.deleteOwnedItem(data.card_id)}, 500);
                                 console.log('check_dodge', data);

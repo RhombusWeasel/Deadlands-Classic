@@ -582,7 +582,11 @@ export default class PlayerSheet extends ActorSheet {
             });
             this.actor.update({'data.perks.level_headed': true});
         }
-        ChatMessage.create({content: reply, whisper: ChatMessage.getWhisperRecipients('GM')});
+        let msg = `
+            <h3 style="text-align: center">Action Deck</h3>
+            <p style="text-align: center">${reply}</p>
+        `;
+        ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
     }
 
     _on_play_card(event) {
@@ -594,7 +598,8 @@ export default class PlayerSheet extends ActorSheet {
             operation: 'discard_card',
             data: {
                 name: item.name,
-                type: item.type
+                type: item.type,
+                char: this.actor.name
             }
         });
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);

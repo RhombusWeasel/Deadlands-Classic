@@ -81,7 +81,11 @@ export default class GMSheet extends ActorSheet {
             let actor_list = [];
             game.users.forEach(user => {
                 if (user.active && user.data.character){
-                    actor_list.push(game.actors.get(user.data.character));
+                    let chars = game.actors.find(i => i.owner == true);
+                    console.log(chars);
+                    chars.forEach(char => {
+                        actor_list.push(game.actors.get(char._id));
+                    });
                 }
             });
             let action_list = [];
@@ -134,6 +138,31 @@ export default class GMSheet extends ActorSheet {
         html.find(".draw-card").click(this._on_draw_card.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+        if (!(game.dc.gm_collapse)) {
+            game.dc.gm_collapse = []
+        }
+        var colls = document.getElementsByClassName("collapsible");
+        for (let i = 0; i < colls.length; i++) {
+            if (!(game.dc.gm_collapse[i])) {
+                game.dc.gm_collapse[i] = false
+            }
+            colls[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (!(game.dc.gm_collapse[i])) {
+                    content.style.maxHeight = null;
+                    game.dc.gm_collapse[i] = true;
+                }else{
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    game.dc.gm_collapse[i] = false;
+                }
+            });
+            if (game.dc.gm_collapse[i]) {
+                colls[i].nextElementSibling.style.maxHeight = null;
+            } else {
+                colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
+            }
+        }
         return super.activateListeners(html);
     }
 
