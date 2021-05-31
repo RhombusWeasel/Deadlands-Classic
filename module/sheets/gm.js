@@ -92,6 +92,7 @@ export default class GMSheet extends ActorSheet {
             let action_list = [];
             for (let i = 0; i < actor_list.length; i++) {
                 const actor = actor_list[i];
+                console.log(actor);
                 let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
                 for (let c = 0; c < cards.length; c++) {
                     const card = cards[c];
