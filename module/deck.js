@@ -442,9 +442,6 @@ let operations = {
     request_cards: function(data){
         if (game.user.isGM) {
             let cards = data.amount
-            if (!(game.dc.chars)) {
-                game.dc.chars = [];
-            }
             if (!(game.dc.chars.includes(data.char))) {
                 game.dc.chars.push(data.char);
             }
@@ -1196,13 +1193,13 @@ let operations = {
 Hooks.on("ready", () => {
     game.dc = {
         combat_active: false,
-        action_deck: [],
-        action_discard: [],
         aim_bonus: 0,
         level_headed_available: true
     }
     if (game.user.isGM) {
         game.dc.action_deck = new_deck('action_deck');
+        game.dc.action_discard = [];
+        game.dc.chars = [];
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
