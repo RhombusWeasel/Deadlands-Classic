@@ -78,21 +78,9 @@ export default class GMSheet extends ActorSheet {
         }
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         if (data.combat_active) {
-            let actor_list = [];
-            game.users.forEach(user => {
-                if (user.active && user.data.character){
-                    let chars = game.actors.find(i => i.owner == true);
-                    console.log(chars);
-                    for (let i = 0; i < chars.length; i++) {
-                        const char = chars[i];
-                        actor_list.push(game.actors.get(char._id));
-                    }
-                }
-            });
             let action_list = [];
-            for (let i = 0; i < actor_list.length; i++) {
-                const actor = actor_list[i];
-                console.log(actor);
+            for (let i = 0; i < game.dc.chars.length; i++) {
+                const actor = game.actors.getName(game.dc.chars[i]);
                 let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
                 for (let c = 0; c < cards.length; c++) {
                     const card = cards[c];

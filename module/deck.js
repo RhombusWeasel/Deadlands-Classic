@@ -442,6 +442,12 @@ let operations = {
     request_cards: function(data){
         if (game.user.isGM) {
             let cards = data.amount
+            if (!(game.dc.chars)) {
+                game.dc.chars = [];
+            }
+            if (!(game.dc.chars.includes(data.char))) {
+                game.dc.chars.push(data.char);
+            }
             if (game.dc.action_deck.length <= cards){
                 restore_discard()
             }
