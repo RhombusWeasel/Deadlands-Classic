@@ -1122,9 +1122,20 @@ let operations = {
     enemy_damage: function(data) {
         let char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
         if (!(char)) {
-            ChatMessage.create({ content: `
-                Target Not Found!
+            for (let t = 0; t < 5; t++) {
+                ChatMessage.create({ content: `
+                    Target Not Found! Retrying...
+                `});
+                char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
+                if (char) {
+                    break;
+                }
+            }
+            if (!(char)) {
+                ChatMessage.create({ content: `
+                Target Not Found! ERROR Finding Target: ${data.target}
             `});
+            }
         }
         if (game.user.isGM) {
             console.log('enemy_damage:', data, char);
