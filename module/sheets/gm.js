@@ -83,9 +83,10 @@ export default class GMSheet extends ActorSheet {
                 if (user.active && user.data.character){
                     let chars = game.actors.find(i => i.owner == true);
                     console.log(chars);
-                    chars.forEach(char => {
+                    for (let i = 0; i < chars.length; i++) {
+                        const char = chars[i];
                         actor_list.push(game.actors.get(char._id));
-                    });
+                    }
                 }
             });
             let action_list = [];
