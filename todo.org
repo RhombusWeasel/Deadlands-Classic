@@ -1,15 +1,58 @@
 * System
-** DC-BOT [0/1]
+** DONE Generalize combat rules for websocket [1/1]
+*** Notes
+ Need a messaging system to allow for waiting for message passing between hosts for Dodge rolls/Spending Fate chips etc.
+ A full Combat action has the following phases:
+
+ | # | Action                       | Melee | Ranged | Potential Actions                                             |
+ | 1 | Attacker chooses a target    | yes   | yes    | Target may dodge                                              |
+ | 2 | Target may attempt to dodge  | yes   | yes    | Show dialog to roll dodge                                     |
+ | 3 | Range modifier is calculated | no    | yes    | Calculate TN and add global modifiers                         |
+ | 4 | Attack roll made             | yes   | yes    | Calculate crit fails and reliability set successes and raises |
+ | 5 | Location roll made           | yes   | yes    | Increase damage dice for noggin and gizzards hits             |
+ | 6 | Armour level is calculated   | yes   | yes    | Reduce damage die type per armour level                       |
+ | 7 | Damage is rolled             | yes   | yes    | Calculate wounds                                              |
+ | 8 | Damage is applied            | yes   | yes    | Target may spend fate chips                                   |
+
+ #+BEGIN_SRC javascript
+ //Example combat action data object
+ let c_action = {
+   type: 'ranged',
+   attacker: 'Char Name',
+   target:   'Char Name',
+   dodge_result: 0,
+   range: 0,
+   shootin: '3d10',
+   location: 'leg_left',
+   damage: '3d6'
+   armour: 0,
+   wounds: 0,
+ }
+ #+END_SRC
+*** DONE Functions [3/3]
+**** DONE Request Dodge
+Needs to ping a player and get a response before proceeding with dice rolls.
+**** DONE Calculate Range
+**** DONE Allow spending fate chips on misses.
+Need to have a dialog open up when a player misses and/or critical fails.
+*** Resolution
+ Updated combat automation to be websocket based which allows for dialog boxes for various combat events.
+ Armour is now calculated and the die type lowered before any damage rolls are made.
+ Marshal's when targeting a player and firing with a weapon from an NPC if the player has action cards left then they will receive a dodge dialog asking if they would like to discard their highest card to dodge.
+
+** DC-BOT [1/2]
 *** TODO Functions [0/1]
 **** TODO Pass items and cash to players directly from GM sheet
 Needs socket listener setting up to pass the data around.
+*** DONE Misc tasks [1/1]
+**** DONE Add strength roll to melee damage
+** Movement Rules
 * Sheets
-** Character Sheet [0/1]
-*** TODO Display [0/4]
+** Character Sheet [1/2]
+*** TODO Display [2/3]
 **** TODO Core [0/1]
 ***** TODO remove input boxes from core stats
-**** TODO Sidebar [8/9]
-***** TODO Add range modifier to firearm display if token has target
+**** DONE Sidebar [8/8]
 ***** DONE Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
 ***** DONE Add global combat modifiers to all die rolls
 ***** DONE Weapon damage being calculated incorrectly.
@@ -30,12 +73,15 @@ Needs socket listener setting up to pass the data around.
 ******* DONE Edges
 ******* DONE Hinderances
 ******* DONE Goods
-**** TODO Traits [0/1]
-***** TODO Get Trait/Die Type/Skill increase buttons to line up properly
-** GM Sheet
-*** Pass items and cash to players [0/1]
-**** TODO Add a way of adding player cash/items from the GM sheet.
-*** TN Calculator: [0/1]
-**** TODO Make the shhet for it
+**** DONE Traits [2/2]
+***** DONE Fix scroll position reset on sheet refresh
+***** DONE Get Trait/Die Type/Skill increase buttons to line up properly
+*** DONE Misc [1/1]
+**** DONE Fix scroll position reset on sheet refresh
+** GM Sheet [1/2]
+*** TODO Pass items and cash to players [0/0]
+Add a way of adding player cash/items from the GM sheet.
+*** DONE TN Calculator: [1/1]
+**** DONE Make the sheet for it
 ** Mook Sheet
 ** NPC Sheet

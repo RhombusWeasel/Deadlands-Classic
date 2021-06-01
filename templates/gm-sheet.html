@@ -1,6 +1,6 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="flexbox">
-        <div class="data">
+        <div>
             <h2 class="center collapsible">Roll Modifiers [{{tn}}]</h2>
             {{#if modifiers}}
             <div class="content">
@@ -53,7 +53,8 @@
             {{/if}}
             </div>
             <h2 class="center">Combat Hand</h2>
-            <a class="center"><p class="draw-card">Draw Action Card</p></a>
+            <div class="content">
+                <a class="center"><p class="draw-card">Draw Action Card</p></a>
             {{#if action_deck}}
                 <table>
                 {{#each action_deck as |card|}}
@@ -64,6 +65,7 @@
                 {{/each}}
                 </table>
             {{/if}}
+            </div>
             {{#if action_list}}
             <h2 class="center collapsible">Action Queue</h2>
             <div class="content">
