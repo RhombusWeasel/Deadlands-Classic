@@ -94,6 +94,13 @@ export default class GMSheet extends ActorSheet {
                 action_list.push(card_data);
             }
             if (action_list.length > 0) {
+                data.sleeve_dict = {};
+                for (let i = 0; i < game.dc.chars.length; i++) {
+                    const actor = game.actors.getName(game.dc.chars[i]);
+                    if (actor.data.data.sleeved) {
+                        data.sleeve_dict[game.dc.chars[i]] = actor.data.data.sleeved.name;
+                    }
+                }
                 data.action_list = [];
                 for (let card = 0; card < cards.length ; card++) {
                     const cur_card = cards[card];
@@ -101,7 +108,9 @@ export default class GMSheet extends ActorSheet {
                         for (let chk = 0; chk < action_list.length; chk++) {
                             const chk_card = action_list[chk].name;
                             if(chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)'){
-                                data.action_list.push(action_list[chk]);
+                                if (!(data.sleeve_dict[action_list[chk].char] == action_list[chk].name)) {
+                                    data.action_list.push(action_list[chk]);
+                                }
                             }
                         }
                     }else{
@@ -110,7 +119,9 @@ export default class GMSheet extends ActorSheet {
                             for (let chk = 0; chk < action_list.length; chk++) {
                                 const chk_card = action_list[chk].name;
                                 if(chk_card == cur_card + ' of ' + cur_suit){
-                                    data.action_list.push(action_list[chk]);
+                                    if (!(data.sleeve_dict[action_list[chk].char] == action_list[chk].name)) {
+                                        data.action_list.push(action_list[chk]);
+                                    }
                                     break;
                                 }
                             }

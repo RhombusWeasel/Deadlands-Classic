@@ -71,11 +71,21 @@
             <h2 class="center gm-collapsible">Action Queue</h2>
             <div class="gm-content">
                 <table>
+                {{#if sleeve_dict}}
+                    <tr class="item" data-itemId="{{card._id}}">
+                        <th>Sleeved</th>
+                    </tr>
+                    {{#each sleeve_dict as |card|}}
+                    <tr class="item" data-itemId="{{card._id}}">
+                        <td class="perc70">{{card}}</td>
+                        <td class="perc30 center">{{@key}}</a></td>
+                    </tr>
+                    {{/each}}
+                {{/if}}
                 {{#each action_list as |card|}}
                     <tr class="item" data-itemId="{{card._id}}">
                         <td class="perc70">{{card.name}}</td>
-                        <td class="perc30 center">{{card.player}}</a></td>
-                        <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash"></i></a></td>
+                        <td class="perc30 center">{{card.char}}</a></td>
                     </tr>
                 {{/each}}
                 </table>
