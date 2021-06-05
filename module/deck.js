@@ -577,9 +577,27 @@ let operations = {
         if (char.owner) {
             data.roller = data.target;
             let form = new Dialog({
-                title: `You've been hit!`,
-                content: build_turn_dialog(char, data, 0),
+                title: `Your Turn.`,
+                content: build_turn_dialog(data),
                 buttons: {
+                    sleeve: {
+                        label: 'Sleeve it',
+                        callback: () => {
+                            if (char.data.sleeved) {
+                                //Prompt for you can only have one sleeved card
+                            }else{
+                                char.update({data: {sleeved: data.name}});
+                            }
+                        }
+                    },
+                    play: {
+                        label: 'Play',
+                        callback: () => {
+                            let itm = char.items.find(i => i.name == data.name);
+                            char.deleteOwnedItem(itm._id);
+                            emit('discard_card', data);
+                        }
+                    }
                 },
                 close: () => {
                     console.log('Damage Dialog Closed');

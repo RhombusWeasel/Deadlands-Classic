@@ -128,6 +128,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".draw-card").click(this._on_draw_card.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+        html.find(".next-turn").click(this._on_next_turn.bind(this));
         if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
@@ -300,5 +301,13 @@ export default class GMSheet extends ActorSheet {
         game.dc.action_discard.push(item)
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
+    }
+
+    _on_next_turn(event) {
+        if (game.dc.combat_active) {
+            let data = this.getData();
+            let next = data.action_deck.pop();
+            console.log(next);
+        }
     }
 }
