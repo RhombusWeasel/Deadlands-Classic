@@ -1,9 +1,9 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="flexbox">
         <div class="perc50">
-            <h2 class="center collapsible">Roll Modifiers [{{tn}}]</h2>
+            <h2 class="center gm-collapsible">Roll Modifiers [{{tn}}]</h2>
             {{#if modifiers}}
-            <div class="content">
+            <div class="gm-content">
                 <table>
                 {{#each modifiers as |mod|}}
                     <tr class="modifiers" data-mod="{{@key}}">
@@ -31,7 +31,7 @@
             <a><p style="text-align: center;" class="end-combat">End Combat</p></a>
             <a><p style="text-align: center;" class="refresh">Refresh</p></a>
             <h2 class="center collapsible">Fate Chips</h2>
-            <div class="content">
+            <div class="gm-content">
                 <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
             {{#if fate_chips}}
                 <table>
@@ -52,8 +52,8 @@
                 </table>
             {{/if}}
             </div>
-            <h2 class="center">Combat Hand</h2>
-            <div class="content">
+            <h2 class="center gm-collapsible">Combat Hand</h2>
+            <div class="gm-content">
                 <a class="center"><p class="draw-card">Draw Action Card</p></a>
             {{#if action_deck}}
                 <table>
@@ -67,8 +67,8 @@
             {{/if}}
             </div>
             {{#if action_list}}
-            <h2 class="center collapsible">Action Queue</h2>
-            <div class="content">
+            <h2 class="center gm-collapsible">Action Queue</h2>
+            <div class="gm-content">
                 <table>
                 {{#each action_list as |card|}}
                     <tr class="item" data-itemId="{{card._id}}">
