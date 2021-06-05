@@ -216,36 +216,6 @@ function build_marshal_draw_message(col) {
     `;
 }
 
-function build_data_div(data) {
-    let div = `<div id="data" `
-    console.log('build_data_div', data);
-    for (let [key, value] of Object.entries(data)) {
-        if (key != 'roll') {
-            div += `data-${key}="${value}"`;
-        }
-    }
-    div += `></div>`;
-    if (data.roll) {
-        div += `
-            ><div id="roll" 
-        `
-        for (let [key, value] of Object.entries(data.roll)) {
-            if (key != 'results') {
-                div += `data-${key}="${value}"`;
-            }
-        }
-        div += `></div>`;
-        div += `
-            <div id="results" 
-        `
-        for (let [key, value] of Object.entries(data.roll.results)) {
-            div += `data-${key}="${value}"`;
-        }
-        div += `></div>`;
-    }
-    return div
-}
-
 function build_roll_dialog(data) {
     let form = `
         <form>
@@ -306,7 +276,7 @@ function build_friendly_fire_dialog(data) {
 function build_dodge_dialog(data) {
     return `
         <form>
-            ${build_data_div(data)}
+            <div>
                 <h2 style="text-align: center;">Incoming Attack!</h2>
                 <p style="text-align: center;">${data.attacker} is attacking you!</p>
                 <p style="text-align: center;">It'll cost your ${data.card_name} to vamoose,</p>
@@ -314,6 +284,10 @@ function build_dodge_dialog(data) {
             </div>
         </form>
     `;
+}
+
+function build_turn_dialog(data) {
+    
 }
 
 function build_damage_dialog(char, data, saved) {
@@ -598,7 +572,20 @@ let operations = {
     //NEW COMBAT OPERATIONS
     //prompt turn is sent by the GM to the players.
     prompt_turn: function(data) {
-
+        let char = game.actors.getName(data.char);
+        if (char.owner) {
+            data.roller = data.target;
+            let form = new Dialog({
+                title: `You've been hit!`,
+                content: build_turn_dialog(char, data, 0),
+                buttons: {
+                },
+                close: () => {
+                    console.log('Damage Dialog Closed');
+                }
+            });
+            form.render(true);
+        }
     },
     //declare an attack is emitted by players to a gm
     declare_attack: function(data) {

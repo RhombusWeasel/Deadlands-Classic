@@ -131,14 +131,14 @@ export default class GMSheet extends ActorSheet {
         if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
-        var colls = document.getElementsByClassName("gm-collapsible");
+        let colls = document.getElementsByClassName("gm-collapsible");
         for (let i = 0; i < colls.length; i++) {
             if (!(game.dc.gm_collapse[i])) {
                 game.dc.gm_collapse[i] = false
             }
             colls[i].addEventListener("click", function() {
                 this.classList.toggle("active");
-                var content = this.nextElementSibling;
+                let content = this.nextElementSibling;
                 if (!(game.dc.gm_collapse[i])) {
                     content.style.maxHeight = null;
                     game.dc.gm_collapse[i] = true;
