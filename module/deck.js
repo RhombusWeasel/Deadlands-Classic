@@ -446,6 +446,7 @@ let operations = {
             if (data.name == "Joker (Black)") {
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Black Joker!</h3>
+                    <img src="https://ih1.redbubble.net/image.1081293467.8422/flat,750x,075,f-pad,750x1000,f8f8f8.u3.jpg"></img>
                     <p style="text-align: center;">You lose your next highest card.</p>
                     <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
                     <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
