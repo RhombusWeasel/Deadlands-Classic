@@ -72,7 +72,7 @@
             <div class="gm-content">
                 <table>
                 {{#if sleeve_dict}}
-                    <tr class="item" data-itemId="{{card._id}}">
+                    <tr>
                         <th>Sleeved</th>
                     </tr>
                     {{#each sleeve_dict as |card|}}
@@ -82,6 +82,9 @@
                     </tr>
                     {{/each}}
                 {{/if}}
+                <tr>
+                    <th>Hands</th>
+                </tr>
                 {{#each action_list as |card|}}
                     <tr class="item" data-itemId="{{card._id}}">
                         <td class="perc70">{{card.name}}</td>
