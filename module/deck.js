@@ -289,7 +289,7 @@ function build_dodge_dialog(data) {
 function build_turn_dialog(data) {
     return `
         <form>
-            <h1 style="text-align: center">${data.card_name}</h1>
+            <h1 style="text-align: center">${data.card}</h1>
             <h3 style="text-align: center">It's ${data.char}'s turn</h3>
         </form>
     `;
