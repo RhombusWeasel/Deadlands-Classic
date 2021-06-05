@@ -678,7 +678,8 @@ let operations = {
                     sleeve: {
                         label: 'Sleeve it',
                         callback: () => {
-                            char.deleteOwnedItem(char.data.data.sleeved.id);
+                            let slv = char.items.find(i => i.name == char.data.data.sleeved.name);
+                            char.deleteOwnedItem(slv._id);
                             let itm = char.items.find(i => i.name == data.name);
                             let card = {
                                 name: data.name,
