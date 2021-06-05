@@ -63,6 +63,26 @@ function sort_deck(card_pile){
     return r_pile;
 }
 
+function assemble_image_urls() {
+    let suit_lookup = [
+        '_2.png',
+        '_1.png',
+        '_0.png',
+        '.png',
+    ]
+    let base_url = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/`;
+    let url_dict = {};
+    url_dict['Joker (Red)'] = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/joker_2.png`;
+    url_dict['Joker (Black)'] = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/joker_1.png`;
+    for (let suit = 0; suit < suits.length; suit++) {
+        for (let card = 1; card < cards.length; card++) {
+            let full_name = `${cards[card]} of ${suits[suit]}`
+            url_deck[full_name] = base_url + `${cards[card].toLowerCase()}${suit_lookup[suit]}`
+        }        
+    }
+    return url_dict
+}
+
 function emit(op, data) {
     console.log('EMIT:', op, data);
     game.socket.emit("system.deadlands_classic", {
@@ -289,7 +309,7 @@ function build_dodge_dialog(data) {
 function build_turn_dialog(data) {
     return `
         <form>
-            <h1 style="text-align: center">${data.card}</h1>
+            <h1 style="text-align: center">${data.name}</h1>
             <h3 style="text-align: center">It's ${data.char}'s turn</h3>
         </form>
     `;
@@ -443,12 +463,11 @@ let operations = {
     },
     discard_card: function(data) {
         if (game.user.isGM) {
-            let black_joker = `https://cdn.shopify.com/s/files/1/0274/5804/3965/products/223859692071-0_360x.jpg?v=1589849544`;
-            let red_joker = `https://ih1.redbubble.net/image.1081293467.8422/flat,750x,075,f-pad,750x1000,f8f8f8.u3.jpg`;
+            let joker = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/hearts_joker.png`;
             if (data.name == "Joker (Black)") {
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Black Joker!</h3>
-                    <img src="${black_joker}"></img>
+                    <img src="${game.dc.url_dict[data.name]}"></img>
                     <p style="text-align: center;">You lose your next highest card.</p>
                     <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
                     <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
@@ -457,13 +476,14 @@ let operations = {
             }else if (data.name == "Joker (Red)") {
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Red Joker!</h3>
-                    <img src="${red_joker}"></img>
+                    <img src="${game.dc.url_dict[data.name]}"></img>
                     <p style="text-align: center;">You may act first or if sleeved may interrupt any card.</p>
                     <p style="text-align: center;">${data.char} may draw a Fate Chip.</p>
                 `});
             }else{
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Action Deck</h3>
+                    <img src="${game.dc.url_dict[data.name]}"></img>
                     <p style="text-align: center;">${data.char} plays ${data.name}</p>
                 `});
             }
@@ -595,7 +615,12 @@ let operations = {
                             if (char.data.sleeved) {
                                 //Prompt for you can only have one sleeved card
                             }else{
-                                char.update({data: {sleeved: data.name}});
+                                let itm = char.items.find(i => i.name == data.name);
+                                let card = {
+                                    name: data.name,
+                                    id: itm._id,
+                                }
+                                char.update({data: {sleeved: card}});
                             }
                         }
                     },
@@ -1209,7 +1234,8 @@ Hooks.on("ready", () => {
     game.dc = {
         combat_active: false,
         aim_bonus: 0,
-        level_headed_available: true
+        level_headed_available: true,
+        url_dict = assemble_image_urls()
     }
     if (game.user.isGM) {
         game.dc.action_deck = new_deck('action_deck');
