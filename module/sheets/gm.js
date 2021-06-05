@@ -304,6 +304,7 @@ export default class GMSheet extends ActorSheet {
     }
 
     _on_next_turn(event) {
+        event.preventDefault();
         if (game.dc.combat_active) {
             let data = this.getData();
             let next = data.action_list.pop();
