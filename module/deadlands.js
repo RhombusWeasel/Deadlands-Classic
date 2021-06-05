@@ -129,7 +129,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('not_sleeved', function (card) {
-        let char = game.actors.getName(game.user.character);
+        let char = game.actors.getName(game.user.charname);
         return (card != char.data.data.sleeved.name) ? options.fn(this) : options.inverse(this);
     });
 
