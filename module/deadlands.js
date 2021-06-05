@@ -157,7 +157,6 @@ Hooks.once("init", function () {
 });
 
 Hooks.on('preCreateToken', function () {
-    console.log('W00T', arguments);
     let act = game.actors.getName(arguments[1].name);
     if (!(act.isPC)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
