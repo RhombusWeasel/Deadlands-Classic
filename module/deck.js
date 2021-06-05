@@ -467,38 +467,34 @@ let operations = {
             let content = `
             <div>
                 <style>
-                    center {
-                        display: block;
-                        margin-left: auto;
-                        margin-right: auto;
-                        width: 50%;
+                    bg {
+                        background-image: url("${game.dc.url_dict[data.name]}");
                     }
                 </style>
+                <div class="bg">
             `;
             if (data.name == "Joker (Black)") {
                 content += `
-                <h3 style="text-align: center;">Black Joker!</h3>
-                <div class="center"><img src="${game.dc.url_dict[data.name]}"></img></div>
-                <p style="text-align: center;">You lose your next highest card.</p>
-                <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
-                <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
+                    <h3 style="text-align: center;">Black Joker!</h3>
+                    <p style="text-align: center;">You lose your next highest card.</p>
+                    <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
+                    <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
                 `;
                 game.dc.combat_shuffle = true
             }else if (data.name == "Joker (Red)") {
                 content += `
-                <h3 style="text-align: center;">Red Joker!</h3>
-                <div class="center"><img src="${game.dc.url_dict[data.name]}"></img></div>
-                <p style="text-align: center;">You may act first or if sleeved may interrupt any card.</p>
-                <p style="text-align: center;">${data.char} may draw a Fate Chip.</p>
+                    <h3 style="text-align: center;">Red Joker!</h3>
+                    <p style="text-align: center;">You may act first or if sleeved may interrupt any card.</p>
+                    <p style="text-align: center;">${data.char} may draw a Fate Chip.</p>
                 `;
             }else{
                 content += `
-                <h3 style="text-align: center;">Action Deck</h3>
-                <div class="center"><img src="${game.dc.url_dict[data.name]}"></img></div>
-                <p style="text-align: center;">${data.char} plays ${data.name}</p>
+                    <h3 style="text-align: center;">Action Deck</h3>
+                    <p style="text-align: center;">${data.char} plays ${data.name}</p>
                 `;
             }
             content += `
+                </div>
             </div>
             `;
             ChatMessage.create({content: content});
