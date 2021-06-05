@@ -133,10 +133,9 @@ Hooks.once("init", function () {
         let sleeved = options.data.root.sleeved?.name;
         if (card != undefined && sleeved != undefined) {
             if (card != sleeved.name) {
-                return true;
+                return options.fn(this);
             }
         }
-        return false;
     });
 
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
