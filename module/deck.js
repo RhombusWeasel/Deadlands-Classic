@@ -76,11 +76,12 @@ function assemble_image_urls() {
     url_dict['Joker (Black)'] = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/joker_1.png`;
     for (let suit = 0; suit < suits.length; suit++) {
         for (let card = 1; card < cards.length; card++) {
-            let full_name = `${cards[card]} of ${suits[suit]}`
-            url_deck[full_name] = base_url + `${cards[card].toLowerCase()}${suit_lookup[suit]}`
+            let full_name = `${cards[card]} of ${suits[suit]}`;
+            url_deck[full_name] = base_url + `${cards[card].toLowerCase()}${suit_lookup[suit]}`;
+            console.log(url_deck[full_name]);
         }        
     }
-    return url_dict
+    return url_dict;
 }
 
 function emit(op, data) {
