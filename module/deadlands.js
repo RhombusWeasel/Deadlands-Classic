@@ -128,7 +128,7 @@ Hooks.once("init", function () {
         }
     });
 
-    Handlebars.registerHelper('not_same', function (card, sleeved) {
+    Handlebars.registerHelper('not_same', function (card, sleeved, options) {
         if (card != undefined && sleeved != undefined) {
             return (card != sleeved.name) ? options.fn(this) : options.inverse(this);
         }
