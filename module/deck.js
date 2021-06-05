@@ -316,6 +316,18 @@ function build_turn_dialog(data) {
     `;
 }
 
+function build_sleeve_dialog(data) {
+    let char = game.actors.getName(data.char);
+    let sleeved = char.data.data.sleeved.name
+    return `
+        <form>
+            <h1 style="text-align: center">Not much room for two!</h1>
+            <p style="text-align: center">You already have the ${sleeved} up your sleeve</p>
+            <p style="text-align: center">You want to replace it with the ${data.card}</p>
+        </form>
+    `;
+}
+
 function build_damage_dialog(data) {
     let form = `
         <form>
@@ -627,8 +639,8 @@ let operations = {
                     sleeve: {
                         label: 'Sleeve it',
                         callback: () => {
-                            if (char.data.sleeved) {
-                                //Prompt for you can only have one sleeved card
+                            if (char.data.data.sleeved) {
+                                operations.alert_sleeve(data);
                             }else{
                                 let itm = char.items.find(i => i.name == data.name);
                                 let card = {
@@ -637,6 +649,41 @@ let operations = {
                                 }
                                 char.update({data: {sleeved: card}});
                             }
+                        }
+                    },
+                    play: {
+                        label: 'Play',
+                        callback: () => {
+                            let itm = char.items.find(i => i.name == data.name);
+                            char.deleteOwnedItem(itm._id);
+                            emit('discard_card', data);
+                        }
+                    }
+                },
+                close: () => {
+                    console.log('Damage Dialog Closed');
+                }
+            });
+            form.render(true);
+        }
+    },
+    alert_sleeve: function(data) {
+        let char = game.actors.getName(data.char);
+        if (char.owner) {
+            data.roller = data.target;
+            let form = new Dialog({
+                title: `Your Turn.`,
+                content: build_sleeve_dialog(data),
+                buttons: {
+                    sleeve: {
+                        label: 'Sleeve it',
+                        callback: () => {
+                            let itm = char.items.find(i => i.name == data.name);
+                            let card = {
+                                name: data.name,
+                                id: itm._id,
+                            }
+                            char.update({data: {sleeved: card}});
                         }
                     },
                     play: {

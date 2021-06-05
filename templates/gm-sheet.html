@@ -74,6 +74,7 @@
                 {{#if sleeve_dict}}
                     <tr class="perc100 center">
                         <th>Sleeved</th>
+                        <th>Name</th>
                     </tr>
                     {{#each sleeve_dict as |card|}}
                     <tr class="item" data-itemId="{{card._id}}">
@@ -83,12 +84,13 @@
                     {{/each}}
                 {{/if}}
                 <tr class="perc100 center">
-                    <th>Hands</th>
+                    <th>Card</th>
+                    <th>Name</th>
                 </tr>
                 {{#each action_list as |card|}}
                     <tr class="item" data-itemId="{{card._id}}">
                         <td class="perc50">{{card.name}}</td>
-                        <td class="perc50 center">{{card.char}}</a></td>
+                        <td class="perc50 right">{{card.char}}</a></td>
                     </tr>
                 {{/each}}
                 </table>
