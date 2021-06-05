@@ -129,31 +129,6 @@ export default class GMSheet extends ActorSheet {
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
-        if (!(game.dc.gm_collapse)) {
-            game.dc.gm_collapse = []
-        }
-        let colls = document.getElementsByClassName("gm-collapsible");
-        for (let i = 0; i < colls.length; i++) {
-            if (!(game.dc.gm_collapse[i])) {
-                game.dc.gm_collapse[i] = false
-            }
-            colls[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                let content = this.nextElementSibling;
-                if (!(game.dc.gm_collapse[i])) {
-                    content.style.maxHeight = null;
-                    game.dc.gm_collapse[i] = true;
-                }else{
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    game.dc.gm_collapse[i] = false;
-                }
-            });
-            if (game.dc.gm_collapse[i]) {
-                colls[i].nextElementSibling.style.maxHeight = null;
-            } else {
-                colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
-            }
-        }
         return super.activateListeners(html);
     }
 
@@ -297,7 +272,10 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Playing ${item.name}`});
+        ChatMessage.create({ content: `
+            <h3 style="text-align: center;">Action Deck</h3>
+            <p style="text-align: center;">The Marshal plays ${item.name}</p>
+        `});
         game.dc.action_discard.push(item)
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
