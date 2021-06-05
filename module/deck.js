@@ -436,8 +436,7 @@ let operations = {
     recieve_card: function(data){
         let actor = game.actors.getName(data.char);
         if (actor.owner){
-            console.log(data);
-            console.log(actor);
+            console.log('Card:', data);
             let c = Math.random();
             setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
         }
