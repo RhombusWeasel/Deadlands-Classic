@@ -24,9 +24,7 @@ function get_token_count(t) {
     let tokens = canvas.tokens.placeables;
     if (tokens) {
         tokens.forEach(tkn => {
-            console.log(tkn.name, t.name);
             if (tkn.name.search(t.name) != -1) {
-                console.log('Match!', tkn.name.search(t.name));
                 count += 1;
             }
         });
