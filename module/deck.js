@@ -443,15 +443,24 @@ let operations = {
     },
     discard_card: function(data) {
         if (game.user.isGM) {
+            let black_joker = `https://cdn.shopify.com/s/files/1/0274/5804/3965/products/223859692071-0_360x.jpg?v=1589849544`;
+            let red_joker = `https://ih1.redbubble.net/image.1081293467.8422/flat,750x,075,f-pad,750x1000,f8f8f8.u3.jpg`;
             if (data.name == "Joker (Black)") {
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Black Joker!</h3>
-                    <img src="https://ih1.redbubble.net/image.1081293467.8422/flat,750x,075,f-pad,750x1000,f8f8f8.u3.jpg"></img>
+                    <img src="${black_joker}"></img>
                     <p style="text-align: center;">You lose your next highest card.</p>
                     <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
                     <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
                 `});
                 game.dc.combat_shuffle = true
+            }else if (data.name == "Joker (Red)") {
+                ChatMessage.create({ content: `
+                    <h3 style="text-align: center;">Red Joker!</h3>
+                    <img src="${black_joker}"></img>
+                    <p style="text-align: center;">You may act first or if sleeved may interrupt any card.</p>
+                    <p style="text-align: center;">${data.char} may draw a Fate Chip.</p>
+                `});
             }else{
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Action Deck</h3>
