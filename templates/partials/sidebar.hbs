@@ -31,7 +31,7 @@
                 </tr>
                 {{/if}}
                 {{#each action_deck as |card|}}
-                    {{#unless card.name sleeved.name}}
+                    {{#if (not_sleeved card.name)}}
                 <tr class="item" data-itemId="{{this._id}}">
                     <td class="perc70">{{this.name}}</td>
                     <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
@@ -40,7 +40,7 @@
                         {{/lvl_head}}
                     <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
                 </tr>
-                    {{/unless}}
+                    {{/if}}
                 {{/each}}
             </table>
             {{/if}}
