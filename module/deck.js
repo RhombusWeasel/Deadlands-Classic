@@ -1235,7 +1235,7 @@ Hooks.on("ready", () => {
         combat_active: false,
         aim_bonus: 0,
         level_headed_available: true,
-        url_dict = assemble_image_urls()
+        url_dict: assemble_image_urls()
     }
     if (game.user.isGM) {
         game.dc.action_deck = new_deck('action_deck');
