@@ -466,11 +466,11 @@ let operations = {
         if (game.user.isGM) {
             let content = `
             <style>
-                body  {
+                bg  {
                     background-image: url("${game.dc.url_dict[data.name]}");
                 }
             </style>
-            <div class="body">
+            <div class="bg">
             `;
             if (data.name == "Joker (Black)") {
                 content += `
@@ -490,7 +490,6 @@ let operations = {
             }else{
                 content += `
                     <h3 style="text-align: center;">Action Deck</h3>
-                    <img src="${game.dc.url_dict[data.name]}"></img>
                     <p style="text-align: center;">${data.char} plays ${data.name}</p>
                 `;
             }
