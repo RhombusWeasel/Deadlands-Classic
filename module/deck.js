@@ -77,8 +77,8 @@ function assemble_image_urls() {
     for (let suit = 0; suit < suits.length; suit++) {
         for (let card = 1; card < cards.length; card++) {
             let full_name = `${cards[card]} of ${suits[suit]}`;
-            url_deck[full_name] = base_url + `${cards[card].toLowerCase()}${suit_lookup[suit]}`;
-            console.log(url_deck[full_name]);
+            url_dict[full_name] = base_url + `${cards[card].toLowerCase()}${suit_lookup[suit]}`;
+            console.log(url_dict[full_name]);
         }        
     }
     return url_dict;
