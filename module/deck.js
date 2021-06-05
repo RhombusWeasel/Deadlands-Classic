@@ -467,11 +467,17 @@ let operations = {
             let joker = `https://opengameart.org/sites/default/files/styles/medium/public/oga-textures/92832/hearts_joker.png`;
             if (data.name == "Joker (Black)") {
                 ChatMessage.create({ content: `
-                    <h3 style="text-align: center;">Black Joker!</h3>
-                    <img src="${game.dc.url_dict[data.name]}"></img>
-                    <p style="text-align: center;">You lose your next highest card.</p>
-                    <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
-                    <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
+                    <div>
+                        <style>
+                            body  {
+                                background-image: url("${game.dc.url_dict[data.name]}");
+                            }
+                        </style>
+                        <h3 style="text-align: center;">Black Joker!</h3>
+                        <p style="text-align: center;">You lose your next highest card.</p>
+                        <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
+                        <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
+                    </div>
                 `});
                 game.dc.combat_shuffle = true
             }else if (data.name == "Joker (Red)") {
