@@ -295,7 +295,10 @@ export default class GMSheet extends ActorSheet {
         let data = this.getData();
         if (data.combat_active) {
             let next = data.action_list.shift();
-            emit('prompt_turn', next);
+            game.socket.emit("system.deadlands_classic", {
+                operation: 'prompt_turn',
+                data: next
+            });
         }
     }
 }
