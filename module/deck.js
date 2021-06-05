@@ -287,10 +287,15 @@ function build_dodge_dialog(data) {
 }
 
 function build_turn_dialog(data) {
-    
+    return `
+        <form>
+            <h1 style="text-align: center">${data.card_name}</h1>
+            <h3 style="text-align: center">It's ${data.char}'s turn</h3>
+        </form>
+    `;
 }
 
-function build_damage_dialog(char, data, saved) {
+function build_damage_dialog(data) {
     let form = `
         <form>
             <div id="data" data-wounds="${data.wounds}" data-char="${data.target}" data-loc_key="${data.loc_key}" data-loc_label=${data.loc_label} data-soak="${data.soak}">
@@ -487,14 +492,10 @@ let operations = {
             }
             data.modifier += parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(char.data.data.wound_modifier);
             data.roll = new_roll(data);
-            emit('confirm_result', data);
+            operations.confirm_result(data);
         }
     },
     confirm_result: function(data) {
-        if (game.user.isGM) {
-            emit('confirm_result', data);
-            return;
-        }
         let char = game.actors.getName(data.roller);
         if (char.owner) {
             let form = new Dialog({
@@ -512,7 +513,7 @@ let operations = {
                                 data.roll = evaluate_roll(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
-                            emit('confirm_result', data);
+                            operations.confirm_result(data);
                         },
                     },
                     red: {
@@ -528,7 +529,7 @@ let operations = {
                                 data.roll = evaluate_roll(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
-                            emit('confirm_result', data);
+                            operations.confirm_result(data);
                         },
                     },
                     blue: {
@@ -544,7 +545,7 @@ let operations = {
                                 data.roll = evaluate_roll(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
-                            emit('confirm_result', data);
+                            operations.confirm_result(data);
                         },
                     },
                     confirm: {
@@ -1065,7 +1066,7 @@ let operations = {
             data.roller = data.target;
             let form = new Dialog({
                 title: `You've been hit!`,
-                content: build_damage_dialog(char, data, 0),
+                content: build_damage_dialog(data),
                 buttons: {
                     white: {
                         label: 'White [1]',
