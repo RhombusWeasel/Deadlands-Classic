@@ -5,9 +5,9 @@
         <h2 class="center collapsible">Fate Chips</h2>
         <div class="content">
             <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
-            {{#if fate_chips}}
+        {{#if fate_chips}}
                 <table>
-                {{#each fate_chips as |chip|}}
+            {{#each fate_chips as |chip|}}
                     <tr class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
                     <td class="perc50">{{this.name}}</td>
                     <td class="perc10 center">{{this.bounty}}</td>
@@ -15,35 +15,35 @@
                     <td class="perc10 center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></td>
                     <td class="perc10 center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></td>
                 </tr>
-                {{/each}}
+            {{/each}}
             </table>
-            {{/if}}
+        {{/if}}
         </div>
         <h2 class="center collapsible">Combat Hand</h2>
         <div class="content">
             <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
-            {{#if action_deck}}
+        {{#if action_deck}}
             <table>
-                {{#if sleeved}}
+            {{#if sleeved}}
                 <tr class="item" data-itemId="{{sleeved.id}}">
                     <td class="perc90">{{sleeved.name}} (Sleeved)</td>
                     <td class="perc10 center"><a class="aim-button"><i class="fas fa-bahai" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
                 </tr>
-                {{/if}}
-                {{#each action_deck as |card|}}
-                    {{#if (not_same card.name)}}
+            {{/if}}
+            {{#each action_deck as |card|}}
+                {{#not_same card.name)}}
                 <tr class="item" data-itemId="{{this._id}}">
                     <td class="perc70">{{this.name}}</td>
                     <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
-                        {{#lvl_head}}
+                    {{#lvl_head}}
                     <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
-                        {{/lvl_head}}
+                    {{/lvl_head}}
                     <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
                 </tr>
-                    {{/if}}
-                {{/each}}
+                {{/not_same}}
+            {{/each}}
             </table>
-            {{/if}}
+        {{/if}}
         </div>
         {{#if melee_weapons}}
         <h2 class="center collapsible">Melee Weapons</h2>
