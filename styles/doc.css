@@ -11,6 +11,9 @@
 .right{
     text-align: right;
 }
+.perc100 {
+    width: 100%;
+}
 .perc90 {
     width: 90%
 }
