@@ -97,8 +97,13 @@ export default class GMSheet extends ActorSheet {
                 data.action_list = [];
                 for (let card = 0; card < cards.length ; card++) {
                     const cur_card = cards[card];
-                    if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') ) {
-                        data.action_list.push(action_list[chk]);
+                    if(cur_card == 'Joker') {
+                        for (let chk = 0; chk < action_list.length; chk++) {
+                            const chk_card = action_list[chk].name;
+                            if(chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)'){
+                                data.action_list.push(action_list[chk]);
+                            }
+                        }
                     }else{
                         for (let suit = 0; suit < suits.length; suit++) {
                             const cur_suit = suits[suit];
