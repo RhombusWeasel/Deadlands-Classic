@@ -323,7 +323,7 @@ function build_sleeve_dialog(data) {
         <form>
             <h1 style="text-align: center">Not much room for two!</h1>
             <p style="text-align: center">You already have the ${sleeved} up your sleeve</p>
-            <p style="text-align: center">You want to replace it with the ${data.card}</p>
+            <p style="text-align: center">You want to replace it with the ${data.name}</p>
         </form>
     `;
 }
