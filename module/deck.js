@@ -474,10 +474,10 @@ let operations = {
             `;
             if (data.name == "Joker (Black)") {
                 content += `
-                        <h3 style="text-align: center;">Black Joker!</h3>
-                        <p style="text-align: center;">You lose your next highest card.</p>
-                        <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
-                        <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
+                    <h3 style="text-align: center;">Black Joker!</h3>
+                    <p style="text-align: center;">You lose your next highest card.</p>
+                    <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
+                    <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
                 `;
                 game.dc.combat_shuffle = true
             }else if (data.name == "Joker (Red)") {
@@ -494,6 +494,9 @@ let operations = {
                     <p style="text-align: center;">${data.char} plays ${data.name}</p>
                 `;
             }
+            content += `
+            </div>
+            `;
             ChatMessage.create({content: content});
             game.dc.action_discard.push(data)
         }
