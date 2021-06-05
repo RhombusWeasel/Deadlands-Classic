@@ -436,6 +436,14 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         this.getData();
         this.render();
+        game.socket.emit("system.deadlands_classic", {
+            operation: "request_cards",
+            data: {
+                user: game.userId,
+                char: this.actor.name,
+                amount: 0
+            }
+        });
     }
 
     _on_item_open(event) {
