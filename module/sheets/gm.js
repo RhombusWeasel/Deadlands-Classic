@@ -84,13 +84,13 @@ export default class GMSheet extends ActorSheet {
                 let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
                 for (let c = 0; c < cards.length; c++) {
                     const card = cards[c];
-                    let card_data = {'name': card.name, 'player': actor.data.name};
+                    let card_data = {'name': card.name, 'char': actor.data.name};
                     action_list.push(card_data);
                 }
             }
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
-                let card_data = {'name': card.name, 'player': 'GM'};
+                let card_data = {'name': card.name, 'char': 'GM'};
                 action_list.push(card_data);
             }
             if (action_list.length > 0) {
@@ -293,10 +293,9 @@ export default class GMSheet extends ActorSheet {
     _on_next_turn(event) {
         event.preventDefault();
         let data = this.getData();
-        console.log('_on_next_turn', event, game.dc.combat_active);
         if (data.combat_active) {
             let next = data.action_list.shift();
-            console.log(next);
+            emit('prompt_turn', next);
         }
     }
 }

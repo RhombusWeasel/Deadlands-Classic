@@ -457,7 +457,7 @@ let operations = {
             }else if (data.name == "Joker (Red)") {
                 ChatMessage.create({ content: `
                     <h3 style="text-align: center;">Red Joker!</h3>
-                    <img src="${black_joker}"></img>
+                    <img src="${red_joker}"></img>
                     <p style="text-align: center;">You may act first or if sleeved may interrupt any card.</p>
                     <p style="text-align: center;">${data.char} may draw a Fate Chip.</p>
                 `});
