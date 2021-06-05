@@ -202,6 +202,7 @@ export default class PlayerSheet extends ActorSheet {
         });
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
         if (data.combat_active) {
+            data.sleeved = this.actor.data.data.sleeved;
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
