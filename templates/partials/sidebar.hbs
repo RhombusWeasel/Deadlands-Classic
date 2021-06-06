@@ -24,14 +24,14 @@
             <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
         {{#if action_deck}}
             <table>
-            {{#if sleeved}}
+            {{!-- {{#if sleeved}}
                 <tr class="item" data-itemId="{{sleeved.id}}">
                     <td class="perc90">{{sleeved.name}} (Sleeved)</td>
                     <td class="perc10 center"><a class="interrupt"><i class="fas fa-bahai" title="Interrupt!  Use this card right now."></i></a></td>
                 </tr>
-            {{/if}}
+            {{/if}} --}}
             {{#each action_deck as |card|}}
-                {{#not_same card.name}}
+                {{!-- {{#not_same card.name}} --}}
                 <tr class="item" data-itemId="{{this._id}}">
                     <td class="perc80">{{this.name}}</td>
                     <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
@@ -39,7 +39,7 @@
                     <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
                     {{/lvl_head}}
                 </tr>
-                {{/not_same}}
+                {{!-- {{/not_same}} --}}
             {{/each}}
             </table>
         {{/if}}
