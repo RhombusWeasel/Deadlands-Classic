@@ -31,7 +31,6 @@
                 </tr>
             {{/if}}
             {{#each action_deck as |card|}}
-                {{log card.name sleeved.name}}
                 {{#not_same card.name}}
                 <tr class="item" data-itemId="{{this._id}}">
                     <td class="perc80">{{this.name}}</td>
