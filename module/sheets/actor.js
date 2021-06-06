@@ -620,12 +620,12 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
+        console.log(this.actor);
         let content = `
             <h3 style="text-align: center;">Action Deck</h3>
             <p style="text-align: center;">${this.actor.name} interrupts the action with the ${item.name}</p>
         `;
         ChatMessage.create({content: content});
-        console.log(this.actor);
         game.socket.emit("system.deadlands_classic", {
             operation: 'discard_card',
             data: {
