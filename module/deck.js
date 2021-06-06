@@ -452,7 +452,7 @@ let operations = {
             for (let i = 0; i < game.dc.chars.length; i++) {
                 const name = game.dc.chars[i];
                 let char = game.actors.get(name);
-                char.update({data: {sleeved: undefined}});
+                char.update({data: {sleeved: false}});
             }
         }
     },
