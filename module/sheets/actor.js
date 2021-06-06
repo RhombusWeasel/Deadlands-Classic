@@ -638,7 +638,6 @@ export default class PlayerSheet extends ActorSheet {
                 char: this.actor.name
             }
         });
-        char.update({data: {sleeved: undefined}});
     }
 
     _on_aim(event) {
