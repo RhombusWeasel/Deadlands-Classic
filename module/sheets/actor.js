@@ -187,7 +187,6 @@ export default class PlayerSheet extends ActorSheet {
         data.goods = data.items.filter(function (item) {return item.type == "goods"}).sort((a, b) => {return compareObjects(a, b, 'name')});
         data.huckster_deck = sort_deck(data.items.filter(function (item) {return item.type == "huckster_deck"}));
         data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
-        console.log(data.action_deck);
         let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
@@ -210,6 +209,7 @@ export default class PlayerSheet extends ActorSheet {
                 setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 100);
             }
         }
+        console.log(data.action_deck);
         return data;
     }
 
