@@ -322,7 +322,7 @@ function build_sleeve_dialog(data) {
     return `
         <form>
             <h1 style="text-align: center">Not much room for two!</h1>
-            <p style="text-align: center">You already have the ${sleeved} up your sleeve</p>
+            <p style="text-align: center">You already have the ${sleeved} up your sleeve, you will lose it if you continue.</p>
             <p style="text-align: center">You want to replace it with the ${data.name}</p>
         </form>
     `;
@@ -449,6 +449,11 @@ let operations = {
             game.dc.action_deck = []
             game.dc.discard_deck = []
             game.dc.aim_bonus = 0
+            for (let i = 0; i < game.dc.chars.length; i++) {
+                const name = game.dc.chars[i];
+                let char = game.actors.get(name);
+                char.update({data: {sleeved: undefined}});
+            }
         }
     },
     request_cards: function(data){

@@ -231,7 +231,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
-        html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
+        html.find(".interrupt").click(this._on_interrupt.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
@@ -614,6 +614,28 @@ export default class PlayerSheet extends ActorSheet {
         });
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
+    }
+
+    _on_interrupt(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let content = `
+            <h3 style="text-align: center;">Action Deck</h3>
+            <p style="text-align: center;">${this.actor.name} interrupts the action with the ${item.name}</p>
+        `;
+        ChatMessage.create({content: content});
+        game.socket.emit("system.deadlands_classic", {
+            operation: 'discard_card',
+            data: {
+                name: item.name,
+                type: item.type,
+                char: this.actor.name
+            }
+        });
+        char.update({data: {sleeved: undefined}});
+        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
     }
 
     _on_aim(event) {

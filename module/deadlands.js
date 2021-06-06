@@ -129,7 +129,6 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('not_same', function (card, options) {
-        console.log('not_same', card, options);
         let sleeved = options?.data?.root?.sleeved?.name || undefined;
         if (card != undefined && sleeved != undefined) {
             if (card != sleeved) {
