@@ -201,7 +201,7 @@ export default class PlayerSheet extends ActorSheet {
                 }
             });
         });
-        data.sleeved = this.actor.data.data.sleeved;
+        //data.sleeved = this.actor.data.data.sleeved;
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
         if (data.combat_active) {
         }else{
@@ -609,6 +609,7 @@ export default class PlayerSheet extends ActorSheet {
             data: {
                 name: item.name,
                 type: item.type,
+                id: item._id,
                 char: this.actor.name
             }
         });

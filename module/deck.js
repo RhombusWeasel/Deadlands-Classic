@@ -451,7 +451,7 @@ let operations = {
             game.dc.aim_bonus = 0
             for (let i = 0; i < game.dc.chars.length; i++) {
                 const name = game.dc.chars[i];
-                let char = game.actors.get(name);
+                let char = game.actors.getName(name);
                 char.update({data: {sleeved: false}});
             }
         }
@@ -520,9 +520,8 @@ let operations = {
             `;
             ChatMessage.create({content: content});
             let char = game.actors.getName(data.char);
-            let itm = char.items.find(i => i.name == data.name);
-            char.deleteOwnedItem(itm._id);
-            game.dc.action_discard.push(data)
+            char.deleteOwnedItem(data.id);
+            game.dc.action_discard.push({name: data.name, type: 'action_deck'});
         }
     },
     recycle_card: function(data) {
