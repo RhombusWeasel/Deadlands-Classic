@@ -284,7 +284,8 @@ export default class GMSheet extends ActorSheet {
         for (let i = 0; i < game.dc.chars.length; i++) {
             const name = game.dc.chars[i];
             let char = game.actors.getName(name);
-            char.update({data: {sleeved: false}});
+            delete char.data.data.sleeved;
+            char.update(char.data);
         }
         game.dc.chars = [];
         return this.render();
