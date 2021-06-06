@@ -612,7 +612,6 @@ export default class PlayerSheet extends ActorSheet {
                 char: this.actor.name
             }
         });
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }
 
@@ -635,7 +634,6 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         char.update({data: {sleeved: undefined}});
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
     }
 
     _on_aim(event) {

@@ -519,6 +519,9 @@ let operations = {
             </div>
             `;
             ChatMessage.create({content: content});
+            let char = game.actors.getName(data.char);
+            let itm = char.items.find(data.name);
+            char.deleteOwnedItem(itm._id);
             game.dc.action_discard.push(data)
         }
     },
@@ -978,64 +981,6 @@ let operations = {
                 emit('skill_roll', data);
             }else{
                 emit('skill_roll', data);
-            }
-        }
-    },
-    trait_check: function(data) {
-        let char = game.actors.getName(data.name);
-        if (char.owner) {
-            let trait = char.data.data.traits[data.trait];
-            let lvl = trait.level;
-            let die = trait.die_type;
-            let mod = trait.modifier;
-            let wound_mod = char.data.data.wound_modifier;
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
-            data.skill_name = trait.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
-        }
-    },
-    skill_check: function(data) {
-        let char = game.actors.getName(data.name);
-        console.log(data, char);
-        if (char.owner) {
-            let trait = char.data.data.traits[data.trait];
-            let skill = trait.skills[data.skill];
-            let lvl = skill.level;
-            let die = trait.die_type;
-            let mod = skill.modifier;
-            let wound_mod = char.data.data.wound_modifier;
-            if (lvl == 0) {
-                lvl = trait.level;
-            }
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
-            data.skill_name = skill.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
-        }
-    },
-    check_target: function(data) {
-        if (game.user.isGM) {
-            console.log('check_target', data);
-            let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
-            console.log('check_target: Attacker:', atk);
-            let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log('check_target: Target:', tgt);
-            if (atk.data.disposition == -1) {
-                emit('attack', data);
-            }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
-                emit('warn_law', data);
-            }else{
-                operations.attack(data);
-            }
-        }else{
-            let char = canvas.tokens.placeables.find(i => i.name == data.target);
-            if (char.owner) {
-                emit('check_target', data);
             }
         }
     },
