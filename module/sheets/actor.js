@@ -620,6 +620,10 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
+        if (item == undefined) {
+            this.actor.update({data: {sleeved: false}});
+            return;
+        }
         console.log(this.actor);
         let content = `
             <h3 style="text-align: center;">Action Deck</h3>
