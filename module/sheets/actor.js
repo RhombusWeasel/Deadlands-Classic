@@ -625,6 +625,7 @@ export default class PlayerSheet extends ActorSheet {
             <p style="text-align: center;">${this.actor.name} interrupts the action with the ${item.name}</p>
         `;
         ChatMessage.create({content: content});
+        console.log(this.actor);
         game.socket.emit("system.deadlands_classic", {
             operation: 'discard_card',
             data: {
