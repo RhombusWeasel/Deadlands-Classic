@@ -520,7 +520,7 @@ let operations = {
             `;
             ChatMessage.create({content: content});
             let char = game.actors.getName(data.char);
-            let itm = char.items.find(data.name);
+            let itm = char.items.find(i => i.name == data.name);
             char.deleteOwnedItem(itm._id);
             game.dc.action_discard.push(data)
         }

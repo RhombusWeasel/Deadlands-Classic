@@ -163,24 +163,24 @@ Hooks.once("init", function () {
     });
 
     preload_handlebars_templates();
-});
 
-Hooks.on('preCreateToken', function () {
-    let act = game.actors.getName(arguments[1].name);
-    if (!(act.isPC)) {
-        let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
-        let amt = get_token_count(act);
-        if (amt > 0) {
-            arguments[1].name += ` ${amt}`
+    Hooks.on('preCreateToken', function () {
+        let act = game.actors.getName(arguments[1].name);
+        if (!(act.isPC)) {
+            let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
+            let amt = get_token_count(act);
+            if (amt > 0) {
+                arguments[1].name += ` ${amt}`
+            }
         }
-    }
-});
-
-Hooks.on('hoverToken', function () {
-    if (game.user.isGM) {
-        let tkn = arguments[0]
-        if (tkn.data.name != tkn.actor.name && !(tkn.actor.isPC)) {
-            tkn.actor.update({name: tkn.data.name});
+    });
+    
+    Hooks.on('hoverToken', function () {
+        if (game.user.isGM) {
+            let tkn = arguments[0]
+            if (tkn.data.name != tkn.actor.name && !(tkn.actor.isPC)) {
+                tkn.actor.update({name: tkn.data.name});
+            }
         }
-    }
+    });
 });
