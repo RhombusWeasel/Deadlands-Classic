@@ -278,6 +278,15 @@ export default class GMSheet extends ActorSheet {
             data: {}
         });
         game.settings.set('deadlands_classic', 'combat_active', false);
+        game.dc.action_deck = [];
+        game.dc.combat_active = false
+        game.dc.discard_deck = [];
+        for (let i = 0; i < game.dc.chars.length; i++) {
+            const name = game.dc.chars[i];
+            let char = game.actors.getName(name);
+            char.update({data: {sleeved: false}});
+        }
+        game.dc.chars = [];
         return this.render();
     }
 

@@ -9,6 +9,7 @@ function restore_discard() {
         game.dc.action_deck.push(game.dc.action_discard.pop());
     }
     game.dc.action_deck = shuffle_deck(game.dc.action_deck);
+    game.dc.action_discard = [];
 }
 
 function shuffle_deck(deck) {
@@ -445,16 +446,6 @@ let operations = {
     },
     end_combat: function(data) {
         game.dc.combat_active = false
-        if (game.user.isGM) {
-            game.dc.action_deck = []
-            game.dc.discard_deck = []
-            game.dc.aim_bonus = 0
-            for (let i = 0; i < game.dc.chars.length; i++) {
-                const name = game.dc.chars[i];
-                let char = game.actors.getName(name);
-                char.update({data: {sleeved: false}});
-            }
-        }
     },
     request_cards: function(data){
         if (game.user.isGM) {
