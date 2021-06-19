@@ -1,59 +1,61 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="flexbox">
-        <div class="data">
+        <div class="perc50">
+            <h2 class="center gm-collapsible">Roll Modifiers [{{tn}}]</h2>
             {{#if modifiers}}
-            <div>
-                <h2 class="center">Roll Modifiers</h2>
-                <div>
-                    <table>
+            <div class="gm-content">
+                <table>
                 {{#each modifiers as |mod|}}
-                        <tr class="modifiers" data-mod="{{@key}}">
-                            <td class="perc80">{{mod.name}}</td>
-                            <td class="perc10 center">{{mod.mod}}</td>
+                    <tr class="modifiers" data-mod="{{@key}}">
+                        <td class="perc80">{{mod.name}}</td>
+                        <td class="perc10 center">{{mod.mod}}</td>
                     {{#if (eq mod.active true)}}
-                            <td><input type="checkbox" name="data.modifiers.{{@key}}.active" checked/></td>
+                        <td><input type="checkbox" name="data.modifiers.{{@key}}.active" checked/></td>
                     {{/if}}
                     {{#if (eq mod.active false)}}
-                            <td><input type="checkbox" name="data.modifiers.{{@key}}.active"/></td>
+                        <td><input type="checkbox" name="data.modifiers.{{@key}}.active"/></td>
                     {{/if}}
-                        </tr>
+                    </tr>
                 {{/each}}
-                        <tr>
-                            <td class="perc90 center">Total</td>
-                            <td class="perc10 center">{{tn}}</td>
-                        </tr>
-                    </table>
-                </div>
+                    <tr>
+                        <td class="perc90 center">Total</td>
+                        <td class="perc10 center">{{tn}}</td>
+                    </tr>
+                </table>
             </div>
             {{/if}}
         </div>
-        <div class="data">
+        <div class="perc50">
             <a><p style="text-align: center;" class="start-combat">Start Combat</p></a>
             <a><p style="text-align: center;" class="new-round">New Round</p></a>
             <a><p style="text-align: center;" class="end-combat">End Combat</p></a>
+            <a><p style="text-align: center;" class="next-turn">Next Turn</p></a>
             <a><p style="text-align: center;" class="refresh">Refresh</p></a>
-            <h2 class="center">Fate Chips</h2>
-            <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
+            <h2 class="center collapsible">Fate Chips</h2>
+            <div class="gm-content">
+                <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
             {{#if fate_chips}}
-            <table>
-                <tr>
-                    <th class="perc70 center">{{localize "dc.fate_chips.name"}}</th>
-                    <th class="perc10 center">{{localize "dc.fate_chips.bounty"}}</th>
-                    <th class="perc10 center">{{localize "dc.fate_chips.amount"}}</th>
-                    <th class="perc10 center">Use</th>
-                </tr>
+                <table>
+                    <tr>
+                        <th class="perc70 center">{{localize "dc.fate_chips.name"}}</th>
+                        <th class="perc10 center">{{localize "dc.fate_chips.bounty"}}</th>
+                        <th class="perc10 center">{{localize "dc.fate_chips.amount"}}</th>
+                        <th class="perc10 center">Use</th>
+                    </tr>
                 {{#each fate_chips as |chip|}}
-                <tr class="use-fate" data-chip="{{this.name}}">
-                    <td class="perc70">{{this.name}}</td>
-                    <td class="perc10 center">{{this.bounty}}</td>
-                    <td class="perc10 center">{{this.amount}}</td>
-                    <td class="perc10 center"><a><i class="fas fa-trash" title="Use in game"></i></a></td>
-                </tr>
+                    <tr class="use-fate" data-chip="{{this.name}}">
+                        <td class="perc70">{{this.name}}</td>
+                        <td class="perc10 center">{{this.bounty}}</td>
+                        <td class="perc10 center">{{this.amount}}</td>
+                        <td class="perc10 center"><a><i class="fas fa-trash" title="Use in game"></i></a></td>
+                    </tr>
                 {{/each}}
-            </table>
+                </table>
             {{/if}}
-            <h2 class="center">Combat Hand</h2>
-            <a class="center"><p class="draw-card">Draw Action Card</p></a>
+            </div>
+            <h2 class="center gm-collapsible">Combat Hand</h2>
+            <div class="gm-content">
+                <a class="center"><p class="draw-card">Draw Action Card</p></a>
             {{#if action_deck}}
                 <table>
                 {{#each action_deck as |card|}}
@@ -64,17 +66,20 @@
                 {{/each}}
                 </table>
             {{/if}}
+            </div>
             {{#if action_list}}
-            <h2 style="text-align: center;">Action Queue</h2>
-            <table>
+            <h2 class="center gm-collapsible">Action Queue</h2>
+            <div class="gm-content">
+                <table>
                 {{#each action_list as |card|}}
-                <tr class="item" data-itemId="{{card._id}}">
-                    <td class="perc70">{{card.name}}</td>
-                    <td class="perc30 center">{{card.player}}</a></td>
-                    <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash"></i></a></td>
-                </tr>
+                    <tr class="item" data-itemId="{{card._id}}">
+                        <td class="perc70">{{card.name}}</td>
+                        <td class="perc30 center">{{card.player}}</a></td>
+                        <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash"></i></a></td>
+                    </tr>
                 {{/each}}
-            </table>
+                </table>
+            </div>
             {{/if}}
         </div>
     </div>

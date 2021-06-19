@@ -162,7 +162,9 @@ Hooks.on('preCreateToken', function () {
     if (!(act.isPC)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
         let amt = get_token_count(act);
-        arguments[1].name += ` ${amt}`
+        if (amt > 0) {
+            arguments[1].name += ` ${amt}`
+        }
     }
 });
 

@@ -9,7 +9,8 @@ let percs = [
     {limit: 0, chip:0},
 ];
 
-let aim_bonus = 0
+let trait_scroll = 0;
+let item_scroll = 0;
 
 function emit(op, data) {
     game.socket.emit("system.deadlands_classic", {
@@ -234,24 +235,62 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+
+        if (!(game.dc.collapse)) {
+            game.dc.collapse = []
+        }
+        var coll = document.getElementsByClassName("collapsible");
+        for (let i = 0; i < coll.length; i++) {
+            if (!(game.dc.collapse[i])) {
+                game.dc.collapse[i] = false
+            }
+            coll[i].addEventListener("click", function() {
+                this.classList.toggle("active");
+                var content = this.nextElementSibling;
+                if (!(game.dc.collapse[i])) {
+                    content.style.maxHeight = null;
+                    game.dc.collapse[i] = true;
+                } else {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    game.dc.collapse[i] = false;
+                }
+            });
+            if (game.dc.collapse[i]) {
+                coll[i].nextElementSibling.style.maxHeight = null;
+            } else {
+                coll[i].nextElementSibling.style.maxHeight = coll[i].nextElementSibling.scrollHeight + "px";
+            }
+        }
+
+        var traits = document.getElementsByClassName("trait_scroller");
+        traits[0].addEventListener("scroll", () => {
+            game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
+        });
+        traits[0].scrollTop = game.dc.trait_scroll;
+        var items = document.getElementsByClassName("item_scroller");
+        items[0].addEventListener("scroll", () => {
+            game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
+        });
+        items[0].scrollTop = game.dc.item_scroll;
         return super.activateListeners(html);
     }
 
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
-        if (game.user.isPC) {
+        if (this.actor.isPC) {
             emit('check_tn', {
                 type: 'trait',
-                name: this.actor.name,
-                trait: trait,
+                roller: this.actor.name,
+                trait: trait_name,
+                modifier: 0
             });
         }else{
             let trait = this.actor.data.data.traits[trait_name];
             let data = {
                 type: 'trait',
                 skill_name: trait.name,
-                tn: 7,
+                tn: 5,
                 name: this.actor.name
             };
             let lvl = trait.level;
@@ -308,17 +347,19 @@ export default class PlayerSheet extends ActorSheet {
             this.actor.update({data: {traits: traits}})
         }
     }
+
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
-        if (game.user.isPC) {
+        if (this.actor.isPC) {
             emit('check_tn', {
                 type: 'skill',
-                name: this.actor.name,
+                roller: this.actor.name,
                 trait: tra,
-                skill: skl
+                skill: skl,
+                modifier: 0
             });
         }else{
             let trait = this.actor.data.data.traits[tra];
@@ -326,7 +367,7 @@ export default class PlayerSheet extends ActorSheet {
             let data = {
                 type: 'skill',
                 skill_name: skill.name,
-                tn: 7,
+                tn: 5,
                 name: this.actor.name
             };
             let lvl = skill.level;
@@ -541,7 +582,11 @@ export default class PlayerSheet extends ActorSheet {
             });
             this.actor.update({'data.perks.level_headed': true});
         }
-        ChatMessage.create({content: reply, whisper: ChatMessage.getWhisperRecipients('GM')});
+        let msg = `
+            <h3 style="text-align: center">Action Deck</h3>
+            <p style="text-align: center">${reply}</p>
+        `;
+        ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
     }
 
     _on_play_card(event) {
@@ -549,12 +594,12 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Playing ${item.name}`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'discard_card',
             data: {
                 name: item.name,
-                type: item.type
+                type: item.type,
+                char: this.actor.name
             }
         });
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
@@ -632,6 +677,7 @@ export default class PlayerSheet extends ActorSheet {
                 data:{
                     _id : itemId,
                     user: game.userId,
+                    char: this.actor.name,
                     card: {
                         name: item.name,
                         type: item.type
@@ -640,7 +686,7 @@ export default class PlayerSheet extends ActorSheet {
             });
             reply = `
                 <h3 style="text-align:center">Discard</h3>
-                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping fer better luck next time.</p>
+                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
             `;
             let c = Math.random()
             setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
@@ -662,7 +708,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("check_target",
+        emit("declare_attack",
             {
                 type: 'melee',
                 attacker: this.actor.name,
@@ -681,7 +727,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("check_target",
+        emit("declare_attack",
             {
                 type: 'ranged',
                 attacker: this.actor.name,

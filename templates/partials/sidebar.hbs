@@ -1,39 +1,46 @@
 <section class="form typed">
     <h2 class="center">Trappin's</h2>
-    <div style="overflow-y:scroll; height:300px">
-        {{#if fate_chips}}
-        <h2 class="center">Fate Chips</h2>
-        <table>
-            {{#each fate_chips as |chip|}}
-            <tr class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
-                <td class="perc50">{{this.name}}</td>
-                <td class="perc10 center">{{this.bounty}}</td>
-                <td class="perc10 center">{{this.amount}}</td>
-                <td class="perc10 center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></td>
-                <td class="perc10 center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></td>
-            </tr>
-            {{/each}}
-        </table>
-        {{/if}}
-        {{#if action_deck}}
-        <h2 style="text-align: center;">Combat Hand</h2>
-        <table>
-        {{#each action_deck as |card|}}
-            <tr class="item" data-itemId="{{this._id}}">
-                <td class="perc70">{{this.name}}</td>
-                <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
-                <td class="perc10 center"><a class="dodge-button"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></a></td>
-            {{#lvl_head}}
-                <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
-            {{/lvl_head}}
-                <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
-            </tr>
-        {{/each}}
-        </table>
-        {{/if}}
+    <div class="scroller item_scroller">
+        <a class="center"><p class="refresh">Refresh</p></a>
+        <h2 class="center collapsible">Fate Chips</h2>
+        <div class="content">
+            <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
+            {{#if fate_chips}}
+                <table>
+                {{#each fate_chips as |chip|}}
+                    <tr class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
+                    <td class="perc50">{{this.name}}</td>
+                    <td class="perc10 center">{{this.bounty}}</td>
+                    <td class="perc10 center">{{this.amount}}</td>
+                    <td class="perc10 center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></td>
+                    <td class="perc10 center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+        </div>
+        <h2 class="center collapsible">Combat Hand</h2>
+        <div class="content">
+            <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
+            {{#if action_deck}}
+            <table>
+                {{#each action_deck as |card|}}
+                <tr class="item" data-itemId="{{this._id}}">
+                    <td class="perc70">{{this.name}}</td>
+                    <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
+                    <td class="perc10 center"><a class="dodge-button"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></a></td>
+                    {{#lvl_head}}
+                    <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
+                    {{/lvl_head}}
+                    <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+        </div>
         {{#if melee_weapons}}
-        <div>
-            <h2 style="text-align: center;">Melee Weapons</h2>
+        <h2 class="center collapsible">Melee Weapons</h2>
+        <div class="content">
             <table>
             {{#each melee_weapons as |wep|}}
                 <tr class="item" data-itemId="{{this._id}}">
@@ -48,8 +55,8 @@
         </div>
         {{/if}}
         {{#if firearms}}
-        <div>
-            <h2 style="text-align: center;">Guns</h2>
+        <h2 class="center collapsible">Guns</h2>
+        <div class="content">
             <table>
             {{#each firearms as |gun|}}
                 <tr class="item" data-itemId="{{this._id}}">
@@ -65,8 +72,8 @@
         </div>
         {{/if}}
         {{#if huckster_deck}}
-        <div>
-            <h2 style="text-align: center;">Hex Hand</h2>
+        <h2 class="center collapsible">Hex Hand</h2>
+        <div class="content">
             <table>
             {{#each huckster_deck as |card|}}
                 <tr class="item" data-itemId="{{this._id}}">
@@ -79,8 +86,8 @@
         </div>
         {{/if}}
         {{#if tricks}}
-        <div>
-            <h2 style="text-align: center;">Tricks</h2>
+        <h2 class="center collapsible">Tricks</h2>
+        <div class="content">
             <table>
             {{#each tricks as |hex|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -99,8 +106,8 @@
         </div>
         {{/if}}
         {{#if hexes}}
-        <div>
-            <h2 style="text-align: center;">Hexes</h2>
+        <h2 class="center collapsible">Hexes</h2>
+        <div class="content">
             <table>
             {{#each hexes as |hex|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -119,8 +126,8 @@
         </div>
         {{/if}}
         {{#if miracles}}
-        <div>
-            <h2 style="text-align: center;">Miracles</h2>
+        <h2 class="center collapsible">Miracles</h2>
+        <div class="content">
             <table>
             {{#each miracles as |mir|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -129,14 +136,14 @@
                 <td class="perc10 center">{{this.data.tn}}</td>
                 <td class="perc10 center"><a class="cast-miracle"><i class="fas fa-pray" title="Cast {{this.name}}"></i></a></td>
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </div>
+            </tr>
             {{/each}}
             </table>
         </div>
         {{/if}}
         {{#if favors}}
-        <div>
-            <h2 style="text-align: center;">Favors</h2>
+        <h2 class="center collapsible">Favors</h2>
+        <div class="content">
             <table>
             {{#each favors as |fav|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -151,8 +158,8 @@
         </div>
         {{/if}}
         {{#if edges}}
-        <div>
-            <h2 style="text-align: center;">Edges</h2>
+        <h2 class="center collapsible">Edges</h2>
+        <div class="content">
             <table>
             {{#each edges as |edge|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -166,7 +173,8 @@
         </div>
         {{/if}}
         {{#if hinderances}}
-            <h2 style="text-align: center;">Hinderances</h2>
+        <h2 class="center collapsible">Hinderances</h2>
+        <div class="content">
             <table>
             {{#each hinderances as |hind|}}
             <tr class="item" data-itemId="{{this._id}}">
@@ -177,10 +185,11 @@
             </tr>
             {{/each}}
             </table>
+        </div>
         {{/if}}
         {{#if goods}}
-            <div>
-            <h2 style="text-align: center;">Goods</h2>
+        <h2 class="center collapsible">Goods</h2>
+        <div class="content">
             <table>
             {{#each goods as |good|}}
             <tr class="item" data-itemId="{{this._id}}">

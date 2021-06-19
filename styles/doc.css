@@ -1,3 +1,7 @@
+.scroller{
+    overflow-y:scroll;
+    height:400px
+}
 .typed{
     font-family: "Lucida Sans Typewriter"
 }
@@ -36,6 +40,9 @@
 }
 .perc20 {
     width: 20%
+}
+.perc12 {
+    width: 12%
 }
 .perc10 {
     width: 10%
