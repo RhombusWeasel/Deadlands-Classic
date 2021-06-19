@@ -1,20 +1,40 @@
 # Deadlands-Classic
 A system for playing Deadlands Classic in Foundry VTT.
 
-Install with the link for system.json in the releases page in the usual Foundry method.
+# CURRENTLY ONLY WORKS FOR Foundry 0.7.X
+I'm Working on the update to 0.8.X but there's a lot to do, please bear with me. :D
+
+Install by copy/pasting this link into the manifest URL textbox in the install system screen in foundry.
+https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json
+
+##Combat Automation Update
+The latest version has now got fully automated combat.  Players must have a weapon with which to attack and set a target, once this is done the player can click the attack 
+button on their sheet and the attack roll will be made.  All skill rolls now have popups attached so players can choose to spend fate chips on the rolls.
+If a player is shot at and they have an action card left then they will recieve a dodge popup so they can decide if they want to use the card to vamoose or take their chances.  
+Choosing to dodge results in a skill roll being made by the player (with the ability to further spend chips) which is then checked against the attack roll once made.
+If the attack beats the TN set by the Marshal on the Marshal Sheet then the attack succeeds and hit location is rolled, the system checks for any armour in that location and reduces the damage dice accordingly and adds any additional dice for a Gizzards or Noggin shot.  Raises are taken into account for the location roll, 
+the system currently just selects a location based on the highest amount of damage dice it can get so if the d20 + raises would make it to the Noggin then you'll get the extra 2 dice.
+If players take damage then a popup will appear on their screen to allow spending fate chips to soak the damage, it's worth noting that this combat system is incredibly lethal.
+Make sure your players have plenty of fate chips, I killed at least 6 characters in a single shot while testing this.
+
+## Combat Automation Gotcha's
+The system currently uses the tokens disposition to determine a few things so player characters tokens must be set to friendly, Friendly NPC's should be set to Neutral and Enemys set to Hostile.  This allows for warning players that they are about to break the law by shooting a bystander and give a chance to cancel an attack made against another player.  This warning can be ignored by the player.
+
+The reloading system now uses ammo from the players inventory so each guns Calibur stat must have a goods item with the same name on the players sheet to function.
 
 ## Marshal Sheet:
-Very simple currently, I plan on adding much more to this in time.  Buttons for starting and ending Combat and a place for you to draw Fate Chips.
-Each Character Sheet has a button to roll Quickness just under their picture, this does nothing until you hit 'Start Combat' on the Marshal Sheet.
-Once you do that button will roll their Quickness and deal the correct amount of cards to the player, these show up on the sheet just above any weapons the player has.
+Buttons for starting and ending Combat and a place for you to draw Fate Chips.  Each Character Sheet has a button to roll Quickness in the Combat Hand section, this does nothing until you hit 'Start Combat' on the Marshal Sheet.
+Once you do that button will roll their Quickness and deal the correct amount of cards to the player, these show up on the sheet in the same section. Clicking this button also adds them to the combat and once you've seen that all the players have drawn cards there is a button for you to draw a card from the action deck, click this as many times as you feel comfortable.  Below the cards you are dealt you should now see the action queue, each card owned by a character in the combat is listed in turn order so you can easily see who is next.  Once the players have played cards you can click the refresh button on the Marshal sheet to update the list.
+One side of the Marshal sheet is filled with checkboxes, these all add modifiers to the global TN for all skill rolls, make sure the TN is set correctly before rolls are made.
 There's also a button for you to draw fate chips.
 
+## Generator Sheet
+This sheet should be set for new players as it has a button on it to draw 12 cards from a deck and displays them in the sidebar with the amount and dice type each card is worth.
+All fields on this sheet are text inputs for allowing you to customise the sheet but once the character has been finalized then the Marshal should set the character to use the Player sheet.
+
 ## Player Sheet:
-The Character Sheet starts with just a list of skills, the core stat block and an Image.
-Each of the skills has a roll button which will send an inline roll to chat naming the skill clicked, enter the skill level and any modifiers.
-I split the shootin' skill into the 4 main categories, Pistol, Rifle, Shotgun and Automatic as weapons can all be given a type to determine which skill to use.
-There is a button under the image to draw a fate chip so players can do this for themselves without Marshal interaction. It will whisper a message to the Marshal whenever clicked however.  You can click the trash icon to 'Use' the chip and a message will be sent to chat saying you spent it or click the '$' icon to trade them in for bounty points which will get added to your character.
-You can add items in the usual way by dragging them onto the sheet, each adds buttons for the player to interact with it.
+The Player Sheet once activated removes the skill inputs so all skills can only be improved by using bounty points.  Players can get bounty points by clicking the $ icon on fate chips, once they have enough to increase a skill / trait then a [+] icon will appear next to the skill for them to click to raise the level.
+Any items added to the sheet will be displayed in the Trappin's section of the sheet and each will reveal buttons for actions they allow, see individual items listed below.
 
 ## Mook Sheets:
 Mooks are an Idea I borrowed from the game Feng Shui, these are short lived combat NPC's for when you need a quick posse of Bandits or whatever.
