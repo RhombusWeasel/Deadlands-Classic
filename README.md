@@ -7,7 +7,7 @@ I'm Working on the update to 0.8.X but there's a lot to do, please bear with me.
 Install by copy/pasting this link into the manifest URL textbox in the install system screen in foundry.
 https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json
 
-##Combat Automation Update
+## Combat Automation Update
 The latest version has now got fully automated combat.  Players must have a weapon with which to attack and set a target, once this is done the player can click the attack 
 button on their sheet and the attack roll will be made.  All skill rolls now have popups attached so players can choose to spend fate chips on the rolls.
 If a player is shot at and they have an action card left then they will recieve a dodge popup so they can decide if they want to use the card to vamoose or take their chances.  
