@@ -18,7 +18,7 @@ If players take damage then a popup will appear on their screen to allow spendin
 Make sure your players have plenty of fate chips, I killed at least 6 characters in a single shot while testing this.
 
 ## Combat Automation Gotcha's
-The system currently uses the tokens disposition to determine a few things so player characters tokens must be set to friendly, Friendly NPC's should be set to Neutral and Enemys set to Hostile.  This allows for warning players that they are about to break the law by shooting a bystander and give a chance to cancel an attack made against another player.  This warning can be ignored by the player.
+The system currently uses the tokens disposition to determine a few things so player characters tokens must be set to friendly, Friendly NPC's should be set to Neutral and Enemies set to Hostile.  This allows for warning players that they are about to break the law by shooting a bystander and give a chance to cancel an attack made against another player.  This warning can be ignored by the player.
 
 The reloading system now uses ammo from the players inventory so each guns Calibur stat must have a goods item with the same name on the players sheet to function.
 
