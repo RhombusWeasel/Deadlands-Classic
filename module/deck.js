@@ -709,7 +709,7 @@ let operations = {
                                 });
                                 setTimeout(() => {char.actor.deleteOwnedItem(data.card_id)}, 500);
                                 console.log('check_dodge', data);
-                                emit('skill_roll', data);
+                                operations.skill_roll(data);
                             }
                         },
                         no: {
