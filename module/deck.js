@@ -1163,13 +1163,15 @@ let operations = {
             });
             let w_data = {
                 data: {
-                    wind: {
-                        value: char.document.actor.data.data.wind.value - wind_roll._total
-                    },
-                    wounds: {
-                        [data.loc_key]: current + data.wounds
-                    },
-                    wound_modifier: highest * -1
+                    data: {
+                        wind: {
+                            value: char.document.actor.data.data.wind.value - wind_roll._total
+                        },
+                        wounds: {
+                            [data.loc_key]: current + data.wounds
+                        },
+                        wound_modifier: highest * -1
+                    }
                 }
             };
             if (data.wounds > 0) {
