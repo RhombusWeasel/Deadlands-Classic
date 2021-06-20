@@ -2,7 +2,7 @@
 <div class="traits typed">
     <h2 class="h1">Skills 'n' Such</h2>
     <div class="scroller trait_scroller">
-    {{#each data.traits as |trait|}}
+    {{#each data.data.traits as |trait|}}
         <div>
             <table class="collapsible">
                 <tr class="trait-data" data-trait="{{@key}}" data-level="{{trait.level}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}">
