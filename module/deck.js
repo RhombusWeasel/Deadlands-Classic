@@ -1150,11 +1150,17 @@ let operations = {
             `});
             }
         }
-        //if (char.owner) {
+        if (char.owner) {
             console.log('enemy_damage:', data, char);
             let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
+            let highest = 0;
+            Object.keys(char.document.actor.data.data.wounds).forEach(function(key) {
+                if (char.document.actor.data.data.wounds[key] >= highest) {
+                    highest = char.document.actor.data.data.wounds[key];
+                }
+            });
             let w_data = {
                 data: {
                     wind: {
@@ -1162,7 +1168,8 @@ let operations = {
                     },
                     wounds: {
                         [data.loc_key]: current + data.wounds
-                    }
+                    },
+                    wound_modifier: highest * -1
                 }
             };
             if (data.wounds > 0) {
@@ -1179,21 +1186,15 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            let highest = 0;
-            Object.keys(char.document.actor.data.data.wounds).forEach(function(key) {
-                if (char.document.actor.data.data.wounds[key] >= highest) {
-                    highest = char.document.actor.data.data.wounds[key];
-                }
-            });
-            let m_data = {data: {wound_modifier: highest * -1}};
             if (char.document.actor.hasPlayerOwner) {
-                let act = game.actors.getName(data.target);
-                act.updateDocuments(w_data);
-                act.updateDocuments(m_data);
+                await Actor.updateDocuments({name: data.target, data: w_data})
+                //let act = game.actors.getName(data.target);
+                //act.update(w_data);
+                //act.update(m_data);
             }
             char.document.actor.data.update(w_data);
             char.document.actor.update(m_data);
-        //}
+        }
     },
     soak: function(data) {
         if (game.user.isGM) {
