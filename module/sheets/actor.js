@@ -319,7 +319,7 @@ export default class PlayerSheet extends ActorSheet {
         };
         if (bounty >= cost){
             console.log(`Attempting to increase ${trait} level from ${level} to ${level + 1}`);
-            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}});
             this.actor.update({data: {traits: traits}});
         }
     }
@@ -344,7 +344,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         if (bounty >= cost){
             console.log(`Attempting to increase ${trait} die type from ${die} to ${upgrades[die].next}`);
-            this.actor.update({data: {bounty: {value: bounty - cost}}})
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}})
             this.actor.update({data: {traits: traits}})
         }
     }
