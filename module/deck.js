@@ -1187,7 +1187,7 @@ let operations = {
                 }
             }
             if (char.document.actor.hasPlayerOwner) {
-                await Actor.updateDocuments({name: data.target, data: w_data})
+                Actor.updateDocuments({name: data.target, data: w_data})
                 //let act = game.actors.getName(data.target);
                 //act.update(w_data);
                 //act.update(m_data);
