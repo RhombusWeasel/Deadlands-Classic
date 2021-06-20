@@ -399,7 +399,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         let bounty = this.actor.data.data.bounty.value;
         if (bounty >= cost){
-            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}});
             let traits = {}
             traits[trait] = {skills: {}}
             traits[trait].skills[skill] = {
