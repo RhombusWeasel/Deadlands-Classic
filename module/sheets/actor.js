@@ -563,7 +563,7 @@ export default class PlayerSheet extends ActorSheet {
         if (data.combat_active == true) {
             let element = event.currentTarget;
             let act = this.getData();
-            let trait = act.data.traits.quickness;
+            let trait = act.data.data.traits.quickness;
             let roll = `${trait.level}${trait.die_type}ex + ${trait.modifier}`
             let draw = 1
             let r = new Roll(roll).roll();
