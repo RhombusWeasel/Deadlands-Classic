@@ -156,14 +156,14 @@ Hooks.once("init", function () {
     preload_handlebars_templates();
 });
 
-Hooks.on('preCreateToken', function () {
+Hooks.on('preCreateToken', function (document, createData, options, userId) {
     console.log('W00T', arguments);
-    let act = game.actors.getName(arguments[1].name);
+    let act = game.actors.getName(document.name);
     if (!(act.isPC)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
         let amt = get_token_count(act);
         if (amt > 0) {
-            arguments[1].name += ` ${amt}`
+            document.data.update({name: document.name += ` ${amt}`});
         }
     }
 });
