@@ -299,6 +299,7 @@ export default class PlayerSheet extends ActorSheet {
             let mod = trait.modifier;
             let wound_mod = this.actor.data.data.wound_modifier;
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            console.log(formula);
             let roll = new Roll(formula).roll();
             let r_data = check_roll(roll, data.tn, mod + wound_mod);
             ChatMessage.create({content: build_skill_template(data, r_data)});
