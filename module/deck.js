@@ -1186,14 +1186,7 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            if (char.document.actor.hasPlayerOwner) {
-                Actor.updateDocuments([{name: data.target, data: w_data}]);
-                //let act = game.actors.getName(data.target);
-                //act.update(w_data);
-                //act.update(m_data);
-            }else{
-                char.document.actor.data.update(w_data);
-            }
+            Actor.updateDocuments([{_id: char.data.actorId, data: w_data}]);
         }
     },
     soak: function(data) {
