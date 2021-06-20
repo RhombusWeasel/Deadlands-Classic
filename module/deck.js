@@ -1188,8 +1188,8 @@ let operations = {
             let m_data = {data: {wound_modifier: highest * -1}};
             if (char.document.actor.hasPlayerOwner) {
                 let act = game.actors.getName(data.target);
-                act.update(w_data);
-                act.update(m_data);
+                act.updateCollection(w_data);
+                act.updateCollection(m_data);
             }
             char.document.actor.data.update(w_data);
             char.document.actor.update(m_data);
