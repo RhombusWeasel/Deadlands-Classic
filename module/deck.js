@@ -811,6 +811,7 @@ let operations = {
                 return;
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
+            console.log(tgt);
             let dmg = itm?.data?.data?.damage?.split('d') || ['0', '0'];
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
             let loc_roll = new Roll('1d20').roll();
