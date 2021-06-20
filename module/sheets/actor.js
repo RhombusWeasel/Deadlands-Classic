@@ -297,6 +297,7 @@ export default class PlayerSheet extends ActorSheet {
             let lvl = trait.level;
             let die = trait.die_type;
             let mod = trait.modifier;
+            console.log(this.actor.data);
             let wound_mod = this.actor.data.data.wound_modifier;
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
             console.log(formula);
