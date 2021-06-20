@@ -1150,7 +1150,7 @@ let operations = {
             `});
             }
         }
-        if (char.owner) {
+        //if (char.owner) {
             console.log('enemy_damage:', data, char);
             let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
@@ -1190,11 +1190,10 @@ let operations = {
                 let act = game.actors.getName(data.target);
                 act.data.update(w_data);
                 act.data.update(m_data);
-            }else{
-                char.document.actor.data.update(w_data);
-                char.document.actor.update(m_data);
             }
-        }
+            char.document.actor.data.update(w_data);
+            char.document.actor.update(m_data);
+        //}
     },
     soak: function(data) {
         if (game.user.isGM) {
