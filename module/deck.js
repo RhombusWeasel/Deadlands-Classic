@@ -1121,7 +1121,7 @@ let operations = {
                     take: {
                         label: 'Take Damage.',
                         callback: (html) => {
-                            emit('enemy_damage', data);
+                            operations.enemy_damage(data);
                         }
                     }
                 },
