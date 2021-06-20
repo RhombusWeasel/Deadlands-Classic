@@ -1175,7 +1175,7 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            char.actor.update(w_data);
+            char.actor.data.update(w_data);
             let highest = 0;
             Object.keys(char.actor.data.data.wounds).forEach(function(key) {
                 if (char.actor.data.data.wounds[key] >= highest) {
