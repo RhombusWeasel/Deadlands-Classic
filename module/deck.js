@@ -1150,7 +1150,7 @@ let operations = {
             `});
             }
         }
-        if (game.user.isGM) {
+        if (char.owner) {
             console.log('enemy_damage:', data, char);
             let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
