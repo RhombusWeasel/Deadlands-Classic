@@ -163,7 +163,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
         let amt = get_token_count(act);
         if (amt > 0) {
-            document.update({name: document.name += ` ${amt}`});
+            document.update({name: createData.name += ` ${amt}`});
         }
     }
 });
