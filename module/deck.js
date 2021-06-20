@@ -1036,6 +1036,7 @@ let operations = {
                         data.wounds = Math.floor(data.damage / tgt.actor.data.data.size);
                         data.soak = 0;
                         let op = 'enemy_damage';
+                        console.log(tgt);
                         if (data.wounds > 0) {
                             if (tgt.data.document.hasPlayerOwner) {
                                 op = 'apply_damage';
