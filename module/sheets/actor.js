@@ -171,6 +171,7 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     getData() {
+        console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
