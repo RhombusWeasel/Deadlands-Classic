@@ -525,8 +525,8 @@ export default class PlayerSheet extends ActorSheet {
                         <h3 style="text-align:center">Bounty: ${chip_type}</h3>
                         <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
                     `});
-                    this.actor.update({"data.bounty.value": new_val});
-                    this.actor.update({"data.bounty.max": new_max});
+                    this.actor.data.update({"data.bounty.value": new_val});
+                    this.actor.data.update({"data.bounty.max": new_max});
                     this.actor.deleteOwnedItem(chip._id);
                     found = true;
                 }
