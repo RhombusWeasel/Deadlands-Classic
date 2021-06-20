@@ -4,7 +4,7 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div>
-        <textarea name="data.description" style="height: 200px;">{{data.description}}</textarea>
+        <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
         <table>
             <tr>
                 <th>{{localize "dc.items.combat.hex.level"}}</th>
@@ -15,12 +15,12 @@
                 <th>{{localize "dc.items.combat.hex.range"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.level" value="{{data.level}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.trait" value="{{data.trait}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.hand" value="{{data.hand}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.speed}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.duration" value="{{data.duration}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.range" value="{{data.range}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.level" value="{{data.data.level}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.trait" value="{{data.data.trait}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.hand" value="{{data.data.hand}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.data.speed}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.duration" value="{{data.data.duration}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.range" value="{{data.data.range}}"/></td>
             </tr>
         </table>
     </div>

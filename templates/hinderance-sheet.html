@@ -4,13 +4,13 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div>
-        <textarea name="data.description" style="height: 200px;">{{data.description}}</textarea>
+        <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
         <table>
             <tr>
                 <th>{{localize "dc.items.hinderance.cost"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.cost}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
             </tr>
         </table>
     </div>
