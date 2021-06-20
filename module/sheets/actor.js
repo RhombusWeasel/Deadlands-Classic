@@ -756,7 +756,7 @@ export default class PlayerSheet extends ActorSheet {
             max -= shots;
             console.log('- shots remaining.', max);
             let act = this.getData();
-            let trait = act.data.traits.deftness;
+            let trait = act.data.data.traits.deftness;
             let skill = trait.skills.speed_load;
             let lvl = skill.level;
             if (ammo){
