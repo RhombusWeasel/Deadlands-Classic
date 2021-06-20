@@ -1038,7 +1038,7 @@ let operations = {
                         let op = 'enemy_damage';
                         console.log(tgt);
                         if (data.wounds > 0) {
-                            if (tgt.data.document.hasPlayerOwner) {
+                            if (tgt.document._actor.hasPlayerOwner) {
                                 op = 'apply_damage';
                             }
                             emit(op, data);
