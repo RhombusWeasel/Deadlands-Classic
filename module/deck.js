@@ -1189,7 +1189,7 @@ let operations = {
             if (char.document.actor.hasPlayerOwner) {
                 Actor.updateDocuments([{_id: char.document.actor._id, data: w_data}]);
             } else {
-                char.document.update({data: w_data});
+                char.document.actor.update({data: w_data});
             }
         }
     },
