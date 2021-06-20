@@ -859,7 +859,7 @@ let operations = {
             data.soak = 0;
             let op = 'enemy_damage';
             if (data.wounds > 0) {
-                if (tgt.actor.hasPlayerOwner) {
+                if (tgt.actor.data.hasPlayerOwner) {
                     op = 'apply_damage';
                 }
                 emit(op, data);
