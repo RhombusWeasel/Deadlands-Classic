@@ -515,8 +515,8 @@ export default class PlayerSheet extends ActorSheet {
             if (found == false) {
                 if (chip.name == chip_type) {
                     console.log(act.data);
-                    let new_val = parseInt(act.data.bounty.value) + parseInt(bounty);
-                    let new_max = parseInt(act.data.bounty.max) + parseInt(bounty);
+                    let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
+                    let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
                     let suffix = 'points';
                     if (bounty == '1') {
                         suffix = 'point'
