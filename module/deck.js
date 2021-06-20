@@ -1161,6 +1161,9 @@ let operations = {
                     highest = char.document.actor.data.data.wounds[key];
                 }
             });
+            if ((highest == 0 && data.wounds > 0) || data.wounds > highest) {
+                highest = data.wounds
+            }
             let w_data = {
                 wind: {
                     value: char.document.actor.data.data.wind.value - wind_roll._total
