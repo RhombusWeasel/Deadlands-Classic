@@ -4,7 +4,7 @@
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
     <div>
-        <textarea name="data.description" style="height: 200px;">{{data.description}}</textarea>
+        <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
         <table>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.cost"}}</th>
@@ -20,20 +20,20 @@
                 <th>{{localize "dc.items.combat.firearm.off_hand"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.cost}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.calibur" value="{{data.calibur}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.gun_type" value="{{data.gun_type}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.speed}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.range" value="{{data.range}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.rof" value="{{data.rof}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.chamber" value="{{data.chamber}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.max" value="{{data.max}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.damage" value="{{data.damage}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.damage_bonus" value="{{data.damage_bonus}}"/></td>
-                {{#if (eq data.off_hand true)}}
+                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.calibur" value="{{data.data.calibur}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.gun_type" value="{{data.data.gun_type}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.data.speed}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.range" value="{{data.data.range}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.rof" value="{{data.data.rof}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.chamber" value="{{data.data.chamber}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.max" value="{{data.data.max}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.damage" value="{{data.data.damage}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.damage_bonus" value="{{data.data.damage_bonus}}"/></td>
+                {{#if (eq data.data.off_hand true)}}
                     <td><input type="checkbox" name="data.off_hand" checked/></td>
                 {{/if}}
-                {{#if (eq data.off_hand false)}}
+                {{#if (eq data.data.off_hand false)}}
                     <td><input type="checkbox" name="data.off_hand"/></td>
                 {{/if}}
             </tr>
