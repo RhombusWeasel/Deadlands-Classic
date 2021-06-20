@@ -944,6 +944,7 @@ let operations = {
         if (atk.owner) {
             //Attack roll
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
+            console.log(tgt);
             let itm = atk.actor.getOwnedItem(data.weapon);
             data.weapon_name = itm.name;
             let range_mod = 0;
@@ -1036,7 +1037,7 @@ let operations = {
                         data.soak = 0;
                         let op = 'enemy_damage';
                         if (data.wounds > 0) {
-                            if (tgt.actor.isPC) {
+                            if (tgt.data.document.hasPlayerOwner) {
                                 op = 'apply_damage';
                             }
                             emit(op, data);
