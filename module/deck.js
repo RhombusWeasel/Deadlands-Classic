@@ -1179,7 +1179,6 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            char.document.actor.data.update(w_data);
             let highest = 0;
             Object.keys(char.document.actor.data.data.wounds).forEach(function(key) {
                 if (char.document.actor.data.data.wounds[key] >= highest) {
@@ -1187,7 +1186,14 @@ let operations = {
                 }
             });
             let m_data = {data: {wound_modifier: highest * -1}};
-            char.document.actor.update(m_data);
+            if (char.document.actor.hasPlayerOwner) {
+                let act = game.actors.getName(data.target);
+                act.data.update(w_data);
+                act.data.update(m_data);
+            }else{
+                char.document.actor.data.update(w_data);
+                char.document.actor.update(m_data);
+            }
         }
     },
     soak: function(data) {
