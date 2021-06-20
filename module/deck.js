@@ -1184,7 +1184,8 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            Actor.updateDocuments([{_id: char.data.actorId, data: w_data}]);
+            let id = game.actors.getName(data.target)._id;
+            Actor.updateDocuments([{_id: id, data: w_data}]);
         }
     },
     soak: function(data) {
