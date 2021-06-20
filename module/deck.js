@@ -1187,9 +1187,9 @@ let operations = {
                 }
             }
             if (char.document.actor.hasPlayerOwner) {
-                Actor.updateDocuments([{_id: act._id, data: w_data}]);
+                Actor.updateDocuments([{_id: char.document.actor._id, data: w_data}]);
             } else {
-                char.update({data: w_data});
+                char.document.update({data: w_data});
             }
         }
     },
