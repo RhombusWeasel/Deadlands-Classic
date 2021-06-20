@@ -1152,13 +1152,13 @@ let operations = {
         }
         if (game.user.isGM) {
             console.log('enemy_damage:', data, char);
-            let current = parseInt(char.actor.data.data.wounds[data.loc_key]) || 0;
+            let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
             let w_data = {
                 data: {
                     wind: {
-                        value: char.actor.data.data.wind.value - wind_roll._total
+                        value: char.document.actor.data.data.wind.value - wind_roll._total
                     },
                     wounds: {
                         [data.loc_key]: current + data.wounds
@@ -1168,7 +1168,7 @@ let operations = {
             if (data.wounds > 0) {
                 char.toggleEffect('icons/svg/blood.svg', {active: true});
             }
-            if (char.actor.data.data.wind.value - wind_roll._total <= 0) {
+            if (char.document.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                 char.toggleEffect('icons/svg/blood.svg', {active: false});
             }
@@ -1179,15 +1179,15 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            char.actor.data.update(w_data);
+            char.document.actor.data.update(w_data);
             let highest = 0;
-            Object.keys(char.actor.data.data.wounds).forEach(function(key) {
-                if (char.actor.data.data.wounds[key] >= highest) {
-                    highest = char.actor.data.data.wounds[key];
+            Object.keys(char.document.actor.data.data.wounds).forEach(function(key) {
+                if (char.document.actor.data.data.wounds[key] >= highest) {
+                    highest = char.document.actor.data.data.wounds[key];
                 }
             });
             let m_data = {data: {wound_modifier: highest * -1}};
-            char.actor.update(m_data);
+            char.document.actor.update(m_data);
         }
     },
     soak: function(data) {
