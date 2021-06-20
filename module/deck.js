@@ -1175,18 +1175,22 @@ let operations = {
             }
             if (char.document.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                char.toggleEffect('icons/svg/skull.svg', {active: true});
                 char.toggleEffect('icons/svg/blood.svg', {active: false});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (data.loc_key in critical) {
                 if (current + data.wounds >= 5) {
                     char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                    char.toggleEffect('icons/svg/skull.svg', {active: true});
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            let act = game.actors.getName(data.target);
-            console.log(act);
-            Actor.updateDocuments([{_id: act._id, data: w_data}]);
+            if (char.document.actor.hasPlayerOwner) {
+                Actor.updateDocuments([{_id: act._id, data: w_data}]);
+            } else {
+                char.update({data: w_data});
+            }
         }
     },
     soak: function(data) {
