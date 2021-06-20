@@ -170,7 +170,7 @@ export default class PlayerSheet extends ActorSheet {
         });
     }
 
-    getDocument() {
+    getData() {
         console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
