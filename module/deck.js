@@ -768,7 +768,7 @@ let operations = {
         if (game.user.isGM) {
             emit('roll_damage', data);
         }else if (atk.owner) {
-            let itm = atk.actor.getOwnedItem(data.weapon);
+            let itm = atk.actor.items.get(data.weapon);
             data.weapon_name = itm.name;
             let shots = 1;
             if (data.type == 'ranged') {
