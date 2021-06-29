@@ -493,6 +493,8 @@ let operations = {
             data.modifier += parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(char.data.data.wound_modifier);
             data.roll = new_roll(data);
             operations.confirm_result(data);
+        }else if (game.user.isGM) {
+            console.log('SKILL_ROLL:', data);
         }
     },
     confirm_result: function(data) {
