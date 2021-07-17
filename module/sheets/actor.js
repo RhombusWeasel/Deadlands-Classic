@@ -279,7 +279,7 @@ export default class PlayerSheet extends ActorSheet {
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
-        if (this.actor.isPC) {
+        if (this.actor.hasPlayerOwner) {
             emit('check_tn', {
                 type: 'trait',
                 roller: this.actor.name,
@@ -354,7 +354,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
-        if (this.actor.isPC) {
+        if (this.actor.hasPlayerOwner) {
             emit('check_tn', {
                 type: 'skill',
                 roller: this.actor.name,
