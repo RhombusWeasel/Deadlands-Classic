@@ -672,7 +672,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = `You have already cycled a card this round.`
         let act = this.getData()
         console.log(act)
-        let level_headed_available = act.data.perks.level_headed
+        let level_headed_available = act.data.data.perks.level_headed
         if (level_headed_available){
             game.socket.emit('system.deadlands_classic', {
                 operation: 'recycle_card',
