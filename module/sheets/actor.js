@@ -802,7 +802,7 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
         let deck = new_deck('huckster_deck');
-        let roll_str = `${act.data.traits[item.data.data.trait].level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`;
+        let roll_str = `${act.data.data.traits[item.data.data.trait].level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`;
         let r = new Roll(roll_str).roll();
         let draw = 0;
         if (r._total >= 5) {
@@ -830,7 +830,7 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
         let deck = new_deck('huckster_deck')
-        let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
+        let roll_str = `${item.data.data.level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`
         let r = new Roll(roll_str).roll()
         let draw = 0
         if (r._total >= 5) {
