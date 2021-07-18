@@ -58,10 +58,10 @@ const dc_utils = {
         get_armour: function(act, location) {
             return act.data.data.armour[location];
         },
-        get_items: function(act, item_type) {
+        get_items: function(act, item_type, sort_key = 'name') {
             return act.items
                 .filter(function (item) {return item.type == item_type})
-                .sort((a, b) => {return dc_utils.sort.compare_objects(a, b, 'name')});
+                .sort((a, b) => {return dc_utils.sort.compare_objects(a, b, sort_key)});
         },
     },
     roll: {
