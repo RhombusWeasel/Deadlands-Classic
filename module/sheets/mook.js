@@ -6,26 +6,6 @@ let d10 = ["Queen", "King"]
 let d12 = ["Ace"]
 let aim_bonus = 0
 
-function dc_utils.deck.new(id) {
-    let deck = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 0; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
-
 function check_joker(card, deck) {
     let values = card.split(' ');
     if (values[0] == 'Joker') {
