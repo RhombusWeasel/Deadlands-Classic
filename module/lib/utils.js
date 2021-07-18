@@ -30,6 +30,9 @@ const dc_utils = {
     gm: {
         get_online_users: function() {
             return game.users.entities.filter(function(i) {return i.active});
+        },
+        get_player_owned_actors: function() {
+            return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
         }
     },
     char: {
