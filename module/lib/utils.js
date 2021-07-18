@@ -184,7 +184,7 @@ const dc_utils = {
             }
             deck.push({name: 'Joker (Red)', type: id})
             deck.push({name: 'Joker (Black)', type: id})
-            deck = shuffle_deck(deck)
+            deck = dc_utils.deck.shuffle(deck);
             return deck
         },
         shuffle: function(deck) {
