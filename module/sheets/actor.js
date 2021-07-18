@@ -175,19 +175,19 @@ export default class PlayerSheet extends ActorSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.firearms = dc_utils.get_items(this.actor, "firearm");
-        data.melee_weapons = dc_utils.get_items(this.actor, "melee");
-        data.miracles = dc_utils.get_items(this.actor, "miracles");
-        data.tricks = dc_utils.get_items(this.actor, "trick");
-        data.hexes = dc_utils.get_items(this.actor, "hex");
-        data.favors = dc_utils.get_items(this.actor, "favor");
-        data.hinderances = dc_utils.get_items(this.actor, "hinderance");
-        data.edges = dc_utils.get_items(this.actor, "edge");
+        data.firearms = dc_utils.char.get_items(this.actor, "firearm");
+        data.melee_weapons = dc_utils.char.get_items(this.actor, "melee");
+        data.miracles = dc_utils.char.get_items(this.actor, "miracles");
+        data.tricks = dc_utils.char.get_items(this.actor, "trick");
+        data.hexes = dc_utils.char.get_items(this.actor, "hex");
+        data.favors = dc_utils.char.get_items(this.actor, "favor");
+        data.hinderances = dc_utils.char.get_items(this.actor, "hinderance");
+        data.edges = dc_utils.char.get_items(this.actor, "edge");
         data.level_headed_available = game.dc.level_headed_available
-        data.goods = dc_utils.get_items(this.actor, "goods");
-        data.huckster_deck = dc_utils.get_items(this.actor, "huckster_deck");
-        data.action_deck = sort_deck(dc_utils.get_items(this.actor, "action_deck"));
-        let fate_chips = dc_utils.get_items(this.actor, "chip");
+        data.goods = dc_utils.char.get_items(this.actor, "goods");
+        data.huckster_deck = dc_utils.char.get_items(this.actor, "huckster_deck");
+        data.action_deck = sort_deck(dc_utils.char.get_items(this.actor, "action_deck"));
+        let fate_chips = dc_utils.char.get_items(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
             {name: "Red", bounty: "2", amount: 0},
