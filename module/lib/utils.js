@@ -8,8 +8,8 @@ const dc_utils = {
 
     sort: {
         compare_objects: function(object1, object2, key) {
-            const obj1 = object1.data.[key].toUpperCase();
-            const obj2 = object2.data.[key].toUpperCase();
+            const obj1 = object1.data[key].toUpperCase();
+            const obj2 = object2.data[key].toUpperCase();
         
             if (obj1 < obj2) {
                 return -1;
