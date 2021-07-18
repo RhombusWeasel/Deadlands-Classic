@@ -29,23 +29,23 @@ const dc_utils = {
                 const trait = act.data.data.traits[trait_name];
                 if (trait_name == skill_name) {
                     return {
-                        level: trait.level,
+                        level: parseInt(trait.level),
                         die_type: trait.die_type,
-                        modifier: trait.modifier
+                        modifier: parseInt(trait.modifier)
                     };
                 }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
                     const skill = act.data.data.traits[trait_name].skills[skill_name];
                     if (skill.level > 0) {
                         return {
-                            level: skill.level,
+                            level: parseInt(skill.level),
                             die_type: trait.die_type,
-                            modifier: skill.modifier + trait.modifier
+                            modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                         }
                     }else{
                         return {
-                            level: trait.level,
+                            level: parseInt(trait.level),
                             die_type: trait.die_type,
-                            modifier: skill.modifier + trait.modifier
+                            modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                         }
                     }
                 }

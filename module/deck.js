@@ -361,18 +361,8 @@ let operations = {
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
         if (char.owner) {
-            let trait = char.data.data.traits[data.trait];
-            let skill = char.data.data.traits[data.trait];
-            if (data.skill) {
-                skill = trait.skills[data.skill];
-            }
-            data.skill_name = skill.name;
-            data.amt = skill.level;
-            data.dice = trait.die_type;
-            if (data.amt == 0) {
-                data.amt = trait.level
-            }
-            data.modifier += parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(char.data.data.wound_modifier);
+            let skill = dc_utils.char.get_skill(char, data.skill);
+            data.modifier += skill.modifier + parseInt(char.data.data.wound_modifier);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
         }else if (game.user.isGM) {
