@@ -262,7 +262,6 @@ export default class PlayerSheet extends ActorSheet {
             roller: this.actor.name,
             amt: skill.level,
             dice: skill.die_type,
-            trait: tra,
             skill: skl,
             tn: dc_utils.roll.get_tn(),
             name: this.actor.name,
