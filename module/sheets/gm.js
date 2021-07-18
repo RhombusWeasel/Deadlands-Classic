@@ -16,7 +16,7 @@ export default class GMSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        let fate_chips = dc_utils.deck.sort(dc_utils.char.get_items(this.actor, "chip"));
+        let fate_chips = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "chip"));
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
             {name: "Red", bounty: "2", amount: 0},
@@ -30,7 +30,7 @@ export default class GMSheet extends ActorSheet {
                 }
             });
         });
-        data.action_deck = dc_utils.deck.sort(dc_utils.char.get_items(this.actor, "action_deck"));
+        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
         data.modifiers = this.actor.data.data.modifiers;
         data.tn = 5;
         for (const [key, mod] of Object.entries(data.modifiers)){

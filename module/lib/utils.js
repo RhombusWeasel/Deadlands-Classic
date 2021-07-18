@@ -33,39 +33,48 @@ const dc_utils = {
         }
     },
     char: {
-        /*  Get Skill:
+        skill: {
+            /*  Get Skill:
                 Will return a dict containing level, die type and modifiers for any skill or trait.
-        */
-        get_skill: function(act, skill_name) {
-            for (const trait_name in act.data.data.traits) {
-                const trait = act.data.data.traits[trait_name];
-                if (trait_name == skill_name) {
-                    return {
-                        name: trait.name,
-                        level: parseInt(trait.level),
-                        die_type: trait.die_type,
-                        modifier: parseInt(trait.modifier)
-                    };
-                }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
-                    const skill = act.data.data.traits[trait_name].skills[skill_name];
-                    if (skill.level > 0) {
+            */
+            get: function(act, skill_name) {
+                for (const trait_name in act.data.data.traits) {
+                    const trait = act.data.data.traits[trait_name];
+                    if (trait_name == skill_name) {
                         return {
-                            name: skill.name,
-                            level: parseInt(skill.level),
-                            die_type: trait.die_type,
-                            modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
-                        }
-                    }else{
-                        return {
-                            name: skill.name,
+                            name: trait.name,
                             level: parseInt(trait.level),
                             die_type: trait.die_type,
-                            modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                            modifier: parseInt(trait.modifier)
+                        };
+                    }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
+                        const skill = act.data.data.traits[trait_name].skills[skill_name];
+                        if (skill.level > 0) {
+                            return {
+                                name: skill.name,
+                                level: parseInt(skill.level),
+                                die_type: trait.die_type,
+                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                            }
+                        }else{
+                            return {
+                                name: skill.name,
+                                level: parseInt(trait.level),
+                                die_type: trait.die_type,
+                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                            }
                         }
                     }
                 }
-            }
-            throw 'DC | ERROR: skill not found.';
+                throw 'DC | ERROR: skill not found.';
+            },
+        },
+        item: {
+            get: function(act, item_type, sort_key = 'name') {
+                return act.items
+                    .filter(function (item) {return item.type == item_type})
+                    .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
+            },
         },
         get_armour: function(act, location) {
             return act.data.data.armour[location];
@@ -76,7 +85,7 @@ const dc_utils = {
                 .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
         },
         spend_fate_chip: function(act, label) {
-            let chips = dc_utils.char.get_items(act, 'chip');
+            let chips = dc_utils.char.items.get(act, 'chip');
             for (let item of chips.values()) {
                 if(item.name == label && item.type == 'chip') {
                     char.deleteOwnedItem(item._id);
