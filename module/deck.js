@@ -384,7 +384,7 @@ let operations = {
                                 let res = roll._total;
                                 data.roll.results.unshift(res);
                                 data.roll.amt += 1;
-                                data.roll = evaluate_roll(data.roll);
+                                data.roll = dc_utils.roll.evaluate(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
                             operations.confirm_result(data);
@@ -400,7 +400,7 @@ let operations = {
                                 data.roll.results[index] += result;
                                 data.roll.total += result;
                                 data.roll.results.push(result);
-                                data.roll = evaluate_roll(data.roll);
+                                data.roll = dc_utils.roll.evaluate(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
                             operations.confirm_result(data);
@@ -416,7 +416,7 @@ let operations = {
                                 data.roll.results[index] += result;
                                 data.roll.total += result;
                                 data.roll.results.push(result);
-                                data.roll = evaluate_roll(data.roll);
+                                data.roll = dc_utils.roll.evaluate(data.roll);
                                 roll.toMessage({rollMode: 'gmroll'});
                             }
                             operations.confirm_result(data);
