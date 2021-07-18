@@ -746,12 +746,7 @@ let operations = {
     //OLD COMBAT OPERATIONS
     check_tn: function(data) {
         if (game.user.isGM) {
-            data.tn = dc_utils.roll.get_tn();
-            if (data.type == 'skill') {
-                dc_utils.socket.emit('skill_roll', data);
-            }else{
-                dc_utils.socket.emit('skill_roll', data);
-            }
+            dc_utils.socket.emit('skill_roll', data);
         }
     },
     trait_check: function(data) {
