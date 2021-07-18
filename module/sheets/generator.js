@@ -10,51 +10,6 @@ let percs = [
 
 let aim_bonus = 0
 
-function dc_utils.deck.new(id) {
-    let deck = [];
-    let shuffled = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 1; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
-
-function dc_utils.deck.sort(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)') {
-                        r_pile.push(card_pile[chk]);
-                        card_pile[chk].name += ' Ask yer Marshal.'
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
 export default class GeneratorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
