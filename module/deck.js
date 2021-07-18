@@ -332,6 +332,7 @@ let operations = {
                         label: 'White',
                         callback: () => {
                             let char = game.actors.getName(data.roller);
+                            console.log(char);
                             if (dc_utils.char.chips.spend(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
