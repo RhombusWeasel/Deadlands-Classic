@@ -46,7 +46,7 @@ export default class GMSheet extends ActorSheet {
             for (let i = 0; i < users.length; i++) {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
-                        const char = pcs[p];
+                        let char = game.actors.get(pcs[p]);
                         console.log('DC | actor.getData |', char);
                         let ad_cards = dc_utils.char.items.get(char, "action_deck");
                         for (let c = 0; c < ad_cards.length; c++) {
