@@ -332,7 +332,7 @@ let operations = {
                         label: 'White',
                         callback: () => {
                             console.log('DC | confirm_result |', char);
-                            console.log('DC | confirm_result |', dc_utils);
+                            console.log('DC | confirm_result |', dc_utils.char.chips.spend(char, 'White'));
                             if (dc_utils.char.chips.spend(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
