@@ -1,5 +1,3 @@
-let cards = ["Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
 let d6 = ["3", "4", "5", "6", "7", "8"]
 let d8 = ["9", "10", "Jack"]
 let d10 = ["Queen", "King"]

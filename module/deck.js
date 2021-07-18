@@ -174,32 +174,8 @@ function build_damage_dialog(data) {
     `;
 }
 
-function spend_fate_chip(data, label) {
-    let char = game.actors.getName(data.roller);
-    for (let item of char.items.values()) {
-        if(item.name == label && item.type == 'chip') {
-            char.deleteOwnedItem(item._id);
-            let reply = `
-                <h3 style="text-align:center">Fate</h3>
-                <p style="text-align:center">${data.roller} spends a ${label} fate chip.</p>
-            `
-            if (label == 'Red'){
-                reply += `
-                    <p style="text-align:center">The Marshal may draw a fate chip.</p>
-                `;
-            }
-            ChatMessage.create({content: reply});
-            return true;
-        }
-    }
-    ChatMessage.create({content: `
-        <h3 style="text-align:center">${data.roller} has no ${label} chips.</h3>
-    `});
-    return false;
-}
-
 function soak_damage(data, label){
-    if (spend_fate_chip(data, label)){
+    if (dc_utils.char.spend_fate_chip(game.actors.getName(data.target), label)){
         data.wounds -= dc_utils.bounty[label]
     }
     return data;
@@ -355,7 +331,7 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
-                            if (spend_fate_chip(data, 'White')) {
+                            if (dc_utils.char.spend_fate_chip(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
                                 data.roll.results.unshift(res);
@@ -369,7 +345,7 @@ let operations = {
                     red: {
                         label: 'Red',
                         callback: () => {
-                            if (spend_fate_chip(data, 'Red')) {
+                            if (dc_utils.char.spend_fate_chip(char, 'Red')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
@@ -385,7 +361,7 @@ let operations = {
                     blue: {
                         label: 'Blue',
                         callback: () => {
-                            if (spend_fate_chip(data, 'Blue')) {
+                            if (dc_utils.char.spend_fate_chip(char, 'Blue')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
