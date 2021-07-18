@@ -44,8 +44,9 @@ export default class GMSheet extends ActorSheet {
             let users = dc_utils.gm.get_online_users();
             for (let i = 0; i < users.length; i++) {
                 if (!(users[i].isGM)) {
-                    const actor = game.actors.getName(users[i].character);
-                    let ad_cards = actor.items.filter(function (item) {return item.type == "action_deck"});
+                    console.log('DC | actor.getData |', users[i].data.character);
+                    const actor = game.actors.get(users[i].data.character);
+                    let ad_cards = dc_utils.char.items.get(actor, "action_deck");
                     for (let c = 0; c < ad_cards.length; c++) {
                         const card = ad_cards[c];
                         let card_data = {'name': card.name, 'player': actor.data.name};
