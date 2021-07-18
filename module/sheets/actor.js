@@ -256,15 +256,17 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let tra = element.closest(".skill-data").dataset.trait;
-        let skl = element.closest(".skill-data").dataset.skill;
+        let skl = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
         let data = {
             type: 'skill',
             roller: this.actor.name,
+            amt: skill.level,
+            dice: skill.die_type,
             trait: tra,
             skill: skl,
             tn: dc_utils.roll.get_tn(),
             name: this.actor.name,
-            modifier: 0
+            modifier: skill.modifier
         }
         if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
