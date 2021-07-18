@@ -29,6 +29,7 @@ const dc_utils = {
                 const trait = act.data.data.traits[trait_name];
                 if (trait_name == skill_name) {
                     return {
+                        name: trait.name,
                         level: parseInt(trait.level),
                         die_type: trait.die_type,
                         modifier: parseInt(trait.modifier)
@@ -37,12 +38,14 @@ const dc_utils = {
                     const skill = act.data.data.traits[trait_name].skills[skill_name];
                     if (skill.level > 0) {
                         return {
+                            name: skill.name,
                             level: parseInt(skill.level),
                             die_type: trait.die_type,
                             modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                         }
                     }else{
                         return {
+                            name: skill.name,
                             level: parseInt(trait.level),
                             die_type: trait.die_type,
                             modifier: parseInt(skill.modifier) + parseInt(trait.modifier)

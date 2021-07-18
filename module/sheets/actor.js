@@ -347,9 +347,10 @@ export default class PlayerSheet extends ActorSheet {
             trait: tra,
             skill: skl,
             tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
             modifier: 0
         }
-        if (this.actor.hasPlayerOwner) {
+        if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
         }else{
             let wound_mod = parseInt(this.actor.data.data.wound_modifier);
