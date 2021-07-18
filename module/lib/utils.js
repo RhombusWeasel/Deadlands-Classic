@@ -7,7 +7,7 @@ const dc_utils = {
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
 
     sort: {
-        compare_objects: function(object1, object2, key) {
+        compare: function(object1, object2, key) {
             let obj1
             let obj2
             if (key == 'name') {
@@ -68,8 +68,31 @@ const dc_utils = {
         get_items: function(act, item_type, sort_key = 'name') {
             return act.items
                 .filter(function (item) {return item.type == item_type})
-                .sort((a, b) => {return dc_utils.sort.compare_objects(a, b, sort_key)});
+                .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
         },
+        spend_fate_chip: function(act, label) {
+            let chips = dc_utils.char.get_items(act, 'chip');
+            for (let item of chips.values()) {
+                if(item.name == label && item.type == 'chip') {
+                    char.deleteOwnedItem(item._id);
+                    let reply = `
+                        <h3 style="text-align:center">Fate</h3>
+                        <p style="text-align:center">${act.name} spends a ${label} fate chip.</p>
+                    `
+                    if (label == 'Red'){
+                        reply += `
+                            <p style="text-align:center">The Marshal may draw a fate chip.</p>
+                        `;
+                    }
+                    ChatMessage.create({content: reply});
+                    return true;
+                }
+            }
+            ChatMessage.create({content: `
+                <h3 style="text-align:center">${act.name} has no ${label} chips.</h3>
+            `});
+            return false;
+        }
     },
     roll: {
         new: function(data) {

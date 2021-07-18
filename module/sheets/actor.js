@@ -1,7 +1,3 @@
-let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
-let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
 let percs = [
     {limit: 99, chip:3},
     {limit: 88, chip:2},
@@ -11,62 +7,6 @@ let percs = [
 
 let trait_scroll = 0;
 let item_scroll = 0;
-
-function emit(op, data) {
-    game.socket.emit("system.deadlands_classic", {
-        operation: op,
-        data: data
-    });
-}
-
-function new_deck(id) {
-    let deck = [];
-    let shuffled = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 1; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)') {
-                        card_pile[chk].name += ' HooWEE!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' Dang it!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
 
 function get_target() {
     for (let t = 0; t < canvas.tokens.placeables.length; t++) {
@@ -91,30 +31,6 @@ function get_token(act) {
         }
     }
     return false;
-}
-
-function check_roll(roll, tn, mod) {
-    console.log(roll);
-    let r_data = {
-        success: false,
-        tn: tn,
-        total: roll._total,
-        raises: 0,
-        pass: 0,
-        ones: 0,
-    }
-    roll.terms[0].results.forEach(die => {
-        if (die.result + mod >= tn) {
-            r_data.pass += 1
-        }else if (die.result == 1) {
-            r_data.ones += 1
-        }
-    });
-    if (r_data.pass > r_data.ones && roll._total >= tn) {
-        r_data.success = true;
-        r_data.raises = Math.floor((roll._total - tn) / 5);
-    }
-    return r_data;
 }
 
 function build_skill_template(data, roll_data) {
@@ -173,7 +89,7 @@ export default class PlayerSheet extends ActorSheet {
         data.level_headed_available = game.dc.level_headed_available
         data.goods = dc_utils.char.get_items(this.actor, "goods");
         data.huckster_deck = dc_utils.char.get_items(this.actor, "huckster_deck");
-        data.action_deck = sort_deck(dc_utils.char.get_items(this.actor, "action_deck"));
+        data.action_deck = dc_utils.deck.sort(dc_utils.char.get_items(this.actor, "action_deck"));
         let fate_chips = dc_utils.char.get_items(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
@@ -267,7 +183,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
         if (this.actor.hasPlayerOwner) {
-            emit('check_tn', {
+           dc_utils.socket.emit('check_tn', {
                 type: 'trait',
                 roller: this.actor.name,
                 trait: trait_name,
@@ -287,7 +203,7 @@ export default class PlayerSheet extends ActorSheet {
             let wound_mod = this.actor.data.data.wound_modifier;
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
@@ -357,7 +273,7 @@ export default class PlayerSheet extends ActorSheet {
             let skill = dc_utils.char.get_skill(this.actor, skl);
             let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, skill.modifier + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, skill.modifier + wound_mod);
             data.skill_name = skill.name
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
@@ -688,7 +604,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("declare_attack",
+       dc_utils.socket.emit("declare_attack",
             {
                 type: 'melee',
                 attacker: this.actor.name,
@@ -707,7 +623,7 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("declare_attack",
+       dc_utils.socket.emit("declare_attack",
             {
                 type: 'ranged',
                 attacker: this.actor.name,
@@ -779,7 +695,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck');
+        let deck = dc_utils.deck.new('huckster_deck');
         let roll_str = `${act.data.data.traits[item.data.data.trait].level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`;
         let r = new Roll(roll_str).roll();
         let draw = 0;
@@ -807,7 +723,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck')
+        let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`
         let r = new Roll(roll_str).roll()
         let draw = 0

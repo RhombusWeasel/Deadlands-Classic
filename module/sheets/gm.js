@@ -1,46 +1,8 @@
 import { dc } from "../config.js";
-let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-
 function get_random_int(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)') {
-                        card_pile[chk].name += ' HooWEE!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' Yee Haw!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
-function new_modifier(name, mod) {
-    return {
-        name: name,
-        mod: mod
-    };
 }
 
 export default class GMSheet extends ActorSheet {
@@ -68,7 +30,7 @@ export default class GMSheet extends ActorSheet {
                 }
             });
         });
-        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
+        data.action_deck = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "action_deck"}));
         data.modifiers = this.actor.data.data.modifiers;
         data.tn = 5;
         for (const [key, mod] of Object.entries(data.modifiers)){
@@ -81,9 +43,9 @@ export default class GMSheet extends ActorSheet {
             let action_list = [];
             for (let i = 0; i < game.dc.chars.length; i++) {
                 const actor = game.actors.getName(game.dc.chars[i]);
-                let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
-                for (let c = 0; c < cards.length; c++) {
-                    const card = cards[c];
+                let ad_cards = actor.items.filter(function (item) {return item.type == "action_deck"});
+                for (let c = 0; c < ad_cards.length; c++) {
+                    const card = ad_cards[c];
                     let card_data = {'name': card.name, 'player': actor.data.name};
                     action_list.push(card_data);
                 }
@@ -95,10 +57,10 @@ export default class GMSheet extends ActorSheet {
             }
             if (action_list.length > 0) {
                 data.action_list = [];
-                for (let card = 0; card < cards.length ; card++) {
-                    const cur_card = cards[card];
-                    for (let suit = 0; suit < suits.length; suit++) {
-                        const cur_suit = suits[suit];
+                for (let card = 0; card < dc_utils.cards.length ; card++) {
+                    const cur_card = dc_utils.cards[card];
+                    for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                        const cur_suit = dc_utils.suits[suit];
                         for (let chk = 0; chk < action_list.length; chk++) {
                             const chk_card = action_list[chk].name;
                             if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){

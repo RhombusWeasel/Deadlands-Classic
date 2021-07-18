@@ -2,30 +2,6 @@ function restore_discard() {
     game.dc.action_deck = dc_utils.deck.new('action_deck');
 }
 
-function evaluate_roll(data) {
-    data.pass = 0;
-    data.ones = 0;
-    for (let i = 0; i < data.amt; i++) {
-        const res = data.results[i]
-        if (res + data.modifier >= data.tn) {
-            data.pass += 1;
-        }else if (res == 1) {
-            data.ones += 1;
-        }
-        if (res + data.modifier > data.total) {
-            data.total = res + data.modifier
-        }
-    }
-    if (data.pass > data.ones) {
-        data.crit_fail = false;
-    }
-    if (data.pass > data.ones && data.total >= data.tn) {
-        data.success = true;
-        data.raises = Math.floor((data.total - data.tn) / 5);
-    }
-    return data;
-}
-
 function build_skill_template(data) {
     console.log('build_skill_temlpate', data);
     let r_str = `
@@ -347,7 +323,7 @@ let operations = {
         if (game.user.isGM) {
             game.dc.action_discard.push(data.card)
             data.card = game.dc.action_deck.pop()
-            emit('recieve_card', data);
+           dc_utils.socket.emit('recieve_card', data);
         }
     },
     //SKILL ROLL OPERATIONS
@@ -759,7 +735,7 @@ let operations = {
             let wound_mod = char.data.data.wound_modifier;
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
             data.skill_name = trait.name
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
@@ -780,7 +756,7 @@ let operations = {
             }
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
             data.skill_name = skill.name
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
