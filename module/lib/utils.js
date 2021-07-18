@@ -6,6 +6,20 @@ const dc_utils = {
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
 
+    sort: {
+        compare_objects: function(object1, object2, key) {
+            const obj1 = object1[key].toUpperCase();
+            const obj2 = object2[key].toUpperCase();
+        
+            if (obj1 < obj2) {
+                return -1;
+            }
+            if (obj1 > obj2) {
+                return 1;
+            }
+            return 0;
+        }
+    },
     char: {
         /*  Get Skill:
                 Will return a dict containing level, die type and modifiers for any skill or trait.
@@ -44,7 +58,7 @@ const dc_utils = {
         get_items: function(act, item_type) {
             return act.items
                 .filter(function (item) {return item.type == item_type})
-                .sort((a, b) => {return compareObjects(a, b, 'name')});
+                .sort((a, b) => {return dc_utils.sort.compare_objects(a, b, 'name')});
         },
     },
     roll: {
