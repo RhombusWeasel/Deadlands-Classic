@@ -27,6 +27,11 @@ const dc_utils = {
             return 0;
         }
     },
+    gm: {
+        get_online_users: function() {
+            return game.users.entities.filter(function(i) {return i.active});
+        }
+    },
     char: {
         /*  Get Skill:
                 Will return a dict containing level, die type and modifiers for any skill or trait.
