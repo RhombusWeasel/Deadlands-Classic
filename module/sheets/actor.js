@@ -356,7 +356,7 @@ export default class PlayerSheet extends ActorSheet {
             let skill = dc_utils.char.get_skill(this.actor, skl);
             let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = check_roll(roll, data.tn, skill.modifier + wound_mod);
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
