@@ -68,19 +68,6 @@ function sort_deck(card_pile){
     return r_pile;
 }
 
-function compareObjects(object1, object2, key) {
-    const obj1 = object1[key].toUpperCase();
-    const obj2 = object2[key].toUpperCase();
-
-    if (obj1 < obj2) {
-        return -1;
-    }
-    if (obj1 > obj2) {
-        return 1;
-    }
-    return 0;
-}
-
 function get_target() {
     for (let t = 0; t < canvas.tokens.placeables.length; t++) {
         let tgt = canvas.tokens.placeables[t]
@@ -355,7 +342,7 @@ export default class PlayerSheet extends ActorSheet {
         let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
         if (this.actor.hasPlayerOwner) {
-            emit('check_tn', {
+            dc_utils.socket.emit('check_tn', {
                 type: 'skill',
                 roller: this.actor.name,
                 trait: tra,
@@ -363,22 +350,9 @@ export default class PlayerSheet extends ActorSheet {
                 modifier: 0
             });
         }else{
-            let trait = this.actor.data.data.traits[tra];
-            let skill = trait.skills[skl];
-            let data = {
-                type: 'skill',
-                skill_name: skill.name,
-                tn: 5,
-                name: this.actor.name
-            };
-            let lvl = skill.level;
-            let die = trait.die_type;
-            let mod = skill.modifier;
-            let wound_mod = this.actor.data.data.wound_modifier;
-            if (lvl == 0) {
-                lvl = trait.level;
-            }
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let wound_mod = parseInt(this.actor.data.data.wound_modifier);
+            let skill = dc_utils.char.get_skill(this.actor, skl);
+            let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
             let roll = new Roll(formula).roll();
             let r_data = check_roll(roll, data.tn, mod + wound_mod);
             ChatMessage.create({content: build_skill_template(data, r_data)});
