@@ -255,8 +255,8 @@ export default class PlayerSheet extends ActorSheet {
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let tra = element.closest(".skill-data").dataset.trait;
-        let skl = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
+        let skl = element.closest(".skill-data").dataset.skill;
+        let skill = dc_utils.char.skill.get(this.actor, skl);
         let data = {
             type: 'skill',
             roller: this.actor.name,
