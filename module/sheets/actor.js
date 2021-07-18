@@ -856,7 +856,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
+        let roll_str = `Casts ${item.name}: [[${act.data.data.traits.spirit.skills.faith.level}${act.data.data.traits.spirit.die_type}ex + ${act.data.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
         ChatMessage.create({ 
             content: `
                 <h3 style="text-align:center">Miracle</h3>
