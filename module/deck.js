@@ -331,6 +331,7 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
+                            let char = game.actors.getName(data.roller);
                             if (dc_utils.char.chips.spend(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
@@ -345,6 +346,7 @@ let operations = {
                     red: {
                         label: 'Red',
                         callback: () => {
+                            let char = game.actors.getName(data.roller);
                             if (dc_utils.char.chips.spend(char, 'Red')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
@@ -361,6 +363,7 @@ let operations = {
                     blue: {
                         label: 'Blue',
                         callback: () => {
+                            let char = game.actors.getName(data.roller);
                             if (dc_utils.char.chips.spend(char, 'Blue')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let result = roll.terms[0].results[0].result;
