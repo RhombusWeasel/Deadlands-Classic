@@ -175,19 +175,19 @@ export default class PlayerSheet extends ActorSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.firearms = data.items.filter(function (item) {return item.type == "firearm"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.miracles = data.items.filter(function (item) {return item.type == "miracle"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.tricks = data.items.filter(function (item) {return item.type == "trick"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.hexes = data.items.filter(function (item) {return item.type == "hex"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.favors = data.items.filter(function (item) {return item.type == "favor"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.edges = data.items.filter(function (item) {return item.type == "edge"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.firearms = dc_utils.get_items(this.actor, "firearm");
+        data.melee_weapons = dc_utils.get_items(this.actor, "melee");
+        data.miracles = dc_utils.get_items(this.actor, "miracles");
+        data.tricks = dc_utils.get_items(this.actor, "trick");
+        data.hexes = dc_utils.get_items(this.actor, "hex");
+        data.favors = dc_utils.get_items(this.actor, "favor");
+        data.hinderances = dc_utils.get_items(this.actor, "hinderance");
+        data.edges = dc_utils.get_items(this.actor, "edge");
         data.level_headed_available = game.dc.level_headed_available
-        data.goods = data.items.filter(function (item) {return item.type == "goods"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.huckster_deck = sort_deck(data.items.filter(function (item) {return item.type == "huckster_deck"}));
-        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
-        let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.goods = dc_utils.get_items(this.actor, "goods");
+        data.huckster_deck = dc_utils.get_items(this.actor, "huckster_deck");
+        data.action_deck = sort_deck(dc_utils.get_items(this.actor, "action_deck"));
+        let fate_chips = dc_utils.get_items(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
             {name: "Red", bounty: "2", amount: 0},

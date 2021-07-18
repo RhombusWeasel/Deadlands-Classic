@@ -1,123 +1,5 @@
-let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-let bounty = {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5};
-let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
-let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
-
 function restore_discard() {
-    for (let c = 0; c < game.dc.action_discard.length; c++) {
-        game.dc.action_deck.push(game.dc.action_discard.pop());
-    }
-    game.dc.action_deck = shuffle_deck(game.dc.action_deck);
-}
-
-function shuffle_deck(deck) {
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck;
-}
-
-function new_deck(id) {
-    let deck = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 1; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-    deck = shuffle_deck(deck)
-    return deck
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)') {
-                        card_pile[chk].name += ' HooWEE!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' Dang it!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
-function emit(op, data) {
-    console.log('EMIT:', op, data);
-    game.socket.emit("system.deadlands_classic", {
-        operation: op,
-        data: data
-    });
-}
-
-function get_tn() {
-    let mods = game.actors.getName('Marshal').data.data.modifiers;
-    let tn = 5;
-    for (const [key, mod] of Object.entries(mods)){
-        if (mod.active) {
-            tn -= mod.mod;
-        }
-    }
-    return tn;
-}
-
-function new_roll(data) {
-    let r_data = {
-        success: false,
-        crit_fail: false,
-        tn: data.tn,
-        total: 0,
-        dice: data.dice,
-        amt: data.amt,
-        modifier: data.modifier,
-        raises: 0,
-        pass: 0,
-        ones: 0,
-        results: [],
-    };
-    let roll = new Roll(`${data.amt}${data.dice}ex + ${data.modifier}`).roll();
-    r_data.total = roll._total;
-    let count = 0
-    roll.terms[0].results.forEach(die => {
-        if (die.result + data.modifier >= data.tn && count < r_data.amt) {
-            r_data.pass += 1;
-        }else if (die.result == 1 && count < r_data.amt) {
-            r_data.ones += 1;
-        }
-        r_data.results.push(die.result);
-    });
-    if (r_data.pass >= r_data.ones && r_data.total >= data.tn) {
-        r_data.success = true;
-        r_data.raises = Math.floor((roll._total - r_data.tn) / 5);
-    }
-    if (r_data.pass < r_data.ones) {
-        r_data.success = false;
-        r_data.crit_fail = true;
-    }
-    console.log('new_roll:', r_data);
-    roll.toMessage({rollMode: 'gmroll'});
-    return r_data;
+    game.dc.action_deck = dc_utils.deck.new('action_deck');
 }
 
 function evaluate_roll(data) {
@@ -342,7 +224,7 @@ function spend_fate_chip(data, label) {
 
 function soak_damage(data, label){
     if (spend_fate_chip(data, label)){
-        data.wounds -= bounty[label]
+        data.wounds -= dc_utils.bounty[label]
     }
     return data;
 }
@@ -429,7 +311,7 @@ let operations = {
             }
             for (let i=0; i<cards; i++){
                 data.card = game.dc.action_deck.pop();
-                emit('recieve_card', data);
+                dc_utils.socket.emit('recieve_card', data);
             }
         };
     },
@@ -491,7 +373,7 @@ let operations = {
                 data.amt = trait.level
             }
             data.modifier += parseInt(trait.modifier) + parseInt(skill.modifier) + parseInt(char.data.data.wound_modifier);
-            data.roll = new_roll(data);
+            data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
         }else if (game.user.isGM) {
             console.log('SKILL_ROLL:', data);
@@ -557,7 +439,7 @@ let operations = {
                                 if(data.write_value) {
                                     data[data.write_value] = data.roll.total
                                 }
-                                emit(data.next_op, data);
+                                dc_utils.socket.emit(data.next_op, data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }else{
                                 ChatMessage.create({content: build_skill_template(data)});
@@ -597,7 +479,7 @@ let operations = {
                         callback: () => {
                             let itm = char.items.find(i => i.name == data.name);
                             char.deleteOwnedItem(itm._id);
-                            emit('discard_card', data);
+                            dc_utils.socket.emit('discard_card', data);
                         }
                     }
                 },
@@ -627,14 +509,14 @@ let operations = {
             if (atk.data.disposition == -1) {
                 operations.attack(data);
             }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
-                emit('warn_friendly_fire', data);
+                dc_utils.socket.emit('warn_friendly_fire', data);
             }else{
-                emit('roll_to_hit', data);
+                dc_utils.socket.emit('roll_to_hit', data);
             }
         }else{
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
             if (char.owner) {
-                emit('check_dodge', data);
+                dc_utils.socket.emit('check_dodge', data);
             }
         }
     },
@@ -646,15 +528,15 @@ let operations = {
             if (tgt.data.disposition != -1) {
                 let form = new Dialog({
                     title: `Breakin' the Law!`,
-                    content: build_friendly_fire_dialog(data, sort_deck(cards)),
+                    content: build_friendly_fire_dialog(data, dc_utils.deck.sort(cards)),
                     buttons: {
                         yes: {
                             label: 'Screw it!',
                             callback: () => {
                                 if (tgt.actor.isPC) {
-                                    emit('check_dodge', data);
+                                    dc_utils.socket.emit('check_dodge', data);
                                 }else{
-                                    emit('roll_to_hit', data);
+                                    dc_utils.socket.emit('roll_to_hit', data);
                                 }
                             }
                         },
@@ -676,7 +558,7 @@ let operations = {
     check_dodge: function(data) {
         let char = canvas.tokens.placeables.find(i => i.name == data.target);
         if (game.user.isGM) {
-            emit('check_dodge', data);
+            dc_utils.socket.emit('check_dodge', data);
         }else if (char.owner) {
             let cards = [];
             for (let item of char.actor.items.values()) {
@@ -684,7 +566,7 @@ let operations = {
                     cards.push(item);
                 }
             }
-            cards = sort_deck(cards);
+            cards = dc_utils.deck.sort(cards);
             console.log('dodge:', cards);
             if (cards.length > 0) {
                 data.next_op = 'roll_to_hit'
@@ -704,7 +586,7 @@ let operations = {
                         yes: {
                             label: 'Dodge',
                             callback: () => {
-                                emit('discard_card', {
+                                dc_utils.socket.emit('discard_card', {
                                     name: data.card_name,
                                     type: 'action_deck',
                                     char: data.target
@@ -719,7 +601,7 @@ let operations = {
                             callback: () => {
                                 console.log('check_dodge', data);
                                 data.dodge_roll = 0;
-                                emit('roll_to_hit', data);
+                                dc_utils.socket.emit('roll_to_hit', data);
                             }
                         }
                     },
@@ -730,7 +612,7 @@ let operations = {
                 form.render(true);
             }else{
                 data.dodge_roll = 0;
-                emit('roll_to_hit', data);
+                dc_utils.socket.emit('roll_to_hit', data);
             }
         }
     },
@@ -738,7 +620,7 @@ let operations = {
         console.log('roll_to_hit:', data);
         let char = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (char.actor.isPC && game.user.isGM) {
-            emit('roll_to_hit', data);
+            dc_utils.socket.emit('roll_to_hit', data);
         }else if(!(char.actor.isPC) && game.user.isGM){
             operations.proceed_attack(data);
         }else if (char.owner) {
@@ -761,14 +643,14 @@ let operations = {
             if (itm.data.data.off_hand) {
                 data.modifier += char.actor.data.data.off_hand_modifier;
             }
-            emit('check_tn', data);
+            dc_utils.socket.emit('check_tn', data);
         }
     },
     roll_damage: function(data) {
         console.log('roll_damage:', data);
         let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (game.user.isGM) {
-            emit('roll_damage', data);
+            dc_utils.socket.emit('roll_damage', data);
         }else if (atk.owner) {
             let itm = atk.actor.items.get(data.weapon);
             data.weapon_name = itm.name;
@@ -821,10 +703,10 @@ let operations = {
             let tot = loc_roll._total - 1;
             let found = [];
             let range = data.roll.raises * 2
-            for (let i = 0; i < locations.length; i++) {
+            for (let i = 0; i < dc_utils.locations.length; i++) {
                 if (i >= tot - range && i <= tot + range && i < 19){
-                    if (!(found.includes(loc_lookup[i]))) {
-                        found.push(loc_lookup[i]);
+                    if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                        found.push(dc_utils.loc_lookup[i]);
                     }
                 }
             }
@@ -846,9 +728,9 @@ let operations = {
                 amt += 1;
             }else{
                 data.loc_key = loc_key;
-                data.loc_label = locations[loc_lookup.indexOf(loc_key)];
+                data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
             }
-            console.log('roll_damage: Location:', loc_lookup.indexOf(loc_key));
+            console.log('roll_damage: Location:', dc_utils.loc_lookup.indexOf(loc_key));
             console.log('roll_damage:', data);
             let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
             if (data.type == 'melee') {
@@ -866,7 +748,7 @@ let operations = {
                 if (tgt.data.document.hasPlayerOwner) {
                     op = 'apply_damage';
                 }
-                emit(op, data);
+                dc_utils.socket.emit(op, data);
             }
             ChatMessage.create({content: battle_report(data)});
         }
@@ -874,11 +756,11 @@ let operations = {
     //OLD COMBAT OPERATIONS
     check_tn: function(data) {
         if (game.user.isGM) {
-            data.tn = get_tn();
+            data.tn = dc_utils.roll.get_tn();
             if (data.type == 'skill') {
-                emit('skill_roll', data);
+                dc_utils.socket.emit('skill_roll', data);
             }else{
-                emit('skill_roll', data);
+                dc_utils.socket.emit('skill_roll', data);
             }
         }
     },
@@ -927,16 +809,16 @@ let operations = {
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             console.log('check_target: Target:', tgt);
             if (atk.data.disposition == -1) {
-                emit('attack', data);
+                dc_utils.socket.emit('attack', data);
             }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
-                emit('warn_law', data);
+                dc_utils.socket.emit('warn_law', data);
             }else{
-                operations.attack(data);
+                dc_utils.socket.operations.attack(data);
             }
         }else{
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
             if (char.owner) {
-                emit('check_target', data);
+                dc_utils.socket.emit('check_target', data);
             }
         }
     },
@@ -987,7 +869,7 @@ let operations = {
                 data.dice = trait.die_type;
                 data.write_value = 'hit_roll';
                 data.modifier = 0;
-                let atk_roll = new_roll(data);
+                let atk_roll = dc_utils.roll.new(data);
                 data.hit_roll = atk_roll.total;
                 data.result = atk_roll.total;
                 if (atk_roll.success) {
@@ -998,10 +880,10 @@ let operations = {
                         let tot = loc_roll._total - 1;
                         let found = [];
                         let range = atk_roll.raises * 2
-                        for (let i = 0; i < locations.length; i++) {
+                        for (let i = 0; i < dc_utils.locations.length; i++) {
                             if (i >= tot - range && i <= tot + range && i < 19){
-                                if (!(found.includes(loc_lookup[i]))) {
-                                    found.push(loc_lookup[i]);
+                                if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                                    found.push(dc_utils.loc_lookup[i]);
                                 }
                             }
                         }
@@ -1023,9 +905,9 @@ let operations = {
                             amt += 1;
                         }else{
                             data.loc_key = loc_key;
-                            data.loc_label = locations[loc_lookup.indexOf(loc_key)];
+                            data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
                         }
-                        console.log('proceed_attack: Location:', loc_lookup.indexOf(loc_key));
+                        console.log('proceed_attack: Location:', dc_utils.loc_lookup.indexOf(loc_key));
                         console.log('proceed_attack:', data);
                         let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
                         if (data.type == 'melee') {
@@ -1043,7 +925,7 @@ let operations = {
                             if (tgt.document._actor.hasPlayerOwner) {
                                 op = 'apply_damage';
                             }
-                            emit(op, data);
+                            dc_utils.socket.emit(op, data);
                         }
                         ChatMessage.create({content: battle_report(data)});
                     }else{
@@ -1096,28 +978,28 @@ let operations = {
                         label: 'White [1]',
                         callback: () => {
                             data = soak_damage(data, 'White');
-                            emit('soak', data);
+                            dc_utils.socket.emit('soak', data);
                         }
                     },
                     red: {
                         label: 'Red [2]',
                         callback: () => {
                             data = soak_damage(data, 'Red');
-                            emit('soak', data);
+                            dc_utils.socket.emit('soak', data);
                         }
                     },
                     blue: {
                         label: 'Blue [3]',
                         callback: () => {
                             data = soak_damage(data, 'Blue');
-                            emit('soak', data);
+                            dc_utils.socket.emit('soak', data);
                         }
                     },
                     legend: {
                         label: 'Legendary [5]',
                         callback: () => {
                             data = soak_damage(data, 'Legendary');
-                            emit('soak', data);
+                            dc_utils.socket.emit('soak', data);
                         }
                     },
                     take: {
@@ -1202,7 +1084,7 @@ let operations = {
         if (game.user.isGM) {
             console.log('soak:', data);
             if (data.wounds > 0) {
-                emit('apply_damage', data);
+                dc_utils.socket.emit('apply_damage', data);
             }
         }
     }
@@ -1215,7 +1097,7 @@ Hooks.on("ready", () => {
         level_headed_available: true
     }
     if (game.user.isGM) {
-        game.dc.action_deck = new_deck('action_deck');
+        game.dc.action_deck = dc_utils.deck.new('action_deck');
         game.dc.action_discard = [];
         game.dc.chars = [];
     };
