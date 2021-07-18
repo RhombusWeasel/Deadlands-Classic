@@ -47,7 +47,7 @@ export default class GMSheet extends ActorSheet {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
                         let char = game.actors.get(pcs[p]);
-                        console.log('DC | actor.getData |', char);
+                        console.log('DC | actor.getData |', pcs[p], char);
                         let ad_cards = dc_utils.char.items.get(char, "action_deck");
                         for (let c = 0; c < ad_cards.length; c++) {
                             const card = ad_cards[c];
@@ -63,7 +63,8 @@ export default class GMSheet extends ActorSheet {
                 action_list.push(card_data);
             }
             if (action_list.length > 0) {
-                data.action_list = [];
+                data.action_list = dc_utils.deck.sort(action_list);
+                /* data.action_list = [];
                 for (let card = 0; card < dc_utils.cards.length ; card++) {
                     const cur_card = dc_utils.cards[card];
                     for (let suit = 0; suit < dc_utils.suits.length; suit++) {
@@ -76,7 +77,7 @@ export default class GMSheet extends ActorSheet {
                             }
                         }
                     }
-                }
+                } */
             }
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
