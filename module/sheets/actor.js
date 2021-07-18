@@ -341,14 +341,16 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
+        let data = {
+            type: 'skill',
+            roller: this.actor.name,
+            trait: tra,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            modifier: 0
+        }
         if (this.actor.hasPlayerOwner) {
-            dc_utils.socket.emit('check_tn', {
-                type: 'skill',
-                roller: this.actor.name,
-                trait: tra,
-                skill: skl,
-                modifier: 0
-            });
+            dc_utils.socket.emit('check_tn', data);
         }else{
             let wound_mod = parseInt(this.actor.data.data.wound_modifier);
             let skill = dc_utils.char.get_skill(this.actor, skl);
