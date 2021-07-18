@@ -87,7 +87,7 @@ const dc_utils = {
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
                         console.log('DC | dc_utils.char.chips.spend |', item);
-                        act.deleteEmbeddedItem(item.id);
+                        act.deleteOwnedItem(item.id);
                         let reply = `
                             <h3 style="text-align:center">Fate</h3>
                             <p style="text-align:center">${act.name} spends a ${label} fate chip.</p>
