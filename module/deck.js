@@ -269,7 +269,7 @@ let operations = {
     },
     recieve_card: function(data){
         let actor = game.actors.getName(data.char);
-        if (actor.owner){
+        if (actor.isOwner){
             console.log(data);
             console.log(actor);
             let c = Math.random();
