@@ -92,18 +92,11 @@ export default class PlayerSheet extends ActorSheet {
         data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
-            {name: "White", bounty: "1", amount: 0},
-            {name: "Red", bounty: "2", amount: 0},
-            {name: "Blue", bounty: "3", amount: 0},
-            {name: "Legendary", bounty: "5", amount: 0},
+            {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
+            {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
+            {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
+            {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        fate_chips.forEach(chip => {
-            data.fate_chips.forEach(stack => {
-                if (stack.name == chip.name){
-                    stack.amount += 1;
-                }
-            });
-        });
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
         if (data.combat_active) {
         }else{

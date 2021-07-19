@@ -64,20 +64,6 @@ export default class GMSheet extends ActorSheet {
             }
             if (action_list.length > 0) {
                 data.action_list = dc_utils.deck.sort(action_list);
-                /* data.action_list = [];
-                for (let card = 0; card < dc_utils.cards.length ; card++) {
-                    const cur_card = dc_utils.cards[card];
-                    for (let suit = 0; suit < dc_utils.suits.length; suit++) {
-                        const cur_suit = dc_utils.suits[suit];
-                        for (let chk = 0; chk < action_list.length; chk++) {
-                            const chk_card = action_list[chk].name;
-                            if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
-                                data.action_list.push(action_list[chk]);
-                                break;
-                            }
-                        }
-                    }
-                } */
             }
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
