@@ -315,7 +315,7 @@ let operations = {
         if (char.isOwner) {
             let skill = dc_utils.char.skill.get(char, data.skill);
             data.amt = skill.level;
-            data.die = skill.die_type;
+            data.dice = skill.die_type;
             data.modifier += skill.modifier + parseInt(char.data.data.wound_modifier);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
