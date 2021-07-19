@@ -312,8 +312,10 @@ let operations = {
     //}
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             let skill = dc_utils.char.skill.get(char, data.skill);
+            data.amt = skill.level;
+            data.die = skill.die_type;
             data.modifier += skill.modifier + parseInt(char.data.data.wound_modifier);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
