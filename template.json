@@ -47,7 +47,10 @@
                 "off_hand_modifier": -6,
                 "perks": {
                     "level_headed": false
-                }
+                },
+                "description": "",
+                "notes": "",
+                "nightmare": ""
             }
         },
         "player": {
