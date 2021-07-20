@@ -65,6 +65,7 @@ export default class PlayerSheet extends ActorSheet {
         console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
+        data.id = this.actor._id;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
