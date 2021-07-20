@@ -6,30 +6,45 @@
         <div>
             <table>
                 <tr>
-                    <td>
+                    {{#each fate_chips as |chip|}}
+
+                    <td class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
+                        <span class="fa-stack fa-2x">
+                            <i class="fas fa-circle fa-stack-2x {{this.name}}"></i>
+                            <i class="fas fa-atom fa-stack-1x"></i>
+                        </span>
+                        <span class="center">{{this.amount}}</span>
+                        <span class="center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></span>
+                        <span class="center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></span>
+                    </td>
+                    {{/each}}
+                    <!-- <td>
                         <span class="fa-stack fa-2x">
                             <i class="fas fa-circle fa-stack-2x white"></i>
                             <i class="fas fa-atom fa-stack-1x"></i>
                         </span>
                     </td>
+                    <td class="perc10 center">{{this.amount}}</td>
+                    <td class="perc10 center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></td>
+                    <td class="perc10 center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></td>
                     <td>
                         <span class="fa-stack fa-2x">
                             <i class="fas fa-circle fa-stack-2x red"></i>
-                            <i class="fas fa-atom fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-atom fa-stack-1x"></i>
                         </span>
                     </td>
                     <td>
                         <span class="fa-stack fa-2x">
                             <i class="fas fa-circle fa-stack-2x blue"></i>
-                            <i class="fas fa-atom fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-atom fa-stack-1x"></i>
                         </span>
                     </td>
                     <td>
                         <span class="fa-stack fa-2x">
                             <i class="fas fa-circle fa-stack-2x legend"></i>
-                            <i class="fas fa-atom fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-atom fa-stack-1x"></i>
                         </span>
-                    </td>
+                    </td> -->
                 </tr>
             </table>
         </div>
