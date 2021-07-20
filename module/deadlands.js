@@ -18,6 +18,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/description.hbs",
         "systems/deadlands_classic/templates/partials/fate-chips.hbs",
         "systems/deadlands_classic/templates/partials/miracles.hbs",
+        "systems/deadlands_classic/templates/partials/hexes.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
     ]
     return loadTemplates(template_paths)
@@ -74,6 +75,14 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('if_has', function (type, val, options) {
+        let act = game.actors.get(game.user.data.character);
+        if (dc_utils.char.has(act, type, val)) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+    
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);

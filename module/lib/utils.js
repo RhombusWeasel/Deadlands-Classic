@@ -37,6 +37,15 @@ const dc_utils = {
         }
     },
     char: {
+        has: function(act, type, name) {
+            let edges = dc_utils.char.items.get(act, type);
+            for (const edge of edges) {
+                if (edge.name == name) {
+                    return true;
+                }
+            }
+            return false;
+        },
         skill: {
             /*  Get Skill:
                 Will return a dict containing level, die type and modifiers for any skill or trait.

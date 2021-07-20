@@ -1,0 +1,42 @@
+<section>
+    {{#if tricks}}
+    <div>
+        <h2 class="center">Tricks</h2>
+        <table>
+        {{#each tricks as |hex|}}
+        <tr class="item" data-itemId="{{this.id}}">
+            <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc40">{{this.name}}</td>
+            {{#has_bounty this.data.data.level 'skill'}}
+            <td class="perc10 right"><a class="magic-buff">[+]</a></td>
+            {{/has_bounty}}
+            <td class="perc10">[{{this.data.data.level}}]</td>
+            <td class="perc20 center">{{this.data.data.trait}}</td>
+            <td class="perc10 center"><a class="sling-trick"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a></td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if hexes}}
+    <div>
+        <h2 class="center">Hexes</h2>
+        <table>
+        {{#each hexes as |hex|}}
+        <tr class="item" data-itemId="{{this.id}}">
+            <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc40">{{this.name}}</td>
+            {{#has_bounty this.data.data.level 'skill'}}
+            <td class="perc10 right"><a class="magic-buff">[+]</a></td>
+            {{/has_bounty}}
+            <td class="perc10">[{{this.data.data.level}}]</td>
+            <td class="perc20 center">{{this.data.data.trait}}</td>
+            <td class="perc10 center"><a class="sling-hex"><i class="fas fa-bahai" title="Cast {{this.name}}"></i></a></td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+</section>
