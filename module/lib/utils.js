@@ -216,17 +216,18 @@ const dc_utils = {
                     const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                     for (let chk = 0; chk < card_pile.length; chk++) {
                         const chk_card = card_pile[chk].data.name;
+                        console.log(chk_card, )
                         if (cur_card == 'Joker') {
-                            if (chk_card === `Joker ${dc_utils.suit_symbols.red_joker}`) {
+                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
                                 card_pile[chk].name += ' '
                                 r_pile.push(card_pile[chk]);
                                 break;
-                            }else if(chk_card === `Joker ${dc_utils.suit_symbols.red_joker}`) {
+                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
                                 card_pile[chk].name += ' '
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }
-                        }else if(chk_card == cur_card + ' ' + cur_suit){
+                        }else if(chk_card == `${cur_card}${cur_suit}`){
                             r_pile.push(card_pile[chk]);
                             break;
                         }
