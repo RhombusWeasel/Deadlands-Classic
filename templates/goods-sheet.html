@@ -9,10 +9,17 @@
             <tr>
                 <th>{{localize "dc.items.goods.cost"}}</th>
                 <th>{{localize "dc.items.goods.amount"}}</th>
+                <th>{{localize "dc.items.goods.equippable"}}</th>
             </tr>
             <tr>
                 <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
                 <td><input style="text-align: center;" type="text" name="data.amount" value="{{data.data.amount}}"/></td>
+                {{#if (eq data.data.equippable true)}}
+                    <td><input type="checkbox" name="data.equippable" checked/></td>
+                {{/if}}
+                {{#if (eq data.data.equippable false)}}
+                    <td><input type="checkbox" name="data.equippable"/></td>
+                {{/if}}
             </tr>
         </table>
     </div>
