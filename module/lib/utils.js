@@ -115,6 +115,33 @@ const dc_utils = {
                 return false;
             }
         },
+        token: {
+            get: function(act) {
+                let owned = canvas.tokens.placeables.find(i => i.owner == true);
+                for (let t = 0; t < owned.length; t++) {
+                    let tgt = owned[t]
+                    if (tgt.owner) {
+                        if (tgt.name == act.name){
+                            return tgt;
+                        }
+                    }
+                }
+                return false;
+            },
+        },
+        target: {
+            get: function() {
+                for (let t = 0; t < canvas.tokens.placeables.length; t++) {
+                    let tgt = canvas.tokens.placeables[t]
+                    for (let u of tgt.targeted) {
+                        if (u._id == game.user._id) {
+                            return tgt;
+                        }
+                    }
+                }
+                return false;
+            }
+        },
     },
     roll: {
         new: function(data) {

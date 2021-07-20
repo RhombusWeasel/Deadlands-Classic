@@ -20,19 +20,6 @@ function get_target() {
     return false;
 }
 
-function get_token(act) {
-    let owned = canvas.tokens.placeables.find(i => i.owner == true);
-    for (let t = 0; t < owned.length; t++) {
-        let tgt = owned[t]
-        if (tgt.owner) {
-            if (tgt.name == act.name){
-                return tgt;
-            }
-        }
-    }
-    return false;
-}
-
 function build_skill_template(data, roll_data) {
     let r_str = `
         <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>

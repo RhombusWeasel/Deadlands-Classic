@@ -655,7 +655,9 @@
         "templates": {
             "description": {
                 "description": "",
-                "script": ""
+                "script": "",
+                "equippable": false,
+                "equipped": false
             }
         },
         "firearm": {

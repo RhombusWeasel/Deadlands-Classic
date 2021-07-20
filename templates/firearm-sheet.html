@@ -36,6 +36,9 @@
                 {{#if (eq data.data.off_hand false)}}
                     <td><input type="checkbox" name="data.off_hand"/></td>
                 {{/if}}
+                {{#if (eq data.data.equippable false)}}
+                    <td><input type="checkbox" name="data.equippable"/></td>
+                {{/if}}
             </tr>
         </table>
     </div>
