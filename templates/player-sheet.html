@@ -28,12 +28,14 @@
                 <tr>
                     {{#each action_deck as |card|}}
                     <td class="item flexrow" data-itemId="{{this.id}}">
-                        <span><a>{{this.name}}</a></span>
-                        <span><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></span>
-                        {{#lvl_head}}
-                        <span><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></span>
-                        {{/lvl_head}}
-                        <span><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></span>
+                        <span>
+                            <a>{{this.name}}</a>
+                            <a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a>
+                            {{#lvl_head}}
+                            <a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a>
+                            {{/lvl_head}}
+                            <a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a>
+                        </span>
                     </td>
                     {{/each}}
                 </tr>
