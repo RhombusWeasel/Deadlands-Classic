@@ -2,6 +2,7 @@ const dc_utils = {
 
     cards: ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
+    suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: "\u1F0CF", black_joker: "\u1F0BF"},
     bounty: {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5},
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
@@ -190,12 +191,13 @@ const dc_utils = {
                 for (let card = 1; card < dc_utils.cards.length; card++) {
                     deck.push({
                         name: `${dc_utils.cards[card]} of ${dc_utils.suits[suit]}`,
+                        symbol: dc_utils.suit_symbols[suit],
                         type: id
                     });
                 }        
             }
-            deck.push({name: 'Joker (Red)', type: id})
-            deck.push({name: 'Joker (Black)', type: id})
+            deck.push({name: 'Joker (Red)', symbol: dc_utils.suit_symbols.red_joker, type: id})
+            deck.push({name: 'Joker (Black)', symbol: dc_utils.suit_symbols.black_joker, type: id})
             deck = dc_utils.deck.shuffle(deck);
             return deck
         },
