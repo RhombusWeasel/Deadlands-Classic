@@ -399,25 +399,22 @@ export default class PlayerSheet extends ActorSheet {
         let bounty = element.closest(".fate-data").dataset.bounty;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        let found = false
         fate_chips.forEach(chip => {
-            if (found == false) {
-                if (chip.name == chip_type) {
-                    let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
-                    let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
-                    let suffix = 'points';
-                    if (bounty == '1') {
-                        suffix = 'point'
-                    }
-                    ChatMessage.create({ content: `
-                        <h3 style="text-align:center">Bounty: ${chip_type}</h3>
-                        <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
-                    `});
-                    this.actor.data.update({data: {bounty: {value: new_val}}});
-                    this.actor.data.update({data: {bounty: {max: new_max}}});
-                    this.actor.deleteOwnedItem(chip._id);
-                    found = true;
+            if (chip.name == chip_type) {
+                let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
+                let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
+                let suffix = 'points';
+                if (bounty == '1') {
+                    suffix = 'point'
                 }
+                ChatMessage.create({ content: `
+                    <h3 style="text-align:center">Bounty: ${chip_type}</h3>
+                    <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
+                `});
+                this.actor.update({data: {bounty: {value: new_val}}});
+                this.actor.update({data: {bounty: {max: new_max}}});
+                chip.delete();
+                break;
             }
         });
     }
@@ -428,17 +425,14 @@ export default class PlayerSheet extends ActorSheet {
         let chip_type = element.closest(".fate-data").dataset.chip;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        let found = false
         fate_chips.forEach(chip => {
-            if (found == false) {
-                if (chip.name == chip_type) {
-                    ChatMessage.create({ content: `
-                        <h3 style="text-align:center">Fate</h3>
-                        <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
-                    `});
-                    this.actor.deleteOwnedItem(chip._id);
-                    found = true;
-                }
+            if (chip.name == chip_type) {
+                ChatMessage.create({ content: `
+                    <h3 style="text-align:center">Fate</h3>
+                    <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
+                `});
+                chip.delete();
+                break;
             }
         });
     }
