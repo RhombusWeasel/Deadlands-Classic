@@ -1,8 +1,8 @@
 <section class="form typed">
     <div class="flexrow">
         <div class="flexcol">
-            <h2 class="center collapsible">Wounds:</h2>
-            <table class="content">
+            <h2 class="center">Wounds:</h2>
+            <table>
                 <tr>
                     <th></th>
                     <th>Wounds</th>
@@ -50,8 +50,8 @@
                 </tr>
             </table>
             {{#if melee_weapons}}
-            <h2 class="center collapsible">Melee Weapons</h2>
-            <table class="content">
+            <h2 class="center">Melee Weapons</h2>
+            <table>
             {{#each melee_weapons as |wep|}}
                 <tr class="item" data-itemId="{{this.id}}">
                     <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
@@ -65,8 +65,8 @@
             {{/if}}
         </div>
         <div class="flexcol">
-            <h2 class="center collapsible">Combat Hand</h2>
-            <div class="content">
+            <h2 class="center">Combat Hand</h2>
+            <div>
                 <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
                 {{#if action_deck}}
                 <table>
@@ -85,8 +85,8 @@
                 {{/if}}
             </div>
             {{#if firearms}}
-            <h2 class="center collapsible">Guns</h2>
-            <div class="content">
+            <h2 class="center">Guns</h2>
+            <div>
                 <table>
                 {{#each firearms as |gun|}}
                     <tr class="item" data-itemId="{{this.id}}">
