@@ -9,11 +9,14 @@ async function preload_handlebars_templates() {
     const template_paths = [
         "systems/deadlands_classic/templates/partials/core.hbs",
         "systems/deadlands_classic/templates/partials/mook-core.hbs",
-        "systems/deadlands_classic/templates/partials/sidebar.hbs",
+        "systems/deadlands_classic/templates/partials/goods.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
+        "systems/deadlands_classic/templates/partials/combat.hbs",
+        "systems/deadlands_classic/templates/partials/description.hbs",
+        "systems/deadlands_classic/templates/partials/fate-chips.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
     ]
     return loadTemplates(template_paths)
@@ -156,22 +159,20 @@ Hooks.once("init", function () {
     preload_handlebars_templates();
 });
 
-Hooks.on('preCreateToken', function () {
-    console.log('W00T', arguments);
-    let act = game.actors.getName(arguments[1].name);
-    if (!(act.isPC)) {
+Hooks.on('preCreateToken', function (document, createData, options, userId) {
+    console.log('W00T', document, createData);
+    let act = game.actors.getName(document.name);
+    if (!(act.hasPlayerOwner)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
         let amt = get_token_count(act);
-        if (amt > 0) {
-            arguments[1].name += ` ${amt}`
-        }
+        document.data.update({name: createData.name += ` ${amt}`});
     }
 });
 
 Hooks.on('hoverToken', function () {
     if (game.user.isGM) {
         let tkn = arguments[0]
-        if (tkn.data.name != tkn.actor.name && !(tkn.actor.isPC)) {
+        if (tkn?.data?.name != tkn?.actor?.name && !(tkn?.actor?.isPC)) {
             tkn.actor.update({name: tkn.data.name});
         }
     }

@@ -10,51 +10,6 @@ let percs = [
 
 let aim_bonus = 0
 
-function new_deck(id) {
-    let deck = [];
-    let shuffled = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 1; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)' || chk_card == 'Joker (Black)') {
-                        r_pile.push(card_pile[chk]);
-                        card_pile[chk].name += ' Ask yer Marshal.'
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
 export default class GeneratorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -67,7 +22,7 @@ export default class GeneratorSheet extends ActorSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.gen_deck = sort_deck(data.items.filter(function (item) {return item.type == "gen_deck"}));
+        data.gen_deck = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "gen_deck"}));
         data.firearms = data.items.filter(function (item) {return item.type == "firearm"});
         data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"});
         data.miracles = data.items.filter(function (item) {return item.type == "miracle"});
@@ -79,7 +34,7 @@ export default class GeneratorSheet extends ActorSheet {
         data.level_headed_available = game.dc.level_headed_available
         data.goods = data.items.filter(function (item) {return item.type == "goods"});
         data.huckster_deck = data.items.filter(function (item) {return item.type == "huckster_deck"});
-        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
+        data.action_deck = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "action_deck"}));
         let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
         data.fate_chips = [
             {name: "White", bounty: "1", amount: 0},
@@ -110,7 +65,7 @@ export default class GeneratorSheet extends ActorSheet {
         return super.activateListeners(html);
     }
     _on_draw_gen_cards(event) {
-        let g_deck = new_deck('gen_deck');
+        let g_deck = dc_utils.deck.new('gen_deck');
         let die_types = {
             Joker: 'd12',
             Ace: 'd12',

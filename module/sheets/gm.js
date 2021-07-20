@@ -1,46 +1,8 @@
 import { dc } from "../config.js";
-let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-
 function get_random_int(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)') {
-                        card_pile[chk].name += ' HooWEE!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' Yee Haw!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
-function new_modifier(name, mod) {
-    return {
-        name: name,
-        mod: mod
-    };
 }
 
 export default class GMSheet extends ActorSheet {
@@ -54,21 +16,14 @@ export default class GMSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
-            {name: "White", bounty: "1", amount: 0},
-            {name: "Red", bounty: "2", amount: 0},
-            {name: "Blue", bounty: "3", amount: 0},
-            {name: "Legendary", bounty: "5", amount: 0},
+            {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
+            {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
+            {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
+            {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        fate_chips.forEach(chip => {
-            data.fate_chips.forEach(stack => {
-                if (stack.name == chip.name){
-                    stack.amount += 1;
-                }
-            });
-        });
-        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
+        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
         data.modifiers = this.actor.data.data.modifiers;
         data.tn = 5;
         for (const [key, mod] of Object.entries(data.modifiers)){
@@ -79,13 +34,20 @@ export default class GMSheet extends ActorSheet {
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         if (data.combat_active) {
             let action_list = [];
-            for (let i = 0; i < game.dc.chars.length; i++) {
-                const actor = game.actors.getName(game.dc.chars[i]);
-                let cards = actor.items.filter(function (item) {return item.type == "action_deck"});
-                for (let c = 0; c < cards.length; c++) {
-                    const card = cards[c];
-                    let card_data = {'name': card.name, 'player': actor.data.name};
-                    action_list.push(card_data);
+            let users = dc_utils.gm.get_online_users();
+            let pcs = dc_utils.gm.get_player_owned_actors();
+            for (let i = 0; i < users.length; i++) {
+                if (!(users[i].isGM)) {
+                    for (let p = 0; p < pcs.length; p++) {
+                        let char = pcs[p];
+                        console.log('DC | actor.getData |', char);
+                        let ad_cards = dc_utils.char.items.get(char, "action_deck");
+                        for (let c = 0; c < ad_cards.length; c++) {
+                            const card = ad_cards[c];
+                            let card_data = {'name': card.name, 'player': char.name};
+                            action_list.push(card_data);
+                        }
+                    }
                 }
             }
             for (let c = 0; c < data.action_deck.length; c++) {
@@ -94,20 +56,7 @@ export default class GMSheet extends ActorSheet {
                 action_list.push(card_data);
             }
             if (action_list.length > 0) {
-                data.action_list = [];
-                for (let card = 0; card < cards.length ; card++) {
-                    const cur_card = cards[card];
-                    for (let suit = 0; suit < suits.length; suit++) {
-                        const cur_suit = suits[suit];
-                        for (let chk = 0; chk < action_list.length; chk++) {
-                            const chk_card = action_list[chk].name;
-                            if( (cur_card == 'Joker' && chk_card == 'Joker (Red)') || (cur_card == 'Joker' && chk_card == 'Joker (Black)') || chk_card == cur_card + ' of ' + cur_suit){
-                                data.action_list.push(action_list[chk]);
-                                break;
-                            }
-                        }
-                    }
-                }
+                data.action_list = dc_utils.deck.sort(action_list);
             }
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
@@ -219,28 +168,25 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let chip_type = element.closest(".use-fate").dataset.chip;
         let act = this.getData();
-        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        let found = false
+        let fate_chips = dc_utils.char.chips.get(act);
         let responses = [
             `I think you might've pissed 'im off`,
             `Let's hope he doesn't have it in fer ya.`,
             `I don't like it when he gets like this...`,
         ];
-        fate_chips.forEach(chip => {
+        for(let chip of fate_chips) {
             console.log(chip.name, chip_type);
-            if (found == false) {
-                if (chip.name == chip_type) {
-                    let r_msg = responses[get_random_int(0, responses.length - 1)]
-                    ChatMessage.create({ content: `
-                        <h3 style="text-align:center">Fate</h3>
-                        <p style="text-align:center">The Marshal uses a ${chip_type} fate chip.</p>
-                        <p style="text-align:center">${r_msg}</p>
-                    `});
-                    this.actor.deleteOwnedItem(chip._id);
-                    found = true;
-                }
+            if (chip.name == chip_type) {
+                let r_msg = responses[get_random_int(0, responses.length - 1)]
+                ChatMessage.create({ content: `
+                    <h3 style="text-align:center">Fate</h3>
+                    <p style="text-align:center">The Marshal uses a ${chip_type} fate chip.</p>
+                    <p style="text-align:center">${r_msg}</p>
+                `});
+                this.actor.deleteOwnedItem(chip._id);
+                break;
             }
-        });
+        }
     }
 
     _on_item_delete(event) {

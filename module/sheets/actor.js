@@ -1,7 +1,3 @@
-let cards = ["Joker", "Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
-let locations = ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'];
-let loc_lookup = ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'];
 let percs = [
     {limit: 99, chip:3},
     {limit: 88, chip:2},
@@ -11,75 +7,6 @@ let percs = [
 
 let trait_scroll = 0;
 let item_scroll = 0;
-
-function emit(op, data) {
-    game.socket.emit("system.deadlands_classic", {
-        operation: op,
-        data: data
-    });
-}
-
-function new_deck(id) {
-    let deck = [];
-    let shuffled = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 1; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
-
-function sort_deck(card_pile){
-    let r_pile = [];
-    for (let card = 0; card < cards.length ; card++) {
-        const cur_card = cards[card];
-        for (let suit = 0; suit < suits.length; suit++) {
-            const cur_suit = suits[suit];
-            for (let chk = 0; chk < card_pile.length; chk++) {
-                const chk_card = card_pile[chk].name;
-                if (cur_card == 'Joker') {
-                    if (chk_card == 'Joker (Red)') {
-                        card_pile[chk].name += ' HooWEE!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }else if(chk_card == 'Joker (Black)') {
-                        card_pile[chk].name += ' Dang it!'
-                        r_pile.push(card_pile[chk]);
-                        break;
-                    }
-                }else if(chk_card == cur_card + ' of ' + cur_suit){
-                    r_pile.push(card_pile[chk]);
-                    break;
-                }
-            }
-        }
-    }
-    return r_pile;
-}
-
-function compareObjects(object1, object2, key) {
-    const obj1 = object1[key].toUpperCase();
-    const obj2 = object2[key].toUpperCase();
-
-    if (obj1 < obj2) {
-        return -1;
-    }
-    if (obj1 > obj2) {
-        return 1;
-    }
-    return 0;
-}
 
 function get_target() {
     for (let t = 0; t < canvas.tokens.placeables.length; t++) {
@@ -91,43 +18,6 @@ function get_target() {
         }
     }
     return false;
-}
-
-function get_token(act) {
-    let owned = canvas.tokens.placeables.find(i => i.owner == true);
-    for (let t = 0; t < owned.length; t++) {
-        let tgt = owned[t]
-        if (tgt.owner) {
-            if (tgt.name == act.name){
-                return tgt;
-            }
-        }
-    }
-    return false;
-}
-
-function check_roll(roll, tn, mod) {
-    console.log(roll);
-    let r_data = {
-        success: false,
-        tn: tn,
-        total: roll._total,
-        raises: 0,
-        pass: 0,
-        ones: 0,
-    }
-    roll.terms[0].results.forEach(die => {
-        if (die.result + mod >= tn) {
-            r_data.pass += 1
-        }else if (die.result == 1) {
-            r_data.ones += 1
-        }
-    });
-    if (r_data.pass > r_data.ones && roll._total >= tn) {
-        r_data.success = true;
-        r_data.raises = Math.floor((roll._total - tn) / 5);
-    }
-    return r_data;
 }
 
 function build_skill_template(data, roll_data) {
@@ -166,46 +56,42 @@ export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/player-sheet.html`,
-            classes: ["player-sheet", "doc"]
+            classes: ["player-sheet", "doc"],
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }]
         });
     }
 
     getData() {
+        console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.firearms = data.items.filter(function (item) {return item.type == "firearm"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.melee_weapons = data.items.filter(function (item) {return item.type == "melee"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.miracles = data.items.filter(function (item) {return item.type == "miracle"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.tricks = data.items.filter(function (item) {return item.type == "trick"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.hexes = data.items.filter(function (item) {return item.type == "hex"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.favors = data.items.filter(function (item) {return item.type == "favor"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.hinderances = data.items.filter(function (item) {return item.type == "hinderance"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.edges = data.items.filter(function (item) {return item.type == "edge"}).sort((a, b) => {return compareObjects(a, b, 'name')});
+        data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
+        data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
+        data.miracles = dc_utils.char.items.get(this.actor, "miracles");
+        data.tricks = dc_utils.char.items.get(this.actor, "trick");
+        data.hexes = dc_utils.char.items.get(this.actor, "hex");
+        data.favors = dc_utils.char.items.get(this.actor, "favor");
+        data.hinderances = dc_utils.char.items.get(this.actor, "hinderance");
+        data.edges = dc_utils.char.items.get(this.actor, "edge");
         data.level_headed_available = game.dc.level_headed_available
-        data.goods = data.items.filter(function (item) {return item.type == "goods"}).sort((a, b) => {return compareObjects(a, b, 'name')});
-        data.huckster_deck = sort_deck(data.items.filter(function (item) {return item.type == "huckster_deck"}));
-        data.action_deck = sort_deck(data.items.filter(function (item) {return item.type == "action_deck"}));
-        let fate_chips = data.items.filter(function (item) {return item.type == "chip"});
+        data.goods = dc_utils.char.items.get(this.actor, "goods");
+        data.huckster_deck = dc_utils.char.items.get(this.actor, "huckster_deck");
+        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
+        console.log(data.action_deck);
+        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
-            {name: "White", bounty: "1", amount: 0},
-            {name: "Red", bounty: "2", amount: 0},
-            {name: "Blue", bounty: "3", amount: 0},
-            {name: "Legendary", bounty: "5", amount: 0},
+            {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
+            {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
+            {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
+            {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        fate_chips.forEach(chip => {
-            data.fate_chips.forEach(stack => {
-                if (stack.name == chip.name){
-                    stack.amount += 1;
-                }
-            });
-        });
         let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
         if (data.combat_active) {
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
                 const card = data.action_deck[c];
-                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 100);
+                setTimeout(() => {card.delete()}, c * 100);
             }
         }
         return data;
@@ -267,19 +153,19 @@ export default class PlayerSheet extends ActorSheet {
             game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
         });
         traits[0].scrollTop = game.dc.trait_scroll;
-        var items = document.getElementsByClassName("item_scroller");
+        /* var items = document.getElementsByClassName("item_scroller");
         items[0].addEventListener("scroll", () => {
             game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
         });
-        items[0].scrollTop = game.dc.item_scroll;
+        items[0].scrollTop = game.dc.item_scroll; */
         return super.activateListeners(html);
     }
 
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
-        if (this.actor.isPC) {
-            emit('check_tn', {
+        if (this.actor.hasPlayerOwner) {
+           dc_utils.socket.emit('check_tn', {
                 type: 'trait',
                 roller: this.actor.name,
                 trait: trait_name,
@@ -299,7 +185,7 @@ export default class PlayerSheet extends ActorSheet {
             let wound_mod = this.actor.data.data.wound_modifier;
             let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
@@ -318,7 +204,7 @@ export default class PlayerSheet extends ActorSheet {
         };
         if (bounty >= cost){
             console.log(`Attempting to increase ${trait} level from ${level} to ${level + 1}`);
-            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}});
             this.actor.update({data: {traits: traits}});
         }
     }
@@ -343,7 +229,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         if (bounty >= cost){
             console.log(`Attempting to increase ${trait} die type from ${die} to ${upgrades[die].next}`);
-            this.actor.update({data: {bounty: {value: bounty - cost}}})
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}})
             this.actor.update({data: {traits: traits}})
         }
     }
@@ -351,35 +237,28 @@ export default class PlayerSheet extends ActorSheet {
     _on_skill_roll(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let tra = element.closest(".skill-data").dataset.trait;
         let skl = element.closest(".skill-data").dataset.skill;
-        if (this.actor.isPC) {
-            emit('check_tn', {
-                type: 'skill',
-                roller: this.actor.name,
-                trait: tra,
-                skill: skl,
-                modifier: 0
-            });
+        let skill = dc_utils.char.skill.get(this.actor, skl);
+        let data = {
+            type: 'skill',
+            roller: this.actor.name,
+            amt: skill.level,
+            dice: skill.die_type,
+            skill_name: skill.name,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
+            modifier: skill.modifier
+        }
+        if (!(game.user.isGM)) {
+            dc_utils.socket.emit('check_tn', data);
         }else{
-            let trait = this.actor.data.data.traits[tra];
-            let skill = trait.skills[skl];
-            let data = {
-                type: 'skill',
-                skill_name: skill.name,
-                tn: 5,
-                name: this.actor.name
-            };
-            let lvl = skill.level;
-            let die = trait.die_type;
-            let mod = skill.modifier;
-            let wound_mod = this.actor.data.data.wound_modifier;
-            if (lvl == 0) {
-                lvl = trait.level;
-            }
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
+            let wound_mod = parseInt(this.actor.data.data.wound_modifier);
+            let skill = dc_utils.char.skill.get(this.actor, skl);
+            let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
             let roll = new Roll(formula).roll();
-            let r_data = check_roll(roll, data.tn, mod + wound_mod);
+            let r_data = dc_utils.roll.evaluate(roll, data.tn, skill.modifier + wound_mod);
+            data.skill_name = skill.name
             ChatMessage.create({content: build_skill_template(data, r_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
@@ -398,7 +277,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         let bounty = this.actor.data.data.bounty.value;
         if (bounty >= cost){
-            this.actor.update({data: {bounty: {value: bounty - cost}}});
+            this.actor.data.update({data: {bounty: {value: bounty - cost}}});
             let traits = {}
             traits[trait] = {skills: {}}
             traits[trait].skills[skill] = {
@@ -509,27 +388,24 @@ export default class PlayerSheet extends ActorSheet {
         let bounty = element.closest(".fate-data").dataset.bounty;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        let found = false
-        fate_chips.forEach(chip => {
-            if (found == false) {
-                if (chip.name == chip_type) {
-                    let new_val = parseInt(act.data.bounty.value) + parseInt(bounty);
-                    let new_max = parseInt(act.data.bounty.max) + parseInt(bounty);
-                    let suffix = 'points';
-                    if (bounty == '1') {
-                        suffix = 'point'
-                    }
-                    ChatMessage.create({ content: `
-                        <h3 style="text-align:center">Bounty: ${chip_type}</h3>
-                        <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
-                    `});
-                    this.actor.update({"data.bounty.value": new_val});
-                    this.actor.update({"data.bounty.max": new_max});
-                    this.actor.deleteOwnedItem(chip._id);
-                    found = true;
+        for (let chip of fate_chips) {
+            if (chip.name == chip_type) {
+                let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
+                let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
+                let suffix = 'points';
+                if (bounty == '1') {
+                    suffix = 'point'
                 }
+                ChatMessage.create({ content: `
+                    <h3 style="text-align:center">Bounty: ${chip_type}</h3>
+                    <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
+                `});
+                this.actor.update({data: {bounty: {value: new_val}}});
+                this.actor.update({data: {bounty: {max: new_max}}});
+                this.actor.deleteOwnedItem(chip._id);
+                break;
             }
-        });
+        }
     }
 
     _on_use_fate(event) {
@@ -538,20 +414,16 @@ export default class PlayerSheet extends ActorSheet {
         let chip_type = element.closest(".fate-data").dataset.chip;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        let found = false
-        fate_chips.forEach(chip => {
-            console.log(chip.name, chip_type);
-            if (found == false) {
-                if (chip.name == chip_type) {
-                    ChatMessage.create({ content: `
-                        <h3 style="text-align:center">Fate</h3>
-                        <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
-                    `});
-                    this.actor.deleteOwnedItem(chip._id);
-                    found = true;
-                }
+        for (let chip of fate_chips) {
+            if (chip.name == chip_type) {
+                ChatMessage.create({ content: `
+                    <h3 style="text-align:center">Fate</h3>
+                    <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
+                `});
+                this.actor.deleteOwnedItem(chip._id);
+                break;
             }
-        });
+        }
     }
 
     _on_roll_init(event){
@@ -561,7 +433,7 @@ export default class PlayerSheet extends ActorSheet {
         if (data.combat_active == true) {
             let element = event.currentTarget;
             let act = this.getData();
-            let trait = act.data.traits.quickness;
+            let trait = act.data.data.traits.quickness;
             let roll = `${trait.level}${trait.die_type}ex + ${trait.modifier}`
             let draw = 1
             let r = new Roll(roll).roll();
@@ -670,7 +542,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = `You have already cycled a card this round.`
         let act = this.getData()
         console.log(act)
-        let level_headed_available = act.data.perks.level_headed
+        let level_headed_available = act.data.data.perks.level_headed
         if (level_headed_available){
             game.socket.emit('system.deadlands_classic', {
                 operation: 'recycle_card',
@@ -708,33 +580,52 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("declare_attack",
-            {
-                type: 'melee',
-                attacker: this.actor.name,
-                target: target.name,
-                weapon: itemId,
-            }
-        );
+        let skl = 'fightin'
+        let skill = dc_utils.char.skill.get(this.actor, skl);
+        let data = {
+            type: 'melee',
+            roller: this.actor.name,
+            target: target.name,
+            attacker: this.actor.name,
+            weapon: itemId,
+            amt: skill.level,
+            dice: skill.die_type,
+            skill_name: skill.name,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
+            modifier: skill.modifier
+        }
+        dc_utils.socket.emit("declare_attack", data);
     }
 
     _on_firearm_attack(event){
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
             return;
         }
-        emit("declare_attack",
-            {
-                type: 'ranged',
-                attacker: this.actor.name,
-                target: target.name,
-                weapon: itemId,
-            }
-        );
+        let skl = `shootin_${item.data.data.gun_type}`
+        let skill = dc_utils.char.skill.get(this.actor, skl);
+        let data = {
+            type: 'ranged',
+            roller: this.actor.name,
+            target: target.name,
+            attacker: this.actor.name,
+            weapon: itemId,
+            amt: skill.level,
+            dice: skill.die_type,
+            skill_name: skill.name,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
+            modifier: skill.modifier
+        }
+       dc_utils.socket.emit("declare_attack", data);
     }
 
     _on_gun_reload(event) {
@@ -754,7 +645,7 @@ export default class PlayerSheet extends ActorSheet {
             max -= shots;
             console.log('- shots remaining.', max);
             let act = this.getData();
-            let trait = act.data.traits.deftness;
+            let trait = act.data.data.traits.deftness;
             let skill = trait.skills.speed_load;
             let lvl = skill.level;
             if (ammo){
@@ -799,8 +690,8 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck');
-        let roll_str = `${act.data.traits[item.data.data.trait].level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`;
+        let deck = dc_utils.deck.new('huckster_deck');
+        let roll_str = `${act.data.data.traits[item.data.data.trait].level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`;
         let r = new Roll(roll_str).roll();
         let draw = 0;
         if (r._total >= 5) {
@@ -827,8 +718,8 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck')
-        let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
+        let deck = dc_utils.deck.new('huckster_deck')
+        let roll_str = `${item.data.data.level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`
         let r = new Roll(roll_str).roll()
         let draw = 0
         if (r._total >= 5) {
@@ -854,7 +745,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
+        let roll_str = `Casts ${item.name}: [[${act.data.data.traits.spirit.skills.faith.level}${act.data.data.traits.spirit.die_type}ex + ${act.data.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
         ChatMessage.create({ 
             content: `
                 <h3 style="text-align:center">Miracle</h3>

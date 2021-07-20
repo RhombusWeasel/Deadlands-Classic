@@ -2,7 +2,7 @@
 <div class="traits">
     <h1 class="h1">Traits:</h1>
     <div style="overflow-y: auto;">
-        {{#each data.traits as |trait|}}
+        {{#each data.data.traits as |trait|}}
         <div class="flexbox">
             <label class="label trait-label" for="data.traits.{{@key}}.level">{{trait.name}}</label>
             <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>

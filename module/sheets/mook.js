@@ -1,30 +1,8 @@
-let cards = ["Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"];
-let suits = ["Spades", "Hearts", "Diamonds", "Clubs"];
 let d6 = ["3", "4", "5", "6", "7", "8"]
 let d8 = ["9", "10", "Jack"]
 let d10 = ["Queen", "King"]
 let d12 = ["Ace"]
 let aim_bonus = 0
-
-function new_deck(id) {
-    let deck = [];
-    for (let suit = 0; suit < suits.length; suit++) {
-        for (let card = 0; card < cards.length; card++) {
-            deck.push({
-                name: `${cards[card]} of ${suits[suit]}`,
-                type: id
-            });
-        }        
-    }
-    deck.push({name: 'Joker (Red)', type: id})
-    deck.push({name: 'Joker (Black)', type: id})
-
-    for (let i = deck.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [deck[i], deck[j]] = [deck[j], deck[i]];
-    }
-    return deck
-}
 
 function check_joker(card, deck) {
     let values = card.split(' ');
@@ -106,7 +84,7 @@ export default class NPCSheet extends ActorSheet {
 
     _on_generate(event) {
         event.preventDefault();
-        let draw_deck = new_deck('draw');
+        let draw_deck = dc_utils.deck.new('draw');
         let act = this.getData();
         for(let key in act.data.traits){
             let dice = get_dice_from_card(draw_deck.pop().name, draw_deck);
@@ -248,7 +226,7 @@ export default class NPCSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck')
+        let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
         let r = new Roll(roll_str).roll()
         let draw = 0
@@ -270,7 +248,7 @@ export default class NPCSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let deck = new_deck('huckster_deck')
+        let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
         let r = new Roll(roll_str).roll()
         let draw = 0

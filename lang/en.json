@@ -40,7 +40,8 @@
             "combat": {
                 "melee": {
                     "cost": "Cost",
-                    "damage": "Damage"
+                    "damage": "Damage",
+                    "equippable": "Equippable"
                 },
                 "firearm": {
                     "cost": "Cost",
@@ -53,7 +54,8 @@
                     "ammo": "Clip",
                     "damage": "Damage",
                     "damage_bonus": "Damage Bonus",
-                    "off_hand": "Off Hand"
+                    "off_hand": "Off Hand",
+                    "equippable": "Equippable"
                 },
                 "hex": {
                     "level": "Level",
@@ -87,7 +89,8 @@
             },
             "goods": {
                 "cost": "Cost",
-                "amount": "Amount"
+                "amount": "Amount",
+                "equippable": "Equippable"
             }
         },
         "fate_chips": {

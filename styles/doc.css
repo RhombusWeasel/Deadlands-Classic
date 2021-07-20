@@ -1,6 +1,6 @@
 .scroller{
     overflow-y:scroll;
-    height:400px
+    height:500px
 }
 .typed{
     font-family: "Lucida Sans Typewriter"
@@ -10,6 +10,7 @@
 }
 .right{
     text-align: right;
+    padding-right: 10px;
 }
 .perc90 {
     width: 90%
@@ -50,4 +51,24 @@
 .flexbox {
     display: flex;
     flex-direction: row;
+}
+.sheet-tabs {
+    -webkit-box-flex: 0;
+    -ms-flex: 0;
+    flex: 0;
+}
+.fa-stack { 
+    font-size: 0.5em;
+}
+.White {
+    color: beige;
+}
+.Red {
+    color: red;
+}
+.Blue {
+    color: blue;
+}
+.Legendary {
+    color: yellow;
 }

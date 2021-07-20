@@ -1,4 +1,5 @@
 <form class="{{cssClass}}" autocomplete="off">
+    {{> "systems/deadlands_classic/templates/partials/fate-chips.hbs"}}
     <div class="flexbox">
         <div class="perc50">
             <h2 class="center gm-collapsible">Roll Modifiers [{{tn}}]</h2>
@@ -26,61 +27,42 @@
             {{/if}}
         </div>
         <div class="perc50">
-            <a><p style="text-align: center;" class="start-combat">Start Combat</p></a>
-            <a><p style="text-align: center;" class="new-round">New Round</p></a>
-            <a><p style="text-align: center;" class="end-combat">End Combat</p></a>
-            <a><p style="text-align: center;" class="next-turn">Next Turn</p></a>
-            <a><p style="text-align: center;" class="refresh">Refresh</p></a>
-            <h2 class="center collapsible">Fate Chips</h2>
+            <a><p class="start-combat center">Start Combat</p></a>
+            <a><p class="new-round center">New Round</p></a>
+            <a><p class="end-combat center">End Combat</p></a>
+            <a><p class="next-turn center">Next Turn</p></a>
+            <a><p class="draw-card center">Draw Action Card</p></a>
+            <a><p class="refresh center">Refresh</p></a>
             <div class="gm-content">
-                <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
-            {{#if fate_chips}}
-                <table>
-                    <tr>
-                        <th class="perc70 center">{{localize "dc.fate_chips.name"}}</th>
-                        <th class="perc10 center">{{localize "dc.fate_chips.bounty"}}</th>
-                        <th class="perc10 center">{{localize "dc.fate_chips.amount"}}</th>
-                        <th class="perc10 center">Use</th>
-                    </tr>
-                {{#each fate_chips as |chip|}}
-                    <tr class="use-fate" data-chip="{{this.name}}">
-                        <td class="perc70">{{this.name}}</td>
-                        <td class="perc10 center">{{this.bounty}}</td>
-                        <td class="perc10 center">{{this.amount}}</td>
-                        <td class="perc10 center"><a><i class="fas fa-trash" title="Use in game"></i></a></td>
-                    </tr>
-                {{/each}}
-                </table>
-            {{/if}}
             </div>
-            <h2 class="center gm-collapsible">Combat Hand</h2>
-            <div class="gm-content">
-                <a class="center"><p class="draw-card">Draw Action Card</p></a>
-            {{#if action_deck}}
-                <table>
-                {{#each action_deck as |card|}}
-                    <tr class="item" data-itemId="{{this._id}}">
-                        <td class="perc90">{{this.name}}</td>
-                        <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
-                    </tr>
-                {{/each}}
-                </table>
-            {{/if}}
+            <div class="flexrow">
+                <div>
+                    <h2 class="center">Combat Hand</h2>
+                    {{#if action_deck}}
+                    <table>
+                        {{#each action_deck as |card|}}
+                        <tr class="item" data-itemId="{{this._id}}">
+                            <td class="perc90">{{this.name}}</td>
+                            <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
+                        </tr>
+                        {{/each}}
+                    </table>
+                    {{/if}}
+                </div>
+                {{#if action_list}}
+                <div>
+                    <h2 class="center">Action Queue</h2>
+                    <table>
+                    {{#each action_list as |card|}}
+                        <tr class="item" data-itemId="{{card._id}}">
+                            <td class="center">{{card.name}}</td>
+                            <td class="center">{{card.player}}</a></td>
+                        </tr>
+                    {{/each}}
+                    </table>
+                </div>
+                {{/if}}
             </div>
-            {{#if action_list}}
-            <h2 class="center gm-collapsible">Action Queue</h2>
-            <div class="gm-content">
-                <table>
-                {{#each action_list as |card|}}
-                    <tr class="item" data-itemId="{{card._id}}">
-                        <td class="perc70">{{card.name}}</td>
-                        <td class="perc30 center">{{card.player}}</a></td>
-                        <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash"></i></a></td>
-                    </tr>
-                {{/each}}
-                </table>
-            </div>
-            {{/if}}
         </div>
     </div>
 </form>
