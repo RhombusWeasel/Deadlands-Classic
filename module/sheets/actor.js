@@ -165,11 +165,11 @@ export default class PlayerSheet extends ActorSheet {
             game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
         });
         traits[0].scrollTop = game.dc.trait_scroll;
-        var items = document.getElementsByClassName("item_scroller");
+        /* var items = document.getElementsByClassName("item_scroller");
         items[0].addEventListener("scroll", () => {
             game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
         });
-        items[0].scrollTop = game.dc.item_scroll;
+        items[0].scrollTop = game.dc.item_scroll; */
         return super.activateListeners(html);
     }
 
