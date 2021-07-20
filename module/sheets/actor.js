@@ -413,7 +413,7 @@ export default class PlayerSheet extends ActorSheet {
                 `});
                 this.actor.update({data: {bounty: {value: new_val}}});
                 this.actor.update({data: {bounty: {max: new_max}}});
-                chip.delete();
+                this.actor.deleteEmbeddedEntity(chip.id);
                 break;
             }
         }
@@ -431,7 +431,7 @@ export default class PlayerSheet extends ActorSheet {
                     <h3 style="text-align:center">Fate</h3>
                     <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
                 `});
-                chip.delete();
+                this.actor.deleteEmbeddedEntity(chip.id);
                 break;
             }
         }
