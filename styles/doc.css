@@ -57,15 +57,8 @@
     -ms-flex: 0;
     flex: 0;
 }
-.fa-stack-2x { 
+.fa-stack { 
     font-size: 0.5em;
-    vertical-align: middle;
-    display: inline-block;
-}
-.fa-stack-1x { 
-    font-size: 0.6em;
-    vertical-align: middle;
-    display: inline-block;
 }
 .white {
     color: beige;
