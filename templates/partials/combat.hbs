@@ -73,12 +73,11 @@
                     {{#each action_deck as |card|}}
                     <tr class="item" data-itemId="{{this.id}}">
                         <td class="center">{{this.name}}</td>
-                        <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
-                        <td class="perc10 center"><a class="dodge-button"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></a></td>
+                        <td class="center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
                         {{#lvl_head}}
-                        <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
+                        <td class="center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
                         {{/lvl_head}}
-                        <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
+                        <td class="center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
                     </tr>
                     {{/each}}
                 </table>
