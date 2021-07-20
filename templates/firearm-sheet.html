@@ -18,6 +18,7 @@
                 <th>{{localize "dc.items.combat.firearm.damage"}}</th>
                 <th>{{localize "dc.items.combat.firearm.damage_bonus"}}</th>
                 <th>{{localize "dc.items.combat.firearm.off_hand"}}</th>
+                <th>{{localize "dc.items.combat.firearm.equippable"}}</th>
             </tr>
             <tr>
                 <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
@@ -35,6 +36,9 @@
                 {{/if}}
                 {{#if (eq data.data.off_hand false)}}
                     <td><input type="checkbox" name="data.off_hand"/></td>
+                {{/if}}
+                {{#if (eq data.data.equippable true)}}
+                    <td><input type="checkbox" name="data.equippable" checked/></td>
                 {{/if}}
                 {{#if (eq data.data.equippable false)}}
                     <td><input type="checkbox" name="data.equippable"/></td>
