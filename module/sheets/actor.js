@@ -68,7 +68,7 @@ export default class PlayerSheet extends ActorSheet {
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
-        data.miracles = dc_utils.char.items.get(this.actor, "miracles");
+        data.miracles = dc_utils.char.items.get(this.actor, "miracle");
         data.tricks = dc_utils.char.items.get(this.actor, "trick");
         data.hexes = dc_utils.char.items.get(this.actor, "hex");
         data.favors = dc_utils.char.items.get(this.actor, "favor");
