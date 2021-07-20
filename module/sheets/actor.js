@@ -91,6 +91,7 @@ export default class PlayerSheet extends ActorSheet {
         data.goods = dc_utils.char.items.get(this.actor, "goods");
         data.huckster_deck = dc_utils.char.items.get(this.actor, "huckster_deck");
         data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
+        console.log(data.action_deck);
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
