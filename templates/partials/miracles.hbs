@@ -1,16 +1,20 @@
 <section>
     <h2 class="center">Miracles</h2>
     <div>
-        <table>
         {{#each miracles as |mir|}}
-        <tr class="item" data-itemId="{{this.id}}">
-            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-            <td class="perc60">{{this.name}}</td>
-            <td class="perc10 center">{{this.data.data.tn}}</td>
-            <td class="perc10 center"><a class="cast-miracle"><i class="fas fa-pray" title="Cast {{this.name}}"></i></a></td>
-            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-        </tr>
-        {{/each}}
+        <h2><td class="center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>{{this.name}}</h2>
+        <table>
+            <tr>
+                <th>TN</th>
+                <th>Pray</th>
+                <th>remove</th>
+            </tr>
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="center">{{this.data.data.tn}}</td>
+                <td class="center"><a class="cast-miracle"><i class="fas fa-pray" title="Cast {{this.name}}"></i></a></td>
+                <td class="center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr>
         </table>
+        {{/each}}
     </div>
 </section>
