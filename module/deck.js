@@ -958,13 +958,13 @@ let operations = {
         }
     },
     enemy_damage: function(data) {
-        let char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
+        let char = canvas.tokens.placeables.find(i => i?.actor?.name == data.target);
         if (!(char)) {
             for (let t = 0; t < 5; t++) {
                 ChatMessage.create({ content: `
                     Target Not Found! Retrying...
                 `});
-                char = canvas.tokens.placeables.find(i => i.actor.name == data.target);
+                char = canvas.tokens.placeables.find(i => i?.actor?.name == data.target);
                 if (char) {
                     break;
                 }
