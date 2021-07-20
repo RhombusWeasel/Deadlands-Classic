@@ -594,7 +594,7 @@ export default class PlayerSheet extends ActorSheet {
             return;
         }
         let item = this.actor.items.get(itemId);
-        let skill = dc_utils.char.skill.get(this.actor, `shootin_${item.data.data.gun_type}`);
+        let skill = dc_utils.char.skill.get(this.actor, `fightin_brawlin`);
         let data = {
             type: 'melee',
             roller: this.actor.name,
