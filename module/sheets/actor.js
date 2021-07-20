@@ -593,33 +593,51 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-       dc_utils.socket.emit("declare_attack",
-            {
-                type: 'melee',
-                attacker: this.actor.name,
-                target: target.name,
-                weapon: itemId,
-            }
-        );
+        let item = this.actor.items.get(itemId);
+        let skill = dc_utils.char.skill.get(this.actor, `shootin_${item.data.data.gun_type}`);
+        let data = {
+            type: 'melee',
+            roller: this.actor.name,
+            target: target.name,
+            attacker: this.actor.name,
+            weapon: itemId,
+            amt: skill.level,
+            dice: skill.die_type,
+            skill_name: skill.name,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
+            modifier: skill.modifier
+        }
+        dc_utils.socket.emit("declare_attack", data);
     }
 
     _on_firearm_attack(event){
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
         let target = get_target()
         if (target == false) {
             console.log('DC:', 'Target not found.');
             return;
         }
-       dc_utils.socket.emit("declare_attack",
-            {
-                type: 'ranged',
-                attacker: this.actor.name,
-                target: target.name,
-                weapon: itemId,
-            }
-        );
+        let skill = dc_utils.char.skill.get(this.actor, `shootin_${item.data.data.gun_type}`);
+        let data = {
+            type: 'ranged',
+            roller: this.actor.name,
+            target: target.name,
+            attacker: this.actor.name,
+            weapon: itemId,
+            amt: skill.level,
+            dice: skill.die_type,
+            skill_name: skill.name,
+            skill: skl,
+            tn: dc_utils.roll.get_tn(),
+            name: this.actor.name,
+            modifier: skill.modifier
+        }
+       dc_utils.socket.emit("declare_attack", data);
     }
 
     _on_gun_reload(event) {

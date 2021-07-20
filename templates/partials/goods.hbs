@@ -2,8 +2,8 @@
     <h2 class="center">Trappin's</h2>
     <div>
         {{#if huckster_deck}}
-        <h2 class="center collapsible">Hex Hand</h2>
-        <div class="content">
+        <h2 class="center">Hex Hand</h2>
+        <div>
             <table>
             {{#each huckster_deck as |card|}}
                 <tr class="item" data-itemId="{{this.id}}">
@@ -16,8 +16,8 @@
         </div>
         {{/if}}
         {{#if tricks}}
-        <h2 class="center collapsible">Tricks</h2>
-        <div class="content">
+        <h2 class="center">Tricks</h2>
+        <div>
             <table>
             {{#each tricks as |hex|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -36,8 +36,8 @@
         </div>
         {{/if}}
         {{#if hexes}}
-        <h2 class="center collapsible">Hexes</h2>
-        <div class="content">
+        <h2 class="center">Hexes</h2>
+        <div>
             <table>
             {{#each hexes as |hex|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -56,8 +56,8 @@
         </div>
         {{/if}}
         {{#if miracles}}
-        <h2 class="center collapsible">Miracles</h2>
-        <div class="content">
+        <h2 class="center">Miracles</h2>
+        <div>
             <table>
             {{#each miracles as |mir|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -72,8 +72,8 @@
         </div>
         {{/if}}
         {{#if favors}}
-        <h2 class="center collapsible">Favors</h2>
-        <div class="content">
+        <h2 class="center">Favors</h2>
+        <div>
             <table>
             {{#each favors as |fav|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -88,8 +88,7 @@
         </div>
         {{/if}}
         {{#if goods}}
-        <h2 class="center collapsible">Goods</h2>
-        <div class="content">
+        <div>
             <table>
             {{#each goods as |good|}}
             <tr class="item" data-itemId="{{this.id}}">
