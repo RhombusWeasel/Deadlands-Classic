@@ -27,14 +27,14 @@
             <table>
                 <tr>
                     {{#each action_deck as |card|}}
-                    <div class="item flexrow" data-itemId="{{this.id}}">
-                        <td >{{this.name}}</td>
-                        <td class="center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
+                    <td class="item flexrow" data-itemId="{{this.id}}">
+                        <a>{{this.name}}</a>
+                        <a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a>
                         {{#lvl_head}}
-                        <td class="center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
+                        <a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a>
                         {{/lvl_head}}
-                        <td class="center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
-                    </div>
+                        <a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a>
+                    </td>
                     {{/each}}
                 </tr>
             </table>
