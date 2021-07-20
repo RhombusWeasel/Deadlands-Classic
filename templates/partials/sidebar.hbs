@@ -1,24 +1,7 @@
 <section class="form typed">
     <h2 class="center">Trappin's</h2>
     <div class="scroller item_scroller">
-        <a class="center"><p class="refresh">Refresh</p></a>
-        <h2 class="center collapsible">Fate Chips</h2>
-        <div class="content">
-            <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
-            {{#if fate_chips}}
-                <table>
-                {{#each fate_chips as |chip|}}
-                    <tr class="fate-data" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
-                    <td class="perc50">{{this.name}}</td>
-                    <td class="perc10 center">{{this.bounty}}</td>
-                    <td class="perc10 center">{{this.amount}}</td>
-                    <td class="perc10 center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></td>
-                    <td class="perc10 center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></td>
-                </tr>
-                {{/each}}
-            </table>
-            {{/if}}
-        </div>
+        <a class="center"><p class="refresh">Refresh</p></a>v>
         <h2 class="center collapsible">Combat Hand</h2>
         <div class="content">
             <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
