@@ -1,0 +1,104 @@
+<section class="form typed">
+    <h2 class="h1">Wounds:</h2>
+    <div>
+        <table>
+            <tr>
+                <th>Location</th>
+                <th>Wounds</th>
+                <th>Armour</th>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.noggin"}}</th>
+                <td class="center"><input type="number" name="data.wounds.noggin" value="{{data.data.wounds.noggin}}"/></td>
+                <td class="center"><input type="number" name="data.armour.noggin" value="{{data.data.armour.noggin}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.guts"}}</th>
+                <td class="center"><input type="number" name="data.wounds.guts" value="{{data.data.wounds.guts}}"/></td>
+                <td class="center"><input type="number" name="data.armour.guts" value="{{data.data.armour.guts}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.arm_left"}}</th>
+                <td class="center"><input type="number" name="data.wounds.arm_left" value="{{data.data.wounds.arm_left}}"/></td>
+                <td class="center"><input type="number" name="data.armour.arm_left" value="{{data.data.armour.arm_left}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.arm_right"}}</th>
+                <td class="center"><input type="number" name="data.wounds.arm_right" value="{{data.data.wounds.arm_right}}"/></td>
+                <td class="center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.gizzards"}}</th>
+                <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
+                <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.lower_guts"}}</th>
+                <td class="center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
+                <td class="center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.leg_left"}}</th>
+                <td class="center"><input type="number" name="data.wounds.leg_left" value="{{data.data.wounds.leg_left}}"/></td>
+                <td class="center"><input type="number" name="data.armour.leg_left" value="{{data.data.armour.leg_left}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.player.core.wounds.leg_right"}}</th>
+                <td class="center"><input type="number" name="data.wounds.leg_right" value="{{data.data.wounds.leg_right}}"/></td>
+                <td class="center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
+            </tr>
+        </table>
+    </div>
+    <h2 class="center collapsible">Combat Hand</h2>
+    <div class="content">
+        <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
+        {{#if action_deck}}
+        <table>
+            {{#each action_deck as |card|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc70">{{this.name}}</td>
+                <td class="perc10 center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
+                <td class="perc10 center"><a class="dodge-button"><i class="fas fa-running" title="Dodge (Must be used before a shot is fired.)"></i></a></td>
+                {{#lvl_head}}
+                <td class="perc10 center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
+                {{/lvl_head}}
+                <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
+            </tr>
+            {{/each}}
+        </table>
+        {{/if}}
+    </div>
+    {{#if melee_weapons}}
+    <h2 class="center collapsible">Melee Weapons</h2>
+    <div class="content">
+        <table>
+        {{#each melee_weapons as |wep|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc60">{{this.name}}</td>
+                <td class="perc10 center">{{wep.data.data.damage}}</td>
+                <td class="perc10 center"><a class="melee-attack"><i class="fas fa-user-slash" title="Attack with {{this.name}}"></i></a></td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+            </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if firearms}}
+    <h2 class="center collapsible">Guns</h2>
+    <div class="content">
+        <table>
+        {{#each firearms as |gun|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 center">{{this.data.data.chamber}}/{{this.data.data.max}}</td>
+                <td class="perc10 center"><a class="gun-attack"><i class="fas fa-crosshairs" title="Fire {{this.name}}"></i></a></td>
+                <td class="perc10 center"><a class="gun-reload"><i class="fas fa-sync-alt" title="Reload {{this.name}}"></i></a></td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+            </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+</section>
