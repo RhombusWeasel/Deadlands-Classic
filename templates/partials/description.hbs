@@ -1,7 +1,8 @@
 <section>
+    <div class="flexrow">
     {{#if edges}}
-    <h2 class="center collapsible">Edges</h2>
-    <div class="content">
+    <div>
+        <h2 class="center">Edges</h2>
         <table>
         {{#each edges as |edge|}}
         <tr class="item" data-itemId="{{this.id}}">
@@ -15,8 +16,8 @@
     </div>
     {{/if}}
     {{#if hinderances}}
-    <h2 class="center collapsible">Hinderances</h2>
-    <div class="content">
+    <div>
+        <h2 class="center">Hinderances</h2>
         <table>
         {{#each hinderances as |hind|}}
         <tr class="item" data-itemId="{{this.id}}">
@@ -29,5 +30,6 @@
         </table>
     </div>
     {{/if}}
+    </div>
     {{editor target="data.data.description" owner="true" editable="true"}}
 </section>
