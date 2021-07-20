@@ -593,8 +593,8 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        let item = this.actor.items.get(itemId);
-        let skill = dc_utils.char.skill.get(this.actor, `fightin_brawlin`);
+        let skl = 'fightin_brawlin'
+        let skill = dc_utils.char.skill.get(this.actor, skl);
         let data = {
             type: 'melee',
             roller: this.actor.name,
@@ -622,7 +622,8 @@ export default class PlayerSheet extends ActorSheet {
             console.log('DC:', 'Target not found.');
             return;
         }
-        let skill = dc_utils.char.skill.get(this.actor, `shootin_${item.data.data.gun_type}`);
+        let skl = `shootin_${item.data.data.gun_type}`
+        let skill = dc_utils.char.skill.get(this.actor, skl);
         let data = {
             type: 'ranged',
             roller: this.actor.name,
