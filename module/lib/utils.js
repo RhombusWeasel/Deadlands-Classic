@@ -188,9 +188,10 @@ const dc_utils = {
         new: function(id) {
             let deck = [];
             for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                let suit_label = dc_utils.suits[suit]
                 for (let card = 1; card < dc_utils.cards.length; card++) {
                     deck.push({
-                        name: `${dc_utils.cards[card]}${dc_utils.suit_symbols[suit]}`,
+                        name: `${dc_utils.cards[card]}${dc_utils.suit_symbols[suit_label]}`,
                         type: id
                     });
                 }        
