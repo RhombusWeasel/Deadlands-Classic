@@ -27,8 +27,8 @@
             <table>
                 <tr>
                     {{#each action_deck as |card|}}
-                    <td class="item" data-itemId="{{this.id}}">
-                        <div class="flexrow" style="display: inline-block; text-align: center;">
+                    <td class="item" data-itemId="{{this.id}}" style="text-align: center;">
+                        <div class="flexrow" style="display: inline-block;">
                             <a>{{this.name}}</a>
                             <a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"> </i></a>
                             {{#lvl_head}}
