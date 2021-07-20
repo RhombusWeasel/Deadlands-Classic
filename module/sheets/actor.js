@@ -399,7 +399,7 @@ export default class PlayerSheet extends ActorSheet {
         let bounty = element.closest(".fate-data").dataset.bounty;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        fate_chips.forEach(chip => {
+        for (let chip of fate_chips) {
             if (chip.name == chip_type) {
                 let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
                 let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
@@ -416,7 +416,7 @@ export default class PlayerSheet extends ActorSheet {
                 chip.delete();
                 break;
             }
-        });
+        }
     }
 
     _on_use_fate(event) {
@@ -425,7 +425,7 @@ export default class PlayerSheet extends ActorSheet {
         let chip_type = element.closest(".fate-data").dataset.chip;
         let act = this.getData();
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
-        fate_chips.forEach(chip => {
+        for (let chip of fate_chips) {
             if (chip.name == chip_type) {
                 ChatMessage.create({ content: `
                     <h3 style="text-align:center">Fate</h3>
@@ -434,7 +434,7 @@ export default class PlayerSheet extends ActorSheet {
                 chip.delete();
                 break;
             }
-        });
+        }
     }
 
     _on_roll_init(event){
