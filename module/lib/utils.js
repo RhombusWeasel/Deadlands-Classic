@@ -215,7 +215,7 @@ const dc_utils = {
                 for (let suit = 0; suit < dc_utils.suits.length; suit++) {
                     const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                     for (let chk = 0; chk < card_pile.length; chk++) {
-                        const chk_card = card_pile[chk].name;
+                        const chk_card = card_pile[chk].data.name;
                         if (cur_card == 'Joker') {
                             if (chk_card === `Joker ${dc_utils.suit_symbols.red_joker}`) {
                                 card_pile[chk].name += ' '
