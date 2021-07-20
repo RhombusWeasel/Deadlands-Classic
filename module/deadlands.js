@@ -16,6 +16,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/combat.hbs",
         "systems/deadlands_classic/templates/partials/description.hbs",
+        "systems/deadlands_classic/templates/partials/fate-chips.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
     ]
     return loadTemplates(template_paths)
