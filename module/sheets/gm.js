@@ -16,7 +16,7 @@ export default class GMSheet extends ActorSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        let fate_chips = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "chip"));
+        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
             {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
