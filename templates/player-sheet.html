@@ -44,6 +44,7 @@
         {{/if}}
         <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
         <nav class="sheet-tabs tabs" data-group="primary">
+            <a class="item" data-tab="description">Description</a>
             <a class="item" data-tab="core">Core</a>
             <a class="item" data-tab="traits">Traits</a>
             <a class="item" data-tab="combat">Combat</a>
@@ -51,6 +52,9 @@
             <a class="item" data-tab="notes">Notes</a>
         </nav>
         <section class="sheet-body scroller trait_scroller">
+            <div class="tab description" data-group="primary" data-tab="description">
+                {{> "systems/deadlands_classic/templates/partials/description.hbs"}}
+            </div>
             <div class="tab core" data-group="primary" data-tab="core">
                 {{> "systems/deadlands_classic/templates/partials/core.hbs"}}
             </div>
@@ -66,7 +70,7 @@
             </div>
             <div class="tab goods" data-group="primary" data-tab="goods">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/sidebar.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/goods.hbs"}}
                 </div>
             </div>
             <div class="tab notes" data-group="primary" data-tab="notes">

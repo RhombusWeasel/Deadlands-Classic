@@ -1,0 +1,33 @@
+<section>
+    {{#if edges}}
+    <h2 class="center collapsible">Edges</h2>
+    <div class="content">
+        <table>
+        {{#each edges as |edge|}}
+        <tr class="item" data-itemId="{{this.id}}">
+            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc70">{{this.name}}</td>
+            <td class="perc10 center">{{this.data.data.cost}}</td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    {{#if hinderances}}
+    <h2 class="center collapsible">Hinderances</h2>
+    <div class="content">
+        <table>
+        {{#each hinderances as |hind|}}
+        <tr class="item" data-itemId="{{this.id}}">
+            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc70">{{this.name}}</td>
+            <td class="perc10 center">{{this.data.data.cost}}</td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+        {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    <textarea name="data.description" value="data.description" cols="30" rows="10"></textarea>
+</section>
