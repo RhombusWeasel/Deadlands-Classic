@@ -62,10 +62,10 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     getData() {
-        console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
         data.id = this.actor.id;
+        console.log('DC | getData() | this.actor.id = ', this.actor.id);
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
@@ -79,7 +79,6 @@ export default class PlayerSheet extends ActorSheet {
         data.goods = dc_utils.char.items.get(this.actor, "goods");
         data.huckster_deck = dc_utils.char.items.get(this.actor, "huckster_deck");
         data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
-        console.log(data.action_deck);
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
