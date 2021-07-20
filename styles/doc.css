@@ -56,4 +56,19 @@
     -webkit-box-flex: 0;
     -ms-flex: 0;
     flex: 0;
-  }
+}
+.fa-stack { 
+    font-size: 0.5em;
+}
+.white {
+    color: beige;
+}
+.red {
+    color: red;
+}
+.blue {
+    color: blue;
+}
+.legend {
+    color: yellow;
+}
