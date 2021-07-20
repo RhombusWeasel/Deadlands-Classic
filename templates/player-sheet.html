@@ -4,24 +4,7 @@
             <div data-edit="name" contenteditable="">{{actor.name}}</div>
         </h1>
         <a class="center"><p class="refresh">Refresh</p></a>
-        <div>
-            <table>
-                <tr>
-                    {{#each fate_chips as |chip|}}
-                    <td class="fate-data center" data-chip="{{this.name}}" data-bounty="{{this.bounty}}">
-                        <span class="fa-stack fa-2x">
-                            <i class="fas fa-circle fa-stack-2x {{this.name}}"></i>
-                            <i class="fas fa-atom fa-stack-1x"></i>
-                        </span>
-                        <span class="center">{{this.amount}}</span>
-                        <span class="center"><a class="spend-fate"><i class="fas fa-dollar-sign" title="Spend for Bounty"></a></i></span>
-                        <span class="center"><a class="use-fate"><i class="fas fa-trash" title="Use in game"></i></a></span>
-                    </td>
-                    {{/each}}
-                </tr>
-            </table>
-            <a class="center"><p class="draw-fate">Draw Fate Chip</p></a>
-        </div>
+        {{> "systems/deadlands_classic/templates/partials/fate-chips.hbs"}}
         {{#if action_deck}}
         <div>
             <table>
