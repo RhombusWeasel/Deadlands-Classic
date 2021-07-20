@@ -49,6 +49,8 @@
                     <td class="center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
                 </tr>
             </table>
+        </div>
+        <div>
             {{#if melee_weapons}}
             <h2 class="center">Melee Weapons</h2>
             <table>
@@ -63,26 +65,6 @@
             {{/each}}
             </table>
             {{/if}}
-        </div>
-        <div>
-            <h2 class="center">Combat Hand</h2>
-            <div>
-                <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
-                {{#if action_deck}}
-                <table>
-                    {{#each action_deck as |card|}}
-                    <tr class="item" data-itemId="{{this.id}}">
-                        <td class="center">{{this.name}}</td>
-                        <td class="center"><a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"></i></a></td>
-                        {{#lvl_head}}
-                        <td class="center"><a class="recycle-card"><i class="fas fa-sync-alt" title="Cycle this card"></i></a></td>
-                        {{/lvl_head}}
-                        <td class="center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
-                    </tr>
-                    {{/each}}
-                </table>
-                {{/if}}
-            </div>
             {{#if firearms}}
             <h2 class="center">Guns</h2>
             <div>
