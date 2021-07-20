@@ -86,8 +86,11 @@ const dc_utils = {
             },
         },
         chips: {
+            get: function(act) {
+                return act.items.filter(function (item) {return 'chip' == item_type});
+            },
             spend: function(act, label) {
-                let chips = dc_utils.char.items.get(act, 'chip');
+                let chips = dc_utils.char.chips.get(act);
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
                         console.log('DC | dc_utils.char.chips.spend |', item);
