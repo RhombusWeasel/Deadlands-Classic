@@ -76,7 +76,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('if_has', function (id, type, val, options) {
-        console.log(type, val);
+        console.log(id, type, val);
         let act = game.actors.get(id);
         if (dc_utils.char.has(act, type, val)) {
             return options.fn(this);
