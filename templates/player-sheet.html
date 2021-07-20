@@ -8,18 +8,20 @@
             <a class="item" data-tab="combat">Combat</a>
             <a class="item" data-tab="notes">Notes</a>
         </nav>
-        <div class="sheet-body">
-            <section class="tab core">
+        <section class="sheet-body">
+            <div class="tab core" data-group="primary" data-tab="core">
                 {{> "systems/deadlands_classic/templates/partials/core.hbs"}}
-            </section>
-            <div class="flexbox">
+            </div>
+            <div class="tab traits flexbox" data-group="primary" data-tab="traits">
                 <div class="sheet">
                     {{> "systems/deadlands_classic/templates/partials/traits.hbs"}}
                 </div>
+            </div>
+            <div class="tab combat flexbox" data-group="primary" data-tab="combat">
                 <div class="sidebar">
                     {{> "systems/deadlands_classic/templates/partials/sidebar.hbs"}}
                 </div>
             </div>
-        </div>
+        </section>
     </div>
 </form>
