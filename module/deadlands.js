@@ -80,9 +80,9 @@ Hooks.once("init", function () {
         if (dc_utils.char.has(act, type, val)) {
             return options.fn(this);
         }
-        return options.inverse(this);
+        //return options.inverse(this);
     });
-    
+
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);
