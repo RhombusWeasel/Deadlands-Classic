@@ -175,7 +175,7 @@ export default class GMSheet extends ActorSheet {
             `I don't like it when he gets like this...`,
         ];
         for(let chip of fate_chips) {
-            console.log(chip);
+            console.log(chip.name, chip_type);
             if (chip.name == chip_type) {
                 let r_msg = responses[get_random_int(0, responses.length - 1)]
                 ChatMessage.create({ content: `
