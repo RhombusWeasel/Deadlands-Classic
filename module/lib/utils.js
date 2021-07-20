@@ -213,20 +213,20 @@ const dc_utils = {
             for (let card = 0; card < dc_utils.cards.length ; card++) {
                 const cur_card = dc_utils.cards[card];
                 for (let suit = 0; suit < dc_utils.suits.length; suit++) {
-                    const cur_suit = dc_utils.suits[suit];
+                    const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                     for (let chk = 0; chk < card_pile.length; chk++) {
                         const chk_card = card_pile[chk].name;
                         if (cur_card == 'Joker') {
-                            if (chk_card == 'Joker (Red)') {
-                                card_pile[chk].name += ' HooWEE!'
+                            if (chk_card === `Joker ${dc_utils.suit_symbols.red_joker}`) {
+                                card_pile[chk].name += ' '
                                 r_pile.push(card_pile[chk]);
                                 break;
-                            }else if(chk_card == 'Joker (Black)') {
-                                card_pile[chk].name += ' Dang it!'
+                            }else if(chk_card === `Joker ${dc_utils.suit_symbols.red_joker}`) {
+                                card_pile[chk].name += ' '
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }
-                        }else if(chk_card == cur_card + ' of ' + cur_suit){
+                        }else if(chk_card == cur_card + ' ' + cur_suit){
                             r_pile.push(card_pile[chk]);
                             break;
                         }
