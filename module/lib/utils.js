@@ -89,8 +89,7 @@ const dc_utils = {
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
             get_equippable: function(act) {
-                return act.items
-                    .filter(function(i) {return i.data.equippable == true})
+                return act.items.filter(function(i) {return i.data.data.equippable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
             delete: function(act, id) {
