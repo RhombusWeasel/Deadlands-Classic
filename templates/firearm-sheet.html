@@ -8,40 +8,60 @@
         <table>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.cost"}}</th>
-                <th>{{localize "dc.items.combat.firearm.calibur"}}</th>
-                <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
-                <th>{{localize "dc.items.combat.firearm.speed"}}</th>
-                <th>{{localize "dc.items.combat.firearm.range"}}</th>
-                <th>{{localize "dc.items.combat.firearm.rof"}}</th>
-                <th>{{localize "dc.items.combat.firearm.chamber"}}</th>
-                <th>{{localize "dc.items.combat.firearm.ammo"}}</th>
-                <th>{{localize "dc.items.combat.firearm.damage"}}</th>
-                <th>{{localize "dc.items.combat.firearm.damage_bonus"}}</th>
-                <th>{{localize "dc.items.combat.firearm.off_hand"}}</th>
-                <th>{{localize "dc.items.combat.firearm.equippable"}}</th>
+                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
+                <th>{{localize "dc.items.combat.firearm.calibur"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.calibur" value="{{data.data.calibur}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.gun_type" value="{{data.data.gun_type}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.speed"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.data.speed}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.range"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.range" value="{{data.data.range}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.rof"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.rof" value="{{data.data.rof}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.chamber"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.chamber" value="{{data.data.chamber}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.ammo"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.max" value="{{data.data.max}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.damage"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.damage" value="{{data.data.damage}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.damage_bonus"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.damage_bonus" value="{{data.data.damage_bonus}}"/></td>
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.off_hand"}}</th>
                 {{#if (eq data.data.off_hand true)}}
-                    <td><input type="checkbox" name="data.off_hand" checked/></td>
+                <td><input type="checkbox" name="data.off_hand" checked/></td>
                 {{/if}}
                 {{#if (eq data.data.off_hand false)}}
-                    <td><input type="checkbox" name="data.off_hand"/></td>
+                <td><input type="checkbox" name="data.off_hand"/></td>
                 {{/if}}
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.firearm.equippable"}}</th>
                 {{#if (eq data.data.equippable true)}}
-                    <td><input type="checkbox" name="data.equippable" checked/></td>
+                <td><input type="checkbox" name="data.equippable" checked/></td>
                 {{/if}}
                 {{#if (eq data.data.equippable false)}}
-                    <td><input type="checkbox" name="data.equippable"/></td>
+                <td><input type="checkbox" name="data.equippable"/></td>
                 {{/if}}
             </tr>
         </table>

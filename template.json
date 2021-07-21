@@ -657,7 +657,10 @@
                 "description": "",
                 "script": "",
                 "equippable": false,
-                "equipped": false
+                "equipped": false,
+                "slot": "hand",
+                "multi_slot": false,
+                "modifiers": []
             }
         },
         "firearm": {
