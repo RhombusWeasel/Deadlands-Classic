@@ -662,6 +662,7 @@
                 "equipped_off": false,
                 "slot": "hand",
                 "multi_slot": false,
+                "reliability": false,
                 "modifiers": []
             }
         },
