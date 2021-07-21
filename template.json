@@ -658,6 +658,8 @@
                 "script": "",
                 "equippable": false,
                 "equipped": false,
+                "equipped_dominant": false,
+                "equipped_off": false,
                 "slot": "hand",
                 "multi_slot": false,
                 "modifiers": []
