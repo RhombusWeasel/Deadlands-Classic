@@ -24,7 +24,12 @@
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
-                <td><input style="text-align: center;" type="text" name="data.multi_slot" value="{{data.data.multi_slot}}"/></td>
+                {{#if (eq data.data.equippable true)}}
+                <td><input type="checkbox" name="data.multi_slot" checked/></td>
+                {{/if}}
+                {{#if (eq data.data.equippable false)}}
+                <td><input type="checkbox" name="data.multi_slot"/></td>
+                {{/if}}
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.speed"}}</th>
