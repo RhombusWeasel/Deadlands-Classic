@@ -6,7 +6,7 @@
         <a class="center"><p class="refresh">Refresh</p></a>
         {{> "systems/deadlands_classic/templates/partials/fate-chips.hbs"}}
         {{#if action_deck}}
-        {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}
+        {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck header='Combat Hand'}}
         {{/if}}
         <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
         <nav class="sheet-tabs tabs" data-group="primary">
