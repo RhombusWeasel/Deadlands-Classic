@@ -473,7 +473,7 @@ export default class PlayerSheet extends ActorSheet {
                 char: this.actor.name
             }
         });
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
@@ -493,7 +493,8 @@ export default class PlayerSheet extends ActorSheet {
             operation: 'discard_card',
             data: {
                 name: item.name,
-                type: item.type
+                type: item.type,
+                char: this.actor.name
             }
         });
         dc_utils.char.items.delete(this.actor, itemId);
