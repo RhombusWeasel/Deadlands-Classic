@@ -439,25 +439,18 @@ let operations = {
     //declare an attack is emitted by players to a gm
     declare_attack: function(data) {
         if (game.user.isGM) {
-            console.log('declare_attack', data);
             let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
-            console.log('declare_attack: Attacker:', atk);
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log('declare_attack: Target:', tgt);
-            data.trait = 'nimbleness';
-            data.skill = 'fightin';
             data.dodge_roll = 0
-            if (data.type == 'ranged') {
-                let itm = atk.actor.getOwnedItem(data.weapon);
-                data.trait = 'deftness';
-                data.skill = 'shootin_' + itm.data.data.gun_type;
-            }
             if (atk.data.disposition == -1) {
+                //Attacker is the GM, proceed to roll to hit.
                 operations.proceed_attack(data);
             }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
-                operations.warn_friendly_fire(data);
+                //Target is a player or neutral party, warn players of crimes.
+                dc_utils.socket.emit('warn_friendly_fire', data);
             }else{
-                operations.roll_to_hit(data);
+                //Target is hostile, roll to hit
+                dc_utils.socket.emit('roll_to_hit', data);
             }
         }else{
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
@@ -573,8 +566,6 @@ let operations = {
             data.roller = data.attacker
             data.next_op = 'roll_damage'
             data.write_value = 'hit_roll'
-            data.trait = 'nimbleness'
-            data.skill = 'fightin'
             data.modifier = 0
             let itm = char.actor.getOwnedItem(data.weapon);
             if (data.type == 'ranged') {

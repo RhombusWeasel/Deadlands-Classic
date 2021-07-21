@@ -63,11 +63,20 @@
                 <tr class="item" data-itemId="{{this.id}}">
                     <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                     <td class="perc60">{{this.name}}</td>
+                    {{#if (eq data.data.equipped_dominant true)}}
+                    <td><input class="equip-dominant" type="checkbox" name="data.equipped_dominant" checked/></td>
+                    {{else}}
+                    <td><input class="equip-dominant" type="checkbox" name="data.equipped_dominant"/></td>
+                    {{/if}}
+                    {{#if (eq data.data.equipped_off true)}}
+                    <td><input class="equip-off" type="checkbox" name="data.equipped_off" checked/></td>
+                    {{else}}
+                    <td><input class="equip-off" type="checkbox" name="data.equipped_off"/></td>
+                    {{/if}}
                 </tr>
             {{/each}}
             </table>
             {{/if}}
-            
         </div>
     </div>
 </section>
