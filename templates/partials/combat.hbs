@@ -56,16 +56,13 @@
             </table>
         </div>
         <div>
-            {{#if melee_weapons}}
+            {{#if equippable}}
             <h2 class="center">Melee Weapons</h2>
             <table>
-            {{#each melee_weapons as |wep|}}
+            {{#each equippable as |item|}}
                 <tr class="item" data-itemId="{{this.id}}">
                     <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                     <td class="perc60">{{this.name}}</td>
-                    <td class="perc10 center">{{wep.data.data.damage}}</td>
-                    <td class="perc10 center"><a class="melee-attack"><i class="fas fa-user-slash" title="Attack with {{this.name}}"></i></a></td>
-                    <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>

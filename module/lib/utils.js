@@ -88,6 +88,11 @@ const dc_utils = {
                     .filter(function (item) {return item.type == item_type})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
+            get_equippable: function(act) {
+                return act.items
+                    .filter(function(i) {return i.equippable == true})
+                    .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
+            },
             delete: function(act, id) {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
