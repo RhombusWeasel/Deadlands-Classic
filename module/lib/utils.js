@@ -88,6 +88,9 @@ const dc_utils = {
                     .filter(function (item) {return item.type == item_type})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
+            delete: function(act, id) {
+                setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
+            },
         },
         armour: {
             get: function(act, location) {

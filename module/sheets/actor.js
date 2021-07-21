@@ -496,7 +496,7 @@ export default class PlayerSheet extends ActorSheet {
                 type: item.type
             }
         });
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
@@ -529,7 +529,7 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         console.log(`Removing ${item.name} ${itemId} ${item}`)
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
