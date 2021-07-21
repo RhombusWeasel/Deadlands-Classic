@@ -1,0 +1,16 @@
+<section>
+    <h2 class="center">Favors</h2>
+    <div>
+        <table>
+        {{#each favors as |fav|}}
+        <tr class="item" data-itemId="{{this.id}}">
+            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc60">{{this.name}}</td>
+            <td class="perc10 center">{{this.data.data.appeasement}}</td>
+            <td class="perc10 center"><a><i class="fas fa-crow" title="Cast {{this.name}}"></i></a></td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+        {{/each}}
+        </table>
+    </div>
+</section>
