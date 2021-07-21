@@ -453,7 +453,7 @@ let operations = {
                 data.skill = 'shootin_' + itm.data.data.gun_type;
             }
             if (atk.data.disposition == -1) {
-                operations.attack(data);
+                operations.proceed_attack(data);
             }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
                 dc_utils.socket.emit('warn_friendly_fire', data);
             }else{

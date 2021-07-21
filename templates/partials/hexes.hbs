@@ -1,4 +1,7 @@
 <section>
+    {{#if huckster_deck}}
+    {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=huckster_deck}}
+    {{/if}}
     {{#if tricks}}
     <div>
         <h2 class="center">Tricks</h2>
