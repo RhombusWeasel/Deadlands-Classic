@@ -26,8 +26,7 @@
                 <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
                 {{#if (eq data.data.multi_slot true)}}
                 <td><input type="checkbox" name="data.multi_slot" checked/></td>
-                {{/if}}
-                {{#if (eq data.data.multi_slot false)}}
+                {{else}}
                 <td><input type="checkbox" name="data.multi_slot"/></td>
                 {{/if}}
             </tr>
@@ -63,8 +62,7 @@
                 <th>{{localize "dc.items.combat.firearm.off_hand"}}</th>
                 {{#if (eq data.data.off_hand true)}}
                 <td><input type="checkbox" name="data.off_hand" checked/></td>
-                {{/if}}
-                {{#if (eq data.data.off_hand false)}}
+                {{else}}
                 <td><input type="checkbox" name="data.off_hand"/></td>
                 {{/if}}
             </tr>
@@ -72,8 +70,7 @@
                 <th>{{localize "dc.items.combat.firearm.equippable"}}</th>
                 {{#if (eq data.data.equippable true)}}
                 <td><input type="checkbox" name="data.equippable" checked/></td>
-                {{/if}}
-                {{#if (eq data.data.equippable false)}}
+                {{else}}
                 <td><input type="checkbox" name="data.equippable"/></td>
                 {{/if}}
             </tr>
