@@ -41,7 +41,9 @@
                 "melee": {
                     "cost": "Cost",
                     "damage": "Damage",
-                    "equippable": "Equippable"
+                    "equippable": "Equippable",
+                    "slot": "Equip Slot",
+                    "multi_slot": "Two Handed"
                 },
                 "firearm": {
                     "cost": "Cost",
