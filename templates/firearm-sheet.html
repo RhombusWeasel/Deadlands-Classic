@@ -24,10 +24,10 @@
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
-                {{#if (eq data.data.equippable true)}}
+                {{#if (eq data.data.multi_slot true)}}
                 <td><input type="checkbox" name="data.multi_slot" checked/></td>
                 {{/if}}
-                {{#if (eq data.data.equippable false)}}
+                {{#if (eq data.data.multi_slot false)}}
                 <td><input type="checkbox" name="data.multi_slot"/></td>
                 {{/if}}
             </tr>
