@@ -3,6 +3,7 @@
     <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
         <option value="Nuthin">Nuthin'</option>
         {{#each items as |item|}}
+            {{log item.slot ../slot}}
             {{#if (eq item.slot ../slot)}}
                 <div class="item" data-itemid="{{item.id}}">
                 {{#if_equipped ../label item.id}}
