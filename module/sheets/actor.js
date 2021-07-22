@@ -169,13 +169,12 @@ export default class PlayerSheet extends ActorSheet {
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
         if (this.actor.hasPlayerOwner) {
-            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
             dc_utils.socket.emit('check_tn', data);
         }else{
-            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
             data.roll = dc_utils.roll.new(data);
-            data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
@@ -234,7 +233,7 @@ export default class PlayerSheet extends ActorSheet {
             dc_utils.socket.emit('check_tn', data);
         }else{
             data.roll = dc_utils.roll.new(data);
-            data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
