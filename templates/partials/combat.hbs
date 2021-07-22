@@ -1,14 +1,33 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
     <div class="flexrow">
-        <div>
+        {{#each hand_slots as |hand|}}
+            <div>
+                <h3 class="center">{{hand.label}}</h3>
+                <select class="item center {{hand.key}}-select" name="data.equipped.{{hand.key}}" id="{{hand.key}}-select" data-slot="{{hand.key}}">
+                <option value="Nuthin">Nuthin'</option>
+                {{#each items as |item|}}
+                    {{#if (eq item.slot slot)}}
+                        <div class="item" data-itemid="{{item.id}}">
+                        {{#if_equipped hand.key item.id}}
+                            <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
+                        {{else}}
+                            <option value="{{item.id}}">{{item.name}}</option>
+                        {{/if_equipped}}
+                        </div>
+                    {{/if}}
+                {{/each}}
+            </select>
+            </div>
+        {{/each}}
+        {{!-- <div>
             <h3 class="center">Dominant Hand</h3>
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="dominant" slot="hand"}}
         </div>
         <div>
             <h3 class="center">Off Hand</h3>
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="off" slot="hand"}}
-        </div>
+        </div> --}}
     </div>
     <div class="flexrow">
         <div>

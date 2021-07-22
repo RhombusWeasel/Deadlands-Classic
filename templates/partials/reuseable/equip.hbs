@@ -1,15 +1,15 @@
 {{!-- Pass label for the name of the dropdown --}}
 <section>
     <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
-        <option value="Nuthin"></option>
+        <option value="Nuthin">Nuthin'</option>
         {{#each items as |item|}}
             {{#if (eq item.slot slot)}}
                 <div class="item" data-itemid="{{item.id}}">
-                {{#if (eq label item.id)}}
+                {{#if_equipped label item.id}}
                     <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                 {{else}}
                     <option value="{{item.id}}">{{item.name}}</option>
-                {{/if}}
+                {{/if_equipped}}
                 </div>
             {{/if}}
         {{/each}}
