@@ -232,9 +232,9 @@ export default class PlayerSheet extends ActorSheet {
         if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
         }else{
-            data.roll_data = dc_utils.roll.new(data);
-            data = dc_utils.roll.evaluate(data.roll_data, data.tn, data.modifier);
-            ChatMessage.create({content: build_skill_template(data, data.roll_data)});
+            data.roll = dc_utils.roll.new(data);
+            data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data, data.roll)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }
