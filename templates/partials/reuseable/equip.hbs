@@ -2,11 +2,11 @@
 <section>
     <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
         <option value="Nuthin">Nuthin'</option>
-        {{log 'DC | equip.hbs | ' this}}
+        {{log 'DC | equip.hbs | ' this root}}
         {{#each items as |item|}}
-            {{log 'DC | equip.hbs | #each items |' this}}
+            {{log 'DC | equip.hbs | #each items |' this root}}
             {{#if (eq item.slot slot)}}
-                {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' this}}
+                {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' this root}}
                 <div class="item" data-itemid="{{item.id}}">
                 {{#if_equipped label item.id}}
                     {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Found!!!' this}}
