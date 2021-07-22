@@ -23,20 +23,18 @@
                     <th>Slot</th>
                     <td><input style="text-align: center;" type="text" name="data.slot" value="{{data.data.slot}}"/></td>
                 </tr>
+                <tr>
+                    <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
+                    {{#if (eq data.data.multi_slot true)}}
+                    <td><input type="checkbox" name="data.multi_slot" checked/></td>
+                    {{else}}
+                    <td><input type="checkbox" name="data.multi_slot"/></td>
+                    {{/if}}
+                </tr>
             {{else}}
                     <td><input type="checkbox" name="data.equippable"/></td>
                 </tr>
             {{/if}}
-            </tr>
-            <tr>
-                
-                
-                {{#if (eq data.data.equippable true)}}
-                    
-                {{/if}}
-                {{#if (eq data.data.equippable false)}}
-                    
-                {{/if}}
             </tr>
         </table>
     </div>
