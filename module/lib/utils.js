@@ -92,6 +92,12 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.equippable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
+            unequip: function(act, slot) {
+                return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
+            },
+            equip: function(act, slot, id) {
+                return act.update({data: {data: {equipped: {[slot]: id}}}});
+            },
             is_equipped: function(act, slot, id) {
                 if (id == act.data.data.equipped[slot]) {
                     return true;

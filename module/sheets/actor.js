@@ -325,6 +325,13 @@ export default class PlayerSheet extends ActorSheet {
         return item.sheet.render(true);
     }
 
+    _on_item_equip(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        dc_utils.char.items.equip(this.actor, itemId);
+    }
+
     _on_item_delete(event) {
         event.preventDefault();
         let element = event.currentTarget;
