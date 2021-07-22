@@ -216,9 +216,9 @@ const dc_utils = {
         },
         new: function(data) {
             let modifier = 0
-            data.modifiers.forEach(mod => {
+            for(let mod of modifiers) {
                 modifier += mod.modifier
-            });
+            }
             let r_data = {
                 success: false,
                 crit_fail: false,
