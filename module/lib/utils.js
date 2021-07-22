@@ -216,7 +216,7 @@ const dc_utils = {
         },
         new: function(data) {
             let modifier = 0
-            for(let mod of modifiers) {
+            for(let mod of data.modifiers) {
                 modifier += mod.modifier
             }
             let r_data = {

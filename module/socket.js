@@ -93,7 +93,7 @@ function build_roll_dialog(data) {
                 </table>
                 <h3 class="center">Modifiers</h3>
                 <table>`;
-    for (letmod of modifiers) {
+    for (let mod of data.modifiers) {
         form += `
                     <tr class="center">
                         <td>${mod.label}</td>
