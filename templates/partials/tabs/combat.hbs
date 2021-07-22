@@ -1,15 +1,22 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
-    <div class="flexrow">
-        <div>
-            <h3 class="center">Dominant Hand</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
-        </div>
-        <div>
-            <h3 class="center">Off Hand</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
-        </div>
-    </div>
+        {{#is_one_handed}}
+            <div class="flexrow"></div>
+                <div>
+                    <h3 class="center">Dominant Hand</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
+                </div>
+                <div>
+                    <h3 class="center">Off Hand</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
+                </div>
+            </div>
+        {{else}}
+            <div>
+                <h3 class="center">Two Handed</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
+            </div>
+        {{/is_one_handed}}
     <div class="flexrow">
         <div>
             <h3 class="center">Head</h3>
