@@ -321,21 +321,27 @@ const dc_utils = {
                 }
             }
             r_str += `
-                    </tr>
-                </table>
-                <h3 class="center">Modifiers</h3>
-                <table>`;
-            for (let key of Object.keys(data.modifiers)) {
+                        </tr>
+                    </table>
+            `;
+            if (data.modifier != 0) {
                 r_str += `
-                    <tr class="center">
-                        <td>${data.modifiers[key].label}</td>
-                        <td>${data.modifiers[key].modifier}</td>
-                    </tr>
+                    <h3 class="center">Modifiers</h3>
+                    <table>`;
+                for (let key of Object.keys(data.modifiers)) {
+                    if (data.modifiers[key].modifier != 0) {
+                        r_str += `
+                            <tr class="center">
+                                <td>${data.modifiers[key].label}</td>
+                                <td>${data.modifiers[key].modifier}</td>
+                            </tr>
+                        `;
+                    }
+                }
+                r_str += `
+                    </table>
                 `;
             }
-            r_str += `
-                </table>
-            `;
             return r_str
         },
     },
