@@ -121,6 +121,8 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+        html.find(".dominant-select").click(this._on_item_equip.bind(this));
+        html.find(".off-select").click(this._on_item_equip.bind(this));
 
         if (!(game.dc.collapse)) {
             game.dc.collapse = []
