@@ -605,7 +605,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
+        let itemId = element.dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let shots = parseInt(item.data.data.chamber);
         let max = item.data.data.max;
