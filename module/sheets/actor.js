@@ -24,7 +24,6 @@ function build_skill_template(data) {
     console.log('DC | build_skill_template', data);
     let r_str = `
         <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
-        <h2 style="text-align:center">${data.roll.total}</h2>
     `;
     r_str += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
