@@ -176,7 +176,6 @@ export default class PlayerSheet extends ActorSheet {
             data.roll = dc_utils.roll.new(data);
             data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
-            roll.toMessage({rollMode: 'gmroll'});
         }
     }
 
@@ -235,7 +234,6 @@ export default class PlayerSheet extends ActorSheet {
             data.roll = dc_utils.roll.new(data);
             data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
-            roll.toMessage({rollMode: 'gmroll'});
         }
     }
 
