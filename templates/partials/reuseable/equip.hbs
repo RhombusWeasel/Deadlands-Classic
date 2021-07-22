@@ -2,18 +2,17 @@
 <section>
     <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
         <option value="Nuthin">Nuthin'</option>
-        {{log this}}
-        {{log 'DC | equip.hbs | ' label slot items}}
+        {{log 'DC | equip.hbs | ' this}}
         {{#each items as |item|}}
-            {{log 'DC | equip.hbs | #each items |' @root.label @root.slot item.data.slot}}
+            {{log 'DC | equip.hbs | #each items |' this}}
             {{#if (eq item.slot slot)}}
-                {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' @root.label @root.slot item.slot}}
+                {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' this}}
                 <div class="item" data-itemid="{{item.id}}">
                 {{#if_equipped label item.id}}
-                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Found!!!' @root.label @root.slot item.slot}}
+                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Found!!!' this}}
                     <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                 {{else}}
-                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Not found :(' @root.label @root.slot item.slot}}
+                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Not found :(' this}}
                     <option value="{{item.id}}">{{item.name}}</option>
                 {{/if_equipped}}
                 </div>
