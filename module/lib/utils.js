@@ -232,6 +232,7 @@ const dc_utils = {
                 ones: 0,
                 results: [],
             };
+            data.modifier = modifier
             let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
             r_data.total = roll._total;
             let count = 0
