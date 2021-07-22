@@ -528,7 +528,8 @@ export default class PlayerSheet extends ActorSheet {
     _on_attack(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId  = element.closest(".item").dataset.itemid;
+        console.log()
+        let itemId  = element.dataset.itemid;
         if (itemId == 'Nuthin') {
             return
         }else{
