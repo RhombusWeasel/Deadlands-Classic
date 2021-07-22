@@ -1,7 +1,7 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
-            <div class="flexrow"></div>
+            <div class="flexrow">
                 <div>
                     <h3 class="center">Dominant Hand</h3>
                     {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
