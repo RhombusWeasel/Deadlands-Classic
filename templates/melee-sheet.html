@@ -8,17 +8,34 @@
         <table>
             <tr>
                 <th>{{localize "dc.items.combat.melee.cost"}}</th>
-                <th>{{localize "dc.items.combat.melee.damage"}}</th>
-                <th>{{localize "dc.items.combat.melee.equippable"}}</th>
+                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.cost" value="{{data.data.cost}}"/></td>
+                <th>{{localize "dc.items.combat.melee.damage"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.damage" value="{{data.data.damage}}"/></td>
-                {{#if (eq data.data.equippable true)}}
+            </tr>
+            <tr>
+                <th>{{localize "dc.items.combat.melee.equippable"}}</th>
+            {{#if (eq data.data.equippable true)}}
                     <td><input type="checkbox" name="data.equippable" checked/></td>
+                </tr>
+                <tr>
+                    <th>Slot</th>
+                    <td><input style="text-align: center;" type="text" name="data.slot" value="{{data.data.slot}}"/></td>
+                </tr>
+            {{else}}
+                    <td><input type="checkbox" name="data.equippable"/></td>
+                </tr>
+            {{/if}}
+            </tr>
+            <tr>
+                
+                
+                {{#if (eq data.data.equippable true)}}
+                    
                 {{/if}}
                 {{#if (eq data.data.equippable false)}}
-                    <td><input type="checkbox" name="data.equippable"/></td>
+                    
                 {{/if}}
             </tr>
         </table>
