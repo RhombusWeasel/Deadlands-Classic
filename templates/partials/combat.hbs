@@ -3,27 +3,11 @@
     <div class="flexrow">
         {{#each hand_slots as |hand|}}
             <div>
-                <h3 class="center">{{hand.label}}</h3>
-                <select class="item center {{hand.key}}-select" name="data.equipped.{{hand.key}}" id="{{hand.key}}-select" data-slot="{{hand.key}}">
-                <option value="Nuthin">Nuthin'</option>
-                {{log data.equippable}}
-                {{#each @../equippable as |item|}}
-                    {{log item @../key}}
-                    {{!-- {{#if (eq item.slot 'hand')}} --}}
-                        {{#if_equipped @../key item.id}}
-                            <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
-                        {{else}}
-                            <option value="{{item.id}}">{{item.name}}</option>
-                        {{/if_equipped}}
-                    {{!-- {{/if}} --}}
-                {{/each}}
-            </select>
+                <h3 class="center">{{hand.label}} Hand</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label=hand.label slot="hand"}}
             </div>
         {{/each}}
-        {{!-- <div>
-            <h3 class="center">Dominant Hand</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="dominant" slot="hand"}}
-        </div>
+        {{!-- 
         <div>
             <h3 class="center">Off Hand</h3>
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="off" slot="hand"}}
