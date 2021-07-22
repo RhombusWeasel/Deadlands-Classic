@@ -2,8 +2,8 @@
 <section>
     <table>
         <tr class="item" data-itemid="{{id}}">
-            <td>
-                <select class="item {{label}}-select center iblock" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
+            <td class="center">
+                <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
                     <option value="Nuthin">Nuthin'</option>
                     {{#each items as |item|}}
                         {{#if (eq item.data.data.slot ../slot)}}
