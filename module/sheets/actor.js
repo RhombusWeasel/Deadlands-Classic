@@ -127,42 +127,11 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".dominant-select").change(this._on_item_equip.bind(this));
         html.find(".off-select").change(this._on_item_equip.bind(this));
 
-        if (!(game.dc.collapse)) {
-            game.dc.collapse = []
-        }
-        var coll = document.getElementsByClassName("collapsible");
-        for (let i = 0; i < coll.length; i++) {
-            if (!(game.dc.collapse[i])) {
-                game.dc.collapse[i] = false
-            }
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (!(game.dc.collapse[i])) {
-                    content.style.maxHeight = null;
-                    game.dc.collapse[i] = true;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    game.dc.collapse[i] = false;
-                }
-            });
-            if (game.dc.collapse[i]) {
-                coll[i].nextElementSibling.style.maxHeight = null;
-            } else {
-                coll[i].nextElementSibling.style.maxHeight = coll[i].nextElementSibling.scrollHeight + "px";
-            }
-        }
-
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
             game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
         });
         traits[0].scrollTop = game.dc.trait_scroll;
-        /* var items = document.getElementsByClassName("item_scroller");
-        items[0].addEventListener("scroll", () => {
-            game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
-        });
-        items[0].scrollTop = game.dc.item_scroll; */
         return super.activateListeners(html);
     }
 

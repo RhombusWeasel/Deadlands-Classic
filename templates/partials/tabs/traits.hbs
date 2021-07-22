@@ -4,7 +4,7 @@
     <div>
     {{#each data.data.traits as |trait|}}
         <div>
-            <table class="collapsible">
+            <table>
                 <tr class="trait-data" data-trait="{{@key}}" data-level="{{trait.level}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}">
                     <td class="perc50 trait-label"><a class="trait-roll">{{trait.name}}</a></td>
             {{#has_bounty trait.level 'trait'}}
@@ -18,7 +18,7 @@
                     <td class="perc10 center">+{{trait.modifier}}</td>
                 </tr>
             </table>
-            <div class="content">
+            <div>
                 <table>
                 {{#each skills as |skill|}}
                     <tr class="skill-data" data-trait="{{@../key}}" data-skill="{{@key}}" data-level="{{skill.level}}" data-mod="{{skill.modifier}}">
