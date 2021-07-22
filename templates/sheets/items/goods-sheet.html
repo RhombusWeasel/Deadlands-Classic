@@ -14,7 +14,7 @@
                 <th>{{localize "dc.items.goods.amount"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.amount" value="{{data.data.amount}}"/></td>
             </tr>
-            {{> systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs data=item}}
+            {{> systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs this}}
             <!-- <tr>
                 <th>{{localize "dc.items.goods.equippable"}}</th>
             {{#if (eq data.data.equippable true)}}
