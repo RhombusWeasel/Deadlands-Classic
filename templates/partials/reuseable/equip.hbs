@@ -19,9 +19,15 @@
             {{#each items as |item|}}
                 {{#if (eq item.data.data.slot ../slot)}}
                     {{#if_equipped ../label item.id}}
-                        <td>{{this.data.data.chamber}}/{{this.data.data.max}}</td>
-                        <td><a class="attack"><i class="fas fa-bahai" title="Attack with {{this.name}}"></i></a></td>
-                        <td><a class="gun-reload"><i class="fas fa-sync-alt" title="Reload {{this.name}}"></i></a></td>
+                        {{#if (eq item.type 'firearm')}}
+                            <td>{{this.data.data.chamber}}/{{this.data.data.max}}</td>
+                        {{/if}}
+                        </tr>
+                        <tr>
+                            <td><a class="attack" title="Attack with {{this.name}}">Attack</a></td>
+                            {{#if (eq item.type 'firearm')}}
+                                <td><a class="gun-reload" title="Reload {{this.name}}">Reload</a></td>
+                            {{/if}}
                     {{else}}
                     {{/if_equipped}}
                 {{/if}}
