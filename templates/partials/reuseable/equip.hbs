@@ -4,7 +4,7 @@
         <option value="Nuthin">Nuthin'</option>
         {{log 'DC | equip.hbs | ' this root}}
         {{#each items as |item|}}
-            {{log 'DC | equip.hbs | #each items |' this @root}}
+            {{log 'DC | equip.hbs | #each items |' this @../}}
             {{#if (eq item.slot slot)}}
                 {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' this @root}}
                 <div class="item" data-itemid="{{item.id}}">
