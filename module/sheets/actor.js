@@ -333,6 +333,7 @@ export default class PlayerSheet extends ActorSheet {
         let slot = element.closest(".item").dataset.slot;
         let itemId = element.value;
         let item = this.actor.items.get(itemId);
+        console.log(`DC | _on_item_equip | adding ${item.name} [${item.id}] to ${slot}`);
         dc_utils.char.items.equip(this.actor, slot, itemId);
         console.log('DC | _on_item_equip |', item.name, item.id, this.actor.data.data.equipped);
     }

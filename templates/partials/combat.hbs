@@ -68,17 +68,7 @@
             {{#each equippable as |item|}}
                 <tr class="item" data-itemId="{{this.id}}">
                     <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                    <td class="perc60">{{this.name}}</td>
-                    {{#if (eq data.data.equipped_dominant true)}}
-                    <td><input type="checkbox" name="data.equipped_dominant" checked/></td>
-                    {{else}}
-                    <td><input type="checkbox" name="data.equipped_dominant"/></td>
-                    {{/if}}
-                    {{#if (eq data.data.equipped_off true)}}
-                    <td><input type="checkbox" name="data.equipped_off" checked/></td>
-                    {{else}}
-                    <td><input type="checkbox" name="data.equipped_off"/></td>
-                    {{/if}}
+                    <td class="perc80">{{this.name}}</td>
                     <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
                 </tr>
             {{/each}}
