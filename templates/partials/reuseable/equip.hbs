@@ -4,11 +4,15 @@
         <option value="Nuthin">Nuthin'</option>
         {{log 'DC | equip.hbs | ' label slot}}
         {{#each items as |item|}}
+            {{log 'DC | equip.hbs | #each items |' label slot item}}
             {{#if (eq item.slot slot)}}
+                {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot)' label slot item.slot}}
                 <div class="item" data-itemid="{{item.id}}">
                 {{#if_equipped label item.id}}
+                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Found!!!' label slot item.slot}}
                     <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                 {{else}}
+                    {{log 'DC | equip.hbs | #each items | #if (eq slotitem.slot) | is_equipped | Not found :(' label slot item.slot}}
                     <option value="{{item.id}}">{{item.name}}</option>
                 {{/if_equipped}}
                 </div>
