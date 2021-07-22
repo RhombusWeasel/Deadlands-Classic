@@ -7,13 +7,13 @@
                 <select class="item center {{hand.key}}-select" name="data.equipped.{{hand.key}}" id="{{hand.key}}-select" data-slot="{{hand.key}}">
                 <option value="Nuthin">Nuthin'</option>
                 {{#each equippable as |item|}}
-                    {{#if (eq item.slot 'hand')}}
+                    {{!-- {{#if (eq item.slot 'hand')}} --}}
                         {{#if_equipped @../key item.id}}
                             <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                         {{else}}
                             <option value="{{item.id}}">{{item.name}}</option>
                         {{/if_equipped}}
-                    {{/if}}
+                    {{!-- {{/if}} --}}
                 {{/each}}
             </select>
             </div>
