@@ -181,7 +181,7 @@ const dc_utils = {
                 wep = 'unarmed'
             }
             let target = dc_utils.char.target.get(act);
-            if (target == false && !(type == skl)) {
+            if (target == false && !(type == 'skill')) {
                 console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }
