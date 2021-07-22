@@ -216,8 +216,8 @@ const dc_utils = {
         },
         new: function(data) {
             let modifier = 0
-            for(let mod of data.modifiers) {
-                modifier += mod.modifier
+            for (let key of Object.keys(data.modifiers)) {
+                modifier += data.modifiers[key].modifier
             }
             let r_data = {
                 success: false,

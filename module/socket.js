@@ -93,11 +93,11 @@ function build_roll_dialog(data) {
                 </table>
                 <h3 class="center">Modifiers</h3>
                 <table>`;
-    for (let mod of data.modifiers) {
+    for (let key of Object.keys(data.modifiers)) {
         form += `
                     <tr class="center">
-                        <td>${mod.label}</td>
-                        <td>${mod.modifier}</td>
+                        <td>${data.modifiers[key].label}</td>
+                        <td>${data.modifiers[key].modifier}</td>
                     </tr>
         `;
     }
