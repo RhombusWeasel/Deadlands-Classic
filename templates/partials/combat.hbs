@@ -12,6 +12,20 @@
     </div>
     <div class="flexrow">
         <div>
+            <h3 class="center">Head</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="head" slot="head"}}
+        </div>
+        <div>
+            <h3 class="center">Body</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="body" slot="body"}}
+        </div>
+        <div>
+            <h3 class="center">Legs</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="legs" slot="legs"}}
+        </div>
+    </div>
+    <div class="flexrow">
+        <div>
             <h2 class="center">Wounds:</h2>
             <table>
                 <tr>
