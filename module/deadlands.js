@@ -101,7 +101,7 @@ Hooks.once("init", function () {
         let act = game.actors.get(options.data.root.id);
         let item = act.items.get(act.data.data.equipped.dominant);
         console.log('DC | HBH is_one_handed |', act, item);
-        if (item.data.multi_slot == false) {
+        if (item.data.data.multi_slot == false) {
             return options.fn(this);
         }
         return options.inverse(this);
