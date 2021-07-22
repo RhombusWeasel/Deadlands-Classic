@@ -2,6 +2,7 @@
 <section>
     <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
         <option value="Nuthin">Nuthin'</option>
+        {{log this}}
         {{log 'DC | equip.hbs | ' label slot items}}
         {{#each items as |item|}}
             {{log 'DC | equip.hbs | #each items |' @root.label @root.slot item.data.slot}}
