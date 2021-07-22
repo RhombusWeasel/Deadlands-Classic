@@ -169,28 +169,13 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
         if (this.actor.hasPlayerOwner) {
-           dc_utils.socket.emit('check_tn', {
-                type: 'trait',
-                roller: this.actor.name,
-                trait: trait_name,
-                modifier: 0
-            });
+            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
+            dc_utils.socket.emit('check_tn', data);
         }else{
-            let trait = this.actor.data.data.traits[trait_name];
-            let data = {
-                type: 'trait',
-                skill_name: trait.name,
-                tn: 5,
-                name: this.actor.name
-            };
-            let lvl = trait.level;
-            let die = trait.die_type;
-            let mod = trait.modifier;
-            let wound_mod = this.actor.data.data.wound_modifier;
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
-            ChatMessage.create({content: build_skill_template(data, r_data)});
+            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
+            data.roll_data = dc_utils.roll.new(data);
+            data = dc_utils.roll.evaluate(data.roll_data, data.tn, mod + wound_mod);
+            ChatMessage.create({content: build_skill_template(data, data.roll_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }
@@ -243,27 +228,13 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let skl = element.closest(".skill-data").dataset.skill;
         let skill = dc_utils.char.skill.get(this.actor, skl);
-        let data = {
-            type: 'skill',
-            roller: this.actor.name,
-            amt: skill.level,
-            dice: skill.die_type,
-            skill_name: skill.name,
-            skill: skl,
-            tn: dc_utils.roll.get_tn(),
-            name: this.actor.name,
-            modifier: skill.modifier
-        }
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', skl);
         if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
         }else{
-            let wound_mod = parseInt(this.actor.data.data.wound_modifier);
-            let skill = dc_utils.char.skill.get(this.actor, skl);
-            let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, skill.modifier + wound_mod);
-            data.skill_name = skill.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
+            data.roll_data = dc_utils.roll.new(data);
+            data = dc_utils.roll.evaluate(data.roll_data, data.tn, mod + wound_mod);
+            ChatMessage.create({content: build_skill_template(data, data.roll_data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }
