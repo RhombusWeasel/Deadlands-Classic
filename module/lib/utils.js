@@ -91,7 +91,8 @@ const dc_utils = {
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
             get_equippable: function(act) {
-                return act.items.filter(function(i) {return i.data.data.equippable == true})
+                let eq = act.data.data.equipped
+                return act.items.filter(function(i) {return i.data.data.equippable == true && !(eq.contains(i.data.id))})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
             unequip: function(act, slot) {
