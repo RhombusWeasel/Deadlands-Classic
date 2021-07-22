@@ -1,0 +1,10 @@
+{{!-- Pass label for the name of the dropdown --}}
+<section>
+    <select name="{{label}}" id="{{label}}-select">
+        {{#each equippable as |item|}}
+            {{#if (eq item.slot slot)}}
+                <option value="{{item.id}}">{{item.name}}</option>
+            {{/if}}
+        {{/each}}
+    </select>
+</section>

@@ -1,8 +1,14 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
     <div class="flexrow">
-        <h3 class="center">Dominant Hand</h3>
-        <h3 class="center">Off Hand</h3>
+        <div>
+            <h3 class="center">Dominant Hand</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" equippable slot="hand"}}
+        </div>
+        <div>
+            <h3 class="center">Off Hand</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" equippable slot="hand"}}
+        </div>
     </div>
     <div class="flexrow">
         <div>

@@ -11,7 +11,7 @@ const dc_utils = {
         compare: function(object1, object2, key) {
             let obj1
             let obj2
-            if (key == 'name') {
+            if (key == 'name' || key == 'type') {
                 obj1 = object1.data[key].toUpperCase();
                 obj2 = object2.data[key].toUpperCase();
             }else{
