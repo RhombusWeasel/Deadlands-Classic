@@ -139,7 +139,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
-        if (this.actor.hasPlayerOwner) {
+        if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
         }else{
             data.roll = dc_utils.roll.new(data);
