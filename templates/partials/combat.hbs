@@ -1,10 +1,10 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
     <div class="flexrow">
-        {{#each hand_slots as |hand|}}
+        {{#each hand_slots as |hand| items=equippable}}
             <div>
                 <h3 class="center">{{hand.label}} Hand</h3>
-                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label=hand.label slot="hand"}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=items label=hand.label slot="hand"}}
             </div>
         {{/each}}
         {{!-- 
