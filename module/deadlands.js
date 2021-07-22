@@ -19,6 +19,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/miracles.hbs",
         "systems/deadlands_classic/templates/partials/hexes.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/deck.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
         "systems/deadlands_classic/templates/partials/fate-chips.hbs",
         "systems/deadlands_classic/templates/partials/favor.hbs",
         "systems/deadlands_classic/templates/partials/traits.hbs"
