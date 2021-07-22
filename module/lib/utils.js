@@ -176,7 +176,7 @@ const dc_utils = {
     },
     roll: {
         new_roll_packet: function(act, type, skl, wep) {
-            let item   = act.items.get(wep);
+            let item = act.items.get(wep);
             if (!(item)) {
                 wep = 'unarmed'
             }
@@ -191,7 +191,7 @@ const dc_utils = {
                 roller:     act.name,
                 target:     target.name,
                 attacker:   act.name,
-                weapon:     itemId,
+                weapon:     wep,
                 tn:         dc_utils.roll.get_tn(),
                 name:       act.name,
                 skill:      skl,
