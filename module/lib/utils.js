@@ -40,9 +40,9 @@ const dc_utils = {
     },
     char: {
         has: function(act, type, name) {
-            let edges = dc_utils.char.items.get(act, type);
-            for (const edge of edges) {
-                if (edge.name == name) {
+            let items = dc_utils.char.items.get(act, type);
+            for (const item of items) {
+                if (item.name == name) {
                     return true;
                 }
             }
@@ -175,7 +175,48 @@ const dc_utils = {
         },
     },
     roll: {
+        new_roll_packet: function(act, type, skl, wep) {
+            let item   = act.items.get(wep);
+            if (!(item)) {
+                wep = 'unarmed'
+            }
+            let target = dc_utils.char.target.get(act);
+            if (target == false) {
+                console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
+                return false;
+            }
+            let skill = dc_utils.char.skill.get(act, skl);
+            let data = {
+                type:       type,
+                roller:     act.name,
+                target:     target.name,
+                attacker:   act.name,
+                weapon:     itemId,
+                tn:         dc_utils.roll.get_tn(),
+                name:       act.name,
+                skill:      skl,
+                amt:        skill.level,
+                dice:       skill.die_type,
+                skill_name: skill.name,
+                modifiers:  {
+                    skill: {label: 'Skill + Trait', modifier: skill.modifier},
+                    wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
+                }
+            }
+            if (act.data.data.equipped.off == item.id) {
+                if (dc_utils.char.has('edge', 'Two Fisted')) {
+                    data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                }else{
+                    data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
+                }
+            }
+            return data;
+        },
         new: function(data) {
+            let modifier = 0
+            for (let mod of data.modifiers) {
+                modifier += mod.modifier
+            }
             let r_data = {
                 success: false,
                 crit_fail: false,
@@ -183,7 +224,7 @@ const dc_utils = {
                 total: 0,
                 dice: data.dice,
                 amt: data.amt,
-                modifier: data.modifier,
+                modifier: modifier,
                 raises: 0,
                 pass: 0,
                 ones: 0,

@@ -91,6 +91,18 @@ function build_roll_dialog(data) {
     form += `
                     </tr>
                 </table>
+                <h3 class="center">Modifiers</h3>
+                <table>`;
+    for (let mod of data.modifiers) {
+        form += `
+                    <tr class="center">
+                        <td>${mod.label}</td>
+                        <td>${mod.modifier}</td>
+                    </tr>
+        `;
+    }
+    form += `
+                </table>
     `;
     if (data.roll.success) {
         if (data.roll.raises == 1) {
@@ -313,10 +325,7 @@ let operations = {
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
         if (char.isOwner) {
-            let skill = dc_utils.char.skill.get(char, data.skill);
-            data.amt = skill.level;
-            data.dice = skill.die_type;
-            data.modifier += skill.modifier + parseInt(char.data.data.wound_modifier);
+            let skill = dc_utils.roll.new_roll_packet(char, 'skill', data.skill);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
         }else if (game.user.isGM) {
@@ -572,15 +581,14 @@ let operations = {
                 let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
                 let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
                 data.range = dist;
-                data.range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
-                data.modifier -= data.range_mod;
+                data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0))};
                 data.trait = 'deftness';
                 data.skill = 'shootin_' + itm.data.data.gun_type;
             }
             if (itm.data.data.off_hand) {
                 data.modifier += char.actor.data.data.off_hand_modifier;
             }
-            dc_utils.socket.emit('check_tn', data);
+            operations.skill_roll(data);
         }
     },
     roll_damage: function(data) {

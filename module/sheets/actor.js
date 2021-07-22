@@ -594,38 +594,11 @@ export default class PlayerSheet extends ActorSheet {
         if (itemId == 'Nuthin') {
             return
         }else{
-            let item   = this.actor.items.get(itemId);
-            let target = dc_utils.char.target.get(this.actor);
-            if (target == false) {
-                console.log('DC:', 'Target not found.');
-                return;
-            }
-            let data = {
-                type:     'melee',
-                roller:   this.actor.name,
-                target:   target.name,
-                attacker: this.actor.name,
-                weapon:   itemId,
-                tn:       dc_utils.roll.get_tn(),
-                name:     this.actor.name,
-            }
+            let data
             if (item.type == 'melee') {
-                let skill       = dc_utils.char.skill.get(this.actor, 'fightin');
-                data.type       = 'melee'
-                data.skill      = 'fightin'
-                data.amt        = skill.level
-                data.dice       = skill.die_type
-                data.skill_name = skill.name
-                data.modifier   = skill.modifier
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
             }else if (item.type == 'firearm') {
-                let skl         = `shootin_${item.data.data.gun_type}`
-                let skill       = dc_utils.char.skill.get(this.actor, skl);
-                data.type       = 'ranged'
-                data.skill      = skl
-                data.amt        = skill.level
-                data.dice       = skill.die_type
-                data.skill_name = skill.name
-                data.modifier   = skill.modifier
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
             }
             dc_utils.socket.emit("declare_attack", data);
         }
