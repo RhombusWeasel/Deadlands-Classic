@@ -6,8 +6,8 @@
                 <h3 class="center">{{hand.label}}</h3>
                 <select class="item center {{hand.key}}-select" name="data.equipped.{{hand.key}}" id="{{hand.key}}-select" data-slot="{{hand.key}}">
                 <option value="Nuthin">Nuthin'</option>
-                {{#each items as |item|}}
-                    {{#if (eq item.slot slot)}}
+                {{#each equippable as |item|}}
+                    {{#if (eq item.slot 'hand')}}
                         <div class="item" data-itemid="{{item.id}}">
                         {{#if_equipped hand.key item.id}}
                             <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
