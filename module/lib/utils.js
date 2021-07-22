@@ -204,6 +204,13 @@ const dc_utils = {
                 }
             }
             if (item) {
+                if (data.type == 'ranged') {
+                    let char = canvas.tokens.placeables.find(i => i.name == data.attacker); 
+                    let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
+                    let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
+                    data.range = dist;
+                    data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0))};
+                }
                 if (act.data.data.equipped.off == item.id) {
                     if (dc_utils.char.has('edge', 'Two Fisted')) {
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
@@ -291,7 +298,7 @@ const dc_utils = {
         },
         get_result_template: function(data) {
             let r_str = `
-                <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
+                <p style="text-align:center">${data.roller} rolled ${data.roll.total}</p>
                 <table style="table-layout: fixed;">
                     <tr style="text-align:center">
             `;

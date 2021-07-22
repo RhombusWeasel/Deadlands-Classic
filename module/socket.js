@@ -57,33 +57,8 @@ function build_roll_dialog(data) {
     let form = `
         <form>
             <div>`
-    `;
-                <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
-                <table style="table-layout: fixed;">
-                    <tr style="text-align:center">
-    `;
-    for (let i = 0; i < data.roll.results.length; i++) {
-        const res = data.roll.results[i];
-        form += `
-                        <td>${res}</td>
-        `;
-    }
-    form += `
-                    </tr>
-                </table>
-                <h3 class="center">Modifiers</h3>
-                <table>`;
-    for (let key of Object.keys(data.modifiers)) {
-        form += `
-                    <tr class="center">
-                        <td>${data.modifiers[key].label}</td>
-                        <td>${data.modifiers[key].modifier}</td>
-                    </tr>
-        `;
-    }
-    form += `
-                </table>
-    `;
+    ;
+    form += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         if (data.roll.raises == 1) {
             form += `
@@ -557,17 +532,6 @@ let operations = {
             data.write_value = 'hit_roll'
             data.modifier = 0
             let itm = char.actor.getOwnedItem(data.weapon);
-            if (data.type == 'ranged') {
-                let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-                let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
-                data.range = dist;
-                data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0))};
-                data.trait = 'deftness';
-                data.skill = 'shootin_' + itm.data.data.gun_type;
-            }
-            if (itm.data.data.off_hand) {
-                data.modifier += char.actor.data.data.off_hand_modifier;
-            }
             operations.skill_roll(data);
         }
     },

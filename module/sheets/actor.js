@@ -20,27 +20,27 @@ function get_target() {
     return false;
 }
 
-function build_skill_template(data, roll_data) {
+function build_skill_template(data) {
     let r_str = `
         <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
-        <h2 style="text-align:center">${roll_data.total}</h2>
+        <h2 style="text-align:center">${data.roll.total}</h2>
     `;
-    if (roll_data.success) {
+    if (data.roll.success) {
         //Winning
-        if (roll_data.raises == 1) {
+        if (data.roll.raises == 1) {
             r_str += `
                 <p style="text-align:center">${data.name} passed with a raise</p>
             `;
-        }else if (roll_data.raises > 0) {
+        }else if (data.roll.raises > 0) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with ${roll_data.raises} raises</p>
+                <p style="text-align:center">${data.name} passed with ${data.roll.raises} raises</p>
             `;
         }else{
             r_str += `
                 <p style="text-align:center">${data.name} passed</p>
             `;
         }
-    }else if (roll_data.ones > roll_data.pass) {
+    }else if (data.roll.ones > data.roll.pass) {
         r_str += `
             <p style="text-align:center">${data.name} critically failed!</p>
         `;
@@ -175,7 +175,7 @@ export default class PlayerSheet extends ActorSheet {
             let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
             data.roll = dc_utils.roll.new(data);
             data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
-            ChatMessage.create({content: build_skill_template(data, data.roll)});
+            ChatMessage.create({content: build_skill_template(data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }
@@ -234,7 +234,7 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             data.roll = dc_utils.roll.new(data);
             data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
-            ChatMessage.create({content: build_skill_template(data, data.roll)});
+            ChatMessage.create({content: build_skill_template(data)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }
