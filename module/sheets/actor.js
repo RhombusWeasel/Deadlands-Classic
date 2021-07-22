@@ -331,6 +331,8 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        console.log('DC | _on_item_equip |', item.name);
         dc_utils.char.items.equip(this.actor, itemId);
     }
 
