@@ -55,7 +55,7 @@ function build_skill_template(data, roll_data) {
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/player-sheet.html`,
+            template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
             classes: ["player-sheet", "doc"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }]
         });

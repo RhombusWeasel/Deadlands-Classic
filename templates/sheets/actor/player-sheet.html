@@ -4,7 +4,7 @@
             <div data-edit="name" contenteditable="">{{actor.name}}</div>
         </h1>
         <a class="center"><p class="refresh">Refresh</p></a>
-        {{> "systems/deadlands_classic/templates/partials/fate-chips.hbs"}}
+        {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
         {{#if action_deck}}
         {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}
         {{/if}}
@@ -25,45 +25,45 @@
         </nav>
         <section class="sheet-body scroller trait_scroller">
             <div class="tab description" data-group="primary" data-tab="description">
-                {{> "systems/deadlands_classic/templates/partials/description.hbs"}}
+                {{> "systems/deadlands_classic/templates/partials/tabs/description.hbs"}}
             </div>
             <div class="tab core" data-group="primary" data-tab="core">
-                {{> "systems/deadlands_classic/templates/partials/core.hbs"}}
+                {{> "systems/deadlands_classic/templates/partials/tabs/core.hbs"}}
             </div>
             <div class="tab traits" data-group="primary" data-tab="traits">
                 <div class="sheet">
-                    {{> "systems/deadlands_classic/templates/partials/traits.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/traits.hbs"}}
                 </div>
             </div>
             <div class="tab combat" data-group="primary" data-tab="combat">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/combat.hbs" this}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/combat.hbs" this}}
                 </div>
             </div>
             {{#if miracles}}
             <div class="tab miracles" data-group="primary" data-tab="miracles">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/miracles.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/miracles.hbs"}}
                 </div>
             </div>
             {{/if}}
             {{#if_has "edge" "Arcane Background (Huckster)"}}
             <div class="tab hexes" data-group="primary" data-tab="hexes">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/hexes.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/hexes.hbs"}}
                 </div>
             </div>
             {{/if_has}}
             {{#if favors}}
-                {{> "systems/deadlands_classic/templates/partials/favor.hbs"}}
+                {{> "systems/deadlands_classic/templates/partials/tabs/favor.hbs"}}
             {{/if}}
             <div class="tab goods" data-group="primary" data-tab="goods">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/goods.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/goods.hbs"}}
                 </div>
             </div>
             <div class="tab notes" data-group="primary" data-tab="notes">
-                {{editor target="data.data.notes" owner="false" editable="true"}}
+                {{editor target="data.notes" owner="false" editable="true"}}
             </div>
         </section>
     </div>

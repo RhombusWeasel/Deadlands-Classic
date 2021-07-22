@@ -13,7 +13,7 @@ let aim_bonus = 0
 export default class GeneratorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/generator-sheet.html`,
+            template: `systems/deadlands_classic/templates/sheets/actor/generator-sheet.html`,
             classes: ["player-sheet"]
         });
     }

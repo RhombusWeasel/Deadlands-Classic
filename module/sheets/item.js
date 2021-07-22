@@ -1,6 +1,6 @@
 export default class DCItem extends ItemSheet {
     get template() {
-        return `systems/deadlands_classic/templates/${this.item.data.type}-sheet.html`;
+        return `systems/deadlands_classic/templates/sheets/items/${this.item.data.type}-sheet.html`;
     }
 
     getData() {

@@ -7,23 +7,23 @@ import mook_sheet from "./sheets/mook.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
-        "systems/deadlands_classic/templates/partials/core.hbs",
-        "systems/deadlands_classic/templates/partials/mook-core.hbs",
-        "systems/deadlands_classic/templates/partials/goods.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/deck.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/core.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/description.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/favor.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
-        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
-        "systems/deadlands_classic/templates/partials/combat.hbs",
-        "systems/deadlands_classic/templates/partials/description.hbs",
-        "systems/deadlands_classic/templates/partials/miracles.hbs",
-        "systems/deadlands_classic/templates/partials/hexes.hbs",
-        "systems/deadlands_classic/templates/partials/reuseable/deck.hbs",
-        "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
-        "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
-        "systems/deadlands_classic/templates/partials/fate-chips.hbs",
-        "systems/deadlands_classic/templates/partials/favor.hbs",
-        "systems/deadlands_classic/templates/partials/traits.hbs"
+        "systems/deadlands_classic/templates/partials/mook-core.hbs",
+        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"
     ]
     return loadTemplates(template_paths)
 }
