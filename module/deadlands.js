@@ -87,6 +87,15 @@ Hooks.once("init", function () {
         //return options.inverse(this);
     });
 
+    Handlebars.registerHelper('if_equipped', function (slot, id, options) {
+        //console.log(id, type, val, options);
+        let act = game.actors.get(options.data.root.id);
+        if (dc_utils.char.is_equipped(act, slot, id)) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
             let act_data = game.actors.get(game.user.data.character);

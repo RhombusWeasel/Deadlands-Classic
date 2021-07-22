@@ -92,6 +92,12 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.equippable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
+            is_equipped: function(act, slot, id) {
+                if (id == act.data.data.equipped[slot]) {
+                    return true;
+                }
+                return false;
+            },
             delete: function(act, id) {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
