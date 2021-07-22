@@ -3,7 +3,7 @@
     <table>
         <tr class="item" data-itemid="{{id}}">
             <td>
-                <select class="item {{label}}-select center" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
+                <select class="item {{label}}-select center iblock" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
                     <option value="Nuthin">Nuthin'</option>
                     {{#each items as |item|}}
                         {{#if (eq item.data.data.slot ../slot)}}

@@ -8,6 +8,9 @@
 .center{
     text-align: center;
 }
+.iblock{
+    display: inline-block;
+}
 .right{
     text-align: right;
     padding-right: 10px;
