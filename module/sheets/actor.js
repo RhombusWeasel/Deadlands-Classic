@@ -173,9 +173,9 @@ export default class PlayerSheet extends ActorSheet {
             dc_utils.socket.emit('check_tn', data);
         }else{
             let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
-            data.roll_data = dc_utils.roll.new(data);
-            data = dc_utils.roll.evaluate(data.roll_data, data.tn, mod + wound_mod);
-            ChatMessage.create({content: build_skill_template(data, data.roll_data)});
+            data.roll = dc_utils.roll.new(data);
+            data = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data, data.roll)});
             roll.toMessage({rollMode: 'gmroll'});
         }
     }

@@ -289,6 +289,48 @@ const dc_utils = {
             }
             return tn;
         },
+        get_result_template: function(data) {
+            let r_str = `
+                <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
+                <table style="table-layout: fixed;">
+                    <tr style="text-align:center">
+            `;
+            for (let i = 0; i < data.roll.amt; i++) {
+                const res = data.roll.results[i];
+                if(res){
+                    if (res + data.modifier >= data.tn) {
+                        r_str += `
+                            <td style="color: green">${res}</td>
+                        `;
+                    }else if (res == 1) {
+                        r_str += `
+                            <td style="color: red">${res}</td>
+                        `;
+                    }else {
+                        r_str += `
+                            <td>${res}</td>
+                        `;
+                    }
+                }
+            }
+            r_str += `
+                    </tr>
+                </table>
+                <h3 class="center">Modifiers</h3>
+                <table>`;
+            for (let key of Object.keys(data.modifiers)) {
+                r_str += `
+                    <tr class="center">
+                        <td>${data.modifiers[key].label}</td>
+                        <td>${data.modifiers[key].modifier}</td>
+                    </tr>
+                `;
+            }
+            r_str += `
+                </table>
+            `;
+            return r_str
+        },
     },
     deck: {
         new: function(id) {

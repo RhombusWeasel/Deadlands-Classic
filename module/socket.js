@@ -10,29 +10,8 @@ function build_skill_template(data) {
         <h3 style="text-align:center">${data.roll.total}</h3>
         <table style="table-layout: fixed;">
             <tr style="text-align:center">
-        `;
-        for (let i = 0; i < data.roll.amt; i++) {
-            const res = data.roll.results[i];
-            if(res){
-                if (res + data.modifier >= data.tn) {
-                    r_str += `
-                        <td style="color: green">${res}</td>
-                    `;
-                }else if (res == 1) {
-                    r_str += `
-                        <td style="color: red">${res}</td>
-                    `;
-                }else {
-                    r_str += `
-                        <td>${res}</td>
-                    `;
-                }
-            }
-        }
-        r_str += `
-            </tr>
-        </table>
-        `;
+    `;
+    r_str += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         //Winning
         if (data.roll.raises == 1) {
@@ -77,7 +56,8 @@ function build_marshal_draw_message(col) {
 function build_roll_dialog(data) {
     let form = `
         <form>
-            <div>
+            <div>`
+    `;
                 <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
                 <table style="table-layout: fixed;">
                     <tr style="text-align:center">
