@@ -8,7 +8,7 @@
                 <option value="Nuthin">Nuthin'</option>
                 {{#each equippable as |item|}}
                     {{#if (eq item.slot 'hand')}}
-                        {{#if_equipped hand.key item.id}}
+                        {{#if_equipped @../key item.id}}
                             <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                         {{else}}
                             <option value="{{item.id}}">{{item.name}}</option>
