@@ -100,6 +100,7 @@ Hooks.once("init", function () {
     Handlebars.registerHelper('is_one_handed', function(options) {
         let act = game.actors.get(options.data.root.id);
         let item = act.items.get(act.data.data.equipped.dominant);
+        console.log('DC | HBH is_one_handed |', act, item);
         if (item.data.multi_slot == false) {
             return options.fn(this);
         }
