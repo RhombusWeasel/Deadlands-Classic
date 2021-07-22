@@ -1,18 +1,14 @@
 <section class="form typed">
     <h2 class="center">Equipment</h2>
     <div class="flexrow">
-        {{#each hand_slots as | hand |}}
-            {{log hand}}
-            <div>
-                <h3 class="center">{{hand.label}} Hand</h3>
-                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label=hand.label slot="hand"}}
-            </div>
-        {{/each}}
-        {{!-- 
+        <div>
+            <h3 class="center">Dominant Hand</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="dominant" slot="hand"}}
+        </div>
         <div>
             <h3 class="center">Off Hand</h3>
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" items=equippable label="off" slot="hand"}}
-        </div> --}}
+        </div>
     </div>
     <div class="flexrow">
         <div>
