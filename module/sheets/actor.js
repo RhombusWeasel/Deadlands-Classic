@@ -116,7 +116,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".roll-quickness").click(this._on_roll_init.bind(this));
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
-        html.find(".melee-attack").click(this._on_melee_attack.bind(this));
+        html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
@@ -585,6 +585,50 @@ export default class PlayerSheet extends ActorSheet {
             <p>${reply}</p>
         `});
         return this.getData()
+    }
+
+    _on_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId  = element.closest(".item").dataset.itemid;
+        if (itemid == 'Nuthin') {
+            return
+        }else{
+            let item   = this.actor.items.get(itemId);
+            let target = dc_utils.char.target.get(this.actor);
+            if (target == false) {
+                console.log('DC:', 'Target not found.');
+                return;
+            }
+            let data = {
+                type:     'melee',
+                roller:   this.actor.name,
+                target:   target.name,
+                attacker: this.actor.name,
+                weapon:   itemId,
+                tn:       dc_utils.roll.get_tn(),
+                name:     this.actor.name,
+            }
+            if (item.type == 'melee') {
+                let skill       = dc_utils.char.skill.get(this.actor, 'fightin');
+                data.type       = 'melee'
+                data.skill      = 'fightin'
+                data.amt        = skill.level
+                data.dice       = skill.die_type
+                data.skill_name = skill.name
+                data.modifier   = skill.modifier
+            }else if (item.type == 'firearm') {
+                let skl         = `shootin_${item.data.data.gun_type}`
+                let skill       = dc_utils.char.skill.get(this.actor, skl);
+                data.type       = 'ranged'
+                data.skill      = skl
+                data.amt        = skill.level
+                data.dice       = skill.die_type
+                data.skill_name = skill.name
+                data.modifier   = skill.modifier
+            }
+            dc_utils.socket.emit("declare_attack", data);
+        }
     }
 
     _on_melee_attack(event) {
