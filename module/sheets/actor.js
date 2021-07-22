@@ -321,7 +321,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         return item.sheet.render(true);
     }
 
@@ -329,11 +329,11 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         ChatMessage.create({ content: `
             Discarding ${item.type} ${item.name}
         `});
-        return this.actor.deleteOwnedItem(itemId);
+        dc_utils.char.items.delete(this.actor, itemId);
     }
 
     _on_draw_fate(event) {
