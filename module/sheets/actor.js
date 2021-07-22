@@ -21,6 +21,7 @@ function get_target() {
 }
 
 function build_skill_template(data) {
+    console.log('DC | build_skill_template', data);
     let r_str = `
         <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
         <h2 style="text-align:center">${data.roll.total}</h2>
