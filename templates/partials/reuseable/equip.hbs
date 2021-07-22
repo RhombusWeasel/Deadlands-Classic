@@ -5,13 +5,11 @@
         {{#each items as |item|}}
             {{log item.data.data.slot ../slot}}
             {{#if (eq item.data.slot ../slot)}}
-                <div class="item" data-itemid="{{item.id}}">
                 {{#if_equipped ../label item.id}}
                     <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
                 {{else}}
                     <option value="{{item.id}}">{{item.name}}</option>
                 {{/if_equipped}}
-                </div>
             {{/if}}
         {{/each}}
     </select>
