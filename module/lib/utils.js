@@ -212,7 +212,7 @@ const dc_utils = {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
                 }
                 if (act.data.data.equipped.off == item.id) {
-                    if (dc_utils.char.has('edge', 'Two Fisted')) {
+                    if (dc_utils.char.has(act, 'edge', 'Two Fisted')) {
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
                     }else{
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
