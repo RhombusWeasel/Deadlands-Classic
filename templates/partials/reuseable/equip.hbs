@@ -1,6 +1,6 @@
 {{!-- Pass label for the name of the dropdown --}}
 <section>
-    <select name="data.equipped.{{label}}" id="{{label}}-select">
+    <select class="{{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select">
         {{#each items as |item|}}
             {{#if (eq item.slot slot)}}
                 {{#if_equipped label item.id}}
