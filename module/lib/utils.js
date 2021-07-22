@@ -203,11 +203,13 @@ const dc_utils = {
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
             }
-            if (act.data.data.equipped.off == item.id) {
-                if (dc_utils.char.has('edge', 'Two Fisted')) {
-                    data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
-                }else{
-                    data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
+            if (item) {
+                if (act.data.data.equipped.off == item.id) {
+                    if (dc_utils.char.has('edge', 'Two Fisted')) {
+                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                    }else{
+                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
+                    }
                 }
             }
             return data;
