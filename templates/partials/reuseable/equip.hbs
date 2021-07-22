@@ -1,6 +1,6 @@
 {{!-- Pass label for the name of the dropdown --}}
 <section>
-    <select name="{{label}}" id="{{label}}-select" contenteditable="true">
+    <select name="data.equipped.{{label}}" id="{{label}}-select" contenteditable="true">
         {{#each items as |item|}}
             {{#if (eq item.slot slot)}}
                 <option value="{{item.id}}">{{item.name}}</option>
