@@ -530,6 +530,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         console.log()
         let itemId  = element.dataset.itemid;
+        let item = this.actor.items.get(itemId)
         if (itemId == 'Nuthin') {
             return
         }else{
