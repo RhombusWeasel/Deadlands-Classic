@@ -1,15 +1,31 @@
 {{!-- Pass label for the name of the dropdown --}}
 <section>
-    <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
-        <option value="Nuthin">Nuthin'</option>
-        {{#each items as |item|}}
-            {{#if (eq item.data.data.slot ../slot)}}
-                {{#if_equipped ../label item.id}}
-                    <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
-                {{else}}
-                    <option value="{{item.id}}">{{item.name}}</option>
-                {{/if_equipped}}
-            {{/if}}
-        {{/each}}
-    </select>
+    <table>
+        <tr class="item" data-itemid="{{data.data.equipped[label]}}">
+            <td>
+                <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
+                    <option value="Nuthin">Nuthin'</option>
+                    {{#each items as |item|}}
+                        {{#if (eq item.data.data.slot ../slot)}}
+                            {{#if_equipped ../label item.id}}
+                                <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
+                            {{else}}
+                                <option value="{{item.id}}">{{item.name}}</option>
+                            {{/if_equipped}}
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </td>
+            {{#each items as |item|}}
+                {{#if (eq item.data.data.slot ../slot)}}
+                    {{#if_equipped ../label item.id}}
+                        <td class="center">{{this.data.data.chamber}}/{{this.data.data.max}}</td>
+                        <td class="center"><a class="gun-attack"><i class="fas fa-crosshairs" title="Fire {{this.name}}"></i></a></td>
+                        <td class="center"><a class="gun-reload"><i class="fas fa-sync-alt" title="Reload {{this.name}}"></i></a></td>
+                    {{else}}
+                    {{/if_equipped}}
+                {{/if}}
+            {{/each}}
+        </tr>
+    </table>
 </section>
