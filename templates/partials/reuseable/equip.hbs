@@ -3,7 +3,7 @@
     <select name="{{label}}" id="{{label}}-select">
         {{#each items as |item|}}
             {{#if (eq item.slot slot)}}
-                <option value="{{item.id}}">{{item.name}}</option>
+                <option value="{{item.id}}" contenteditable="true">{{item.name}}</option>
             {{/if}}
         {{/each}}
     </select>
