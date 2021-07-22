@@ -97,7 +97,7 @@ Hooks.once("init", function () {
         return options.inverse(this);
     });
 
-    Handlebars.registerHelper('is_one_handed', function() {
+    Handlebars.registerHelper('is_one_handed', function(options) {
         let act = game.actors.get(options.data.root.id);
         let item = act.items.get(act.data.data.equipped.dominant);
         if (item.multi_slot) {
