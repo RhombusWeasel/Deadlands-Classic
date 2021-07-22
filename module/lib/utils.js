@@ -217,7 +217,7 @@ const dc_utils = {
         new: function(data) {
             let modifier = 0
             for (let key of Object.keys(data.modifiers)) {
-                modifier += data.modifiers[key].modifier
+                modifier += parseInt(data.modifiers[key].modifier);
             }
             let r_data = {
                 success: false,
@@ -232,11 +232,11 @@ const dc_utils = {
                 ones: 0,
                 results: [],
             };
-            let roll = new Roll(`${data.amt}${data.dice}ex + ${data.modifier}`).roll();
+            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
             r_data.total = roll._total;
             let count = 0
             roll.terms[0].results.forEach(die => {
-                if (die.result + data.modifier >= data.tn && count < r_data.amt) {
+                if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
                 }else if (die.result == 1 && count < r_data.amt) {
                     r_data.ones += 1;
