@@ -11,6 +11,10 @@
 .iblock{
     display: inline-block;
 }
+.border{
+    border: 5px;
+    border-color: saddlebrown;
+}
 .right{
     text-align: right;
     padding-right: 10px;
