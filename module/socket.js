@@ -280,7 +280,7 @@ let operations = {
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
         if (char.isOwner) {
-            let skill = dc_utils.roll.new_roll_packet(char, 'skill', data.skill);
+            let skill = dc_utils.roll.new_roll_packet(char, data.type, data.skill);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
         }else if (game.user.isGM) {
