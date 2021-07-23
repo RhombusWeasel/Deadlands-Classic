@@ -12,8 +12,9 @@
     display: inline-block;
 }
 .border{
-    border: 5px;
+    border: 1px;
     border-color: saddlebrown;
+    padding: 5px;
 }
 .right{
     text-align: right;
