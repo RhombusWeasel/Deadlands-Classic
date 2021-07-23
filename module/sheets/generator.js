@@ -68,10 +68,10 @@ export default class GeneratorSheet extends ActorSheet {
         let g_deck = dc_utils.deck.new('gen_deck');
         let die_types = {
             Joker: 'd12',
-            Ace: 'd12',
-            King: 'd10',
-            Queen: 'd10',
-            Jack: 'd8',
+            A: 'd12',
+            K: 'd10',
+            Q: 'd10',
+            J: 'd8',
             "10": 'd8',
             "9": 'd8',
             "8": 'd8',
@@ -83,10 +83,10 @@ export default class GeneratorSheet extends ActorSheet {
             "2": 'd4'
         };
         let suit_types = {
-            'Spades': 4,
-            'Hearts': 3,
-            'Diamonds': 2,
-            'Clubs': 1
+            '\u2660': 4,
+            '\u2661': 3,
+            '\u2662': 2,
+            '\u2663': 1
         };
         for (let d = 0; d < 12; d++) {
             let card = g_deck.pop();
