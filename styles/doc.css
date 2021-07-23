@@ -12,6 +12,7 @@
     display: inline-block;
 }
 .border{
+    border-style: groove;
     border: 1px;
     border-color: saddlebrown;
     padding: 5px;
