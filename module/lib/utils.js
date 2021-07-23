@@ -195,10 +195,8 @@ const dc_utils = {
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                 console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
-                    chatMessage.create({content: `
-                        <h3 class="center">Out of Range</h3>
-                        <p class="center">You'll need to haul ass if you want to get there this round.</p>
-                    `})
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
                 }
             }
             let skill = dc_utils.char.skill.get(act, skl);
@@ -421,7 +419,18 @@ const dc_utils = {
                 `
             }
             return sheet
-        }
+        },
+        send: function(title) {
+            let sheet = `
+                <h3 style="text-align: center;">${title}</h3>
+            `
+            for (let i = 0; i < arguments.length; i++) {
+                sheet += `
+                <p style="text-align: center;">${arguments[i]}</p>
+                `
+            }
+            ChatMessage.create({content: sheet})
+        },
     },
     socket: {
         emit: function(op, data) {
