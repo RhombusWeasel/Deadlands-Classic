@@ -188,6 +188,7 @@ const dc_utils = {
             }
             if (target) {
                 dist = Math.floor(canvas.grid.measureDistance(act, target));
+                console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
                     chatMessage.create({content: `
                         <h3 class="center">Out of Range</h3>
@@ -202,6 +203,7 @@ const dc_utils = {
                 target:     target.name,
                 attacker:   act.name,
                 weapon:     wep,
+                range:      dist,
                 tn:         dc_utils.roll.get_tn(),
                 name:       act.name,
                 skill:      skl,
@@ -214,7 +216,6 @@ const dc_utils = {
                 }
             }
             if (item) {
-                data.range = dist;
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
                 }
