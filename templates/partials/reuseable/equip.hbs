@@ -23,7 +23,7 @@
                         {{/if}}
         </tr>
         <tr class="center">
-                        {{#if (eq item.type == 'melee')}}
+                        {{#if (eq item.type 'melee')}}
             <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
                         {{/if}}
                         {{#if (eq item.type 'firearm')}}
