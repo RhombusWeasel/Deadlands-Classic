@@ -7,17 +7,23 @@ import mook_sheet from "./sheets/mook.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
-        "systems/deadlands_classic/templates/partials/core.hbs",
-        "systems/deadlands_classic/templates/partials/mook-core.hbs",
-        "systems/deadlands_classic/templates/partials/goods.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/deck.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/core.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/description.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/favor.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
-        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
-        "systems/deadlands_classic/templates/partials/combat.hbs",
-        "systems/deadlands_classic/templates/partials/description.hbs",
-        "systems/deadlands_classic/templates/partials/fate-chips.hbs",
-        "systems/deadlands_classic/templates/partials/traits.hbs"
+        "systems/deadlands_classic/templates/partials/mook-core.hbs",
+        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"
     ]
     return loadTemplates(template_paths)
 }
@@ -71,6 +77,34 @@ Hooks.once("init", function () {
         onChange: value => {
           console.log('Updated unskilled checks: ', value)
         }
+    });
+
+    Handlebars.registerHelper('if_has', function (type, val, options) {
+        //console.log(id, type, val, options);
+        let act = game.actors.get(options.data.root.id);
+        if (dc_utils.char.has(act, type, val)) {
+            return options.fn(this);
+        }
+        //return options.inverse(this);
+    });
+
+    Handlebars.registerHelper('if_equipped', function (slot, id, options) {
+        //console.log(id, slot, options);
+        let act = game.actors.get(options.data.root.id);
+        if (dc_utils.char.items.is_equipped(act, slot, id)) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+
+    Handlebars.registerHelper('is_one_handed', function(options) {
+        let act = game.actors.get(options.data.root.id);
+        let item = act.items.get(act.data.data.equipped.dominant);
+        console.log('DC | HBH is_one_handed |', item.data.data.multi_slot);
+        if (item.data.data.multi_slot == false) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('lvl_head', function (options) {

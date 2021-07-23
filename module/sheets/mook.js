@@ -46,7 +46,7 @@ function get_dice_from_card(card, deck) {
 export default class NPCSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/mook-sheet.html`,
+            template: `systems/deadlands_classic/templates/sheets/actor/mook-sheet.html`,
             classes: ["player-sheet"]
         });
     }

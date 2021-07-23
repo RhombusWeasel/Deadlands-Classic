@@ -41,7 +41,9 @@
                 "melee": {
                     "cost": "Cost",
                     "damage": "Damage",
-                    "equippable": "Equippable"
+                    "equippable": "Equippable",
+                    "slot": "Equip Slot",
+                    "multi_slot": "Two Handed"
                 },
                 "firearm": {
                     "cost": "Cost",
@@ -55,7 +57,9 @@
                     "damage": "Damage",
                     "damage_bonus": "Damage Bonus",
                     "off_hand": "Off Hand",
-                    "equippable": "Equippable"
+                    "equippable": "Equippable",
+                    "slot": "Equip Slot",
+                    "multi_slot": "Two Handed"
                 },
                 "hex": {
                     "level": "Level",
@@ -90,7 +94,9 @@
             "goods": {
                 "cost": "Cost",
                 "amount": "Amount",
-                "equippable": "Equippable"
+                "equippable": "Equippable",
+                "slot": "Equip Slot",
+                "multi_slot": "Two Handed"
             }
         },
         "fate_chips": {

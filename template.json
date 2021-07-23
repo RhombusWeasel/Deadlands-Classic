@@ -36,6 +36,13 @@
                     "leg_left": 0,
                     "leg_right": 0
                 },
+                "equipped": {
+                    "dominant": "Nuthin",
+                    "off": "Nuthin",
+                    "head":"Nuthin",
+                    "body": "Nuthin",
+                    "legs": "Nuthin"
+                },
                 "wound_modifier": 0,
                 "grit": 0,
                 "cash": 0,
@@ -657,7 +664,13 @@
                 "description": "",
                 "script": "",
                 "equippable": false,
-                "equipped": false
+                "equipped": false,
+                "equipped_dominant": false,
+                "equipped_off": false,
+                "slot": "hand",
+                "multi_slot": false,
+                "reliability": false,
+                "modifiers": []
             }
         },
         "firearm": {

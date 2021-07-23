@@ -20,27 +20,28 @@ function get_target() {
     return false;
 }
 
-function build_skill_template(data, roll_data) {
+function build_skill_template(data) {
+    console.log('DC | build_skill_template', data);
     let r_str = `
         <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
-        <h2 style="text-align:center">${roll_data.total}</h2>
     `;
-    if (roll_data.success) {
+    r_str += dc_utils.roll.get_result_template(data);
+    if (data.roll.success) {
         //Winning
-        if (roll_data.raises == 1) {
+        if (data.roll.raises == 1) {
             r_str += `
                 <p style="text-align:center">${data.name} passed with a raise</p>
             `;
-        }else if (roll_data.raises > 0) {
+        }else if (data.roll.raises > 0) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with ${roll_data.raises} raises</p>
+                <p style="text-align:center">${data.name} passed with ${data.roll.raises} raises</p>
             `;
         }else{
             r_str += `
                 <p style="text-align:center">${data.name} passed</p>
             `;
         }
-    }else if (roll_data.ones > roll_data.pass) {
+    }else if (data.roll.ones > data.roll.pass) {
         r_str += `
             <p style="text-align:center">${data.name} critically failed!</p>
         `;
@@ -55,20 +56,23 @@ function build_skill_template(data, roll_data) {
 export default class PlayerSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/player-sheet.html`,
+            template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
             classes: ["player-sheet", "doc"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }]
         });
     }
 
     getData() {
-        console.log('Getting Data');
         const data = super.getData();
         data.config = CONFIG.dc;
+        data.id = this.actor.id;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
+        data.equippable = dc_utils.char.items.get_equippable(this.actor);
+        data.hand_slots = dc_utils.hand_slots;
+        data.equip_slots = dc_utils.equip_slots;
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
-        data.miracles = dc_utils.char.items.get(this.actor, "miracles");
+        data.miracles = dc_utils.char.items.get(this.actor, "miracle");
         data.tricks = dc_utils.char.items.get(this.actor, "trick");
         data.hexes = dc_utils.char.items.get(this.actor, "hex");
         data.favors = dc_utils.char.items.get(this.actor, "favor");
@@ -76,9 +80,8 @@ export default class PlayerSheet extends ActorSheet {
         data.edges = dc_utils.char.items.get(this.actor, "edge");
         data.level_headed_available = game.dc.level_headed_available
         data.goods = dc_utils.char.items.get(this.actor, "goods");
-        data.huckster_deck = dc_utils.char.items.get(this.actor, "huckster_deck");
+        data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
-        console.log(data.action_deck);
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.fate_chips = [
             {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
@@ -114,80 +117,34 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".roll-quickness").click(this._on_roll_init.bind(this));
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
-        html.find(".melee-attack").click(this._on_melee_attack.bind(this));
+        html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
-
-        if (!(game.dc.collapse)) {
-            game.dc.collapse = []
-        }
-        var coll = document.getElementsByClassName("collapsible");
-        for (let i = 0; i < coll.length; i++) {
-            if (!(game.dc.collapse[i])) {
-                game.dc.collapse[i] = false
-            }
-            coll[i].addEventListener("click", function() {
-                this.classList.toggle("active");
-                var content = this.nextElementSibling;
-                if (!(game.dc.collapse[i])) {
-                    content.style.maxHeight = null;
-                    game.dc.collapse[i] = true;
-                } else {
-                    content.style.maxHeight = content.scrollHeight + "px";
-                    game.dc.collapse[i] = false;
-                }
-            });
-            if (game.dc.collapse[i]) {
-                coll[i].nextElementSibling.style.maxHeight = null;
-            } else {
-                coll[i].nextElementSibling.style.maxHeight = coll[i].nextElementSibling.scrollHeight + "px";
-            }
-        }
+        html.find(".dominant-select").change(this._on_item_equip.bind(this));
+        html.find(".off-select").change(this._on_item_equip.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
             game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
         });
         traits[0].scrollTop = game.dc.trait_scroll;
-        /* var items = document.getElementsByClassName("item_scroller");
-        items[0].addEventListener("scroll", () => {
-            game.dc.item_scroll = document.querySelector(".item_scroller").scrollTop;
-        });
-        items[0].scrollTop = game.dc.item_scroll; */
         return super.activateListeners(html);
     }
 
     _on_trait_roll(event) {
         let element = event.currentTarget;
         let trait_name = element.closest(".trait-data").dataset.trait;
-        if (this.actor.hasPlayerOwner) {
-           dc_utils.socket.emit('check_tn', {
-                type: 'trait',
-                roller: this.actor.name,
-                trait: trait_name,
-                modifier: 0
-            });
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', trait_name);
+        if (!(game.user.isGM)) {
+            dc_utils.socket.emit('check_tn', data);
         }else{
-            let trait = this.actor.data.data.traits[trait_name];
-            let data = {
-                type: 'trait',
-                skill_name: trait.name,
-                tn: 5,
-                name: this.actor.name
-            };
-            let lvl = trait.level;
-            let die = trait.die_type;
-            let mod = trait.modifier;
-            let wound_mod = this.actor.data.data.wound_modifier;
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
         }
     }
 
@@ -239,28 +196,13 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let skl = element.closest(".skill-data").dataset.skill;
         let skill = dc_utils.char.skill.get(this.actor, skl);
-        let data = {
-            type: 'skill',
-            roller: this.actor.name,
-            amt: skill.level,
-            dice: skill.die_type,
-            skill_name: skill.name,
-            skill: skl,
-            tn: dc_utils.roll.get_tn(),
-            name: this.actor.name,
-            modifier: skill.modifier
-        }
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', skl);
         if (!(game.user.isGM)) {
             dc_utils.socket.emit('check_tn', data);
         }else{
-            let wound_mod = parseInt(this.actor.data.data.wound_modifier);
-            let skill = dc_utils.char.skill.get(this.actor, skl);
-            let formula = `${skill.level}${skill.die_type}ex + ${skill.modifier}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, skill.modifier + wound_mod);
-            data.skill_name = skill.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
         }
     }
 
@@ -321,19 +263,30 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         return item.sheet.render(true);
+    }
+
+    _on_item_equip(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let slot = element.closest(".item").dataset.slot;
+        let itemId = element.value;
+        let item = this.actor.items.get(itemId);
+        console.log(`DC | _on_item_equip | adding ${item.name} [${item.id}] to ${slot}`);
+        dc_utils.char.items.equip(this.actor, slot, itemId);
+        console.log('DC | _on_item_equip |', item.name, item.id, this.actor.data.data.equipped);
     }
 
     _on_item_delete(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         ChatMessage.create({ content: `
             Discarding ${item.type} ${item.name}
         `});
-        return this.actor.deleteOwnedItem(itemId);
+        dc_utils.char.items.delete(this.actor, itemId);
     }
 
     _on_draw_fate(event) {
@@ -474,7 +427,7 @@ export default class PlayerSheet extends ActorSheet {
                 char: this.actor.name
             }
         });
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
@@ -494,10 +447,11 @@ export default class PlayerSheet extends ActorSheet {
             operation: 'discard_card',
             data: {
                 name: item.name,
-                type: item.type
+                type: item.type,
+                char: this.actor.name
             }
         });
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
@@ -530,7 +484,7 @@ export default class PlayerSheet extends ActorSheet {
             }
         });
         console.log(`Removing ${item.name} ${itemId} ${item}`)
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
+        dc_utils.char.items.delete(this.actor, itemId);
         return this.getData();
     }
 
@@ -569,6 +523,25 @@ export default class PlayerSheet extends ActorSheet {
             <p>${reply}</p>
         `});
         return this.getData()
+    }
+
+    _on_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log(element)
+        let itemId  = element.dataset.itemid;
+        let item = this.actor.items.get(itemId)
+        if (itemId == 'Nuthin') {
+            return
+        }else{
+            let data
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+            }
+            dc_utils.socket.emit("declare_attack", data);
+        }
     }
 
     _on_melee_attack(event) {
@@ -632,7 +605,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
+        let itemId = element.dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let shots = parseInt(item.data.data.chamber);
         let max = item.data.data.max;

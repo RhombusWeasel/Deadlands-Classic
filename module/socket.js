@@ -10,29 +10,8 @@ function build_skill_template(data) {
         <h3 style="text-align:center">${data.roll.total}</h3>
         <table style="table-layout: fixed;">
             <tr style="text-align:center">
-        `;
-        for (let i = 0; i < data.roll.amt; i++) {
-            const res = data.roll.results[i];
-            if(res){
-                if (res + data.modifier >= data.tn) {
-                    r_str += `
-                        <td style="color: green">${res}</td>
-                    `;
-                }else if (res == 1) {
-                    r_str += `
-                        <td style="color: red">${res}</td>
-                    `;
-                }else {
-                    r_str += `
-                        <td>${res}</td>
-                    `;
-                }
-            }
-        }
-        r_str += `
-            </tr>
-        </table>
-        `;
+    `;
+    r_str += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         //Winning
         if (data.roll.raises == 1) {
@@ -77,21 +56,9 @@ function build_marshal_draw_message(col) {
 function build_roll_dialog(data) {
     let form = `
         <form>
-            <div>
-                <h1 style="text-align:center">${data.roller} rolled ${data.roll.total}</h1>
-                <table style="table-layout: fixed;">
-                    <tr style="text-align:center">
-    `;
-    for (let i = 0; i < data.roll.results.length; i++) {
-        const res = data.roll.results[i];
-        form += `
-                        <td>${res}</td>
-        `;
-    }
-    form += `
-                    </tr>
-                </table>
-    `;
+            <div>`
+    ;
+    form += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         if (data.roll.raises == 1) {
             form += `
@@ -201,7 +168,7 @@ function battle_report(data) {
     `;
     if (data.type == 'ranged'){
         msg += `
-            <h3 style="text-align:center">Range: ${data.range} yards [-${data.range_mod}]</h3>
+            <h3 style="text-align:center">Range: ${data.range} yards [-${data.modifiers.range.modifier}]</h3>
             <p style="text-align:center">${data.attacker} fired their ${data.weapon_name} at ${data.target}</p>
         `;
     }else{
@@ -313,10 +280,7 @@ let operations = {
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
         if (char.isOwner) {
-            let skill = dc_utils.char.skill.get(char, data.skill);
-            data.amt = skill.level;
-            data.dice = skill.die_type;
-            data.modifier += skill.modifier + parseInt(char.data.data.wound_modifier);
+            let skill = dc_utils.roll.new_roll_packet(char, data.type, data.skill);
             data.roll = dc_utils.roll.new(data);
             operations.confirm_result(data);
         }else if (game.user.isGM) {
@@ -439,24 +403,17 @@ let operations = {
     //declare an attack is emitted by players to a gm
     declare_attack: function(data) {
         if (game.user.isGM) {
-            console.log('declare_attack', data);
             let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
-            console.log('declare_attack: Attacker:', atk);
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log('declare_attack: Target:', tgt);
-            data.trait = 'nimbleness';
-            data.skill = 'fightin';
             data.dodge_roll = 0
-            if (data.type == 'ranged') {
-                let itm = atk.actor.getOwnedItem(data.weapon);
-                data.trait = 'deftness';
-                data.skill = 'shootin_' + itm.data.data.gun_type;
-            }
             if (atk.data.disposition == -1) {
-                operations.attack(data);
+                //Attacker is the GM, proceed to roll to hit.
+                operations.proceed_attack(data);
             }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
+                //Target is a player or neutral party, warn players of crimes.
                 dc_utils.socket.emit('warn_friendly_fire', data);
             }else{
+                //Target is hostile, roll to hit
                 dc_utils.socket.emit('roll_to_hit', data);
             }
         }else{
@@ -573,23 +530,9 @@ let operations = {
             data.roller = data.attacker
             data.next_op = 'roll_damage'
             data.write_value = 'hit_roll'
-            data.trait = 'nimbleness'
-            data.skill = 'fightin'
             data.modifier = 0
             let itm = char.actor.getOwnedItem(data.weapon);
-            if (data.type == 'ranged') {
-                let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-                let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
-                data.range = dist;
-                data.range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
-                data.modifier -= data.range_mod;
-                data.trait = 'deftness';
-                data.skill = 'shootin_' + itm.data.data.gun_type;
-            }
-            if (itm.data.data.off_hand) {
-                data.modifier += char.actor.data.data.off_hand_modifier;
-            }
-            dc_utils.socket.emit('check_tn', data);
+            operations.skill_roll(data);
         }
     },
     roll_damage: function(data) {

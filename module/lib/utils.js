@@ -6,12 +6,14 @@ const dc_utils = {
     bounty: {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5},
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
+    hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
+    equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
 
     sort: {
         compare: function(object1, object2, key) {
             let obj1
             let obj2
-            if (key == 'name') {
+            if (key == 'name' || key == 'type') {
                 obj1 = object1.data[key].toUpperCase();
                 obj2 = object2.data[key].toUpperCase();
             }else{
@@ -37,6 +39,15 @@ const dc_utils = {
         }
     },
     char: {
+        has: function(act, type, name) {
+            let items = dc_utils.char.items.get(act, type);
+            for (const item of items) {
+                if (item.name == name) {
+                    return true;
+                }
+            }
+            return false;
+        },
         skill: {
             /*  Get Skill:
                 Will return a dict containing level, die type and modifiers for any skill or trait.
@@ -78,6 +89,26 @@ const dc_utils = {
                 return act.items
                     .filter(function (item) {return item.type == item_type})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
+            },
+            get_equippable: function(act) {
+                let eq = act.data.data.equipped
+                return act.items.filter(function(i) {return i.data.data.equippable == true})
+                    .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
+            },
+            unequip: function(act, slot) {
+                return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
+            },
+            equip: function(act, slot, id) {
+                return act.update({data: {data: {equipped: {[slot]: id}}}});
+            },
+            is_equipped: function(act, slot, id) {
+                if (id == act.data.data.equipped[slot]) {
+                    return true;
+                }
+                return false;
+            },
+            delete: function(act, id) {
+                setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
         },
         armour: {
@@ -128,6 +159,9 @@ const dc_utils = {
                 }
                 return false;
             },
+            get_name: function(name) {
+                return canvas.tokens.placeables.find(i => i.name == name);
+            },
         },
         target: {
             get: function() {
@@ -144,7 +178,65 @@ const dc_utils = {
         },
     },
     roll: {
+        new_roll_packet: function(act, type, skl, wep) {
+            let item = act.items.get(wep);
+            let dist = 1
+            if (!(item)) {
+                wep = 'unarmed'
+            }
+            let target = dc_utils.char.target.get(act);
+            if (target == false && !(type == 'skill')) {
+                console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
+                return false;
+            }
+            if (target) {
+                let tkn = dc_utils.char.token.get_name(act.name);
+                let tgt = dc_utils.char.token.get_name(target.name);
+                dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+                console.log('DC | dc_utils.roll.new_attack_packet', dist);
+                if (type == 'melee' && dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
+                }
+            }
+            let skill = dc_utils.char.skill.get(act, skl);
+            let data = {
+                type:       type,
+                roller:     act.name,
+                target:     target.name,
+                attacker:   act.name,
+                weapon:     wep,
+                range:      dist,
+                tn:         dc_utils.roll.get_tn(),
+                name:       act.name,
+                skill:      skl,
+                amt:        skill.level,
+                dice:       skill.die_type,
+                skill_name: skill.name,
+                modifiers:  {
+                    skill: {label: 'Skill + Trait', modifier: skill.modifier},
+                    wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
+                }
+            }
+            if (item) {
+                if (data.type == 'ranged') {
+                    data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
+                }
+                if (act.data.data.equipped.off == item.id) {
+                    if (dc_utils.char.has(act, 'edge', 'Two Fisted')) {
+                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                    }else{
+                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
+                    }
+                }
+            }
+            return data;
+        },
         new: function(data) {
+            let modifier = 0
+            for (let key of Object.keys(data.modifiers)) {
+                modifier += parseInt(data.modifiers[key].modifier);
+            }
             let r_data = {
                 success: false,
                 crit_fail: false,
@@ -152,17 +244,18 @@ const dc_utils = {
                 total: 0,
                 dice: data.dice,
                 amt: data.amt,
-                modifier: data.modifier,
+                modifier: modifier,
                 raises: 0,
                 pass: 0,
                 ones: 0,
                 results: [],
             };
-            let roll = new Roll(`${data.amt}${data.dice}ex + ${data.modifier}`).roll();
+            data.modifier = modifier
+            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
             r_data.total = roll._total;
             let count = 0
             roll.terms[0].results.forEach(die => {
-                if (die.result + data.modifier >= data.tn && count < r_data.amt) {
+                if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
                 }else if (die.result == 1 && count < r_data.amt) {
                     r_data.ones += 1;
@@ -213,6 +306,54 @@ const dc_utils = {
                 }
             }
             return tn;
+        },
+        get_result_template: function(data) {
+            let r_str = `
+                <p style="text-align:center">${data.roller} rolled ${data.roll.total}</p>
+                <table style="table-layout: fixed;">
+                    <tr style="text-align:center">
+            `;
+            for (let i = 0; i < data.roll.amt; i++) {
+                const res = data.roll.results[i];
+                if(res){
+                    if (res + data.modifier >= data.tn) {
+                        r_str += `
+                            <td style="color: green">${res}</td>
+                        `;
+                    }else if (res == 1) {
+                        r_str += `
+                            <td style="color: red">${res}</td>
+                        `;
+                    }else {
+                        r_str += `
+                            <td>${res}</td>
+                        `;
+                    }
+                }
+            }
+            r_str += `
+                        </tr>
+                    </table>
+            `;
+            if (data.modifier != 0) {
+                r_str += `
+                    <h3 class="center">Modifiers</h3>
+                    <table>`;
+                for (let key of Object.keys(data.modifiers)) {
+                    if (data.modifiers[key].modifier != 0) {
+                        r_str += `
+                            <tr class="center">
+                                <td>${data.modifiers[key].label}</td>
+                                <td>${data.modifiers[key].modifier}</td>
+                            </tr>
+                        `;
+                    }
+                }
+                r_str += `
+                    </table>
+                `;
+            }
+            return r_str
         },
     },
     deck: {
@@ -278,7 +419,18 @@ const dc_utils = {
                 `
             }
             return sheet
-        }
+        },
+        send: function(title) {
+            let sheet = `
+                <h3 style="text-align: center;">${title}</h3>
+            `
+            for (let i = 0; i < arguments.length; i++) {
+                sheet += `
+                <p style="text-align: center;">${arguments[i]}</p>
+                `
+            }
+            ChatMessage.create({content: sheet})
+        },
     },
     socket: {
         emit: function(op, data) {

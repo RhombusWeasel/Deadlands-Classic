@@ -1,0 +1,36 @@
+<section>
+    <table>
+        <tr>
+            <td class="center">
+                <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
+                    <option value="Nuthin">Nuthin'</option>
+                    {{#each items as |item|}}
+                        {{#if (eq item.data.data.slot ../slot)}}
+                            {{#if_equipped ../label item.id}}
+                    <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
+                            {{else}}
+                    <option value="{{item.id}}">{{item.name}}</option>
+                            {{/if_equipped}}
+                        {{/if}}
+                    {{/each}}
+                </select>
+            </td>
+            {{#each items as |item|}}
+                {{#if (eq item.data.data.slot ../slot)}}
+                    {{#if_equipped ../label item.id}}
+                        {{#if (eq item.type 'firearm')}}
+            <td>{{this.data.data.chamber}}/{{this.data.data.max}}</td>
+                        {{/if}}
+        </tr>
+        <tr class="center">
+            <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
+                            {{#if (eq item.type 'firearm')}}
+            <td><a class="gun-reload" title="Reload {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Reload</a></td>
+                            {{/if}}
+                    {{else}}
+                    {{/if_equipped}}
+                {{/if}}
+            {{/each}}
+        </tr>
+    </table>
+</section>

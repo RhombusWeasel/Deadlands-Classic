@@ -8,7 +8,7 @@ function get_random_int(min, max) {
 export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/gm-sheet.html`,
+            template: `systems/deadlands_classic/templates/sheets/actor/gm-sheet.html`,
             classes: ["doc"]
         });
     }

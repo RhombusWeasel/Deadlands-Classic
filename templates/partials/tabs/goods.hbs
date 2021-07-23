@@ -1,0 +1,38 @@
+<section class="form typed">
+    <h2 class="center">Trappin's</h2>
+    <div>
+        {{#if goods}}
+        <div>
+            <table>
+            {{#each melee_weapons as |wep|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc20 right">1</td>
+                <td class="perc50">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr>
+            {{/each}}
+            {{#each firearms as |gun|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc20 right">1</td>
+                <td class="perc50">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr>
+            {{/each}}
+            {{#each goods as |good|}}
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc20 right">{{this.data.data.amount}}</td>
+                <td class="perc50">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr>
+            {{/each}}
+            </table>
+        </div>
+        {{/if}}
+    </div>
+</section>
