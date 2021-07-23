@@ -194,7 +194,7 @@ const dc_utils = {
                 let tgt = dc_utils.char.token.get_name(target.name);
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                 console.log('DC | dc_utils.roll.new_attack_packet', dist);
-                if (type == 'melee' && dist > 2) {
+                if (type == 'melee' && dist > 5) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
                     return false;
                 }
