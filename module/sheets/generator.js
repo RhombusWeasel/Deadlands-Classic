@@ -91,6 +91,7 @@ export default class GeneratorSheet extends ActorSheet {
         for (let d = 0; d < 12; d++) {
             let card = g_deck.pop();
             let name_data = card.name.split(' ');
+            console.log(name_data);
             card.die_type = die_types[name_data[0]];
             if (name_data[0] == 'Joker') {
                 let s_card = g_deck.pop();
@@ -99,9 +100,8 @@ export default class GeneratorSheet extends ActorSheet {
                 }
                 card.level = suit_types[s_card.name.split(' ')[2]];
             }else{
-                card.level = toString(suit_types[name_data[2]]);
+                card.level = suit_types[name_data[2]];
             }
-            console.log(card);
             let item = {
                 name: card.name,
                 type: card.type,
