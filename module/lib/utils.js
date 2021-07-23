@@ -424,7 +424,7 @@ const dc_utils = {
             let sheet = `
                 <h3 style="text-align: center;">${title}</h3>
             `
-            for (let i = 0; i < arguments.length; i++) {
+            for (let i = 1; i < arguments.length; i++) {
                 sheet += `
                 <p style="text-align: center;">${arguments[i]}</p>
                 `
