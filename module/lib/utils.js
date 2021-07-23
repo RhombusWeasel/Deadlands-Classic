@@ -190,8 +190,8 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                let tkn = dc_utils.char.token.getName(data.attacker);
-                let tgt = dc_utils.char.token.getName(data.target);
+                let tkn = dc_utils.char.token.getName(act.name);
+                let tgt = dc_utils.char.token.getName(target.name);
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                 console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
