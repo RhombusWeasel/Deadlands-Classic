@@ -187,7 +187,9 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                dist = Math.floor(canvas.grid.measureDistance(act, target));
+                let tkn = dc_utils.char.token.get(act);
+                let tgt = dc_utils.char.token.get(target);
+                dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                 console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
                     chatMessage.create({content: `
