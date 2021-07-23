@@ -168,7 +168,7 @@ function battle_report(data) {
     `;
     if (data.type == 'ranged'){
         msg += `
-            <h3 style="text-align:center">Range: ${data.range} yards [-${data.range_mod}]</h3>
+            <h3 style="text-align:center">Range: ${data.range} yards [-${data.modifiers.range.modifier}]</h3>
             <p style="text-align:center">${data.attacker} fired their ${data.weapon_name} at ${data.target}</p>
         `;
     }else{

@@ -185,6 +185,15 @@ const dc_utils = {
                 console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }
+            let char = canvas.tokens.placeables.find(i => i.name == data.attacker); 
+            let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
+            let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
+            if (type == 'melee' && dist > 2) {
+                chatMessage.create({content: `
+                    <h3 class="center">Out of Range</h3>
+                    <p class="center">You'll need to haul ass if you want to get there this round.</p>
+                `})
+            }
             let skill = dc_utils.char.skill.get(act, skl);
             let data = {
                 type:       type,
@@ -204,11 +213,8 @@ const dc_utils = {
                 }
             }
             if (item) {
+                data.range = dist;
                 if (data.type == 'ranged') {
-                    let char = canvas.tokens.placeables.find(i => i.name == data.attacker); 
-                    let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-                    let dist = Math.floor(canvas.grid.measureDistance(char, tgt));
-                    data.range = dist;
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
                 }
                 if (act.data.data.equipped.off == item.id) {
