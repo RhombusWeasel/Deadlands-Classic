@@ -1,7 +1,7 @@
 <section>
     <table>
         <tr>
-            <td class="center">
+            <td class="center" style="table-layout: fixed;">
                 <select class="item {{label}}-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
                     <option value="Nuthin">Nuthin'</option>
                     {{#each items as |item|}}
@@ -22,7 +22,7 @@
             <td>{{this.data.data.chamber}}/{{this.data.data.max}}</td>
                         {{/if}}
         </tr>
-        <tr class="center">
+        <tr class="center" style="table-layout: fixed;">
                         {{#if (eq item.type 'melee')}}
             <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
                         {{/if}}
