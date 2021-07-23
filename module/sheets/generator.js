@@ -99,7 +99,7 @@ export default class GeneratorSheet extends ActorSheet {
                 }
                 card.level = suit_types[s_card.name.split(' ')[2]];
             }else{
-                card.level = suit_types[name_data[2]];
+                card.level = toString(suit_types[name_data[2]]);
             }
             console.log(card);
             let item = {
