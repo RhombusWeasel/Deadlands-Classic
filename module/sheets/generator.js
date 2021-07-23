@@ -67,7 +67,7 @@ export default class GeneratorSheet extends ActorSheet {
     _on_draw_gen_cards(event) {
         let g_deck = dc_utils.deck.new('gen_deck');
         let die_types = {
-            Joker: 'd12',
+            Jo: 'd12',
             A: 'd12',
             K: 'd10',
             Q: 'd10',
@@ -88,19 +88,20 @@ export default class GeneratorSheet extends ActorSheet {
             '\u2662': 2,
             '\u2663': 1
         };
+        console.log(suit_types);
         for (let d = 0; d < 12; d++) {
             let card = g_deck.pop();
-            let name_data = card.name.split(' ');
-            console.log(name_data);
-            card.die_type = die_types[name_data[0]];
-            if (name_data[0] == 'Joker') {
+            let value = dc_utils.deck.get_card_value(card);
+            let suit = card.name.slice(-1);
+            card.die_type = die_types[value];
+            if (value == 'Jo') {
                 let s_card = g_deck.pop();
-                if (s_card.name.split(' ')[0] == 'Joker') {
+                if (dc_utils.deck.get_card_value(s_card) == 'Jo') {
                     s_card = g_deck.pop()
                 }
-                card.level = suit_types[s_card.name.split(' ')[2]];
+                card.level = suit_types[s_card.name.slice(-1)];
             }else{
-                card.level = suit_types[name_data[2]];
+                card.level = suit_types[suit];
             }
             let item = {
                 name: card.name,

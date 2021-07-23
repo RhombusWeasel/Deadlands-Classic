@@ -406,7 +406,14 @@ const dc_utils = {
                 }
             }
             return r_pile;
-        }
+        },
+        get_card_value: function(card) {
+            let value = card.name.charAt(0);
+            if (card.name.length > 2) {
+                value = card.name.slice(0, 1);
+            }
+            return value;
+        },
     },
     chat: {
         format: function(title) {
