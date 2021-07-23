@@ -177,6 +177,7 @@ const dc_utils = {
     roll: {
         new_roll_packet: function(act, type, skl, wep) {
             let item = act.items.get(wep);
+            let dist = 0
             if (!(item)) {
                 wep = 'unarmed'
             }
@@ -186,7 +187,7 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                let dist = Math.floor(canvas.grid.measureDistance(act, target));
+                dist = Math.floor(canvas.grid.measureDistance(act, target));
                 if (type == 'melee' && dist > 2) {
                     chatMessage.create({content: `
                         <h3 class="center">Out of Range</h3>
