@@ -23,10 +23,13 @@
                         {{/if}}
         </tr>
         <tr class="center">
+                        {{#if (eq item.type == 'melee')}}
             <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
-                            {{#if (eq item.type 'firearm')}}
+                        {{/if}}
+                        {{#if (eq item.type 'firearm')}}
+            <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
             <td><a class="gun-reload" title="Reload {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Reload</a></td>
-                            {{/if}}
+                        {{/if}}
                     {{else}}
                     {{/if_equipped}}
                 {{/if}}
