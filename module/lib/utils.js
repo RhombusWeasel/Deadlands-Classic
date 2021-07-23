@@ -159,6 +159,9 @@ const dc_utils = {
                 }
                 return false;
             },
+            get_name: function(name) {
+                return canvas.tokens.placeables.find(i => i.name == name);
+            },
         },
         target: {
             get: function() {
@@ -187,8 +190,8 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                let tkn = dc_utils.char.token.get(act);
-                let tgt = dc_utils.char.target.get(target);
+                let tkn = dc_utils.char.token.getName(data.attacker);
+                let tgt = dc_utils.char.token.getName(data.target);
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                 console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
