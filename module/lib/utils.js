@@ -145,6 +145,14 @@ const dc_utils = {
                     return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
                 }
             },
+            increase_die_type: function(act, skill_name) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.sides < 12) {
+                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.sides + 2}`}}}});
+                }else{
+                    return act.update({data: {traits: {[skill.trait]: {modifier: skill.modifier + 2}}}});
+                }
+            },
         },
         items: {
             get: function(act, item_type, sort_key = 'name') {
