@@ -86,12 +86,14 @@ const dc_utils = {
                 }
                 throw 'DC | ERROR: skill not found.';
             },
-            add_level: function(act, skill_name) {
+            add_level: function(act, skill_name, amt) {
+                console.log(`DC | Adding ${amt} levels to ${skill_name}`, act);
                 let skill = dc_utils.char.skill.get(act, skill_name);
+                console.log(`DC | Adding ${amt} levels to ${skill_name}`, skill);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level + 1}}}}});
+                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level + amt}}}}});
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + 1}}}}}}});
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}}});
                 }
             },
             add_modifier: function(act, skill_name, mod) {
@@ -102,12 +104,12 @@ const dc_utils = {
                     return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier + mod}}}}}}});
                 }
             },
-            remove_level: function(act, skill_name) {
+            remove_level: function(act, skill_name, amt) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level - 1}}}}});
+                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level - amt}}}}});
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - 1}}}}}}});
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}}});
                 }
             },
             remove_modifier: function(act, skill_name, mod) {
