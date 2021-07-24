@@ -59,6 +59,7 @@ const dc_utils = {
                             trait:    trait_name,
                             level:    parseInt(trait.level),
                             die_type: trait.die_type,
+                            trait_fb: false,
                             modifier: parseInt(trait.modifier)
                         };
                     }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
@@ -70,6 +71,7 @@ const dc_utils = {
                                 trait:    trait_name,
                                 level:    parseInt(skill.level),
                                 die_type: trait.die_type,
+                                trait_fb: false,
                                 modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }else{
@@ -79,6 +81,7 @@ const dc_utils = {
                                 trait:    trait_name,
                                 level:    parseInt(trait.level),
                                 die_type: trait.die_type,
+                                trait_fb: true,
                                 modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }
@@ -86,42 +89,47 @@ const dc_utils = {
                 }
                 throw 'DC | ERROR: skill not found.';
             },
+            get_level: function(act, skill_name) {
+                
+            },
             add_level: function(act, skill_name, amt) {
-                console.log(`DC | Adding ${amt} levels to ${skill_name}`, act);
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                console.log(`DC | Adding ${amt} levels to ${skill_name}`, skill);
+                if (skill.trait_fb) {
+                    skill.level = 0;
+                    dc_utils.char.skill.add_modifier(act, skill_name, 8);
+                }
                 if (skill.trait == skill_name) {
-                    let data = {data: {data: {traits: {[skill_name]: {level: skill.level + amt}}}}}
-                    console.log(data);
-                    return act.update(data);
+                    return act.update({data: {traits: {[skill_name]: {level: skill.level + amt}}}});
                 } else {
-                    let data = {data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}}}
-                    console.log(data);
-                    return act.update(data);
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
                 }
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {modifier: skill.modifier + mod}}}}});
+                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier + mod}}}});
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier + mod}}}}}}});
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier + mod}}}}}});
                 }
             },
             remove_level: function(act, skill_name, amt) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.level <= 1) {
+                    skill.level = amt;
+                    dc_utils.char.skill.add_modifier(act, skill_name, -8);
+                }
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level - amt}}}}});
+                    return act.update({data: {traits: {[skill_name]: {level: skill.level - amt}}}});
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}}});
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
                 }
             },
             remove_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}}});
+                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}}});
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
                 }
             },
         },
