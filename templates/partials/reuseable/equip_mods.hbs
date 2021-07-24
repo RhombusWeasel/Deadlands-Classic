@@ -1,41 +1,43 @@
 <section>
-    <h3 class="center">Modifiers</h3>
-    <a class="center"><p class="add-modifier">Add a modifier</p></a>
-    <table>
-    {{#each modifiers as |mod|}}
-        <tr>
-            <td>{{@index}}</td>
-            <td>
-                <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
-                    <option value="skill_mod">Skill Modifier</option>
-                    <option value="armour_mod">Armour Modifier</option>
-                    <option value="wind_mod">Wind Modifier</option>
-                    <option value="pace_mod">Pace Modifier</option>
-                </select>
-                {{#if (eq mod.type 'skill_mod')}}
-                    <select name="{{@index}}-skill-select" id="{{@index}}-skill-select">
-                        <option value="cognition">Cognition</option>
-                        <option value="art">Art</option>
-                        <option value="artillery">Artillery</option>
-                        <option value="scrutinize">Scrutinize</option>
-                        <option value="search">Search</option>
-                        <option value="trackin">Trackin'</option>
-                        <option value="deftness">Deftness</option>
-                        <option value="bow">Bow</option>
-                        <option value="filchin">Filchin'</option>
-                        <option value="lockpickin">Lockpickin'</option>
-                        <option value="shootin_pistol">Shootin' Pistol</option>
-                        <option value="shootin_rifle">Shootin' Rifle</option>
-                        <option value="shootin_shotgun">Shootin' Shotgun</option>
-                        <option value="shootin_automatic">Shootin' Automatic</option>
-                        <option value="sleight_o_hand">Sleight o' hand</option>
-                        <option value="speed_load">Speed Load</option>
-                        <option value="throwin">Throwin'</option>
-                        <option value=""></option>
+    <div>
+        <h3 class="center">Modifiers</h3>
+        <a class="center"><p class="add-modifier">Add a modifier</p></a>
+        <table>
+        {{#each modifiers as |mod|}}
+            <tr>
+                <td>{{@index}}</td>
+                <td>
+                    <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
+                        <option value="skill_mod">Skill Modifier</option>
+                        <option value="armour_mod">Armour Modifier</option>
+                        <option value="wind_mod">Wind Modifier</option>
+                        <option value="pace_mod">Pace Modifier</option>
                     </select>
-                {{/if}}
-            </td>
-        </tr>
-    {{/each}}
-    </table>
+                    {{#if (eq mod.type 'skill_mod')}}
+                        <select name="{{@index}}-skill-select" id="{{@index}}-skill-select">
+                            <option value="cognition">Cognition</option>
+                            <option value="art">Art</option>
+                            <option value="artillery">Artillery</option>
+                            <option value="scrutinize">Scrutinize</option>
+                            <option value="search">Search</option>
+                            <option value="trackin">Trackin'</option>
+                            <option value="deftness">Deftness</option>
+                            <option value="bow">Bow</option>
+                            <option value="filchin">Filchin'</option>
+                            <option value="lockpickin">Lockpickin'</option>
+                            <option value="shootin_pistol">Shootin' Pistol</option>
+                            <option value="shootin_rifle">Shootin' Rifle</option>
+                            <option value="shootin_shotgun">Shootin' Shotgun</option>
+                            <option value="shootin_automatic">Shootin' Automatic</option>
+                            <option value="sleight_o_hand">Sleight o' hand</option>
+                            <option value="speed_load">Speed Load</option>
+                            <option value="throwin">Throwin'</option>
+                            <option value=""></option>
+                        </select>
+                    {{/if}}
+                </td>
+            </tr>
+        {{/each}}
+        </table>
+    </div>
 </section>
