@@ -91,9 +91,13 @@ const dc_utils = {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 console.log(`DC | Adding ${amt} levels to ${skill_name}`, skill);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level + amt}}}}});
+                    let data = {data: {data: {traits: {[skill_name]: {level: skill.level + amt}}}}}
+                    console.log(data);
+                    return act.update(data);
                 } else {
-                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}}});
+                    let data = {data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}}}
+                    console.log(data);
+                    return act.update(data);
                 }
             },
             add_modifier: function(act, skill_name, mod) {
