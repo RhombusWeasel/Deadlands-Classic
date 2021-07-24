@@ -7,6 +7,7 @@ export default class DCItem extends ItemSheet {
         const data = super.getData();
         data.config = CONFIG.dc;
         data.modifiers = this.object.data.data.modifiers
+        data.actor = this.actor
         return data;
     }
 
@@ -23,6 +24,7 @@ export default class DCItem extends ItemSheet {
             modifier: 2
         })
         this.object.update(this.object.data);
+        console.log(this);
         return this.getData();
     }
 }
