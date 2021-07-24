@@ -6,6 +6,7 @@ export default class DCItem extends ItemSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
+        data.modifiers = this.object.data.data.modifiers
         return data;
     }
 
