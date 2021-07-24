@@ -101,7 +101,6 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     activateListeners(html) {
-        html.find(".trait-roll").click(this._on_trait_roll.bind(this));
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
