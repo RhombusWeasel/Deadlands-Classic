@@ -23,6 +23,6 @@ export default class DCItem extends ItemSheet {
             modifier: 2
         })
         this.object.update(this.object.data);
-        console.log(this);
+        return this.getData();
     }
 }
