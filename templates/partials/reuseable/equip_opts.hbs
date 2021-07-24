@@ -1,4 +1,5 @@
 <section>
+    <h3 class="center">Stats</h3>
     <tr>
         <th>{{localize "dc.items.goods.equippable"}}</th>
     {{#if (eq data.data.equippable true)}}
@@ -18,7 +19,7 @@
                 {{/if}}
             {{/if}}
         </tr>
-        {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs"}}
+        {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
     {{else}}
             <td><input type="checkbox" name="data.equippable"/></td>
         </tr>
