@@ -2,10 +2,11 @@
     <h3 class="center">Modifiers</h3>
     <a class="center"><p class="add-modifier">Add a modifier</p></a>
     <table>
-    {{#each modifiers as |mod|}}
+    {{#each data.modifiers as |mod|}}
         <tr>
+            <td>{{@index}}</td>
             <td>
-                <select class="{{mod.name}}-type-select" name="{{mod.name}}" id="{{mod.name}}-type-select">
+                <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
                     <option value="skill_mod">Skill Modifier</option>
                     <option value="armour_mod">Armour Modifier</option>
                     <option value="wind_mod">Wind Modifier</option>
