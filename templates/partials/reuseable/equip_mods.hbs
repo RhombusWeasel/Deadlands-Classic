@@ -13,7 +13,14 @@
                     <option value="pace_mod">Pace Modifier</option>
                 </select>
                 {{#if (eq mod.type 'skill_mod')}}
-                    
+                    <select name="{{@index}}-skill-select" id="{{@index}}-skill-select">
+                        {{#each ../actor.data.data.traits as trait}}
+                            <option value="{{@key}}">{{trait.name}}</option>
+                            {{#each trait.skills as |skill|}}
+                                <option value="{{@key}}">{{skill.name}}</option>
+                            {{/each}}
+                        {{/each}}
+                    </select>
                 {{/if}}
             </td>
         </tr>
