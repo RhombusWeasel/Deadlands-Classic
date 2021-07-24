@@ -169,7 +169,7 @@ const dc_utils = {
                 return act.items.get(act.data.data.equipped[slot]);
             },
             unequip: function(act, slot) {
-                let item = dc_utils.char.item.get_equipped(act, slot);
+                let item = dc_utils.char.items.get_equipped(act, slot);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
@@ -180,7 +180,7 @@ const dc_utils = {
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
-                let item = dc_utils.char.item.get_equipped(act, slot);
+                let item = dc_utils.char.items.get_equipped(act, slot);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
