@@ -49,16 +49,15 @@ const dc_utils = {
             return false;
         },
         skill: {
-            /*  Get Skill:
-                Will return a dict containing level, die type and modifiers for any skill or trait.
-            */
             get: function(act, skill_name) {
                 for (const trait_name in act.data.data.traits) {
                     const trait = act.data.data.traits[trait_name];
                     if (trait_name == skill_name) {
                         return {
-                            name: trait.name,
-                            level: parseInt(trait.level),
+                            name:     trait.name,
+                            key:      skill_name,
+                            trait:    trait_name,
+                            level:    parseInt(trait.level),
                             die_type: trait.die_type,
                             modifier: parseInt(trait.modifier)
                         };
@@ -66,15 +65,19 @@ const dc_utils = {
                         const skill = act.data.data.traits[trait_name].skills[skill_name];
                         if (skill.level > 0) {
                             return {
-                                name: skill.name,
-                                level: parseInt(skill.level),
+                                name:     skill.name,
+                                key:      skill_name,
+                                trait:    trait_name,
+                                level:    parseInt(skill.level),
                                 die_type: trait.die_type,
                                 modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }else{
                             return {
-                                name: skill.name,
-                                level: parseInt(trait.level),
+                                name:     skill.name,
+                                key:      skill_name,
+                                trait:    trait_name,
+                                level:    parseInt(trait.level),
                                 die_type: trait.die_type,
                                 modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
@@ -82,6 +85,38 @@ const dc_utils = {
                     }
                 }
                 throw 'DC | ERROR: skill not found.';
+            },
+            add_level: function(act, skill_name) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level + 1}}}}});
+                } else {
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + 1}}}}}}});
+                }
+            },
+            add_modifier: function(act, skill, mod) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {data: {traits: {[skill_name]: {modifier: skill.modifier + mod}}}}});
+                } else {
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier + mod}}}}}}});
+                }
+            },
+            remove_level: function(act, skill_name) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {data: {traits: {[skill_name]: {level: skill.level - 1}}}}});
+                } else {
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - 1}}}}}}});
+                }
+            },
+            remove_modifier: function(act, skill_name, mod) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}}});
+                } else {
+                    return act.update({data: {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}}});
+                }
             },
         },
         items: {
@@ -95,10 +130,29 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.equippable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
+            get_equipped: function(act, slot) {
+                return act.items.get(act.data.data.equipped[slot]);
+            },
             unequip: function(act, slot) {
+                let item = dc_utils.char.item.get_equipped(act, slot);
+                if (item?.data?.data?.modifiers) {
+                    for (let mod of item.data.data.modifiers) {
+                        if (mod.type == 'skill_mod') {
+                            dc_utils.char.skill.remove_modifier(act, mod.skill);
+                        }
+                    }
+                }
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
+                let item = dc_utils.char.item.get_equipped(act, slot);
+                if (item?.data?.data?.modifiers) {
+                    for (let mod of item.data.data.modifiers) {
+                        if (mod.type == 'skill_mod') {
+                            dc_utils.char.skill.add_modifier(act, mod.skill);
+                        }
+                    }
+                }
                 return act.update({data: {data: {equipped: {[slot]: id}}}});
             },
             is_equipped: function(act, slot, id) {
@@ -126,7 +180,7 @@ const dc_utils = {
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
                         console.log('DC | dc_utils.char.chips.spend |', item);
-                        item.delete();
+                        dc_utils.char.items.delete(act, item.id);
                         let reply = `
                             <h3 style="text-align:center">Fate</h3>
                             <p style="text-align:center">${act.name} spends a ${label} fate chip.</p>
