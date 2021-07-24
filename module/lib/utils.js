@@ -48,49 +48,62 @@ const dc_utils = {
             }
             return false;
         },
+        bounty: {
+            get: function(act) {
+                return act.data.data.bounty.value;
+            },
+            add: function(act, amt) {
+                let bty = act.data.data.bounty
+                return act.update({data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
+            },
+            remove: function(act, amt) {
+                let bty = act.data.data.bounty
+                return act.update({data: {bounty: {value: bty.value - amt}}})
+            },
+        },
         skill: {
             get: function(act, skill_name) {
                 for (const trait_name in act.data.data.traits) {
                     const trait = act.data.data.traits[trait_name];
                     if (trait_name == skill_name) {
                         return {
-                            name:     trait.name,
-                            key:      skill_name,
-                            trait:    trait_name,
-                            level:    parseInt(trait.level),
-                            die_type: trait.die_type,
-                            trait_fb: false,
-                            modifier: parseInt(trait.modifier)
+                            name:      trait.name,
+                            key:       skill_name,
+                            trait:     trait_name,
+                            level:     parseInt(trait.level),
+                            die_type:  trait.die_type,
+                            die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                            trait_fb:  false,
+                            modifier:  parseInt(trait.modifier)
                         };
                     }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
                         const skill = act.data.data.traits[trait_name].skills[skill_name];
-                        if (skill.level > 0) {
+                        if (parseInt(skill.level) > 0) {
                             return {
-                                name:     skill.name,
-                                key:      skill_name,
-                                trait:    trait_name,
-                                level:    parseInt(skill.level),
-                                die_type: trait.die_type,
-                                trait_fb: false,
-                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                                name:      skill.name,
+                                key:       skill_name,
+                                trait:     trait_name,
+                                level:     parseInt(skill.level),
+                                die_type:  trait.die_type,
+                                die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                                trait_fb:  false,
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }else{
                             return {
-                                name:     skill.name,
-                                key:      skill_name,
-                                trait:    trait_name,
-                                level:    parseInt(trait.level),
-                                die_type: trait.die_type,
-                                trait_fb: true,
-                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                                name:      skill.name,
+                                key:       skill_name,
+                                trait:     trait_name,
+                                level:     parseInt(trait.level),
+                                die_type:  trait.die_type,
+                                die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                                trait_fb:  true,
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }
                     }
                 }
                 throw 'DC | ERROR: skill not found.';
-            },
-            get_level: function(act, skill_name) {
-                
             },
             add_level: function(act, skill_name, amt) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
