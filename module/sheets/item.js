@@ -19,8 +19,8 @@ export default class DCItem extends ItemSheet {
     activateListeners(html) {
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
-        html.find(".type-select").change(this._on_select_mod_type.bind(this));
-        html.find(".target-select").change(this._on_target_select.bind(this));
+        //html.find(".type-select").change(this._on_select_mod_type.bind(this));
+        //html.find(".target-select").change(this._on_target_select.bind(this));
         return super.activateListeners(html);
     }
 
@@ -63,16 +63,8 @@ export default class DCItem extends ItemSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.id;
-        let mod_type = element.value;
-        let item;
-        if (this.object.actor) {
-            item = this.object.actor.items.get(this.item.id);
-        } else {
-            item = game.items.get(this.item.id);
-        }
-        let mods = item.data.data.modifiers;
-        mods[index].type = mod_type;
-        item.update({data: {modifiers: mods}});
+        
+        item.update({data: {type_select: val}});
     }
 
     _on_target_select(event) {
