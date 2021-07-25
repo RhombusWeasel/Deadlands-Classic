@@ -17,7 +17,7 @@ export default class DCItem extends ItemSheet {
 
     activateListeners(html) {
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
-        html.find(".delete-item").click(this._on_remove_modifier.bind(this));
+        html.find(".item-delete").click(this._on_remove_modifier.bind(this));
         return super.activateListeners(html);
     }
 
