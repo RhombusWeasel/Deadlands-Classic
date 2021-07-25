@@ -6,7 +6,7 @@ export default class DCItem extends ItemSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.modifiers = game.items.find(i => function(){return i.name == this.item.id}).data.data.modifiers;
+        data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         console.log(data.modifiers);
         return data;
     }
@@ -18,13 +18,14 @@ export default class DCItem extends ItemSheet {
 
     _on_add_modifier(event) {
         event.preventDefault();
-        let item = game.items.get(this.item.id);
-        item.data.data.modifiers.push({
+        let item = game.items.get(this.item.id)
+        let mods = item.data.data.modifiers;
+        mods.push({
             type: 'skill_mod',
             skill: 'cognition',
             modifier: 2
         });
-        item.update(item.data);
+        item.update({data: mods});
         console.log(this);
         return this.getData();
     }
