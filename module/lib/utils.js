@@ -175,6 +175,10 @@ const dc_utils = {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.remove_modifier(act, mod.skill, mod.modifier);
+                        }else if (mod.type == 'armour_mod') {
+                            dc_utils.char.armour.remove(act, mod.location, mod.modifier);
+                        } else {
+                            
                         }
                     }
                 }
@@ -187,6 +191,10 @@ const dc_utils = {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.add_modifier(act, mod.skill, mod.modifier);
+                        }else if (mod.type == 'armour_mod') {
+                            dc_utils.char.armour.add(act, mod.location, mod.modifier);
+                        } else {
+                            
                         }
                     }
                 }
@@ -205,6 +213,14 @@ const dc_utils = {
         armour: {
             get: function(act, location) {
                 return act.data.data.armour[location];
+            },
+            add: function(act, location, amt) {
+                let cur = dc_utils.char.armour.get(act, location);
+                return act.update({data: {armour: {[location]: cur + amt}}});
+            },
+            remove: function(act, location, amt) {
+                let cur = dc_utils.char.armour.get(act, location);
+                return act.update({data: {armour: {[location]: Math.max(cur - amt, 0)}}});
             },
         },
         chips: {

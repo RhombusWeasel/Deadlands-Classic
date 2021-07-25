@@ -7,10 +7,26 @@
             <tr class="item" data-id="{{@index}}">
                 <td>
                     <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
-                        <option value="skill_mod">Skill Modifier</option>
-                        <option value="armour_mod">Armour Modifier</option>
-                        <option value="wind_mod">Wind Modifier</option>
-                        <option value="pace_mod">Pace Modifier</option>
+                        {{#if (eq mod.type 'skill_mod')}}
+                            <option value="skill_mod" selected>Skill Modifier</option>
+                        {{else}}
+                            <option value="skill_mod">Skill Modifier</option>
+                        {{/if}}
+                        {{#if (eq mod.type 'armour_mod')}}
+                            <option value="armour_mod" selected>Armour Modifier</option>
+                        {{else}}
+                            <option value="armour_mod">Armour Modifier</option>
+                        {{/if}}
+                        {{#if (eq mod.type 'wind_mod')}}
+                            <option value="wind_mod" selected>Wind Modifier</option>
+                        {{else}}
+                            <option value="wind_mod">Wind Modifier</option>
+                        {{/if}}
+                        {{#if (eq mod.type 'pace_mod')}}
+                            <option value="pace_mod" selected>Pace Modifier</option>
+                        {{else}}
+                            <option value="pace_mod">Pace Modifier</option>
+                        {{/if}}
                     </select>
                 </td>
                 <td>
