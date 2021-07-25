@@ -4,10 +4,10 @@ export default class DCItem extends ItemSheet {
     }
 
     getData() {
+        console.log(this);
         const data = super.getData();
         data.config = CONFIG.dc;
         data.modifiers = game.items.get(this.item.id).data.data.modifiers;
-        console.log(data.modifiers);
         return data;
     }
 
