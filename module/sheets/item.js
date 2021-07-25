@@ -11,7 +11,9 @@ export default class DCItem extends ItemSheet {
         data.skills    = dc_utils.skills;
         if (this.object.actor) {
             data.modifiers = this.object.actor.items.get(this.item.id).data.data.modifiers;
-        } else {
+        }else if (this.item.id.includes('item-')) {
+            data.modifiers = game.items.get(this.item.object.id).data.data.modifiers;
+        }else{
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
         return data;
