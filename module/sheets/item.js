@@ -18,6 +18,7 @@ export default class DCItem extends ItemSheet {
 
     _on_add_modifier(event) {
         event.preventDefault();
+        let item = game.items.get(this.item.id);
         let data = {
             modifiers: [
                 {
@@ -27,7 +28,7 @@ export default class DCItem extends ItemSheet {
                 }
             ]
         };
-        this.item.update(data);
+        item.update(data);
         console.log(this);
         return this.getData();
     }
