@@ -41,12 +41,16 @@ Need to have a dialog open up when a player misses and/or critical fails.
  Marshal's when targeting a player and firing with a weapon from an NPC if the player has action cards left then they will receive a dodge dialog asking if they would like to discard their highest card to dodge.
 
 ** DC-BOT [1/2]
-*** TODO Functions [0/1]
+*** TODO Functions [0/2]
 **** TODO Pass items and cash to players directly from GM sheet
 Needs socket listener setting up to pass the data around.
 *** DONE Misc tasks [1/1]
 **** DONE Add strength roll to melee damage
 ** Movement Rules
+** Equipment Update
+I ultimately want the edges and hindrances made to be able to modify any skill/attribute of the sheet
+will need to add a new equippable effects list in the item template and a method of adding new effects
+to the item on the item sheet
 * Sheets
 ** Character Sheet [1/2]
 *** TODO Display [2/3]

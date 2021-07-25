@@ -24,7 +24,7 @@ export default class DCItem extends ItemSheet {
             modifier: 2
         });
         let data = {
-            modifiers: this.data.data.modifiers
+            modifiers: this.object.data.data.modifiers
         }
         this.object.update(data);
         console.log(this);
