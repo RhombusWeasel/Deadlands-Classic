@@ -7,7 +7,11 @@ export default class DCItem extends ItemSheet {
         console.log(this);
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.modifiers = game.items.get(this.item.id).data.data.modifiers;
+        if (this.object.actor) {
+            data.modifiers = this.object.actor.items.get(this.item.id).data.data.modifiers;
+        } else {
+            data.modifiers = game.items.get(this.item.id).data.data.modifiers;
+        }
         return data;
     }
 
