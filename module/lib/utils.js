@@ -284,6 +284,18 @@ const dc_utils = {
             }
         },
     },
+    item: {
+        add_modifier: function(item, data){
+            console.log('DC | dc_utils.item.add_modifier |', data, item);
+            item.update({data: {modifiers: data}});
+        },
+        remove_modifier: function(item, index) {
+            let mods = item.data.data.modifiers;
+            console.log('DC | dc_utils.item.remove_modifier |', index, item);
+            mods.splice(index);
+            item.update({data: {modifiers: mods}});
+        },
+    },
     roll: {
         new_roll_packet: function(act, type, skl, wep) {
             let item = act.items.get(wep);

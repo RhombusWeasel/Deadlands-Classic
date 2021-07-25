@@ -1,12 +1,10 @@
 <section>
     <div>
         <h3 class="center">Modifiers</h3>
-        <a class="center"><p class="add-modifier">Add a modifier</p></a>
         <table>
-        {{#each modifiers as |mod|}}
-            <tr class="item" data-id="{{@index}}">
+            <tr>
                 <td>
-                    <select class="type-select" name="{{@index}}" id="{{@index}}-type-select">
+                    <select class="type-select" name="type-select" id="type-select">
                         {{#if (eq mod.type 'skill_mod')}}
                             <option value="skill_mod" selected>Skill Modifier</option>
                         {{else}}
@@ -30,7 +28,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="target-select" id="{{@index}}-target-select">
+                    <select name="target-select" id="target-select">
                     {{#if (eq mod.type 'skill_mod')}}
                             <option value="cognition">Cognition</option>
                             <option value="art">Art</option>
@@ -62,9 +60,13 @@
                     {{/if}}
                     </select>
                 </td>
-                <td>
-                    <input style="text-align: center;" type="text" name="data.modifier" value="{{mod.modifier}}"/>
-                </td>
+            </tr>
+        </table>
+        <a class="center"><p class="add-modifier">Add a modifier</p></a>
+        <table>
+        {{#each modifiers as |mod|}}
+            <tr class="item" data-id="{{@index}}">
+                <td><input style="text-align: center;" type="text" name="data.modifier" value="{{mod.modifier}}"/></td>      
                 <td class="center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
         {{/each}}
