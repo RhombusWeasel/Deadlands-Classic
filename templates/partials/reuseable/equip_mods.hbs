@@ -4,8 +4,7 @@
         <a class="center"><p class="add-modifier">Add a modifier</p></a>
         <table>
         {{#each modifiers as |mod|}}
-            <tr>
-                <td>{{@index}}</td>
+            <tr class="item" data-id="{{@index}}">
                 <td>
                     <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
                         <option value="skill_mod">Skill Modifier</option>
@@ -13,6 +12,8 @@
                         <option value="wind_mod">Wind Modifier</option>
                         <option value="pace_mod">Pace Modifier</option>
                     </select>
+                </td>
+                <td>
                     {{#if (eq mod.type 'skill_mod')}}
                         <select name="{{@index}}-skill-select" id="{{@index}}-skill-select">
                             <option value="cognition">Cognition</option>
@@ -36,6 +37,10 @@
                         </select>
                     {{/if}}
                 </td>
+                <td>
+                    <input style="text-align: center;" type="text" name="data.modifier" value="{{data.data.modifier}}"/>
+                </td>
+                <td class="center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
         {{/each}}
         </table>

@@ -38,4 +38,19 @@ export default class DCItem extends ItemSheet {
         console.log(this);
         return this.getData();
     }
+
+    _on_remove_modifier(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let index = element.closest(".item").dataset.id;
+        let item
+        if (this.object.actor) {
+            item = this.object.actor.items.get(this.item.id);
+        } else {
+            item = game.items.get(this.item.id)
+        }
+        let mods = item.data.data.modifiers;
+        mods.splice(index)
+        item.update({data: {modifiers: mods}})
+    }
 }
