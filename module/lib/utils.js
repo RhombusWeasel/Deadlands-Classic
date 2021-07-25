@@ -220,12 +220,12 @@ const dc_utils = {
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
                 console.log('dc | dc_utils.char.armour.add |', location, amt, cur);
-                return act.update({data: {armour: {[location]: cur + parseInt(amt)}}});
+                setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
                 console.log('dc | dc_utils.char.armour.remove |', location, amt, cur);
-                return act.update({data: {armour: {[location]: cur - parseInt(amt)}}});
+                setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
             },
         },
         chips: {
