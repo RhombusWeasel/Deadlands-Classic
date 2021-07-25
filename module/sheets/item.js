@@ -22,7 +22,12 @@ export default class DCItem extends ItemSheet {
 
     _on_add_modifier(event) {
         event.preventDefault();
-        let item = game.items.get(this.item.id)
+        let item
+        if (this.object.actor) {
+            item = this.object.actor.items.get(this.item.id);
+        } else {
+            item = game.items.get(this.item.id)
+        }
         let mods = item.data.data.modifiers;
         mods.push({
             type: 'skill_mod',
