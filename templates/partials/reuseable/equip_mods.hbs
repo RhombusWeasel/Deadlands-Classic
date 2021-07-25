@@ -50,7 +50,7 @@
                     {{/if}}
                     {{#if (eq data.data.type_select 'armour_mod')}}
                             {{#each locations as |loc|}}
-                                {{#if (eq data.data.target_select @key)}}
+                                {{#if (eq ../data.data.target_select @key)}}
                                     <option value="{{@key}}" selected>{{loc}}</option>
                                 {{else}}
                                     <option value="{{@key}}">{{loc}}</option>
