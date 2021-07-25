@@ -4,6 +4,7 @@ export default class DCItem extends ItemSheet {
     }
 
     getData() {
+        console.log(this);
         const data     = super.getData();
         data.config    = CONFIG.dc;
         data.locations = dc_utils.hit_locations;
