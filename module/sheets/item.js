@@ -12,7 +12,7 @@ export default class DCItem extends ItemSheet {
         if (this.object.actor) {
             data.modifiers = this.object.actor.items.get(this.item.id).data.data.modifiers;
         }else if (this.object.pack) {
-            let pack = game.packs.get(`world.${store}`);
+            let pack = game.packs.get(this.object.pack);
             let item = await pack.getDocuments().find(i => {i.id == this.object.id});
             data.modifiers = game.items.get(this.object.id).data.data.modifiers;
         }else{
