@@ -18,12 +18,16 @@ export default class DCItem extends ItemSheet {
 
     _on_add_modifier(event) {
         event.preventDefault();
-        this.object.data.data.modifiers.push({
-            type: 'skill_mod',
-            target: 'cognition',
-            modifier: 2
-        });
-        this.object.update(this.object.data);
+        let data = {
+            modifiers: [
+                {
+                    type: 'skill_mod',
+                    target: 'cognition',
+                    modifier: 2
+                }
+            ]
+        };
+        this.item.update(data);
         console.log(this);
         return this.getData();
     }
