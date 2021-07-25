@@ -119,11 +119,11 @@ const dc_utils = {
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                let mod = parseInt(skill.modifier) || 0;
+                let sk_mod = parseInt(skill.modifier);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier + mod}}}});
+                    return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier + mod}}}}}});
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
                 }
             },
             remove_level: function(act, skill_name, amt) {
