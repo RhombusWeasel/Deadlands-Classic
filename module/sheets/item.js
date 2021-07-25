@@ -26,8 +26,8 @@ export default class DCItem extends ItemSheet {
     _on_add_modifier(event) {
         event.preventDefault();
         let element       = event.currentTarget;
-        let type_select   = element.closest(".type-select").value;
-        let target_select = element.closest(".target-select").value;
+        let type_select   = document.getElementsByClassName(".type-select").value;
+        let target_select = document.getElementsByClassName(".target-select").value;
         let item
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
