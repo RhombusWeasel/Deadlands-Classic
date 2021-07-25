@@ -4,7 +4,6 @@ export default class DCItem extends ItemSheet {
     }
 
     getData() {
-        console.log(this);
         const data = super.getData();
         data.config = CONFIG.dc;
         if (this.object.actor) {
@@ -37,7 +36,6 @@ export default class DCItem extends ItemSheet {
             modifier: item.data.data.value_select
         });
         item.update({data: {modifiers: mods}});
-        console.log(this);
         return this.getData();
     }
 

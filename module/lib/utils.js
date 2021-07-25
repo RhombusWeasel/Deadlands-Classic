@@ -213,7 +213,7 @@ const dc_utils = {
         },
         armour: {
             get: function(act, location) {
-                return act.data.data.armour[location];
+                return parseInt(act.data.data.armour[location]);
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
