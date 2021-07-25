@@ -174,6 +174,7 @@ const dc_utils = {
                 let item = dc_utils.char.items.get_equipped(act, slot);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
+                        console.log('dc | dc_utils.char.item.unequip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.remove_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
@@ -190,6 +191,7 @@ const dc_utils = {
                 let item = act.items.get(id);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
+                        console.log('dc | dc_utils.char.item.equip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.add_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
