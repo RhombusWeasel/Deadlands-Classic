@@ -174,9 +174,9 @@ const dc_utils = {
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
-                            dc_utils.char.skill.remove_modifier(act, mod.skill, mod.modifier);
+                            dc_utils.char.skill.remove_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
-                            dc_utils.char.armour.remove(act, mod.location, mod.modifier);
+                            dc_utils.char.armour.remove(act, mod.target, mod.modifier);
                         } else {
                             
                         }
@@ -190,9 +190,9 @@ const dc_utils = {
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
-                            dc_utils.char.skill.add_modifier(act, mod.skill, mod.modifier);
+                            dc_utils.char.skill.add_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
-                            dc_utils.char.armour.add(act, mod.location, mod.modifier);
+                            dc_utils.char.armour.add(act, mod.target, mod.modifier);
                         } else {
                             
                         }

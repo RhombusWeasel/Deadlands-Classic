@@ -18,6 +18,7 @@ export default class DCItem extends ItemSheet {
     activateListeners(html) {
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
+        html.find(".type-select").click(this._on_select_mod_type.bind(this));
         return super.activateListeners(html);
     }
 
@@ -27,12 +28,12 @@ export default class DCItem extends ItemSheet {
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
         } else {
-            item = game.items.get(this.item.id)
+            item = game.items.get(this.item.id);
         }
         let mods = item.data.data.modifiers;
         mods.push({
             type: 'skill_mod',
-            skill: 'cognition',
+            target: 'cognition',
             modifier: 2
         });
         item.update({data: {modifiers: mods}});
@@ -44,14 +45,30 @@ export default class DCItem extends ItemSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index = parseInt(element.closest(".item").dataset.id);
-        let item
+        let item;
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
         } else {
-            item = game.items.get(this.item.id)
+            item = game.items.get(this.item.id);
         }
         let mods = item.data.data.modifiers;
         mods.splice(index);
-        item.update({data: {modifiers: mods}})
+        item.update({data: {modifiers: mods}});
+    }
+
+    _on_select_mod_type(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let index = element.closest(".item").dataset.id;
+        let mod_type = element.value;
+        let item;
+        if (this.object.actor) {
+            item = this.object.actor.items.get(this.item.id);
+        } else {
+            item = game.items.get(this.item.id);
+        }
+        let mods = item.data.data.modifiers;
+        mods[index].type = mod_type;
+        item.update({data: {modifiers: mods}});
     }
 }

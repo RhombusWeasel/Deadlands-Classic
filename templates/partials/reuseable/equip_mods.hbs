@@ -6,7 +6,7 @@
         {{#each modifiers as |mod|}}
             <tr class="item" data-id="{{@index}}">
                 <td>
-                    <select class="{{@index}}-type-select" name="{{@index}}" id="{{@index}}-type-select">
+                    <select class="type-select" name="{{@index}}" id="{{@index}}-type-select">
                         {{#if (eq mod.type 'skill_mod')}}
                             <option value="skill_mod" selected>Skill Modifier</option>
                         {{else}}
@@ -31,7 +31,7 @@
                 </td>
                 <td>
                     {{#if (eq mod.type 'skill_mod')}}
-                        <select name="{{@index}}-skill-select" id="{{@index}}-skill-select">
+                        <select name="skill-select" id="{{@index}}-skill-select">
                             <option value="cognition">Cognition</option>
                             <option value="art">Art</option>
                             <option value="artillery">Artillery</option>
