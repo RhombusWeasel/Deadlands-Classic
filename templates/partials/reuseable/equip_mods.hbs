@@ -28,7 +28,7 @@
                     </select>
                 </td>
                 <td>
-                    <select name="target-select" id="target-select">
+                    <select name="data.target_select" id="target-select">
                     {{#if (eq data.data.type_select 'skill_mod')}}
                             <option value="cognition">Cognition</option>
                             <option value="art">Art</option>
@@ -49,14 +49,13 @@
                             <option value="throwin">Throwin'</option>
                     {{/if}}
                     {{#if (eq data.data.type_select 'armour_mod')}}
-                            <option value="noggin">Noggin'</option>
-                            <option value="guts">Upper Guts</option>
-                            <option value="arm_right">Right Arm</option>
-                            <option value="arm_left">Left Arm</option>
-                            <option value="lower_guts">Lower Guts</option>
-                            <option value="gizzards">Gizzards</option>
-                            <option value="leg_right">Right Leg</option>
-                            <option value="leg_left">Left Leg</option>
+                            {{#each locations as |loc|}}
+                                {{#if (eq data.data.target_select @key)}}
+                                    <option value="{{@key}}" selected>{{loc}}</option>
+                                {{else}}
+                                    <option value="{{@key}}">{{loc}}</option>
+                                {{/if}}
+                            {{/each}}
                     {{/if}}
                     </select>
                 </td>

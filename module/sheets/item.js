@@ -12,6 +12,7 @@ export default class DCItem extends ItemSheet {
         } else {
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
+        data.locations = dc_utils.hit_locations
         return data;
     }
 
