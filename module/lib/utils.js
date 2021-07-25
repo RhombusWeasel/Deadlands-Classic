@@ -119,6 +119,7 @@ const dc_utils = {
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
+                let mod = parseInt(skill.modifier) || 0;
                 if (skill.trait == skill_name) {
                     return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier + mod}}}});
                 } else {
@@ -180,7 +181,8 @@ const dc_utils = {
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
-                let item = dc_utils.char.items.get_equipped(act, slot);
+                dc_utils.char.items.unequip(act, slot);
+                let item = act.items.get(id);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
