@@ -6,7 +6,7 @@ export default class DCItem extends ItemSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.modifiers = game.items.find(i => function(){return i.name == this.object.id});
+        data.modifiers = game.items.find(i => function(){return i.name == this.object.name}).data.data.modifiers;
         console.log(data.modifiers);
         return data;
     }
@@ -23,10 +23,7 @@ export default class DCItem extends ItemSheet {
             target: 'cognition',
             modifier: 2
         });
-        let data = {
-            modifiers: this.object.data.data.modifiers
-        }
-        this.object.update(data);
+        this.object.update(this.object.data);
         console.log(this);
         return this.getData();
     }
