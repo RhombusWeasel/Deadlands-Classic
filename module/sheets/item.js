@@ -19,16 +19,12 @@ export default class DCItem extends ItemSheet {
     _on_add_modifier(event) {
         event.preventDefault();
         let item = game.items.get(this.item.id);
-        let data = {
-            modifiers: [
-                {
-                    type: 'skill_mod',
-                    target: 'cognition',
-                    modifier: 2
-                }
-            ]
-        };
-        item.update(data);
+        item.data.data.modifiers.push({
+            type: 'skill_mod',
+            skill: 'cognition',
+            modifier: 2
+        });
+        item.update(item.data);
         console.log(this);
         return this.getData();
     }
