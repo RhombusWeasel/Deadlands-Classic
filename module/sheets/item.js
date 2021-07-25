@@ -26,10 +26,10 @@ export default class DCItem extends ItemSheet {
     _on_add_modifier(event) {
         event.preventDefault();
         let element       = event.currentTarget;
-        let type_select   = document.getElementsByClassName(".type-select").value;
-        let target_select = document.getElementsByClassName(".target-select").value;
-        console.log(document.getElementsByClassName(".type-select"));
-        console.log(document.getElementsByClassName(".target-select"));
+        let type_select   = document.getElementById(".type-select").value;
+        let target_select = document.getElementById(".target-select").value;
+        console.log(document.getElementById(".type-select"));
+        console.log(document.getElementById(".target-select"));
         let item
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
