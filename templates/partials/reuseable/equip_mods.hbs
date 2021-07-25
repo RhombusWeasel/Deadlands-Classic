@@ -30,8 +30,8 @@
                     </select>
                 </td>
                 <td>
+                    <select name="target-select" id="{{@index}}-target-select"></select>
                     {{#if (eq mod.type 'skill_mod')}}
-                        <select name="skill-select" id="{{@index}}-skill-select">
                             <option value="cognition">Cognition</option>
                             <option value="art">Art</option>
                             <option value="artillery">Artillery</option>
@@ -50,8 +50,18 @@
                             <option value="speed_load">Speed Load</option>
                             <option value="throwin">Throwin'</option>
                             <option value=""></option>
-                        </select>
                     {{/if}}
+                    {{#if (eq mod.type 'armour_mod')}}
+                            <option value="noggin">Noggin'</option>
+                            <option value="guts">Upper Guts</option>
+                            <option value="arm_right">Right Arm</option>
+                            <option value="arm_left">Left Arm</option>
+                            <option value="lower_guts">Lower Guts</option>
+                            <option value="gizzards">Gizzards</option>
+                            <option value="leg_right">Right Leg</option>
+                            <option value="leg_left">Left Leg</option>
+                    {{/if}}
+                    </select>
                 </td>
                 <td>
                     <input style="text-align: center;" type="text" name="data.modifier" value="{{mod.modifier}}"/>
