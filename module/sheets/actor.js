@@ -212,7 +212,6 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let slot = element.closest(".item").dataset.slot;
         let itemId = element.value;
-        let item = this.actor.items.get(itemId);
         dc_utils.char.items.equip(this.actor, slot, itemId);
     }
 

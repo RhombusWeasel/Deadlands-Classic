@@ -119,7 +119,7 @@ const dc_utils = {
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                let sk_mod = parseInt(skill.modifier);
+                let sk_mod = parseInt(skill.modifier) || 0;
                 if (skill.trait == skill_name) {
                     return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
@@ -174,7 +174,7 @@ const dc_utils = {
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
-                            dc_utils.char.skill.remove_modifier(act, mod.skill);
+                            dc_utils.char.skill.remove_modifier(act, mod.skill, mod.modifier);
                         }
                     }
                 }
@@ -186,7 +186,7 @@ const dc_utils = {
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
                         if (mod.type == 'skill_mod') {
-                            dc_utils.char.skill.add_modifier(act, mod.skill);
+                            dc_utils.char.skill.add_modifier(act, mod.skill, mod.modifier);
                         }
                     }
                 }
