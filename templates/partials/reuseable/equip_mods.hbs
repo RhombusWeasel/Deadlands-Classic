@@ -31,7 +31,7 @@
                     <select name="data.target_select" id="target-select">
                     {{#if (eq data.data.type_select 'skill_mod')}}
                         {{#each skills as |skill|}}
-                            {{#if (eq ../data.data.target_select @key)}}
+                            {{#if (eq ../data.data.target_select skill.key)}}
                                 <option value="{{skill.key}}" selected>{{skill.label}}</option>
                             {{else}}
                                 <option value="{{skill.key}}">{{skill.label}}</option>
