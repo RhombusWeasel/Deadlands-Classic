@@ -6,7 +6,7 @@ export default class DCItem extends ItemSheet {
     getData() {
         const data = super.getData();
         data.config = CONFIG.dc;
-        data.modifiers = game.items.find(i => function(){return i.name == this.object.name}).data.data.modifiers;
+        data.modifiers = game.items.find(i => function(){return i.name == this.item.id}).data.data.modifiers;
         console.log(data.modifiers);
         return data;
     }
