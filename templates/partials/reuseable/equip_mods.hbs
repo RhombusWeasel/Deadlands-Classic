@@ -30,23 +30,13 @@
                 <td>
                     <select name="data.target_select" id="target-select">
                     {{#if (eq data.data.type_select 'skill_mod')}}
-                            <option value="cognition">Cognition</option>
-                            <option value="art">Art</option>
-                            <option value="artillery">Artillery</option>
-                            <option value="scrutinize">Scrutinize</option>
-                            <option value="search">Search</option>
-                            <option value="trackin">Trackin'</option>
-                            <option value="deftness">Deftness</option>
-                            <option value="bow">Bow</option>
-                            <option value="filchin">Filchin'</option>
-                            <option value="lockpickin">Lockpickin'</option>
-                            <option value="shootin_pistol">Shootin' Pistol</option>
-                            <option value="shootin_rifle">Shootin' Rifle</option>
-                            <option value="shootin_shotgun">Shootin' Shotgun</option>
-                            <option value="shootin_automatic">Shootin' Automatic</option>
-                            <option value="sleight_o_hand">Sleight o' hand</option>
-                            <option value="speed_load">Speed Load</option>
-                            <option value="throwin">Throwin'</option>
+                        {{#each skills as |skill|}}
+                            {{#if (eq ../data.data.target_select @key)}}
+                                <option value="{{skill.key}}" selected>{{skill.label}}</option>
+                            {{else}}
+                                <option value="{{skill.key}}">{{skill.label}}</option>
+                            {{/if}}
+                        {{/each}}
                     {{/if}}
                     {{#if (eq data.data.type_select 'armour_mod')}}
                             {{#each locations as |loc|}}

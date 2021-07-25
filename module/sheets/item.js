@@ -4,14 +4,15 @@ export default class DCItem extends ItemSheet {
     }
 
     getData() {
-        const data = super.getData();
-        data.config = CONFIG.dc;
+        const data     = super.getData();
+        data.config    = CONFIG.dc;
+        data.locations = dc_utils.hit_locations;
+        data.skills    = dc_utils.skills;
         if (this.object.actor) {
             data.modifiers = this.object.actor.items.get(this.item.id).data.data.modifiers;
         } else {
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
-        data.locations = dc_utils.hit_locations
         return data;
     }
 
