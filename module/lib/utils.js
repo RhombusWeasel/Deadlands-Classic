@@ -217,7 +217,7 @@ const dc_utils = {
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                return act.update({data: {armour: {[location]: cur + amt}}});
+                return act.update({data: {armour: {[location]: cur + parseInt(amt)}}});
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
