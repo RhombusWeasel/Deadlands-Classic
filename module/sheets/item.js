@@ -18,8 +18,8 @@ export default class DCItem extends ItemSheet {
     activateListeners(html) {
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
-        html.find(".type-select").click(this._on_select_mod_type.bind(this));
-        html.find(".target-select").click(this._on_target_select.bind(this));
+        html.find(".type-select").change(this._on_select_mod_type.bind(this));
+        html.find(".target-select").change(this._on_target_select.bind(this));
         return super.activateListeners(html);
     }
 
