@@ -221,7 +221,7 @@ const dc_utils = {
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                return act.update({data: {armour: {[location]: Math.max(cur - amt, 0)}}});
+                return act.update({data: {armour: {[location]: Math.max(cur - parseInt(amt), 0)}}});
             },
         },
         chips: {
