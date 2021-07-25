@@ -25,7 +25,7 @@ export default class DCItem extends ItemSheet {
             skill: 'cognition',
             modifier: 2
         });
-        item.update({data: mods});
+        item.update({data: {modifiers: mods}});
         console.log(this);
         return this.getData();
     }
