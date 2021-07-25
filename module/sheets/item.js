@@ -28,6 +28,8 @@ export default class DCItem extends ItemSheet {
         let element       = event.currentTarget;
         let type_select   = document.getElementsByClassName(".type-select").value;
         let target_select = document.getElementsByClassName(".target-select").value;
+        console.log(document.getElementsByClassName(".type-select"));
+        console.log(document.getElementsByClassName(".target-select"));
         let item
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
@@ -38,7 +40,7 @@ export default class DCItem extends ItemSheet {
         mods.push({
             type: type_select,
             target: target_select,
-            modifier: 2
+            modifier: item.data.data.value_select
         });
         item.update({data: {modifiers: mods}});
         console.log(this);
