@@ -4,11 +4,11 @@
     {{#if (eq data.data.equippable true)}}
             <td><input type="checkbox" name="data.equippable" checked/></td>
         </tr>
-        <tr>
+        <td>
             <th>Slot</th>
             <td><input style="text-align: center;" type="text" name="data.slot" value="{{data.data.slot}}"/></td>
-        </tr>
-        <tr>
+        </td>
+        <td>
             {{#if (eq data.data.slot 'hand')}}
                 <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
                 {{#if (eq data.data.multi_slot true)}}
@@ -17,8 +17,9 @@
                     <td><input type="checkbox" name="data.multi_slot"/></td>
                 {{/if}}
             {{/if}}
-        </tr>
+        </td>
         {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
+    </tr>
     {{else}}
             <td><input type="checkbox" name="data.equippable"/></td>
         </tr>
