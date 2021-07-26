@@ -3,7 +3,8 @@
     height:500px
 }
 .typed{
-    font-family: "Lucida Sans Typewriter"
+    font-family: "Lucida Sans Typewriter";
+    font-size: small;
 }
 .center{
     text-align: center;
