@@ -1,4 +1,11 @@
 <section class="form typed">
+    <h2 class="center">Targeting</h2>
+        <div class="flexrow">
+            {{#each targets as |target|}}
+                <label for="select-{{@key}}">{{target.name}} [{{target.mod}}]</label>
+                <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}">
+            {{/each}}
+        </div>
     <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
             <div class="flexrow">

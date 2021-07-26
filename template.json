@@ -52,6 +52,7 @@
                     "value": 0
                 },
                 "off_hand_modifier": -6,
+                "called_shot": "any",
                 "perks": {
                     "level_headed": false
                 },
