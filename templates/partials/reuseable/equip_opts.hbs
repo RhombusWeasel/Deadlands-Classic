@@ -1,28 +1,30 @@
 <section>
+{{#if (eq data.data.equippable true)}}
     <tr>
         <th>{{localize "dc.items.goods.equippable"}}</th>
-    {{#if (eq data.data.equippable true)}}
-            <td><input type="checkbox" name="data.equippable" checked/></td>
-        </tr>
+        <td><input type="checkbox" name="data.equippable" checked/></td>
+    </tr>
+    <tr>
         <td>
             <th>Slot</th>
             <td><input style="text-align: center;" type="text" name="data.slot" value="{{data.data.slot}}"/></td>
         </td>
-        <td>
-            {{#if (eq data.data.slot 'hand')}}
-                <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
-                {{#if (eq data.data.multi_slot true)}}
-                    <td><input type="checkbox" name="data.multi_slot" checked/></td>
-                {{else}}
-                    <td><input type="checkbox" name="data.multi_slot"/></td>
-                {{/if}}
-            {{/if}}
-        </td>
     </tr>
-        {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
-    {{else}}
-            <td><input type="checkbox" name="data.equippable"/></td>
-        </tr>
+    <tr>
+    {{#if (eq data.data.slot 'hand')}}
+        <th>{{localize "dc.items.combat.firearm.multi_slot"}}</th>
+        {{#if (eq data.data.multi_slot true)}}
+        <td><input type="checkbox" name="data.multi_slot" checked/></td>
+        {{else}}
+        <td><input type="checkbox" name="data.multi_slot"/></td>
+        {{/if}}
     {{/if}}
     </tr>
+        {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
+{{else}}
+    <tr>
+        <th>{{localize "dc.items.goods.equippable"}}</th>
+        <td><input type="checkbox" name="data.equippable"/></td>
+    </tr>
+{{/if}}
 </section>
