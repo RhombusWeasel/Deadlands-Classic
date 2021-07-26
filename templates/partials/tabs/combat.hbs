@@ -4,7 +4,7 @@
             {{#each targets as |target|}}
                 <label for="select-{{@key}}">{{target.name}} [{{target.mod}}]</label>
                 {{#if (eq @key ../data.data.called_shot)}}
-                <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}" selected>
+                <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}" checked>
                 {{else}}
                 <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}">
                 {{/if}}
