@@ -511,6 +511,10 @@ const dc_utils = {
                     }
                 }
             }
+            let tgt = act.data.data.called_shot
+            if (tgt != 'any') {
+                data.modifiers.called = {label: `${dc_utils.hit_locations[tgt]} shot.`, modifier: dc_utils.hit_locations[tgt].mod};
+            }
             return data;
         },
         new: function(data) {
