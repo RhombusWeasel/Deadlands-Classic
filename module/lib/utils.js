@@ -666,10 +666,10 @@ const dc_utils = {
         }
     },
     journal: {
-        new: function(name, content) {
+        new_data: function(name, content) {
             return JournalEntry.create({
                 name: name,
-                content: content
+                content: JSON.stringify(content)
             });
         },
         load: function(name) {
@@ -678,7 +678,11 @@ const dc_utils = {
         },
         save: function(name, content) {
             let journal = game.journal.getName(name);
-            return journal.update({data: {content: JSON.stringify(content)}})
+            if (journal) {
+                return journal.update({data: {content: JSON.stringify(content)}});
+            } else {
+                return dc_utils.journal.new_data(name, content);
+            }
         },
     },
     combat: {
