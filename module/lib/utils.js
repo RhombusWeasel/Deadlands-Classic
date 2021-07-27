@@ -308,16 +308,26 @@ const dc_utils = {
                 return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
             },
             calculate_wound_modifier: function(act) {
-                let wm = parseInt(act.data.data.wounds.noggin)
+                let wm = act.data.data.wound_modifier
+                let is_wounded = false
                 for (const loc in act.data.data.wounds) {
                     if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
-                        const cur = parseInt(act.data.data.wounds[loc]);
-                        if (cur > wm) {
+                        const cur = act.data.data.wounds[loc];
+                        if (cur * -1 < wm) {
                             wm = cur * -1
+                            is_wounded = true
+                        }else{
+                            if (cur > 0) {
+                                is_wounded = true
+                            }
                         }
                     }
                 }
-                return act.update({data: {wound_modifier: wm}});
+                if (is_wounded) {
+                    return act.update({data: {wound_modifier: wm}});
+                }else{
+                    return act.update({data: {wound_modifier: 0}});
+                }
             },
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
