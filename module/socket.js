@@ -543,9 +543,9 @@ let operations = {
         }else if (atk.owner) {
             let itm = atk.actor.items.get(data.weapon);
             data.weapon_name = itm.name;
-            let shots = 1;
             if (data.type == 'ranged') {
-                if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
+                //Check ammo
+                if (!(dc_utils.char.weapon.use_ammo(atk.actor, data.weapon))) {
                     return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
                 }
             }
@@ -566,21 +566,7 @@ let operations = {
             console.log(tgt);
             let dmg = itm?.data?.data?.damage?.split('d') || ['0', '0'];
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
-            let loc_roll = new Roll('1d20').roll();
-            loc_roll.toMessage({rollMode: 'gmroll'});
-            let tot = loc_roll._total - 1;
-            let found = [];
-            let range = data.roll.raises * 2
-            for (let i = 0; i < dc_utils.locations.length; i++) {
-                if (i >= tot - range && i <= tot + range && i < 19){
-                    if (!(found.includes(dc_utils.loc_lookup[i]))) {
-                        found.push(dc_utils.loc_lookup[i]);
-                    }
-                }
-            }
-            console.log('roll_damage: Location:', found, found.length - 1);
-            let loc_key = found[found.length - 1];
-            console.log('roll_damage: Location:', loc_key);
+            let loc_key = dc_utils.roll.location_roll(data.roll.raises, atk.actor.data.data.called_shot);
             //Armour Check
             data.av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
             //Damage
