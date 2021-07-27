@@ -308,11 +308,11 @@ const dc_utils = {
                 return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
             },
             calculate_wound_modifier: function(act) {
-                let wm = act.data.data.wound_modifier
+                let wm = act.data.data.wounds.noggin
                 for (const loc in act.data.data.wounds) {
                     if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
                         const cur = act.data.data.wounds[loc];
-                        if (cur * -1 < wm) {
+                        if (cur > wm) {
                             wm = cur * -1
                         }
                     }
