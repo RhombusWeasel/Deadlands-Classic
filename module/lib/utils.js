@@ -67,11 +67,11 @@ const dc_utils = {
     called_shots: {
         any:  {name: "None" , mod:  0,  locations: ['any']},
         head: {name: "Head!", mod: -6,  locations: ['noggin']},
-        hand: {name: "Hand" , mod: -6,  locations: ['disarm']},
+        hand: {name: "Hand" , mod: -6,  locations: ['arm_left', 'arm_right']},
         arm:  {name: "Arm"  , mod: -4,  locations: ['arm_left', 'arm_right']},
         leg:  {name: "Leg"  , mod: -4,  locations: ['leg_left', 'leg_right']},
         body: {name: "Body" , mod: -2,  locations: ['guts', 'lower_guts', 'gizzards']},
-        eye:  {name: "Eye"  , mod: -10, locations: ['kill']}
+        eye:  {name: "Eye"  , mod: -10, locations: ['noggin']}
     },
     hit_locations: {leg_left: 'Left Leg', leg_right: 'Right Leg', lower_guts: 'Lower Guts', gizzards: 'Gizzards', arm_left: 'Left Arm', arm_right: 'Right Arm', guts: 'Upper Guts', noggin: 'Noggin'},
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
@@ -589,6 +589,7 @@ const dc_utils = {
             return tn;
         },
         location_roll(raises, key) {
+            let loc_key
             if (key == 'any') {
                 let loc_roll = new Roll('1d20').roll();
                 loc_roll.toMessage({rollMode: 'gmroll'});
@@ -603,12 +604,13 @@ const dc_utils = {
                     }
                 }
                 console.log('roll_damage: Location:', found, found.length - 1);
-                let loc_key = found[found.length - 1];
+                loc_key = found[found.length - 1];
                 console.log('roll_damage: Location:', loc_key);
-                return loc_key
             }else{
-                return key;
+                let locs = dc_utils.called_shots[key].locations
+                loc_key = locs[Math.floor(Math.random() * locs.length)]
             }
+            return loc_key;
         },
         get_result_template: function(data) {
             let r_str = `
