@@ -309,9 +309,12 @@ const dc_utils = {
             },
             calculate_wound_modifier: function(act) {
                 let wm = act.data.data.wound_modifier
-                for (let loc of act.data.data.wounds) {
-                    if (loc * -1 < wm) {
-                        wm = loc * -1
+                for (const loc in act.data.data.wounds) {
+                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
+                        const cur = act.data.data.wounds[loc];
+                        if (cur * -1 < wm) {
+                            wm = cur * -1
+                        }
                     }
                 }
                 return act.update({data: {wound_modifier: wm}});
