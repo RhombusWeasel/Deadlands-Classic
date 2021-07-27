@@ -513,7 +513,7 @@ const dc_utils = {
             }
             let tgt = act.data.data.called_shot
             if (tgt != 'any') {
-                data.modifiers.called = {label: `${dc_utils.hit_locations[tgt]} shot.`, modifier: dc_utils.hit_locations[tgt].mod};
+                data.modifiers.called = {label: `${dc_utils.called_shots[tgt]} shot.`, modifier: dc_utils.called_shots[tgt].mod};
             }
             return data;
         },
