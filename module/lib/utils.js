@@ -298,6 +298,29 @@ const dc_utils = {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
         },
+        wounds: {
+            add: function(act, loc, amt) {
+                let tot = act.data.data.wounds[loc] + amt;
+                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+            },
+            remove: function(act, loc, amt) {
+                let tot = act.data.data.wounds[loc] - amt;
+                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+            },
+            calculate_wound_modifier: function(act) {
+                let wm = act.data.data.wound_modifier
+                for (let loc of act.data.data.wounds) {
+                    if (loc * -1 < wm) {
+                        wm = loc * -1
+                    }
+                }
+                return act.update({data: {wound_modifier: wm}});
+            },
+            heal_roll: function(act, loc) {
+                let tn = 3 + (act.data.data.wounds[loc] * 2);
+
+            },
+        },
         armour: {
             get: function(act, location) {
                 return parseInt(act.data.data.armour[location]);
@@ -418,7 +441,6 @@ const dc_utils = {
                 let tkn = dc_utils.char.token.get_name(act.name);
                 let tgt = dc_utils.char.token.get_name(target.name);
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
-                console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
                     return false;
@@ -649,17 +671,6 @@ const dc_utils = {
         },
     },
     chat: {
-        format: function(title) {
-            let sheet = `
-                <h3 style="text-align: center;">${title}</h3>
-            `
-            for (let i = 0; i < arguments.length; i++) {
-                sheet += `
-                <p style="text-align: center;">${arguments[i]}</p>
-                `
-            }
-            return sheet
-        },
         send: function(title) {
             let sheet = `
                 <h3 style="text-align: center;">${title}</h3>
@@ -690,7 +701,12 @@ const dc_utils = {
         },
         load: function(name) {
             let journal = game.journal.getName(name);
-            return JSON.parse(journal.data.content);
+            if (journal) {
+                return JSON.parse(journal.data.content);
+            }else{
+                let new_journal = dc_utils.journal.new_data(name, {});
+                return {};
+            }
         },
         save: function(name, content) {
             let journal = game.journal.getName(name);
@@ -703,7 +719,7 @@ const dc_utils = {
     },
     combat: {
         add: function(data) {
-
+            
         },
         new: function(act, tgt, type, wep) {
 
