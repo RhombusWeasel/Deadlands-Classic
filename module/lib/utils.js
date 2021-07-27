@@ -343,6 +343,22 @@ const dc_utils = {
                 return false;
             }
         },
+        money: {
+            get: function(act) {
+                return act.data.data.cash;
+            },
+            set: function(act, value) {
+                return act.update({data: {cash: value}});
+            },
+            add: function(act, amt) {
+                let tot = act.data.data.cash + amt;
+                return act.update({data: {cash: tot}});
+            },
+            subtract: function(act, amt) {
+                let tot = act.data.data.cash - amt;
+                return act.update({data: {cash: tot}});
+            },
+        },
         token: {
             get: function(act) {
                 let owned = canvas.tokens.placeables.find(i => i.owner == true);
