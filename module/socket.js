@@ -572,16 +572,13 @@ let operations = {
             //Damage
             let amt = parseInt(dmg[0]);
             let die = Math.max(parseInt(dmg[1]) - data.av, 4);
-            if (found.includes('noggin') || loc_roll._total == 20) {
-                data.loc_key = 'noggin';
-                data.loc_label = 'Noggin';
+            data.loc_key = loc_key;
+            data.loc_label = dc_utils.hit_locations[loc_key]
+            if (loc_key == 'noggin') {
                 amt += 2;
-            }else if (found.includes('gizzards')) {
-                data.loc_key = 'gizzards';
-                data.loc_label = 'Gizzards';
+            }else if (loc_key == 'gizzards') {
                 amt += 1;
             }else{
-                data.loc_key = loc_key;
                 data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
             }
             console.log('roll_damage: Location:', dc_utils.loc_lookup.indexOf(loc_key));
