@@ -588,23 +588,27 @@ const dc_utils = {
             }
             return tn;
         },
-        location_roll(raises) {
-            let loc_roll = new Roll('1d20').roll();
-            loc_roll.toMessage({rollMode: 'gmroll'});
-            let tot = loc_roll._total - 1;
-            let found = [];
-            let range = raises * 2
-            for (let i = 0; i < dc_utils.locations.length; i++) {
-                if (i >= tot - range && i <= tot + range && i < 19){
-                    if (!(found.includes(dc_utils.loc_lookup[i]))) {
-                        found.push(dc_utils.loc_lookup[i]);
+        location_roll(raises, key) {
+            if (key == 'any') {
+                let loc_roll = new Roll('1d20').roll();
+                loc_roll.toMessage({rollMode: 'gmroll'});
+                let tot = loc_roll._total - 1;
+                let found = [];
+                let range = raises * 2
+                for (let i = 0; i < dc_utils.locations.length; i++) {
+                    if (i >= tot - range && i <= tot + range && i < 19){
+                        if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                            found.push(dc_utils.loc_lookup[i]);
+                        }
                     }
                 }
+                console.log('roll_damage: Location:', found, found.length - 1);
+                let loc_key = found[found.length - 1];
+                console.log('roll_damage: Location:', loc_key);
+                return loc_key
+            }else{
+                return key;
             }
-            console.log('roll_damage: Location:', found, found.length - 1);
-            let loc_key = found[found.length - 1];
-            console.log('roll_damage: Location:', loc_key);
-            return loc_key
         },
         get_result_template: function(data) {
             let r_str = `
