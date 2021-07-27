@@ -311,7 +311,6 @@ const dc_utils = {
                 let wm = act.data.data.wound_modifier
                 let is_wounded = false
                 for (const loc in act.data.data.wounds) {
-                    console.log(loc);
                     if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
                         let cur = act.data.data.wounds[loc];
                         if (cur * -1 < wm) {
