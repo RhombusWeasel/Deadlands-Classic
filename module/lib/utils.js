@@ -66,7 +66,7 @@ const dc_utils = {
     ],
     called_shots: {
         any:  {name: "None" , mod:  0,  locations: ['any']},
-        head: {name: "Head!", mod: -6,  locations: ['noggin'], msg: `They're aimin' for the head!`},
+        head: {name: "Head", mod: -6,  locations: ['noggin'], msg: `They're aimin' for the head!`},
         hand: {name: "Hand" , mod: -6,  locations: ['arm_left', 'arm_right'], msg: `They're aimin' fer their hand!`},
         arm:  {name: "Arm"  , mod: -4,  locations: ['arm_left', 'arm_right'], msg: `They're aimin' fer the arm!`},
         leg:  {name: "Leg"  , mod: -4,  locations: ['leg_left', 'leg_right'], msg: `They're aimin' fer the legs!`},
@@ -513,7 +513,7 @@ const dc_utils = {
             }
             let tgt = act.data.data.called_shot
             if (tgt != 'any') {
-                data.modifiers.called = {label: `${dc_utils.called_shots[tgt]} shot.`, modifier: dc_utils.called_shots[tgt].mod};
+                data.modifiers.called = {label: `${dc_utils.called_shots[tgt].name} shot.`, modifier: dc_utils.called_shots[tgt].mod};
             }
             return data;
         },
