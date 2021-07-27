@@ -545,15 +545,10 @@ let operations = {
             data.weapon_name = itm.name;
             let shots = 1;
             if (data.type == 'ranged') {
-                shots = itm.data.data.chamber;
+                if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
+                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
+                }
             }
-            if (shots < 1) {
-                //Out of ammo
-                return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
-            }
-            shots = shots - 1;
-            game.dc.aim_bonus = 0;
-            itm.update({"data.chamber": shots});
             if (data.hit_roll < data.tn) {
                 //Missed
                 if (data.roll.ones > data.roll.pass) {

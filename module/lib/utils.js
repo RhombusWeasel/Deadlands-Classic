@@ -331,7 +331,12 @@ const dc_utils = {
             },
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
-
+                let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
+                data.tn = tn
+                data.roll = dc_utils.roll.new(data);
+                if (data.roll.success) {
+                    dc_utils.char.wounds.remove(act, loc, 1);
+                }
             },
         },
         armour: {
@@ -393,6 +398,21 @@ const dc_utils = {
             subtract: function(act, amt) {
                 let tot = act.data.data.cash - amt;
                 return act.update({data: {cash: tot}});
+            },
+        },
+        weapon: {
+            use_ammo: function(act, weapon_id) {
+                let item = act.items.get(weapon_id);
+                if (item) {
+                    let shots = item.data.data.chamber;
+                    if (shots < 1) {
+                        return false;
+                    }
+                    shots = shots - 1;
+                    item.update({"data.chamber": shots});
+                    return true;
+                }
+                return false;
             },
         },
         token: {
@@ -572,8 +592,19 @@ const dc_utils = {
             let loc_roll = new Roll('1d20').roll();
             loc_roll.toMessage({rollMode: 'gmroll'});
             let tot = loc_roll._total - 1;
-            
-            return 
+            let found = [];
+            let range = raises * 2
+            for (let i = 0; i < dc_utils.locations.length; i++) {
+                if (i >= tot - range && i <= tot + range && i < 19){
+                    if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                        found.push(dc_utils.loc_lookup[i]);
+                    }
+                }
+            }
+            console.log('roll_damage: Location:', found, found.length - 1);
+            let loc_key = found[found.length - 1];
+            console.log('roll_damage: Location:', loc_key);
+            return loc_key
         },
         get_result_template: function(data) {
             let r_str = `
