@@ -549,39 +549,23 @@ let operations = {
             }
             if (shots < 1) {
                 //Out of ammo
-                ChatMessage.create({content: `
-                    <h3 style="text-align:center">Out of Ammo!</h3>
-                    <p style="text-align:center">Click...</p>
-                    <p style="text-align:center">Click Click!</p>
-                    <p style="text-align:center">Looks like you're empty partner.</p>
-                `});
-                return;
+                return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
             }
             shots = shots - 1;
             game.dc.aim_bonus = 0;
             itm.update({"data.chamber": shots});
             if (data.hit_roll < data.tn) {
                 //Missed
-                let msg = `
-                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
-                    <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
-                `;
                 if (data.roll.ones > data.roll.pass) {
-                    msg += `
-                    <p style="text-align:center">It was a critical failure!</p>
-                    `;
+                    dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'It was a critical failure!')
+                }else{
+                    dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`)
                 }
-                ChatMessage.create({content: msg});
                 return;
             }
             if (data.hit_roll < data.dodge_roll) {
                 //Dodged
-                ChatMessage.create({content: `
-                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
-                    <p style="text-align:center">${data.attacker} attacked ${data.target} but missed.</p>
-                    <p style="text-align:center">They saw it coming and managed to dodge.</p>
-                `});
-                return;
+                return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             console.log(tgt);

@@ -65,19 +65,35 @@ const dc_utils = {
         {key: "vigor", label: "Vigor"},
     ],
     called_shots: {
-        any:  {name: "None" , mod:  0},
-        head: {name: "Head!", mod: -6},
-        hand: {name: "Hand" , mod: -6},
-        arm:  {name: "Arm"  , mod: -4},
-        leg:  {name: "Leg"  , mod: -4},
-        body: {name: "Body" , mod: -2},
-        eye:  {name: "Eye"  , mod: -10}
+        any:  {name: "None" , mod:  0,  locations: ['any']},
+        head: {name: "Head!", mod: -6,  locations: ['noggin']},
+        hand: {name: "Hand" , mod: -6,  locations: ['disarm']},
+        arm:  {name: "Arm"  , mod: -4,  locations: ['arm_left', 'arm_right']},
+        leg:  {name: "Leg"  , mod: -4,  locations: ['leg_left', 'leg_right']},
+        body: {name: "Body" , mod: -2,  locations: ['guts', 'lower_guts', 'gizzards']},
+        eye:  {name: "Eye"  , mod: -10, locations: ['kill']}
     },
     hit_locations: {leg_left: 'Left Leg', leg_right: 'Right Leg', lower_guts: 'Lower Guts', gizzards: 'Gizzards', arm_left: 'Left Arm', arm_right: 'Right Arm', guts: 'Upper Guts', noggin: 'Noggin'},
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
+
+    /** UUID
+    * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
+    */
+    uuid: function() {
+        let str = ''
+        for (let a = 0; a < arguments.length; a++) {
+            for (let i = 0; i < arguments[a]; i++) {
+                str += uuid_keys[Math.floor(Math.random() * uuid_keys.length)];
+            }
+            if (a < arguments.length - 1) {
+                str += '-'
+            }
+        }
+        return str
+    },
 
     sort: {
         compare: function(object1, object2, key) {
@@ -106,7 +122,7 @@ const dc_utils = {
         },
         get_player_owned_actors: function() {
             return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
-        }
+        },
     },
     char: {
         has: function(act, type, name) {
@@ -402,6 +418,7 @@ const dc_utils = {
                 range:      dist,
                 tn:         dc_utils.roll.get_tn(),
                 name:       act.name,
+                called:     act.data.data.called_shot,
                 skill:      skl,
                 amt:        skill.level,
                 dice:       skill.die_type,
@@ -499,6 +516,13 @@ const dc_utils = {
                 }
             }
             return tn;
+        },
+        location_roll(raises) {
+            let loc_roll = new Roll('1d20').roll();
+            loc_roll.toMessage({rollMode: 'gmroll'});
+            let tot = loc_roll._total - 1;
+            
+            return 
         },
         get_result_template: function(data) {
             let r_str = `
@@ -640,5 +664,29 @@ const dc_utils = {
                 data: data
             });
         }
+    },
+    journal: {
+        new: function(name, content) {
+            return JournalEntry.create({
+                name: name,
+                content: content
+            });
+        },
+        load: function(name) {
+            let journal = game.journal.getName(name);
+            return JSON.parse(journal.data.content);
+        },
+        save: function(name, content) {
+            let journal = game.journal.getName(name);
+            return journal.update({data: {content: JSON.stringify(content)}})
+        },
+    },
+    combat: {
+        add: function(data) {
+
+        },
+        new: function(act, tgt, type, wep) {
+
+        },
     }
 };
