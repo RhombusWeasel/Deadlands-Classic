@@ -792,7 +792,7 @@ const dc_utils = {
         },
         sleeve_card: function(act, card) {
             if (act.data.data.sleeved_card != 'none') {
-                let confirmation = await Dialog.confirm({
+                let confirmation = Dialog.confirm({
                     title: 'Hold up.',
                     content: `
                         <p class="center">You have the ${act.data.data.sleeved_card} up your sleeve already,</p>
