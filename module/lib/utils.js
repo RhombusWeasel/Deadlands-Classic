@@ -514,6 +514,7 @@ const dc_utils = {
             if (type == 'melee' || type == 'ranged') {
                 if (act.data.data.aim_bonus > 0) {
                     data.modifiers.aim = {label: 'Aim', modifier: act.data.data.aim_bonus};
+                    dc_utils.combat.clear_aim(act);
                 }
             }
             let tgt = act.data.data.called_shot
