@@ -782,7 +782,7 @@ const dc_utils = {
             let bonus = act.data.data.aim_bonus + 2
             if (bonus <= 6) {
                 act.update({data: {aim_bonus: bonus}});
-                dc_utils.char.items.delete(act, card);
+                dc_utils.char.items.delete(act, card.id);
                 dc_utils.socket.emit('discard_card', card);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
