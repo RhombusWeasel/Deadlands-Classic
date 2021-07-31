@@ -511,6 +511,11 @@ const dc_utils = {
                     }
                 }
             }
+            if (type == 'melee' || type == 'ranged') {
+                if (act.data.data.aim_bonus > 0) {
+                    data.modifiers.aim = {label: 'Aim', modifier: act.data.data.aim_bonus};
+                }
+            }
             let tgt = act.data.data.called_shot
             if (tgt != 'any') {
                 data.modifiers.called = {label: `${dc_utils.called_shots[tgt].name} shot.`, modifier: dc_utils.called_shots[tgt].mod};
@@ -699,11 +704,11 @@ const dc_utils = {
                         const chk_card = card_pile[chk].name;
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name += ' '
+                                card_pile[chk].name = 'Joker (Red)'
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }else if(chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name += ' '
+                                card_pile[chk].name = 'Joker (Black)'
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }
@@ -772,11 +777,37 @@ const dc_utils = {
         },
     },
     combat: {
-        add: function(data) {
-            
+        aim: function(act, card) {
+            let bonus = act.data.data.aim_bonus + 2
+            if (bonus <= 6) {
+                act.update({data: {aim_bonus: bonus}});
+                dc_utils.socket.emit('discard_card', card);
+                dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
+            }else{
+                dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
+            }
         },
-        new: function(act, tgt, type, wep) {
-
+        clear_aim: function(act) {
+            act.update({data: {aim_bonus: 0}});
         },
+        sleeve_card: function(act, card) {
+            if (act.data.data.sleeved_card != 'none') {
+                let confirmation = await Dialog.confirm({
+                    title: 'Hold up.',
+                    content: `
+                        <p class="center">You have the ${act.data.data.sleeved_card} up your sleeve already,</p>
+                        <p class="center">If you sleeve the ${card.name} you'll lose the ${act.data.data.sleeved_card}.</p>
+                    `,
+                });
+                if (confirmation) {
+                    let old = act.items.find(i => function() {return i.name == act.data.data.sleeved_card});
+                    dc_utils.socket.emit('discard_card', old);
+                    dc_utils.char.items.delete(act, old.id);
+                    act.update({data: {sleeved_card: card.name}});
+                }
+            } else {
+                act.update({data: {sleeved_card: card.name}});
+            }
+        }
     }
 };

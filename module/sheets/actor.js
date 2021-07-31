@@ -374,22 +374,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        let bonus = game.dc.aim_bonus + 2
-        if (bonus <= 6) {
-            game.dc.aim_bonus = bonus
-            reply = `Spends the ${item.name} to aim [ +${bonus} ]`;
-        }
-        ChatMessage.create({content: reply});
-        game.socket.emit("system.deadlands_classic", {
-            operation: 'discard_card',
-            data: {
-                name: item.name,
-                type: item.type,
-                char: this.actor.name
-            }
-        });
-        dc_utils.char.items.delete(this.actor, itemId);
-        return this.getData();
+        dc_utils.combat.aim(this.actor, item);
     }
 
     _on_dodge(event) {

@@ -51,8 +51,11 @@
                     "max": 0,
                     "value": 0
                 },
+                "sleeved_card": "none",
+                "aim_bonus": 0,
                 "off_hand_modifier": -6,
                 "called_shot": "any",
+                "is_bleeding": false,
                 "perks": {
                     "level_headed": false
                 },
