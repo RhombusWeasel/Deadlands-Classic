@@ -217,48 +217,26 @@ let operations = {
     },
     end_combat: function(data) {
         game.dc.combat_active = false
-        if (game.user.isGM) {
-            game.dc.action_deck = []
-            game.dc.discard_deck = []
-            game.dc.aim_bonus = 0
-        }
     },
     request_cards: function(data){
         if (game.user.isGM) {
             let cards = data.amount
             if (game.dc.action_deck.deck.length <= cards){
-                restore_discard()
+                dc_utils.combat.restore_discard();
             }
             let act = game.actors.getName(data.char);
             for (let i=0; i<cards; i++){
-                dc_utils.deck.deal_action_card(act);
+                dc_utils.combat.deal_card(act);
             }
         };
     },
-    recieve_card: function(data){
-        let actor = game.actors.getName(data.char);
-        if (actor.isOwner){
-            console.log(data);
-            console.log(actor);
-            let c = Math.random();
-            setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
-        }
-    },
     discard_card: function(data) {
         if (game.user.isGM) {
-            if (data.name == "Joker (Black)") {
-                ChatMessage.create({ content: `
-                    <h3 style="text-align: center;">Black Joker!</h3>
-                    <p style="text-align: center;">You lose your next highest card.</p>
-                    <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
-                    <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
-                `});
+            if (data.name == "Joker "+dc_utils.suit_symbols.black_joker) {
+                dc_utils.chat.send('Black Joker', 'You lose your next highest card.', 'The combat deck will be reshuffled at the end of the round.', 'The Marshal draws a Fate Chip.');
                 game.dc.combat_shuffle = true
             }else{
-                ChatMessage.create({ content: `
-                    <h3 style="text-align: center;">Action Deck</h3>
-                    <p style="text-align: center;">${data.char} plays ${data.name}</p>
-                `});
+                dc_utils.chat.send('Action Deck', `${data.char} plays ${data.name}`)
             }
             game.dc.action_discard.push(data)
         }

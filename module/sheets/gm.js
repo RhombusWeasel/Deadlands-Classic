@@ -202,6 +202,8 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let act = this.getData();
         this.actor.update({"combat_active": true});
+        dc_utils.combat.new_combat();
+        dc_utils.combat.new_round();
         ChatMessage.create({ content: `Combat Begins!`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
@@ -213,6 +215,7 @@ export default class GMSheet extends ActorSheet {
 
     _on_new_round(event) {
         event.preventDefault();
+        dc_utils.combat.new_round();
         ChatMessage.create({ content: `New Round! Get Down with the Quickness!`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',

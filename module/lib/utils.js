@@ -729,10 +729,6 @@ const dc_utils = {
             }
             return value;
         },
-        deal_action_card: function(act) {
-            let card = game.dc.action_deck.deck.pop();
-            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
-        },
     },
     chat: {
         send: function(title) {
@@ -814,6 +810,33 @@ const dc_utils = {
             } else {
                 act.update({data: {sleeved_card: card.name}});
             }
-        }
+        },
+        new_combat: function() {
+            let deck = {
+                deck: dc_utils.deck.new('action_deck'),
+                discard: []
+            }
+            dc_utils.journal.save('action_deck', deck);
+            game.dc.action_deck = dc_utils.journal.load('action_deck');
+        },
+        new_round: function() {
+            game.dc.combat_active = true
+            game.dc.level_headed_available = true
+            if (game.dc.combat_shuffle) {
+                game.dc.combat_shuffle = false;
+                dc_utils.combat.restore_discard();
+            }
+        },
+        restore_discard: function() {
+            game.dc.action_deck.discard.forEach(card => {
+                game.dc.action_deck.push(card);
+            });
+            game.dc.action_deck.discard = []
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
+        },
+        deal_card: function(act) {
+            let card = game.dc.action_deck.deck.pop();
+            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
+        },
     }
 };
