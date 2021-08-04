@@ -729,6 +729,10 @@ const dc_utils = {
             }
             return value;
         },
+        deal_action_card: function(act) {
+            let card = game.dc.action_deck.deck.pop();
+            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
+        },
     },
     chat: {
         send: function(title) {
@@ -759,13 +763,13 @@ const dc_utils = {
                 content: JSON.stringify(content)
             });
         },
-        load: function(name) {
+        load: function(name, content) {
             let journal = game.journal.getName(name);
             if (journal) {
                 return JSON.parse(journal.data.content);
             }else{
-                let new_journal = dc_utils.journal.new_data(name, {});
-                return {};
+                let new_journal = dc_utils.journal.new_data(name, content);
+                return content;
             }
         },
         save: function(name, content) {

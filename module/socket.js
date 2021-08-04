@@ -1,5 +1,9 @@
 function restore_discard() {
-    game.dc.action_deck = dc_utils.deck.new('action_deck');
+    game.dc.action_deck.discard.forEach(card => {
+        game.dc.action_deck.push(card);
+    });
+    game.dc.action_deck.discard = []
+    dc_utils.journal.save('action_deck', game.dc.action_deck);
 }
 
 function build_skill_template(data) {
@@ -222,15 +226,12 @@ let operations = {
     request_cards: function(data){
         if (game.user.isGM) {
             let cards = data.amount
-            if (!(game.dc.chars.includes(data.char))) {
-                game.dc.chars.push(data.char);
-            }
-            if (game.dc.action_deck.length <= cards){
+            if (game.dc.action_deck.deck.length <= cards){
                 restore_discard()
             }
+            let act = game.actors.getName(data.char);
             for (let i=0; i<cards; i++){
-                data.card = game.dc.action_deck.pop();
-                dc_utils.socket.emit('recieve_card', data);
+                dc_utils.deck.deal_action_card(act);
             }
         };
     },
@@ -377,11 +378,7 @@ let operations = {
                     sleeve: {
                         label: 'Sleeve it',
                         callback: () => {
-                            if (char.data.sleeved) {
-                                //Prompt for you can only have one sleeved card
-                            }else{
-                                char.update({data: {sleeved: data.name}});
-                            }
+                            dc_utils.combat.sleeve_card(act, itm);
                         }
                     },
                     play: {
@@ -943,9 +940,16 @@ Hooks.on("ready", () => {
         level_headed_available: true
     }
     if (game.user.isGM) {
-        game.dc.action_deck = dc_utils.deck.new('action_deck');
-        game.dc.action_discard = [];
-        game.dc.chars = [];
+        let journal = game.journal.getName('action_deck');
+        if (journal) {
+            game.dc.action_deck = dc_utils.journal.load('action_deck');
+        }else{
+            let deck = {
+                deck: dc_utils.deck.new('action_deck'),
+                discard: []
+            }
+            game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
+        }
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {

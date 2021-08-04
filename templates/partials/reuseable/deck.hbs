@@ -4,7 +4,11 @@
             {{#each deck as |card|}}
             <td class="item" data-itemId="{{this.id}}" style="text-align: center;">
                 <div class="flexrow" style="display: inline-block;">
+                    {{#if (eq data.data.sleeved_card card.name)}}
+                    <a>{{this.name}} (Sl)</a>
+                    {{else}}
                     <a>{{this.name}}</a>
+                    {{/if}}
                     {{#if (eq this.type 'action_deck')}}
                     <a class="aim-button"><i class="fas fa-crosshairs" title="Aim (Adds +2 to next shot, stacks to +6)"> </i></a>
                         {{#lvl_head}}
