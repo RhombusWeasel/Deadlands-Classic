@@ -238,7 +238,8 @@ let operations = {
             }else{
                 dc_utils.chat.send('Action Deck', `${data.char} plays ${data.name}`)
             }
-            game.dc.action_discard.push(data)
+            game.dc.action_deck.discard.push(data);
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
         }
     },
     recycle_card: function(data) {
