@@ -236,7 +236,7 @@ export default class GMSheet extends ActorSheet {
     }
 
     _on_draw_card() {
-        let card = game.dc.action_deck.pop();
+        let card = game.dc.action_deck.deck.pop();
         let c = Math.random()
         setTimeout(() => {this.actor.createOwnedItem(card)}, c * 100);
     }
