@@ -1,7 +1,7 @@
 <section>
         <tr>
             <td class="center" style="table-layout: fixed;">
-                <select class="item equip-select" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
+                <select class="item equip-select center" name="data.equipped.{{label}}" id="{{label}}-select" data-slot="{{label}}">
                     <option value="Nuthin">Nuthin'</option>
                     {{#each items as |item|}}
                         {{#if (eq item.data.data.slot ../slot)}}
@@ -18,16 +18,16 @@
                 {{#if (eq item.data.data.slot ../slot)}}
                     {{#if_equipped ../label item.id}}
                         {{#if (eq item.type 'firearm')}}
-            <td>{{this.data.data.chamber}}/{{this.data.data.max}}</td>
+            <td class="center">{{this.data.data.chamber}}/{{this.data.data.max}}</td>
                         {{/if}}
         </tr>
         <tr class="center" style="table-layout: fixed;">
                         {{#if (eq item.type 'melee')}}
-            <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
+            <td class="center"><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
                         {{/if}}
                         {{#if (eq item.type 'firearm')}}
-            <td><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
-            <td><a class="gun-reload" title="Reload {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Reload</a></td>
+            <td class="center"><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
+            <td class="center"><a class="gun-reload" title="Reload {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Reload</a></td>
                         {{/if}}
                     {{else}}
                     {{/if_equipped}}
