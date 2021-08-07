@@ -41,7 +41,9 @@
                     "off": "Nuthin",
                     "head":"Nuthin",
                     "body": "Nuthin",
-                    "legs": "Nuthin"
+                    "belt": "Nuthin",
+                    "legs": "Nuthin",
+                    "feet": "Nuthin"
                 },
                 "wound_modifier": 0,
                 "grit": 0,
