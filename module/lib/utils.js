@@ -305,8 +305,8 @@ const dc_utils = {
                 let r_data = [];
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
-                    let proto = copies[0];
-                    for (const copy of copies) {
+                    for (let i = 1; i < copies.length; i++) {
+                        const copy = copies[i];
                         data[a].update({data: {amount: data[a].amount + copy.data.data.amount}})
                         copy.delete();
                     }
