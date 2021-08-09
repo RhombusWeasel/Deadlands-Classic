@@ -301,7 +301,7 @@ const dc_utils = {
                 }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
-            compress: function(data) {
+            compress: function(act, data) {
                 let r_data = [];
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
