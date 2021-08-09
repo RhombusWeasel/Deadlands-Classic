@@ -14,6 +14,14 @@
                 <th>{{localize "dc.items.goods.amount"}}</th>
                 <td><input style="text-align: center;" type="text" name="data.amount" value="{{data.data.amount}}"/></td>
             </tr>
+            <tr>
+                <th>{{localize "dc.items.goods.is_float"}}</th>
+            {{#if (eq data.data.is_float true)}}
+                <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
+            {{else}}
+                <option value="{{item.id}}">{{item.name}}</option>
+            {{/if}}
+            </tr>
             {{> systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs this}}
             <!-- <tr>
                 <th>{{localize "dc.items.goods.equippable"}}</th>

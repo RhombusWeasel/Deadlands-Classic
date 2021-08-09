@@ -94,6 +94,7 @@
             "goods": {
                 "cost": "Cost",
                 "amount": "Amount",
+                "is_float": "Divisable Units",
                 "equippable": "Equippable",
                 "slot": "Equip Slot",
                 "multi_slot": "Two Handed"

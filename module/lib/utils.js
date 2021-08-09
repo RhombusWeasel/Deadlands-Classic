@@ -306,7 +306,7 @@ const dc_utils = {
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
                     let numParse = parseInt;
-                    if (parseFloat(data[a].data.data.amount) % 1 != 0) {
+                    if (data[a].data.data.is_float) {
                         numParse = parseFloat;
                     }
                     let total = numParse(data[a].data.data.amount);

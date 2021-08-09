@@ -776,7 +776,8 @@
                 "description"
             ],
             "cost": "$1.00",
-            "amount": "1"
+            "amount": "1",
+            "is_float": false
         }
     }
 }
