@@ -296,7 +296,7 @@ const dc_utils = {
             },
             delete: function(act, id) {
                 let item = act.items.get(id);
-                if (item?.data?.data?.amount > 2) {
+                if (item?.data?.data?.amount >= 2) {
                     return item.update({data: {amount: item.data.data.amount - 1}});
                 }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
