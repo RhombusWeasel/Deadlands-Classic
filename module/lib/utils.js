@@ -305,11 +305,11 @@ const dc_utils = {
                 let r_data = [];
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
-                    let total = data[a].data.data.amount;
+                    let total = parseInt(data[a].data.data.amount);
                     for (let i = 1; i < copies.length; i++) {
                         const copy = copies[i];
                         if (copy.id != data[a].id) {
-                            total += copy.data.data.amount;
+                            total += parseInt(copy.data.data.amount);
                             copy.delete();
                         }
                     }
