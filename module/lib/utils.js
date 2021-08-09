@@ -295,27 +295,23 @@ const dc_utils = {
                 return false;
             },
             delete: function(act, id) {
+                let item = act.items.get(id);
+                if (item?.data?.data?.amount > 2) {
+                    return item.update({data: {amount: item.data.data.amount - 1}});
+                }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
             compress: function(data) {
                 let r_data = [];
                 for (let a = 0; a < data.length; a++) {
-                    const item = data[a];
-                    let found = false;
-                    for (let r = 0; r < r_data.length; r++) {
-                        const r_item = r_data[r];
-                        if (r_item && item.name == r_item.name) {
-                            found = r;
-                            break;
-                        }
-                    }
-                    if (!(found === false)) {
-                        r_data[found].data.data.amount += item.data.data.amount;
-                    }else{
-                        r_data.push(data[found]);
+                    let copies = act.items.filter(function (i) {return i.name == data[a].name});
+                    let proto = copies[0];
+                    for (const copy of object) {
+                        data[a].update({data: {amount: data[a].amount + copy.data.data.amount}})
+                        copy.delete();
                     }
                 }
-                return r_data
+                return data
             },
         },
         wounds: {
