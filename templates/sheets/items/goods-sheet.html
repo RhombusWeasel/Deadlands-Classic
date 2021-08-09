@@ -17,9 +17,9 @@
             <tr>
                 <th>{{localize "dc.items.goods.is_float"}}</th>
             {{#if (eq data.data.is_float true)}}
-                <option data-itemid="{{item.id}}" value="{{item.id}}" selected>{{item.name}}</option>
+                <input type="checkbox" name="data.data.is_float" checked/>
             {{else}}
-                <option value="{{item.id}}">{{item.name}}</option>
+                <input type="checkbox" name="data.data.is_float"/>
             {{/if}}
             </tr>
             {{> systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs this}}
