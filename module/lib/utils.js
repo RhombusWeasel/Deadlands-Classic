@@ -297,6 +297,26 @@ const dc_utils = {
             delete: function(act, id) {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
+            compress: function(data) {
+                let r_data = [];
+                for (let a = 0; a < data.length; a++) {
+                    const item = data[a];
+                    let found = false;
+                    for (let r = 0; r < r_data.length; r++) {
+                        const r_item = r_data[r];
+                        if (item.name == r_item.name) {
+                            found = r;
+                            break;
+                        }
+                    }
+                    if (!(found === false)) {
+                        r_data[found].data.data.amount += item.data.data.amount;
+                    }else{
+                        r_data.push(data[found]);
+                    }
+                }
+                return data
+            },
         },
         wounds: {
             add: function(act, loc, amt) {
