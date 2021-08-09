@@ -304,7 +304,7 @@ const dc_utils = {
                     let found = false;
                     for (let r = 0; r < r_data.length; r++) {
                         const r_item = r_data[r];
-                        if (item.name == r_item.name) {
+                        if (r_item && item.name == r_item.name) {
                             found = r;
                             break;
                         }
