@@ -315,7 +315,7 @@ const dc_utils = {
                         r_data.push(data[found]);
                     }
                 }
-                return data
+                return r_data
             },
         },
         wounds: {
