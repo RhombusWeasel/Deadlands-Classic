@@ -3,13 +3,20 @@
     height:500px
 }
 .typed{
-    font-family: "Lucida Sans Typewriter"
+    font-family: "Lucida Sans Typewriter";
+    font-size: small;
 }
 .center{
     text-align: center;
 }
 .iblock{
     display: inline-block;
+}
+.border{
+    border-style: groove;
+    border: 1px;
+    border-color: saddlebrown;
+    padding: 5px;
 }
 .right{
     text-align: right;

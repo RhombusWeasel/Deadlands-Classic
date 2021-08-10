@@ -1,29 +1,31 @@
 <form class="{{cssClass}}" autocomplete="off">
     <div class="form">
-        <h1 class="center">
-            <div data-edit="name" contenteditable="">{{actor.name}}</div>
-        </h1>
-        <a class="center"><p class="refresh">Refresh</p></a>
-        {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
-        {{#if action_deck}}
-        {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}
-        {{/if}}
-        <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
-        <nav class="sheet-tabs tabs" data-group="primary">
-            <a class="item" data-tab="description">Description</a>
-            <a class="item" data-tab="core">Core</a>
-            <a class="item" data-tab="traits">Traits</a>
-            <a class="item" data-tab="combat">Combat</a>
-            {{#if miracles}}
-            <a class="item" data-tab="miracles">Miracles</a>
+        <div class="border">
+            <h1 class="center">
+                <div data-edit="name" contenteditable="">{{actor.name}}</div>
+            </h1>
+            <a class="center"><p class="refresh">Refresh</p></a>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
+            {{#if action_deck}}
+            {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}
             {{/if}}
-            {{#if_has "edge" "Arcane Background (Huckster)"}}
-            <a class="item" data-tab="hexes">Hexes</a>
-            {{/if_has}}
-            <a class="item" data-tab="goods">Goods</a>
-            <a class="item" data-tab="notes">Notes</a>
-        </nav>
-        <section class="sheet-body scroller trait_scroller">
+            <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
+            <nav class="sheet-tabs tabs" data-group="primary">
+                <a class="item" data-tab="description">Description</a>
+                <a class="item" data-tab="core">Core</a>
+                <a class="item" data-tab="traits">Traits</a>
+                <a class="item" data-tab="combat">Combat</a>
+                {{#if miracles}}
+                <a class="item" data-tab="miracles">Miracles</a>
+                {{/if}}
+                {{#if_has "edge" "Arcane Background (Huckster)"}}
+                <a class="item" data-tab="hexes">Hexes</a>
+                {{/if_has}}
+                <a class="item" data-tab="goods">Goods</a>
+                <a class="item" data-tab="notes">Notes</a>
+            </nav>
+        </div>
+        <section class="sheet-body scroller trait_scroller border">
             <div class="tab description" data-group="primary" data-tab="description">
                 {{> "systems/deadlands_classic/templates/partials/tabs/description.hbs"}}
             </div>

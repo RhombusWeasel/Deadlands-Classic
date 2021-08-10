@@ -41,7 +41,9 @@
                     "off": "Nuthin",
                     "head":"Nuthin",
                     "body": "Nuthin",
-                    "legs": "Nuthin"
+                    "belt": "Nuthin",
+                    "legs": "Nuthin",
+                    "feet": "Nuthin"
                 },
                 "wound_modifier": 0,
                 "grit": 0,
@@ -51,7 +53,11 @@
                     "max": 0,
                     "value": 0
                 },
+                "sleeved_card": "none",
+                "aim_bonus": 0,
                 "off_hand_modifier": -6,
+                "called_shot": "any",
+                "is_bleeding": false,
                 "perks": {
                     "level_headed": false
                 },
@@ -670,6 +676,9 @@
                 "slot": "hand",
                 "multi_slot": false,
                 "reliability": false,
+                "type_select": "skill_mod",
+                "target_select": "cognition",
+                "value_select": 2,
                 "modifiers": []
             }
         },
@@ -767,7 +776,8 @@
                 "description"
             ],
             "cost": "$1.00",
-            "amount": "1"
+            "amount": "1",
+            "is_float": false
         }
     }
 }

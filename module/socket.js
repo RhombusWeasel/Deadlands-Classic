@@ -1,5 +1,9 @@
 function restore_discard() {
-    game.dc.action_deck = dc_utils.deck.new('action_deck');
+    game.dc.action_deck.discard.forEach(card => {
+        game.dc.action_deck.push(card);
+    });
+    game.dc.action_deck.discard = []
+    dc_utils.journal.save('action_deck', game.dc.action_deck);
 }
 
 function build_skill_template(data) {
@@ -213,53 +217,29 @@ let operations = {
     },
     end_combat: function(data) {
         game.dc.combat_active = false
-        if (game.user.isGM) {
-            game.dc.action_deck = []
-            game.dc.discard_deck = []
-            game.dc.aim_bonus = 0
-        }
     },
     request_cards: function(data){
         if (game.user.isGM) {
             let cards = data.amount
-            if (!(game.dc.chars.includes(data.char))) {
-                game.dc.chars.push(data.char);
+            if (game.dc.action_deck.deck.length <= cards){
+                dc_utils.combat.restore_discard();
             }
-            if (game.dc.action_deck.length <= cards){
-                restore_discard()
-            }
+            let act = game.actors.getName(data.char);
             for (let i=0; i<cards; i++){
-                data.card = game.dc.action_deck.pop();
-                dc_utils.socket.emit('recieve_card', data);
+                dc_utils.combat.deal_card(act);
             }
         };
     },
-    recieve_card: function(data){
-        let actor = game.actors.getName(data.char);
-        if (actor.isOwner){
-            console.log(data);
-            console.log(actor);
-            let c = Math.random();
-            setTimeout(() => {actor.createOwnedItem(data.card)}, c * 100);
-        }
-    },
     discard_card: function(data) {
         if (game.user.isGM) {
-            if (data.name == "Joker (Black)") {
-                ChatMessage.create({ content: `
-                    <h3 style="text-align: center;">Black Joker!</h3>
-                    <p style="text-align: center;">You lose your next highest card.</p>
-                    <p style="text-align: center;">The combat deck will be reshuffled at the end of the round.</p>
-                    <p style="text-align: center;">The Marshal draws a Fate Chip.</p>
-                `});
+            if (data.name == "Joker "+dc_utils.suit_symbols.black_joker) {
+                dc_utils.chat.send('Black Joker', 'You lose your next highest card.', 'The combat deck will be reshuffled at the end of the round.', 'The Marshal draws a Fate Chip.');
                 game.dc.combat_shuffle = true
             }else{
-                ChatMessage.create({ content: `
-                    <h3 style="text-align: center;">Action Deck</h3>
-                    <p style="text-align: center;">${data.char} plays ${data.name}</p>
-                `});
+                dc_utils.chat.send('Action Deck', `${data.char} plays ${data.name}`)
             }
-            game.dc.action_discard.push(data)
+            game.dc.action_deck.discard.push(data);
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
         }
     },
     recycle_card: function(data) {
@@ -281,7 +261,7 @@ let operations = {
         let char = game.actors.getName(data.roller);
         if (char.isOwner) {
             let skill = dc_utils.roll.new_roll_packet(char, data.type, data.skill);
-            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
             console.log('SKILL_ROLL:', data);
@@ -377,11 +357,7 @@ let operations = {
                     sleeve: {
                         label: 'Sleeve it',
                         callback: () => {
-                            if (char.data.sleeved) {
-                                //Prompt for you can only have one sleeved card
-                            }else{
-                                char.update({data: {sleeved: data.name}});
-                            }
+                            dc_utils.combat.sleeve_card(act, itm);
                         }
                     },
                     play: {
@@ -543,80 +519,42 @@ let operations = {
         }else if (atk.owner) {
             let itm = atk.actor.items.get(data.weapon);
             data.weapon_name = itm.name;
-            let shots = 1;
             if (data.type == 'ranged') {
-                shots = itm.data.data.chamber;
+                //Check ammo
+                if (!(dc_utils.char.weapon.use_ammo(atk.actor, data.weapon))) {
+                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
+                }
             }
-            if (shots < 1) {
-                //Out of ammo
-                ChatMessage.create({content: `
-                    <h3 style="text-align:center">Out of Ammo!</h3>
-                    <p style="text-align:center">Click...</p>
-                    <p style="text-align:center">Click Click!</p>
-                    <p style="text-align:center">Looks like you're empty partner.</p>
-                `});
-                return;
-            }
-            shots = shots - 1;
-            game.dc.aim_bonus = 0;
-            itm.update({"data.chamber": shots});
             if (data.hit_roll < data.tn) {
                 //Missed
-                let msg = `
-                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
-                    <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
-                `;
                 if (data.roll.ones > data.roll.pass) {
-                    msg += `
-                    <p style="text-align:center">It was a critical failure!</p>
-                    `;
+                    dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'It was a critical failure!')
+                }else{
+                    dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`)
                 }
-                ChatMessage.create({content: msg});
                 return;
             }
             if (data.hit_roll < data.dodge_roll) {
                 //Dodged
-                ChatMessage.create({content: `
-                    <h3 style="text-align:center">Attack! [${data.tn}]</h3>
-                    <p style="text-align:center">${data.attacker} attacked ${data.target} but missed.</p>
-                    <p style="text-align:center">They saw it coming and managed to dodge.</p>
-                `});
-                return;
+                return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             console.log(tgt);
             let dmg = itm?.data?.data?.damage?.split('d') || ['0', '0'];
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
-            let loc_roll = new Roll('1d20').roll();
-            loc_roll.toMessage({rollMode: 'gmroll'});
-            let tot = loc_roll._total - 1;
-            let found = [];
-            let range = data.roll.raises * 2
-            for (let i = 0; i < dc_utils.locations.length; i++) {
-                if (i >= tot - range && i <= tot + range && i < 19){
-                    if (!(found.includes(dc_utils.loc_lookup[i]))) {
-                        found.push(dc_utils.loc_lookup[i]);
-                    }
-                }
-            }
-            console.log('roll_damage: Location:', found, found.length - 1);
-            let loc_key = found[found.length - 1];
-            console.log('roll_damage: Location:', loc_key);
+            let loc_key = dc_utils.roll.location_roll(data.roll.raises, atk.actor.data.data.called_shot);
             //Armour Check
             data.av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
             //Damage
             let amt = parseInt(dmg[0]);
             let die = Math.max(parseInt(dmg[1]) - data.av, 4);
-            if (found.includes('noggin') || loc_roll._total == 20) {
-                data.loc_key = 'noggin';
-                data.loc_label = 'Noggin';
+            data.loc_key = loc_key;
+            data.loc_label = dc_utils.hit_locations[loc_key]
+            if (loc_key == 'noggin') {
                 amt += 2;
-            }else if (found.includes('gizzards')) {
-                data.loc_key = 'gizzards';
-                data.loc_label = 'Gizzards';
+            }else if (loc_key == 'gizzards') {
                 amt += 1;
             }else{
-                data.loc_key = loc_key;
                 data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
             }
             console.log('roll_damage: Location:', dc_utils.loc_lookup.indexOf(loc_key));
@@ -918,7 +856,7 @@ let operations = {
             `});
             }
         }
-        if (char.owner) {
+        if (char.isOwner) {
             console.log('enemy_damage:', data, char);
             let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
@@ -981,9 +919,16 @@ Hooks.on("ready", () => {
         level_headed_available: true
     }
     if (game.user.isGM) {
-        game.dc.action_deck = dc_utils.deck.new('action_deck');
-        game.dc.action_discard = [];
-        game.dc.chars = [];
+        let journal = game.journal.getName('action_deck');
+        if (journal) {
+            game.dc.action_deck = dc_utils.journal.load('action_deck');
+        }else{
+            let deck = {
+                deck: dc_utils.deck.new('action_deck'),
+                discard: []
+            }
+            game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
+        }
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {

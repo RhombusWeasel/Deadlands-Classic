@@ -4,10 +4,96 @@ const dc_utils = {
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
     bounty: {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5},
+    skills: [
+        {key: "cognition", label: "Cognition"},
+        {key: "artillery", label: "Artillery"},
+        {key: "art", label: "Art"},
+        {key: "scrutinize", label: "Scrutinize"},
+        {key: "search", label: "Search"},
+        {key: "trackin", label: "Trackin"},
+        {key: "deftness", label: "Deftness"},
+        {key: "bow", label: "Bow"},
+        {key: "filchin", label: "Filchin'"},
+        {key: "lockpickin", label: "Lockpickin'"},
+        {key: "shootin_pistol", label: "Shootin' Pistol"},
+        {key: "shootin_rifle", label: "Shootin' Rifle"},
+        {key: "shootin_shotgun", label: "Shootin' Shotgun"},
+        {key: "shootin_automatic", label: "Shootin' Automatic"},
+        {key: "sleight_o_hand", label: "Sleight o' hand"},
+        {key: "speed_load", label: "Speed Load"},
+        {key: "throwin", label: "Throwin'"},
+        {key: "knowledge", label: "Knowledge"},
+        {key: "academia", label: "Academia"},
+        {key: "area_knowledge", label: "Area Knowledge"},
+        {key: "demolition", label: "Demolition"},
+        {key: "disguise", label: "Disguise"},
+        {key: "mad_science", label: "Mad Science"},
+        {key: "medicine", label: "Medicine"},
+        {key: "professional", label: "Professional"},
+        {key: "science", label: "Science"},
+        {key: "trade", label: "Trade"},
+        {key: "mien", label: "Mien"},
+        {key: "animal_wranglin", label: "Animal Wranglin'"},
+        {key: "leadership", label: "Leadership"},
+        {key: "overawe", label: "Overawe"},
+        {key: "performin", label: "Performin'"},
+        {key: "persuasion", label: "Persuasion"},
+        {key: "tale_tellin", label: "Tale Tellin"},
+        {key: "nimbleness", label: "Nimbleness"},
+        {key: "climbin", label: "Climbin'"},
+        {key: "dodge", label: "Dodge"},
+        {key: "drivin", label: "Drivin'"},
+        {key: "fightin", label: "Fightin (Brawlin)"},
+        {key: "horse_ridin", label: "Horse Ridin'"},
+        {key: "sneak", label: "Sneak"},
+        {key: "swimmin", label: "Swimmin'"},
+        {key: "teamster", label: "Teamster"},
+        {key: "quickness", label: "Quickness"},
+        {key: "quick_draw", label: "Quick Draw"},
+        {key: "smarts", label: "Smarts"},
+        {key: "bluff", label: "Bluff"},
+        {key: "gamblin", label: "Gamblin'"},
+        {key: "ridicule", label: "Ridicule"},
+        {key: "scroungin", label: "Scroungin'"},
+        {key: "streetwise", label: "Streetwise"},
+        {key: "survival", label: "Survival"},
+        {key: "tinkerin", label: "Tinkerin'"},
+        {key: "spirit", label: "Spirit"},
+        {key: "faith", label: "Faith"},
+        {key: "guts", label: "Guts"},
+        {key: "strength", label: "Strength"},
+        {key: "vigor", label: "Vigor"},
+    ],
+    called_shots: {
+        any:  {name: "None" , mod:  0,  locations: ['any']},
+        head: {name: "Head", mod: -6,  locations: ['noggin'], msg: `They're aimin' for the head!`},
+        hand: {name: "Hand" , mod: -6,  locations: ['arm_left', 'arm_right'], msg: `They're aimin' fer their hand!`},
+        arm:  {name: "Arm"  , mod: -4,  locations: ['arm_left', 'arm_right'], msg: `They're aimin' fer the arm!`},
+        leg:  {name: "Leg"  , mod: -4,  locations: ['leg_left', 'leg_right'], msg: `They're aimin' fer the legs!`},
+        body: {name: "Body" , mod: -2,  locations: ['guts', 'lower_guts', 'gizzards'], msg: `They're aimin' center of mass.`},
+        eye:  {name: "Eye"  , mod: -10, locations: ['noggin'], msg: `The eye!?! This one's trying to blind someone!`}
+    },
+    hit_locations: {leg_left: 'Left Leg', leg_right: 'Right Leg', lower_guts: 'Lower Guts', gizzards: 'Gizzards', arm_left: 'Left Arm', arm_right: 'Right Arm', guts: 'Upper Guts', noggin: 'Noggin'},
     locations: ['Left Leg','Right Leg','Left Leg','Right Leg','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Lower Guts','Gizzards','Left Arm','Right Arm','Left Arm','Right Arm','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Upper Guts','Noggin'],
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
+
+    /** UUID
+    * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
+    */
+    uuid: function() {
+        let str = ''
+        for (let a = 0; a < arguments.length; a++) {
+            for (let i = 0; i < arguments[a]; i++) {
+                str += uuid_keys[Math.floor(Math.random() * uuid_keys.length)];
+            }
+            if (a < arguments.length - 1) {
+                str += '-'
+            }
+        }
+        return str
+    },
 
     sort: {
         compare: function(object1, object2, key) {
@@ -36,7 +122,7 @@ const dc_utils = {
         },
         get_player_owned_actors: function() {
             return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
-        }
+        },
     },
     char: {
         has: function(act, type, name) {
@@ -48,40 +134,111 @@ const dc_utils = {
             }
             return false;
         },
+        bounty: {
+            get: function(act) {
+                return act.data.data.bounty.value;
+            },
+            add: function(act, amt) {
+                let bty = act.data.data.bounty
+                return act.update({data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
+            },
+            remove: function(act, amt) {
+                let bty = act.data.data.bounty
+                return act.update({data: {bounty: {value: bty.value - amt}}})
+            },
+        },
         skill: {
-            /*  Get Skill:
-                Will return a dict containing level, die type and modifiers for any skill or trait.
-            */
             get: function(act, skill_name) {
                 for (const trait_name in act.data.data.traits) {
                     const trait = act.data.data.traits[trait_name];
                     if (trait_name == skill_name) {
                         return {
-                            name: trait.name,
-                            level: parseInt(trait.level),
-                            die_type: trait.die_type,
-                            modifier: parseInt(trait.modifier)
+                            name:      trait.name,
+                            key:       skill_name,
+                            trait:     trait_name,
+                            level:     parseInt(trait.level),
+                            die_type:  trait.die_type,
+                            die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                            trait_fb:  false,
+                            modifier:  parseInt(trait.modifier)
                         };
                     }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
                         const skill = act.data.data.traits[trait_name].skills[skill_name];
-                        if (skill.level > 0) {
+                        if (parseInt(skill.level) > 0) {
                             return {
-                                name: skill.name,
-                                level: parseInt(skill.level),
-                                die_type: trait.die_type,
-                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                                name:      skill.name,
+                                key:       skill_name,
+                                trait:     trait_name,
+                                level:     parseInt(skill.level),
+                                die_type:  trait.die_type,
+                                die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                                trait_fb:  false,
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }else{
                             return {
-                                name: skill.name,
-                                level: parseInt(trait.level),
-                                die_type: trait.die_type,
-                                modifier: parseInt(skill.modifier) + parseInt(trait.modifier)
+                                name:      skill.name,
+                                key:       skill_name,
+                                trait:     trait_name,
+                                level:     parseInt(trait.level),
+                                die_type:  trait.die_type,
+                                die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
+                                trait_fb:  true,
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }
                     }
                 }
                 throw 'DC | ERROR: skill not found.';
+            },
+            add_level: function(act, skill_name, amt) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait_fb) {
+                    skill.level = 0;
+                    dc_utils.char.skill.add_modifier(act, skill_name, 8);
+                }
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {level: skill.level + amt}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
+                }
+            },
+            add_modifier: function(act, skill_name, mod) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                let sk_mod = parseInt(skill.modifier) || 0;
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
+                }
+            },
+            remove_level: function(act, skill_name, amt) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.level <= 1) {
+                    skill.level = amt;
+                    dc_utils.char.skill.add_modifier(act, skill_name, -8);
+                }
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {level: skill.level - amt}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
+                }
+            },
+            remove_modifier: function(act, skill_name, mod) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
+                }
+            },
+            increase_die_type: function(act, skill_name) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.sides < 12) {
+                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.sides + 2}`}}}});
+                }else{
+                    return act.update({data: {traits: {[skill.trait]: {modifier: skill.modifier + 2}}}});
+                }
             },
         },
         items: {
@@ -95,10 +252,40 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.equippable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
+            get_equipped: function(act, slot) {
+                return act.items.get(act.data.data.equipped[slot]);
+            },
             unequip: function(act, slot) {
+                let item = dc_utils.char.items.get_equipped(act, slot);
+                if (item?.data?.data?.modifiers) {
+                    for (let mod of item.data.data.modifiers) {
+                        console.log('dc | dc_utils.char.item.unequip |', mod);
+                        if (mod.type == 'skill_mod') {
+                            dc_utils.char.skill.remove_modifier(act, mod.target, mod.modifier);
+                        }else if (mod.type == 'armour_mod') {
+                            dc_utils.char.armour.remove(act, mod.target, mod.modifier);
+                        } else {
+                            
+                        }
+                    }
+                }
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
+                dc_utils.char.items.unequip(act, slot);
+                let item = act.items.get(id);
+                if (item?.data?.data?.modifiers) {
+                    for (let mod of item.data.data.modifiers) {
+                        console.log('dc | dc_utils.char.item.equip |', mod);
+                        if (mod.type == 'skill_mod') {
+                            dc_utils.char.skill.add_modifier(act, mod.target, mod.modifier);
+                        }else if (mod.type == 'armour_mod') {
+                            dc_utils.char.armour.add(act, mod.target, mod.modifier);
+                        } else {
+                            
+                        }
+                    }
+                }
                 return act.update({data: {data: {equipped: {[slot]: id}}}});
             },
             is_equipped: function(act, slot, id) {
@@ -108,12 +295,87 @@ const dc_utils = {
                 return false;
             },
             delete: function(act, id) {
+                let item = act.items.get(id);
+                if (item?.data?.data?.amount >= 2) {
+                    return item.update({data: {amount: item.data.data.amount - 1}});
+                }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
+            },
+            compress: function(act, data) {
+                let r_data = [];
+                for (let a = 0; a < data.length; a++) {
+                    let copies = act.items.filter(function (i) {return i.name == data[a].name});
+                    let numParse = parseInt;
+                    if (data[a].data.data.is_float) {
+                        numParse = parseFloat;
+                    }
+                    let total = numParse(data[a].data.data.amount);
+                    for (let i = 1; i < copies.length; i++) {
+                        const copy = copies[i];
+                        if (copy.id != data[a].id) {
+                            total += numParse(copy.data.data.amount);
+                            copy.delete();
+                        }
+                    }
+                    data[a].update({data: {amount: total}});
+                }
+                return data
+            },
+        },
+        wounds: {
+            add: function(act, loc, amt) {
+                let tot = act.data.data.wounds[loc] + amt;
+                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+            },
+            remove: function(act, loc, amt) {
+                let tot = act.data.data.wounds[loc] - amt;
+                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+            },
+            calculate_wound_modifier: function(act) {
+                let wm = act.data.data.wound_modifier
+                let is_wounded = false
+                for (const loc in act.data.data.wounds) {
+                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
+                        let cur = act.data.data.wounds[loc];
+                        if (cur * -1 < wm) {
+                            wm = cur * -1
+                            is_wounded = true
+                        }else{
+                            if (cur > 0) {
+                                is_wounded = true
+                            }
+                        }
+                    }
+                }
+                if (is_wounded) {
+                    return act.update({data: {wound_modifier: wm}});
+                }else{
+                    return act.update({data: {wound_modifier: 0}});
+                }
+            },
+            heal_roll: function(act, loc) {
+                let tn = 3 + (act.data.data.wounds[loc] * 2);
+                let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
+                data.tn = tn
+                data.roll = dc_utils.roll.new(data);
+                if (data.roll.success) {
+                    dc_utils.char.wounds.remove(act, loc, 1);
+                }
             },
         },
         armour: {
             get: function(act, location) {
-                return act.data.data.armour[location];
+                return parseInt(act.data.data.armour[location]);
+            },
+            add: function(act, location, amt) {
+                let cur = dc_utils.char.armour.get(act, location);
+                console.log('dc | dc_utils.char.armour.add |', location, amt, cur);
+                setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
+            },
+            remove: function(act, location, amt) {
+                let cur = dc_utils.char.armour.get(act, location);
+                console.log('dc | dc_utils.char.armour.remove |', location, amt, cur);
+                setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
             },
         },
         chips: {
@@ -126,7 +388,7 @@ const dc_utils = {
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
                         console.log('DC | dc_utils.char.chips.spend |', item);
-                        item.delete();
+                        dc_utils.char.items.delete(act, item.id);
                         let reply = `
                             <h3 style="text-align:center">Fate</h3>
                             <p style="text-align:center">${act.name} spends a ${label} fate chip.</p>
@@ -145,6 +407,37 @@ const dc_utils = {
                 `});
                 return false;
             }
+        },
+        money: {
+            get: function(act) {
+                return act.data.data.cash;
+            },
+            set: function(act, value) {
+                return act.update({data: {cash: value}});
+            },
+            add: function(act, amt) {
+                let tot = act.data.data.cash + amt;
+                return act.update({data: {cash: tot}});
+            },
+            subtract: function(act, amt) {
+                let tot = act.data.data.cash - amt;
+                return act.update({data: {cash: tot}});
+            },
+        },
+        weapon: {
+            use_ammo: function(act, weapon_id) {
+                let item = act.items.get(weapon_id);
+                if (item) {
+                    let shots = item.data.data.chamber;
+                    if (shots < 1) {
+                        return false;
+                    }
+                    shots = shots - 1;
+                    item.update({"data.chamber": shots});
+                    return true;
+                }
+                return false;
+            },
         },
         token: {
             get: function(act) {
@@ -177,6 +470,18 @@ const dc_utils = {
             }
         },
     },
+    item: {
+        add_modifier: function(item, data){
+            console.log('DC | dc_utils.item.add_modifier |', data, item);
+            item.update({data: {modifiers: data}});
+        },
+        remove_modifier: function(item, index) {
+            let mods = item.data.data.modifiers;
+            console.log('DC | dc_utils.item.remove_modifier |', index, item);
+            mods.splice(index);
+            item.update({data: {modifiers: mods}});
+        },
+    },
     roll: {
         new_roll_packet: function(act, type, skl, wep) {
             let item = act.items.get(wep);
@@ -193,7 +498,6 @@ const dc_utils = {
                 let tkn = dc_utils.char.token.get_name(act.name);
                 let tgt = dc_utils.char.token.get_name(target.name);
                 dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
-                console.log('DC | dc_utils.roll.new_attack_packet', dist);
                 if (type == 'melee' && dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
                     return false;
@@ -209,6 +513,7 @@ const dc_utils = {
                 range:      dist,
                 tn:         dc_utils.roll.get_tn(),
                 name:       act.name,
+                called:     act.data.data.called_shot,
                 skill:      skl,
                 amt:        skill.level,
                 dice:       skill.die_type,
@@ -229,6 +534,16 @@ const dc_utils = {
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
                     }
                 }
+            }
+            if (type == 'melee' || type == 'ranged') {
+                if (act.data.data.aim_bonus > 0) {
+                    data.modifiers.aim = {label: 'Aim', modifier: act.data.data.aim_bonus};
+                    dc_utils.combat.clear_aim(act);
+                }
+            }
+            let tgt = act.data.data.called_shot
+            if (tgt != 'any') {
+                data.modifiers.called = {label: `${dc_utils.called_shots[tgt].name} shot.`, modifier: dc_utils.called_shots[tgt].mod};
             }
             return data;
         },
@@ -306,6 +621,30 @@ const dc_utils = {
                 }
             }
             return tn;
+        },
+        location_roll(raises, key) {
+            let loc_key
+            if (key == 'any') {
+                let loc_roll = new Roll('1d20').roll();
+                loc_roll.toMessage({rollMode: 'gmroll'});
+                let tot = loc_roll._total - 1;
+                let found = [];
+                let range = raises * 2
+                for (let i = 0; i < dc_utils.locations.length; i++) {
+                    if (i >= tot - range && i <= tot + range && i < 19){
+                        if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                            found.push(dc_utils.loc_lookup[i]);
+                        }
+                    }
+                }
+                console.log('roll_damage: Location:', found, found.length - 1);
+                loc_key = found[found.length - 1];
+                console.log('roll_damage: Location:', loc_key);
+            }else{
+                let locs = dc_utils.called_shots[key].locations
+                loc_key = locs[Math.floor(Math.random() * locs.length)]
+            }
+            return loc_key;
         },
         get_result_template: function(data) {
             let r_str = `
@@ -390,11 +729,11 @@ const dc_utils = {
                         const chk_card = card_pile[chk].name;
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name += ' '
+                                card_pile[chk].name = 'Joker (Red)'
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }else if(chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name += ' '
+                                card_pile[chk].name = 'Joker (Black)'
                                 r_pile.push(card_pile[chk]);
                                 break;
                             }
@@ -406,20 +745,16 @@ const dc_utils = {
                 }
             }
             return r_pile;
-        }
+        },
+        get_card_value: function(card) {
+            let value = card.name.charAt(0);
+            if (card.name.length > 2) {
+                value = card.name.slice(0, 1);
+            }
+            return value;
+        },
     },
     chat: {
-        format: function(title) {
-            let sheet = `
-                <h3 style="text-align: center;">${title}</h3>
-            `
-            for (let i = 0; i < arguments.length; i++) {
-                sheet += `
-                <p style="text-align: center;">${arguments[i]}</p>
-                `
-            }
-            return sheet
-        },
         send: function(title) {
             let sheet = `
                 <h3 style="text-align: center;">${title}</h3>
@@ -440,5 +775,92 @@ const dc_utils = {
                 data: data
             });
         }
+    },
+    journal: {
+        new_data: function(name, content) {
+            return JournalEntry.create({
+                name: name,
+                content: JSON.stringify(content)
+            });
+        },
+        load: function(name, content) {
+            let journal = game.journal.getName(name);
+            if (journal) {
+                return JSON.parse(journal.data.content);
+            }else{
+                let new_journal = dc_utils.journal.new_data(name, content);
+                return content;
+            }
+        },
+        save: function(name, content) {
+            let journal = game.journal.getName(name);
+            if (journal) {
+                return journal.update({data: {content: JSON.stringify(content)}});
+            } else {
+                return dc_utils.journal.new_data(name, content);
+            }
+        },
+    },
+    combat: {
+        aim: function(act, card) {
+            let bonus = act.data.data.aim_bonus + 2
+            if (bonus <= 6) {
+                act.update({data: {aim_bonus: bonus}});
+                dc_utils.char.items.delete(act, card.id);
+                dc_utils.socket.emit('discard_card', card);
+                dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
+            }else{
+                dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
+            }
+        },
+        clear_aim: function(act) {
+            act.update({data: {aim_bonus: 0}});
+        },
+        sleeve_card: function(act, card) {
+            if (act.data.data.sleeved_card != 'none') {
+                let confirmation = Dialog.confirm({
+                    title: 'Hold up.',
+                    content: `
+                        <p class="center">You have the ${act.data.data.sleeved_card} up your sleeve already,</p>
+                        <p class="center">If you sleeve the ${card.name} you'll lose the ${act.data.data.sleeved_card}.</p>
+                    `,
+                });
+                if (confirmation) {
+                    let old = act.items.find(i => function() {return i.name == act.data.data.sleeved_card});
+                    dc_utils.socket.emit('discard_card', old);
+                    dc_utils.char.items.delete(act, old.id);
+                    act.update({data: {sleeved_card: card.name}});
+                }
+            } else {
+                act.update({data: {sleeved_card: card.name}});
+            }
+        },
+        new_combat: function() {
+            let deck = {
+                deck: dc_utils.deck.new('action_deck'),
+                discard: []
+            }
+            dc_utils.journal.save('action_deck', deck);
+            game.dc.action_deck = dc_utils.journal.load('action_deck');
+        },
+        new_round: function() {
+            game.dc.combat_active = true
+            game.dc.level_headed_available = true
+            if (game.dc.combat_shuffle) {
+                game.dc.combat_shuffle = false;
+                dc_utils.combat.restore_discard();
+            }
+        },
+        restore_discard: function() {
+            game.dc.action_deck.discard.forEach(card => {
+                game.dc.action_deck.push(card);
+            });
+            game.dc.action_deck.discard = []
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
+        },
+        deal_card: function(act) {
+            let card = game.dc.action_deck.deck.pop();
+            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
+        },
     }
 };

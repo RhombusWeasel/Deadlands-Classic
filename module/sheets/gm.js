@@ -202,6 +202,8 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let act = this.getData();
         this.actor.update({"combat_active": true});
+        dc_utils.combat.new_combat();
+        dc_utils.combat.new_round();
         ChatMessage.create({ content: `Combat Begins!`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
@@ -213,6 +215,7 @@ export default class GMSheet extends ActorSheet {
 
     _on_new_round(event) {
         event.preventDefault();
+        dc_utils.combat.new_round();
         ChatMessage.create({ content: `New Round! Get Down with the Quickness!`});
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
@@ -233,9 +236,10 @@ export default class GMSheet extends ActorSheet {
     }
 
     _on_draw_card() {
-        let card = game.dc.action_deck.pop();
+        let card = game.dc.action_deck.deck.pop();
         let c = Math.random()
         setTimeout(() => {this.actor.createOwnedItem(card)}, c * 100);
+        dc_utils.journal.save('action_deck', game.dc.action_deck);
     }
 
     _on_play_card(event) {
@@ -244,7 +248,8 @@ export default class GMSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         ChatMessage.create({ content: `Playing ${item.name}`});
-        game.dc.action_discard.push(item)
+        game.dc.action_deck.discard.push(item);
+        dc_utils.journal.save('action_deck', game.dc.action_deck);
         setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
         return this.getData();
     }

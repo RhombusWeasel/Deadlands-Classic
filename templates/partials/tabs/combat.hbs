@@ -1,4 +1,15 @@
 <section class="form typed">
+    <h2 class="center">Targeting</h2>
+        <div class="flexrow">
+            {{#each targets as |target|}}
+                {{#if (eq @key ../data.data.called_shot)}}
+                <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}" checked>
+                {{else}}
+                <input type="radio" id="select-{{@key}}" name="data.called_shot" value="{{@key}}">
+                {{/if}}
+                <label for="select-{{@key}}">{{target.name}} [{{target.mod}}]</label>
+            {{/each}}
+        </div>
     <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
             <div class="flexrow">
@@ -27,8 +38,16 @@
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="body" slot="body" id=data.data.equipped.body}}
         </div>
         <div>
+            <h3 class="center">Belt</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="belt" slot="belt" id=data.data.equipped.belt}}
+        </div>
+        <div>
             <h3 class="center">Legs</h3>
             {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="legs" slot="legs" id=data.data.equipped.legs}}
+        </div>
+        <div>
+            <h3 class="center">Feet</h3>
+            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="feet" slot="feet" id=data.data.equipped.feet}}
         </div>
     </div>
     <div class="flexrow">
@@ -67,14 +86,14 @@
                     <td class="center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
                 </tr>
                 <tr>
-                    <th>{{localize "dc.player.core.wounds.gizzards"}}</th>
-                    <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
-                </tr>
-                <tr>
                     <th>{{localize "dc.player.core.wounds.lower_guts"}}</th>
                     <td class="center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
                     <td class="center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
+                </tr>
+                <tr>
+                    <th>{{localize "dc.player.core.wounds.gizzards"}}</th>
+                    <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
+                    <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.leg_left"}}</th>

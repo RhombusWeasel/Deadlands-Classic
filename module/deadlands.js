@@ -8,6 +8,7 @@ import mook_sheet from "./sheets/mook.js"
 async function preload_handlebars_templates() {
     const template_paths = [
         "systems/deadlands_classic/templates/partials/reuseable/deck.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",

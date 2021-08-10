@@ -1,0 +1,67 @@
+<section>
+    <div>
+        <h3 class="center">Modifiers</h3>
+        <table>
+            <tr>
+                <td>
+                    <select name="data.type_select" id="type-select">
+                    {{#if (eq data.data.type_select 'skill_mod')}}
+                        <option value="skill_mod" selected>Skill Modifier</option>
+                    {{else}}
+                        <option value="skill_mod">Skill Modifier</option>
+                    {{/if}}
+                    {{#if (eq data.data.type_select 'armour_mod')}}
+                        <option value="armour_mod" selected>Armour Modifier</option>
+                    {{else}}
+                        <option value="armour_mod">Armour Modifier</option>
+                    {{/if}}
+                    {{#if (eq data.data.type_select 'wind_mod')}}
+                        <option value="wind_mod" selected>Wind Modifier</option>
+                    {{else}}
+                        <option value="wind_mod">Wind Modifier</option>
+                    {{/if}}
+                    {{#if (eq data.data.type_select 'pace_mod')}}
+                        <option value="pace_mod" selected>Pace Modifier</option>
+                    {{else}}
+                        <option value="pace_mod">Pace Modifier</option>
+                    {{/if}}
+                    </select>
+                </td>
+                <td>
+                    <select name="data.target_select" id="target-select">
+                    {{#if (eq data.data.type_select 'skill_mod')}}
+                        {{#each skills as |skill|}}
+                            {{#if (eq ../data.data.target_select skill.key)}}
+                                <option value="{{skill.key}}" selected>{{skill.label}}</option>
+                            {{else}}
+                                <option value="{{skill.key}}">{{skill.label}}</option>
+                            {{/if}}
+                        {{/each}}
+                    {{/if}}
+                    {{#if (eq data.data.type_select 'armour_mod')}}
+                        {{#each locations as |loc|}}
+                            {{#if (eq ../data.data.target_select @key)}}
+                                <option value="{{@key}}" selected>{{loc}}</option>
+                            {{else}}
+                                <option value="{{@key}}">{{loc}}</option>
+                            {{/if}}
+                        {{/each}}
+                    {{/if}}
+                    </select>
+                </td>
+                <td><input class="target-select" style="text-align: center;" type="number" name="data.value_select" value="{{data.data.value_select}}"/></td>
+                <td><a class="center"><p class="add-modifier">Add</p></a></td>
+            </tr>
+        </table>
+        <table>
+        {{#each modifiers as |mod|}}
+            <tr class="item" data-id="{{@index}}">
+                <td><p>{{mod.type}}</p></td>
+                <td><p>{{mod.target}}</p></td>
+                <td><p>{{mod.modifier}}</p></td>
+                <td class="center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr>
+        {{/each}}
+        </table>
+    </div>
+</section>
