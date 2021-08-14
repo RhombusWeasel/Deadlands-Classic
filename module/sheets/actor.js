@@ -81,7 +81,7 @@ export default class PlayerSheet extends ActorSheet {
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
-        data.action_deck = dc_utils.deck.sort(this.actor.data.data.action_cards);
+        data.action_deck = this.actor.data.data.action_cards;
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.targets = dc_utils.called_shots;
         data.fate_chips = [
@@ -354,27 +354,22 @@ export default class PlayerSheet extends ActorSheet {
     _on_play_card(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        game.socket.emit("system.deadlands_classic", {
-            operation: 'discard_card',
-            data: {
-                name: item.name,
-                type: item.type,
-                char: this.actor.name
-            }
-        });
-        dc_utils.char.items.delete(this.actor, itemId);
-        return this.getData();
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        dc_utils.socket.emit('discard_card', card);
+        dc_utils.combat.remove_card(this.actor, index);
     }
 
     _on_aim(event) {
         event.preventDefault();
-        let reply = `You can't aim no more! Time to shoot 'em!`
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        dc_utils.combat.aim(this.actor, item);
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = act.data.data.action_cards[index];
+        card.char = this.actor.name;
+        dc_utils.socket.emit('discard_card', card);
+        dc_utils.combat.aim(this.actor);
+        dc_utils.combat.remove_card(this.actor, index);
     }
 
     _on_dodge(event) {

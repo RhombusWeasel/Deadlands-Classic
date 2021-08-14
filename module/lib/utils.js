@@ -802,12 +802,10 @@ const dc_utils = {
         },
     },
     combat: {
-        aim: function(act, card) {
+        aim: function(act) {
             let bonus = act.data.data.aim_bonus + 2
-            if (bonus <= 6) {
+            if (bonus < 6) {
                 act.update({data: {aim_bonus: bonus}});
-                dc_utils.char.items.delete(act, card.id);
-                dc_utils.socket.emit('discard_card', card);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
                 dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
@@ -868,6 +866,12 @@ const dc_utils = {
                 hand.push(card);
             }
             act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
-    }
+        remove_card: function(act, index) {
+            let hand = act.data.data.action_cards;
+            hand.splice(index, 1);
+            act.update({data: {action_cards: hand}});
+        },
+    },
 };
