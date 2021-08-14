@@ -417,10 +417,7 @@ export default class PlayerSheet extends ActorSheet {
             dc_utils.socket.emit('recycle_card',
                 {
                     char: this.actor.name,
-                    card: {
-                        name: item.name,
-                        type: item.type
-                    }
+                    card: card
                 }
             );
             reply = `
