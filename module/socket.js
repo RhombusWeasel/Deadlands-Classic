@@ -240,7 +240,6 @@ let operations = {
     recycle_card: function(data) {
         if (game.user.isGM) {
             game.dc.action_deck.discard.push(data.card);
-            data.card = game.dc.action_deck.deck.pop();
             let act = game.actors.getName(data.char);
             dc_utils.combat.deal_cards(act, 1);
         }
