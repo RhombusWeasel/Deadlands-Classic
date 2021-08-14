@@ -851,9 +851,10 @@ const dc_utils = {
         },
         restore_discard: function() {
             game.dc.action_deck.discard.forEach(card => {
-                game.dc.action_deck.push(card);
+                game.dc.action_deck.deck.push(card);
             });
             game.dc.action_deck.discard = []
+            game.dc.action_deck.deck = dc_utils.deck.shuffle(game.dc.action_deck.deck);
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         deal_cards: function(act, amt) {
