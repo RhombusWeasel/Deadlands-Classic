@@ -408,31 +408,26 @@ export default class PlayerSheet extends ActorSheet {
     _on_recycle(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        let reply = `You have already cycled a card this round.`
-        let act = this.getData()
-        console.log(act)
-        let level_headed_available = act.data.data.perks.level_headed
+        let index = element.closest(".item").dataset.itemindex;
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        let reply = `You have already cycled a card this round.`;
+        let level_headed_available = this.actor.data.data.perks.level_headed;
         if (level_headed_available){
-            game.socket.emit('system.deadlands_classic', {
-                operation: 'recycle_card',
-                data:{
-                    _id : itemId,
-                    user: game.userId,
+            dc_utils.socket.emit('recycle_card',
+                {
                     char: this.actor.name,
                     card: {
                         name: item.name,
                         type: item.type
                     }
                 }
-            });
+            );
             reply = `
                 <h3 style="text-align:center">Discard</h3>
                 <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
             `;
-            let c = Math.random()
-            setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
+            dc_utils.combat.remove_card(this.actor, index);
             this.actor.update({'data.perks.level_headed': false});
         }
         ChatMessage.create({ content: `
