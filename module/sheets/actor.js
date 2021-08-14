@@ -423,7 +423,7 @@ export default class PlayerSheet extends ActorSheet {
             );
             reply = `
                 <h3 style="text-align:center">Discard</h3>
-                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
+                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${card.name} hoping for better luck next time.</p>
             `;
             this.actor.update({'data.perks.level_headed': false});
         }
