@@ -110,7 +110,6 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".aim-button").click(this._on_aim.bind(this));
-        html.find(".dodge-button").click(this._on_dodge.bind(this));
         html.find(".recycle-card").click(this._on_recycle.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".roll-quickness").click(this._on_roll_init.bind(this));
