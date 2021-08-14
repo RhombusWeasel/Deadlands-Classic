@@ -365,7 +365,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index = parseInt(element.closest(".item").dataset.itemindex);
-        let card = act.data.data.action_cards[index];
+        let card = this.actor.data.data.action_cards[index];
         card.char = this.actor.name;
         dc_utils.socket.emit('discard_card', card);
         dc_utils.combat.aim(this.actor);
