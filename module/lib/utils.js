@@ -859,7 +859,7 @@ const dc_utils = {
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         deal_cards: function(act, amt) {
-            if (game.dc.action_deck.deck.length <= cards){
+            if (game.dc.action_deck.deck.length <= amt){
                 dc_utils.combat.restore_discard();
             }
             let hand = act.data.data.action_cards
