@@ -795,7 +795,7 @@ const dc_utils = {
         save: function(name, content) {
             let journal = game.journal.getName(name);
             if (journal) {
-                return journal.update({data: {content: JSON.stringify(content)}});
+                return journal.update({content: JSON.stringify(content)});
             } else {
                 return dc_utils.journal.new_data(name, content);
             }
