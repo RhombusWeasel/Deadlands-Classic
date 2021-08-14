@@ -81,7 +81,7 @@ export default class PlayerSheet extends ActorSheet {
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
-        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
+        data.action_deck = dc_utils.deck.sort(this.actor.data.data.action_cards);
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.targets = dc_utils.called_shots;
         data.fate_chips = [

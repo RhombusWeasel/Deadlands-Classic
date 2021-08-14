@@ -220,14 +220,9 @@ let operations = {
     },
     request_cards: function(data){
         if (game.user.isGM) {
-            let cards = data.amount
-            if (game.dc.action_deck.deck.length <= cards){
-                dc_utils.combat.restore_discard();
-            }
+            let cards = data.amount;
             let act = game.actors.getName(data.char);
-            for (let i=0; i<cards; i++){
-                dc_utils.combat.deal_card(act);
-            }
+            dc_utils.combat.deal_cards(act, cards);
         };
     },
     discard_card: function(data) {

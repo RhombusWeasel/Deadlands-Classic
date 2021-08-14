@@ -858,9 +858,16 @@ const dc_utils = {
             game.dc.action_deck.discard = []
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
-        deal_card: function(act) {
-            let card = game.dc.action_deck.deck.pop();
-            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
+        deal_cards: function(act, amt) {
+            if (game.dc.action_deck.deck.length <= cards){
+                dc_utils.combat.restore_discard();
+            }
+            let hand = act.data.data.action_cards
+            for (let i = 0; i < amt; i++) {
+                let card = game.dc.action_deck.deck.pop();
+                hand.push(card);
+            }
+            act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
         },
     }
 };
