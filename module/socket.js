@@ -233,7 +233,10 @@ let operations = {
             }else{
                 dc_utils.chat.send('Action Deck', `${data.char} plays ${data.name}`)
             }
-            game.dc.action_deck.discard.push(data);
+            game.dc.action_deck.discard.push({
+                name: data.name,
+                type: data.type
+            });
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         }
     },

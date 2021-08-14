@@ -226,6 +226,11 @@ export default class GMSheet extends ActorSheet {
     _on_end_combat(event) {
         event.preventDefault();
         ChatMessage.create({ content: `Combat Ends!`});
+        let pcs = dc_utils.gm.get_player_owned_actors();
+        for (let i = 0; i < pcs.length; i++) {
+            const char = pcs[i];
+            char.update({data: {action_cards: []}})
+        }
         game.socket.emit("system.deadlands_classic", {
             operation: 'end_combat',
             data: {}
