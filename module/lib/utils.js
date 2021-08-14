@@ -824,15 +824,11 @@ const dc_utils = {
                         <p class="center">If you sleeve the ${card.name} you'll lose the ${act.data.data.sleeved_card}.</p>
                     `,
                 });
-                if (confirmation) {
-                    let old = act.items.find(i => function() {return i.name == act.data.data.sleeved_card});
-                    dc_utils.socket.emit('discard_card', old);
-                    dc_utils.char.items.delete(act, old.id);
-                    act.update({data: {sleeved_card: card.name}});
+                if (!(confirmation)) {
+                    return false;
                 }
-            } else {
-                act.update({data: {sleeved_card: card.name}});
             }
+            act.update({data: {sleeved_card: card.name}});
         },
         new_combat: function() {
             let deck = {

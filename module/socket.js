@@ -242,7 +242,10 @@ let operations = {
     },
     recycle_card: function(data) {
         if (game.user.isGM) {
-            game.dc.action_deck.discard.push(data.card);
+            game.dc.action_deck.discard.push({
+                name: data.card.name,
+                type: data.card.type
+            });
             let act = game.actors.getName(data.char);
             setTimeout(() => {dc_utils.combat.deal_cards(act, 1)}, 500);
         }
