@@ -243,7 +243,6 @@ let operations = {
             data.card = game.dc.action_deck.deck.pop();
             let act = game.actors.getName(data.char);
             dc_utils.combat.deal_cards(act, 1);
-            dc_utils.journal.save('action_deck', game.dc.action_deck);
         }
     },
     //SKILL ROLL OPERATIONS
