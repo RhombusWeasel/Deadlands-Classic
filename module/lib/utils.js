@@ -866,7 +866,7 @@ const dc_utils = {
                 let card = game.dc.action_deck.deck.pop();
                 hand.push(card);
             }
-            setTimeout(() => {act.update({data: {action_cards: dc_utils.deck.sort(hand)}})}, 500);
+            act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         remove_card: function(act, index) {

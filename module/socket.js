@@ -241,7 +241,7 @@ let operations = {
         if (game.user.isGM) {
             game.dc.action_deck.discard.push(data.card);
             let act = game.actors.getName(data.char);
-            dc_utils.combat.deal_cards(act, 1);
+            setTimeout(() => {dc_utils.combat.deal_cards(act, 1)}, 500);
         }
     },
     //SKILL ROLL OPERATIONS
