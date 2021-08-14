@@ -367,7 +367,7 @@ export default class PlayerSheet extends ActorSheet {
         let card = this.actor.data.data.action_cards[index];
         card.char = this.actor.name;
         let bonus = this.actor.data.data.aim_bonus + 2
-        if (bonus < 6) {
+        if (bonus <= 6) {
             this.actor.update({data: {aim_bonus: bonus}});
             dc_utils.socket.emit('discard_card', card);
             dc_utils.combat.remove_card(this.actor, index);
