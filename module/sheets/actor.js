@@ -366,14 +366,14 @@ export default class PlayerSheet extends ActorSheet {
         let index = parseInt(element.closest(".item").dataset.itemindex);
         let card = this.actor.data.data.action_cards[index];
         card.char = this.actor.name;
-        let bonus = act.data.data.aim_bonus + 2
+        let bonus = this.actor.data.data.aim_bonus + 2
         if (bonus < 6) {
             this.actor.update({data: {aim_bonus: bonus}});
             dc_utils.socket.emit('discard_card', card);
             dc_utils.combat.remove_card(this.actor, index);
-            dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
+            dc_utils.chat.send('Aim', `${this.actor.name} takes a moment to aim. [+${bonus}]`);
         }else{
-            dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
+            dc_utils.chat.send('Aim', `${this.actor.name} can't aim any more, time to shoot 'em`);
         }
     }
 
