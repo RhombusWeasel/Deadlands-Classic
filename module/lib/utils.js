@@ -802,10 +802,11 @@ const dc_utils = {
         },
     },
     combat: {
-        aim: function(act) {
+        aim: function(act, index) {
             let bonus = act.data.data.aim_bonus + 2
             if (bonus < 6) {
                 act.update({data: {aim_bonus: bonus}});
+                dc_utils.combat.remove_card(this.actor, index);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
                 dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);

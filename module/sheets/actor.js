@@ -367,42 +367,15 @@ export default class PlayerSheet extends ActorSheet {
         let index = parseInt(element.closest(".item").dataset.itemindex);
         let card = this.actor.data.data.action_cards[index];
         card.char = this.actor.name;
-        dc_utils.socket.emit('discard_card', card);
-        dc_utils.combat.aim(this.actor);
-        dc_utils.combat.remove_card(this.actor, index);
-    }
-
-    _on_dodge(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        this.actor.deleteOwnedItem(itemId);
-        let act = this.getData();
-        let trait = act.data.traits.nimbleness;
-        let skill = trait.skills.dodge;
-        let lvl = skill.level;
-        if (lvl == 0){
-            lvl = trait.level;
+        let bonus = act.data.data.aim_bonus + 2
+        if (bonus < 6) {
+            this.actor.update({data: {aim_bonus: bonus}});
+            dc_utils.socket.emit('discard_card', card);
+            dc_utils.combat.remove_card(this.actor, index);
+            dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
+        }else{
+            dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
         }
-        let roll = `
-            <h3 style="text-align:center">Dodge!</h3>
-            <p>${this.actor.name.split(' ')[0]} tries to jump out o' the way!</p>
-            <div>
-            Dodge: [[${lvl}${trait.die_type} + ${skill.modifier} + ${act.data.wound_modifier}]]
-            </div>
-        `;
-        ChatMessage.create({content: roll});
-        game.socket.emit("system.deadlands_classic", {
-            operation: 'discard_card',
-            data: {
-                name: item.name,
-                type: item.type
-            }
-        });
-        console.log(`Removing ${item.name} ${itemId} ${item}`)
-        dc_utils.char.items.delete(this.actor, itemId);
-        return this.getData();
     }
 
     _on_recycle(event) {
@@ -431,7 +404,6 @@ export default class PlayerSheet extends ActorSheet {
             <h3 style="text-align:center">Level Headed</h3>
             <p>${reply}</p>
         `});
-        return this.getData()
     }
 
     _on_attack(event) {
