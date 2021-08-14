@@ -839,7 +839,7 @@ const dc_utils = {
                 discard: []
             }
             dc_utils.journal.save('action_deck', deck);
-            game.dc.action_deck = dc_utils.journal.load('action_deck');
+            game.dc.action_deck = deck;
         },
         new_round: function() {
             game.dc.combat_active = true
