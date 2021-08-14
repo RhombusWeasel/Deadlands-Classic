@@ -414,6 +414,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = `You have already cycled a card this round.`;
         let level_headed_available = this.actor.data.data.perks.level_headed;
         if (level_headed_available){
+            dc_utils.combat.remove_card(this.actor, index);
             dc_utils.socket.emit('recycle_card',
                 {
                     char: this.actor.name,
@@ -424,7 +425,6 @@ export default class PlayerSheet extends ActorSheet {
                 <h3 style="text-align:center">Discard</h3>
                 <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
             `;
-            dc_utils.combat.remove_card(this.actor, index);
             this.actor.update({'data.perks.level_headed': false});
         }
         ChatMessage.create({ content: `
