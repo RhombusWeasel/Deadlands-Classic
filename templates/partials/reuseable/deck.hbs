@@ -2,7 +2,7 @@
     <table>
         <tr>
             {{#each deck as |card|}}
-            <td class="item" data-itemId="{{this.id}}" style="text-align: center;">
+            <td class="item" data-itemId="{{this.id}}" data-itemindex="{{@index}}" style="text-align: center;">
                 <div class="flexrow" style="display: inline-block;">
                     {{#if (eq data.data.sleeved_card card.name)}}
                     <a>{{this.name}} (Sl)</a>

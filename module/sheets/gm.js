@@ -40,8 +40,7 @@ export default class GMSheet extends ActorSheet {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
                         let char = pcs[p];
-                        console.log('DC | actor.getData |', char);
-                        let ad_cards = dc_utils.char.items.get(char, "action_deck");
+                        let ad_cards = char.data.data.action_cards;
                         for (let c = 0; c < ad_cards.length; c++) {
                             const card = ad_cards[c];
                             let card_data = {'name': card.name, 'player': char.name};
@@ -217,6 +216,13 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         dc_utils.combat.new_round();
         ChatMessage.create({ content: `New Round! Get Down with the Quickness!`});
+        let pcs = dc_utils.gm.get_player_owned_actors();
+        for (let i = 0; i < pcs.length; i++) {
+            let char = pcs[i];
+            if (char.data.data.is_bleeding) {
+                //Do wind damage
+            }
+        }
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
             data: {}
@@ -227,6 +233,12 @@ export default class GMSheet extends ActorSheet {
     _on_end_combat(event) {
         event.preventDefault();
         ChatMessage.create({ content: `Combat Ends!`});
+        let pcs = dc_utils.gm.get_player_owned_actors();
+        for (let i = 0; i < pcs.length; i++) {
+            const char = pcs[i];
+            char.update({data: {action_cards: []}});
+            char.update({data: {aim_bonus: 0}});
+        }
         game.socket.emit("system.deadlands_classic", {
             operation: 'end_combat',
             data: {}

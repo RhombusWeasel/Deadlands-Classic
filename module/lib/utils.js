@@ -94,7 +94,14 @@ const dc_utils = {
         }
         return str
     },
-
+    get_actor: function(name) {
+        let char = game.actors.getName(name);
+        if (char) {
+            return char;
+        }
+        char = canvas.tokens.placeables.find(i => i.name == name);
+        return char.document.actor;
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -505,6 +512,7 @@ const dc_utils = {
             }
             let skill = dc_utils.char.skill.get(act, skl);
             let data = {
+                uuid:       dc_utils.uuid(4, 4, 4, 4),
                 type:       type,
                 roller:     act.name,
                 target:     target.name,
@@ -703,7 +711,8 @@ const dc_utils = {
                 for (let card = 1; card < dc_utils.cards.length; card++) {
                     deck.push({
                         name: `${dc_utils.cards[card]}${dc_utils.suit_symbols[suit_label]}`,
-                        type: id
+                        type: id,
+                        sleeved: false
                     });
                 }        
             }
@@ -727,6 +736,10 @@ const dc_utils = {
                     const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                     for (let chk = 0; chk < card_pile.length; chk++) {
                         const chk_card = card_pile[chk].name;
+                        if(card_pile[chk].sleeved) {
+                            r_pile.unshift(card_pile[chk]);
+                            break;
+                        }
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
                                 card_pile[chk].name = 'Joker (Red)'
@@ -788,7 +801,7 @@ const dc_utils = {
             if (journal) {
                 return JSON.parse(journal.data.content);
             }else{
-                let new_journal = dc_utils.journal.new_data(name, content);
+                dc_utils.journal.new_data(name, content);
                 return content;
             }
         },
@@ -802,12 +815,11 @@ const dc_utils = {
         },
     },
     combat: {
-        aim: function(act, card) {
+        aim: function(act, index) {
             let bonus = act.data.data.aim_bonus + 2
-            if (bonus <= 6) {
+            if (bonus < 6) {
                 act.update({data: {aim_bonus: bonus}});
-                dc_utils.char.items.delete(act, card.id);
-                dc_utils.socket.emit('discard_card', card);
+                dc_utils.combat.remove_card(this.actor, index);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
                 dc_utils.chat.send('Aim', `${act.name} can't aim any more, time to shoot 'em`);
@@ -825,15 +837,11 @@ const dc_utils = {
                         <p class="center">If you sleeve the ${card.name} you'll lose the ${act.data.data.sleeved_card}.</p>
                     `,
                 });
-                if (confirmation) {
-                    let old = act.items.find(i => function() {return i.name == act.data.data.sleeved_card});
-                    dc_utils.socket.emit('discard_card', old);
-                    dc_utils.char.items.delete(act, old.id);
-                    act.update({data: {sleeved_card: card.name}});
+                if (!(confirmation)) {
+                    return false;
                 }
-            } else {
-                act.update({data: {sleeved_card: card.name}});
             }
+            act.update({data: {sleeved_card: card.name}});
         },
         new_combat: function() {
             let deck = {
@@ -841,7 +849,7 @@ const dc_utils = {
                 discard: []
             }
             dc_utils.journal.save('action_deck', deck);
-            game.dc.action_deck = dc_utils.journal.load('action_deck');
+            game.dc.action_deck = deck;
         },
         new_round: function() {
             game.dc.combat_active = true
@@ -853,14 +861,47 @@ const dc_utils = {
         },
         restore_discard: function() {
             game.dc.action_deck.discard.forEach(card => {
-                game.dc.action_deck.push(card);
+                game.dc.action_deck.deck.push(card);
             });
             game.dc.action_deck.discard = []
+            game.dc.action_deck.deck = dc_utils.deck.shuffle(game.dc.action_deck.deck);
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
-        deal_card: function(act) {
-            let card = game.dc.action_deck.deck.pop();
-            setTimeout(() => {act.createOwnedItem(card)}, Math.random() * 500);
+        deal_cards: function(act, amt) {
+            if (game.dc.action_deck.deck.length <= amt){
+                dc_utils.combat.restore_discard();
+            }
+            let hand = act.data.data.action_cards
+            for (let i = 0; i < amt; i++) {
+                let card = game.dc.action_deck.deck.pop();
+                hand.push(card);
+            }
+            act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
+            dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
-    }
+        remove_card: function(act, index) {
+            let hand = act.data.data.action_cards;
+            hand.splice(index, 1);
+            act.update({data: {action_cards: hand}});
+        },
+        get_cards: function(act) {
+
+        },
+        new_attack: function(atk, tgt, type, skill, wep) {
+            let data = {
+                attacker:    atk,
+                target:      tgt,
+                type:        type,
+                skill:       skill,
+                weapon:      wep,
+                location:    'unrolled',
+                attack_roll: 'unrolled',
+                dodge_roll:  'unrolled',
+                uuid:        dc_utils.uuid(4, 4, 4, 4)
+            }
+            game.dc.combat_actions[data.uuid] = data;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            return data;
+        },
+    },
 };

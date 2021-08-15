@@ -81,7 +81,7 @@ export default class PlayerSheet extends ActorSheet {
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
-        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
+        data.action_deck = this.actor.data.data.action_cards;
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.targets = dc_utils.called_shots;
         data.fate_chips = [
@@ -110,7 +110,6 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".aim-button").click(this._on_aim.bind(this));
-        html.find(".dodge-button").click(this._on_dodge.bind(this));
         html.find(".recycle-card").click(this._on_recycle.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".roll-quickness").click(this._on_roll_init.bind(this));
@@ -354,97 +353,56 @@ export default class PlayerSheet extends ActorSheet {
     _on_play_card(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        game.socket.emit("system.deadlands_classic", {
-            operation: 'discard_card',
-            data: {
-                name: item.name,
-                type: item.type,
-                char: this.actor.name
-            }
-        });
-        dc_utils.char.items.delete(this.actor, itemId);
-        return this.getData();
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        dc_utils.socket.emit('discard_card', card);
+        dc_utils.combat.remove_card(this.actor, index);
     }
 
     _on_aim(event) {
         event.preventDefault();
-        let reply = `You can't aim no more! Time to shoot 'em!`
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        dc_utils.combat.aim(this.actor, item);
-    }
-
-    _on_dodge(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        this.actor.deleteOwnedItem(itemId);
-        let act = this.getData();
-        let trait = act.data.traits.nimbleness;
-        let skill = trait.skills.dodge;
-        let lvl = skill.level;
-        if (lvl == 0){
-            lvl = trait.level;
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        let bonus = this.actor.data.data.aim_bonus + 2
+        if (bonus <= 6) {
+            this.actor.update({data: {aim_bonus: bonus}});
+            dc_utils.socket.emit('discard_card', card);
+            dc_utils.combat.remove_card(this.actor, index);
+            dc_utils.chat.send('Aim', `${this.actor.name} takes a moment to aim. [+${bonus}]`);
+        }else{
+            dc_utils.chat.send('Aim', `${this.actor.name} can't aim any more, time to shoot 'em`);
         }
-        let roll = `
-            <h3 style="text-align:center">Dodge!</h3>
-            <p>${this.actor.name.split(' ')[0]} tries to jump out o' the way!</p>
-            <div>
-            Dodge: [[${lvl}${trait.die_type} + ${skill.modifier} + ${act.data.wound_modifier}]]
-            </div>
-        `;
-        ChatMessage.create({content: roll});
-        game.socket.emit("system.deadlands_classic", {
-            operation: 'discard_card',
-            data: {
-                name: item.name,
-                type: item.type
-            }
-        });
-        console.log(`Removing ${item.name} ${itemId} ${item}`)
-        dc_utils.char.items.delete(this.actor, itemId);
-        return this.getData();
     }
 
     _on_recycle(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        let reply = `You have already cycled a card this round.`
-        let act = this.getData()
-        console.log(act)
-        let level_headed_available = act.data.data.perks.level_headed
+        let index = element.closest(".item").dataset.itemindex;
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        let reply = `You have already cycled a card this round.`;
+        let level_headed_available = this.actor.data.data.perks.level_headed;
         if (level_headed_available){
-            game.socket.emit('system.deadlands_classic', {
-                operation: 'recycle_card',
-                data:{
-                    _id : itemId,
-                    user: game.userId,
+            dc_utils.combat.remove_card(this.actor, index);
+            dc_utils.socket.emit('recycle_card',
+                {
                     char: this.actor.name,
-                    card: {
-                        name: item.name,
-                        type: item.type
-                    }
+                    card: card
                 }
-            });
+            );
             reply = `
                 <h3 style="text-align:center">Discard</h3>
-                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${item.name} hoping for better luck next time.</p>
+                <p style="text-align:center">${this.actor.name.split(' ')[0]} discards ${card.name} hoping for better luck next time.</p>
             `;
-            let c = Math.random()
-            setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, c * 100);
             this.actor.update({'data.perks.level_headed': false});
         }
         ChatMessage.create({ content: `
             <h3 style="text-align:center">Level Headed</h3>
             <p>${reply}</p>
         `});
-        return this.getData()
     }
 
     _on_attack(event) {
@@ -462,7 +420,7 @@ export default class PlayerSheet extends ActorSheet {
             }else if (item.type == 'firearm') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
             }
-            dc_utils.socket.emit("declare_attack", data);
+            dc_utils.socket.emit("register_attack", data);
         }
     }
 

@@ -102,13 +102,13 @@ function build_friendly_fire_dialog(data) {
     `;
 }
 
-function build_dodge_dialog(data) {
+function build_dodge_dialog(data, card_name) {
     return `
         <form>
             <div>
                 <h2 style="text-align: center;">Incoming Attack!</h2>
                 <p style="text-align: center;">${data.attacker} is attacking you!</p>
-                <p style="text-align: center;">It'll cost your ${data.card_name} to vamoose,</p>
+                <p style="text-align: center;">It'll cost your ${card_name} to vamoose,</p>
                 <p style="text-align: center;">would you like to try and dodge?</p>
             </div>
         </form>
@@ -132,11 +132,11 @@ function build_damage_dialog(data) {
     `;
     if (data.wounds - data.soak == 1){
         form += `
-                <p style="text-align: center;">${data.target} has taken 1 wound to the ${data.loc_label}</p>
+                <p style="text-align: center;">${data.target} has taken 1 wound to the ${dc_utils.hit_locations[data.location]}</p>
         `;
     }else{
         form += `
-                <p style="text-align: center;">${data.target} has taken ${data.wounds - data.soak} wounds to the ${data.loc_label}</p>
+                <p style="text-align: center;">${data.target} has taken ${data.wounds - data.soak} wounds to the ${dc_utils.hit_locations[data.location]}</p>
         `;
     }
     return form += `
@@ -220,14 +220,9 @@ let operations = {
     },
     request_cards: function(data){
         if (game.user.isGM) {
-            let cards = data.amount
-            if (game.dc.action_deck.deck.length <= cards){
-                dc_utils.combat.restore_discard();
-            }
+            let cards = data.amount;
             let act = game.actors.getName(data.char);
-            for (let i=0; i<cards; i++){
-                dc_utils.combat.deal_card(act);
-            }
+            dc_utils.combat.deal_cards(act, cards);
         };
     },
     discard_card: function(data) {
@@ -238,15 +233,21 @@ let operations = {
             }else{
                 dc_utils.chat.send('Action Deck', `${data.char} plays ${data.name}`)
             }
-            game.dc.action_deck.discard.push(data);
+            game.dc.action_deck.discard.push({
+                name: data.name,
+                type: data.type
+            });
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         }
     },
     recycle_card: function(data) {
         if (game.user.isGM) {
-            game.dc.action_discard.push(data.card)
-            data.card = game.dc.action_deck.pop()
-           dc_utils.socket.emit('recieve_card', data);
+            game.dc.action_deck.discard.push({
+                name: data.card.name,
+                type: data.card.type
+            });
+            let act = game.actors.getName(data.char);
+            setTimeout(() => {dc_utils.combat.deal_cards(act, 1)}, 500);
         }
     },
     //SKILL ROLL OPERATIONS
@@ -258,17 +259,18 @@ let operations = {
     //  next_op: 'next_operation'   (STRING OPTIONAL)
     //}
     skill_roll: function(data) {
-        let char = game.actors.getName(data.roller);
+        let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
-            let skill = dc_utils.roll.new_roll_packet(char, data.type, data.skill);
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
+            data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
+            operations.confirm_result(data);
             console.log('SKILL_ROLL:', data);
         }
     },
     confirm_result: function(data) {
-        let char = game.actors.getName(data.roller);
+        let char = dc_utils.get_actor(data.roller);
         if (char.owner) {
             let form = new Dialog({
                 title: `Confirm skill roll`,
@@ -277,8 +279,6 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
-                            console.log('DC | confirm_result |', char);
-                            console.log('DC | confirm_result |', dc_utils.char.chips.spend(char, 'White'));
                             if (dc_utils.char.chips.spend(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
@@ -332,6 +332,7 @@ let operations = {
                                 dc_utils.socket.emit(data.next_op, data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }else{
+                                dc_utils.socket.emit('lock_result', data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }
                         }
@@ -342,6 +343,174 @@ let operations = {
                 }
             });
             form.render(true);
+        }
+    },
+    lock_result: function(data) {
+        if (game.user.isGM) {
+            game.dc.rolls[data.uuid] = data;
+            dc_utils.journal.save('roll_data', game.dc.rolls);
+            if (data.combat_id) {
+                if (data.gm_action) {
+                    return operations[data.next_op](data);
+                }
+                return dc_utils.socket.emit(data.next_op, data);
+            }
+        }
+    },
+    request_roll: function(data) {
+        let char = dc_utils.get_actor(data.roller);
+        if (char.owner) {
+            operations.skill_roll(data);
+        }
+    },
+    register_attack: function(data) {
+        if (game.user.isGM) {
+            let attack = dc_utils.combat.new_attack(data.attacker, data.target, data.type, data.skill, data.weapon);
+            let tgt = dc_utils.get_actor(data.target);
+            let dodge = dc_utils.roll.new_roll_packet(tgt, 'skill', 'dodge');
+            dodge.combat_id = attack.uuid;
+            dodge.next_op = 'roll_attack';
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            if (tgt.hasPlayerOwner) {
+                dc_utils.socket.emit('roll_dodge', dodge);
+            }else{
+                dodge.roll = {total: 0};
+                dodge.gm_action = true;
+                operations.roll_attack(dodge);
+            }
+        }else{
+            // GM is attacking a player, that player should bounce back the message.
+            let act = dc_utils.get_actor(data.target);
+            if (act.owner) {
+                dc_utils.socket.emit('register_attack', data);
+            }
+        }
+    },
+    roll_dodge: function(data) {
+        let char = dc_utils.get_actor(data.roller);
+        if (char.owner) {
+            let cards = char.data.data.action_cards;
+            if (cards.length > 0) {
+                let card_name = cards[0].name;
+                let form = new Dialog({
+                    title: `Dodge!`,
+                    content: build_dodge_dialog(data, card_name),
+                    buttons: {
+                        yes: {
+                            label: 'Dodge',
+                            callback: () => {
+                                dc_utils.socket.emit('discard_card', {
+                                    name: card_name,
+                                    type: 'action_deck',
+                                    char: data.target
+                                });
+                                dc_utils.combat.remove_card(char, 0);
+                                operations.skill_roll(data);
+                            }
+                        },
+                        no: {
+                            label: 'Take yer chances.',
+                            callback: () => {
+                                console.log('check_dodge', data);
+                                data.roll = {total: 0};
+                                dc_utils.socket.emit('roll_attack', data);
+                            }
+                        }
+                    },
+                    close: () => {
+                        console.log('Dodge Dialog Closed');
+                    }
+                });
+                form.render(true);
+            }else{
+                data.roll = {total: 0};
+                dc_utils.socket.emit('roll_attack', data);
+            }
+        }
+    },
+    roll_attack: function(data) {
+        if (game.user.isGM) {
+            let ca             = game.dc.combat_actions[data.combat_id];
+            ca.dodge_roll      = data.roll.total;
+            game.dc.combat_actions[data.combat_id] = ca;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            let act            = dc_utils.get_actor(ca.attacker);
+            let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+            atk_roll.combat_id = ca.uuid;
+            atk_roll.next_op   = 'check_hit';
+            if (act.hasPlayerOwner){
+                return dc_utils.socket.emit('skill_roll', atk_roll);
+            }
+            atk_roll.gm_action = true;
+            operations.skill_roll(atk_roll);
+        }
+    },
+    check_hit: function(data) {
+        if (game.user.isGM) {
+            let ca         = game.dc.combat_actions[data.combat_id];
+            ca.attack_roll = data.roll.total;
+            game.dc.combat_actions[data.combat_id] = ca;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            // Check if dodged
+            if (ca.dodge_roll != 'none') {
+                if (ca.dodge_roll > ca.attack_roll) {
+                    return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
+                }
+            }
+            if (ca.attack_roll > 5) {
+                operations.apply_hit(ca);
+            }
+            dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
+        }else{
+            let act = dc_utils.get_actor(data.target);
+            if (act.owner) {
+                dc_utils.socket.emit('check_hit', data);
+            }
+        }
+    },
+    apply_hit: function(data) {
+        if (game.user.isGM) {
+            let act = dc_utils.get_actor(data.attacker);
+            let raises    = Math.floor((data.attack_roll - 5) / 5);
+            let called    = act.data.data.called_shot;
+            data.location = dc_utils.roll.location_roll(raises, called);
+            game.dc.combat_actions[data.uuid] = data;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            let tgt = dc_utils.get_actor(data.target);
+            let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
+            if (data.type == 'ranged') {
+                //Check ammo
+                if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
+                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
+                }
+            }
+            let armour_val =  (tgt.data.data.armour[data.location] || 0) * 2;
+            let dmg = wep?.data?.data?.damage?.split('d') || ['0', '0'];
+            if (data.location == 'noggin') {
+                dmg[0] = parseInt(dmg[0]) + 2
+            }else if (data.location == 'gizzards') {
+                dmg[0] = parseInt(dmg[0]) + 1
+            }
+            let amt = parseInt(dmg[0]);
+            let die = Math.max(parseInt(dmg[1]) - armour_val, 4);
+            let dmg_mod = wep?.data?.data?.damage_bonus || 0;
+            let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
+            if (data.type == 'melee') {
+                let str = act.data.data.traits.strength;
+                dmg_formula += ` + ${str.level}${str.die_type}ex`;
+            }
+            let dmg_roll = new Roll(dmg_formula).roll();
+            dmg_roll.toMessage({rollMode: 'gmroll'});
+            data.damage = dmg_roll._total;
+            data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
+            data.soak   = 0;
+            game.dc.combat_actions[data.uuid] = data;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            if (tgt.hasPlayerOwner) {
+                dc_utils.socket.emit('apply_damage', data);
+            }else{
+                operations.enemy_damage(data);
+            }
         }
     },
     //NEW COMBAT OPERATIONS
@@ -395,7 +564,7 @@ let operations = {
         }else{
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
             if (char.owner) {
-                dc_utils.socket.emit('check_dodge', data);
+                dc_utils.socket.emit('dodge', data);
             }
         }
     },
@@ -434,30 +603,23 @@ let operations = {
             }
         }
     },
+    
     check_dodge: function(data) {
         let char = canvas.tokens.placeables.find(i => i.name == data.target);
         if (game.user.isGM) {
             dc_utils.socket.emit('check_dodge', data);
         }else if (char.owner) {
-            let cards = [];
-            for (let item of char.actor.items.values()) {
-                if (item.type == 'action_deck') {
-                    cards.push(item);
-                }
-            }
-            cards = dc_utils.deck.sort(cards);
-            console.log('dodge:', cards);
+            let cards = char.document.actor.data.data.action_cards;
             if (cards.length > 0) {
-                data.next_op = 'roll_to_hit'
-                data.write_value = 'dodge_roll'
-                data.trait = 'nimbleness'
-                data.skill = 'dodge'
-                data.roller = data.target
-                data.tn = 0
-                data.modifier = 0
-                data.card_name = cards[0].name
-                data.card_id = cards[0]._id
-                console.log('dodge:', data)
+                data.next_op = 'roll_to_hit';
+                data.write_value = 'dodge_roll';
+                data.trait = 'nimbleness';
+                data.skill = 'dodge';
+                data.roller = data.target;
+                data.tn = 0;
+                data.modifier = 0;
+                data.card_name = cards[0].name;
+                data.card_id = cards[0]._id;
                 let form = new Dialog({
                     title: `Dodge!`,
                     content: build_dodge_dialog(data),
@@ -470,7 +632,7 @@ let operations = {
                                     type: 'action_deck',
                                     char: data.target
                                 });
-                                setTimeout(() => {char.actor.deleteOwnedItem(data.card_id)}, 500);
+                                dc_utils.combat.remove_card(char.document.actor, 0);
                                 console.log('check_dodge', data);
                                 operations.skill_roll(data);
                             }
@@ -507,11 +669,10 @@ let operations = {
             data.next_op = 'roll_damage'
             data.write_value = 'hit_roll'
             data.modifier = 0
-            let itm = char.actor.getOwnedItem(data.weapon);
             operations.skill_roll(data);
         }
     },
-    roll_damage: function(data) {
+    damage_roll: function(data) {
         console.log('roll_damage:', data);
         let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (game.user.isGM) {
@@ -534,15 +695,17 @@ let operations = {
                 }
                 return;
             }
-            if (data.hit_roll < data.dodge_roll) {
-                //Dodged
-                return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
+            if (data.dodge_roll) {
+                if (data.hit_roll < data.dodge_roll.total) {
+                    //Dodged
+                    return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
+                }
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             console.log(tgt);
             let dmg = itm?.data?.data?.damage?.split('d') || ['0', '0'];
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
-            let loc_key = dc_utils.roll.location_roll(data.roll.raises, atk.actor.data.data.called_shot);
+            let loc_key = dc_utils.roll.location_roll(data.roll.raises, atk.document.actor.data.data.called_shot);
             //Armour Check
             data.av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
             //Damage
@@ -858,7 +1021,7 @@ let operations = {
         }
         if (char.isOwner) {
             console.log('enemy_damage:', data, char);
-            let current = parseInt(char.document.actor.data.data.wounds[data.loc_key]) || 0;
+            let current = parseInt(char.document.actor.data.data.wounds[data.location]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
             let highest = 0;
@@ -875,7 +1038,7 @@ let operations = {
                     value: char.document.actor.data.data.wind.value - wind_roll._total
                 },
                 wounds: {
-                    [data.loc_key]: current + data.wounds
+                    [data.location]: current + data.wounds
                 },
                 wound_modifier: highest * -1
             };
@@ -888,7 +1051,7 @@ let operations = {
                 char.toggleEffect('icons/svg/blood.svg', {active: false});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
-            if (data.loc_key in critical) {
+            if (data.location in critical) {
                 if (current + data.wounds >= 5) {
                     char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                     char.toggleEffect('icons/svg/skull.svg', {active: true});
@@ -906,7 +1069,7 @@ let operations = {
         if (game.user.isGM) {
             console.log('soak:', data);
             if (data.wounds > 0) {
-                dc_utils.socket.emit('apply_damage', data);
+                dc_utils.socket.emit('soak', data);
             }
         }
     }
@@ -919,6 +1082,7 @@ Hooks.on("ready", () => {
         level_headed_available: true
     }
     if (game.user.isGM) {
+        // Initialize action deck
         let journal = game.journal.getName('action_deck');
         if (journal) {
             game.dc.action_deck = dc_utils.journal.load('action_deck');
@@ -928,6 +1092,20 @@ Hooks.on("ready", () => {
                 discard: []
             }
             game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
+        }
+        // Initialize roll tracking
+        let rolls = game.journal.getName('roll_data');
+        if (rolls) {
+            game.dc.rolls = dc_utils.journal.load('roll_data');
+        }else{
+            game.dc.rolls = dc_utils.journal.load('roll_data', {});
+        }
+        // Initialize combat action tracking
+        let ca = game.journal.getName('combat_actions');
+        if (rolls) {
+            game.dc.combat_actions = dc_utils.journal.load('combat_actions');
+        }else{
+            game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
         }
     };
     console.log("DC | Initializing socket listeners...")
