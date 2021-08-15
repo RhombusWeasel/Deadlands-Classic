@@ -703,7 +703,8 @@ const dc_utils = {
                 for (let card = 1; card < dc_utils.cards.length; card++) {
                     deck.push({
                         name: `${dc_utils.cards[card]}${dc_utils.suit_symbols[suit_label]}`,
-                        type: id
+                        type: id,
+                        sleeved: false
                     });
                 }        
             }
@@ -727,6 +728,10 @@ const dc_utils = {
                     const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                     for (let chk = 0; chk < card_pile.length; chk++) {
                         const chk_card = card_pile[chk].name;
+                        if(card_pile[chk].sleeved) {
+                            r_pile.unshift(card_pile[chk]);
+                            break;
+                        }
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
                                 card_pile[chk].name = 'Joker (Red)'
@@ -871,5 +876,8 @@ const dc_utils = {
             hand.splice(index, 1);
             act.update({data: {action_cards: hand}});
         },
+        get_cards: function(act) {
+
+        }
     },
 };

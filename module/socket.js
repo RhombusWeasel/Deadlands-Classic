@@ -432,6 +432,50 @@ let operations = {
             }
         }
     },
+    dodge: function(data) {
+        let char = canvas.tokens.placeables.find(i => i.name == data.target);
+        if (game.user.isGM) {
+            dc_utils.socket.emit('check_dodge', data);
+        }else if (char.owner) {
+            let cards = char.document.actor.data.data.action_cards;
+            if (cards.length > 0) {
+                let card_name = cards[0].name;
+                let form = new Dialog({
+                    title: `Dodge!`,
+                    content: build_dodge_dialog(data),
+                    buttons: {
+                        yes: {
+                            label: 'Dodge',
+                            callback: () => {
+                                dc_utils.socket.emit('discard_card', {
+                                    name: card_name,
+                                    type: 'action_deck',
+                                    char: data.target
+                                });
+                                dc_utils.combat.remove_card(char.document.actor, 0);
+                                data.next_op = 'roll_to_hit';
+                                data.dodge_roll = dc_utils.roll.new_roll_packet(char.document.actor, 'skill', 'dodge');
+                                console.log('check_dodge', data);
+                                operations.skill_roll(data.dodge_roll);
+                            }
+                        },
+                        no: {
+                            label: 'Take yer chances.',
+                            callback: () => {
+                                console.log('check_dodge', data);
+                                data.dodge_roll = 0;
+                                dc_utils.socket.emit('roll_to_hit', data);
+                            }
+                        }
+                    },
+                    close: () => {
+                        console.log('Dodge Dialog Closed');
+                    }
+                });
+                form.render(true);
+            }
+        }
+    },
     check_dodge: function(data) {
         let char = canvas.tokens.placeables.find(i => i.name == data.target);
         if (game.user.isGM) {
@@ -497,7 +541,6 @@ let operations = {
             data.next_op = 'roll_damage'
             data.write_value = 'hit_roll'
             data.modifier = 0
-            let itm = char.actor.getOwnedItem(data.weapon);
             operations.skill_roll(data);
         }
     },
@@ -524,9 +567,11 @@ let operations = {
                 }
                 return;
             }
-            if (data.hit_roll < data.dodge_roll) {
-                //Dodged
-                return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
+            if (data.dodge_roll) {
+                if (data.hit_roll < data.dodge_roll.total) {
+                    //Dodged
+                    return dc_utils.chat.send(`Attack! [${data.tn}]`, `${data.attacker} fired at ${data.target} but missed.`, 'They saw it coming and managed to dodge.');
+                }
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
             console.log(tgt);
