@@ -393,7 +393,7 @@ let operations = {
         }else{
             let char = canvas.tokens.placeables.find(i => i.name == data.target);
             if (char.owner) {
-                dc_utils.socket.emit('check_dodge', data);
+                dc_utils.socket.emit('dodge', data);
             }
         }
     },
@@ -435,7 +435,7 @@ let operations = {
     dodge: function(data) {
         let char = canvas.tokens.placeables.find(i => i.name == data.target);
         if (game.user.isGM) {
-            dc_utils.socket.emit('check_dodge', data);
+            dc_utils.socket.emit('dodge', data);
         }else if (char.owner) {
             let cards = char.document.actor.data.data.action_cards;
             if (cards.length > 0) {
