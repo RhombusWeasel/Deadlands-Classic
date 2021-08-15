@@ -90,7 +90,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('if_equipped', function (slot, id, options) {
-        //console.log(id, slot, options);
+        console.log(id, slot, options);
         let act = game.actors.get(options.data.root.id);
         if (dc_utils.char.items.is_equipped(act, slot, id)) {
             return options.fn(this);
