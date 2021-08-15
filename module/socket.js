@@ -259,7 +259,7 @@ let operations = {
     //  next_op: 'next_operation'   (STRING OPTIONAL)
     //}
     skill_roll: function(data) {
-        let char = game.actors.getName(data.roller);
+        let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
@@ -268,7 +268,7 @@ let operations = {
         }
     },
     confirm_result: function(data) {
-        let char = game.actors.getName(data.roller);
+        let char = dc_utils.get_actor(data.roller);
         if (char.owner) {
             let form = new Dialog({
                 title: `Confirm skill roll`,
