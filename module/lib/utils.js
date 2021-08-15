@@ -94,7 +94,14 @@ const dc_utils = {
         }
         return str
     },
-
+    get_actor: function(name) {
+        let char = game.actors.getName(name);
+        if (char) {
+            return char;
+        }
+        char = canvas.tokens.placeables.find(i => i.name == name);
+        return char.document.actor;
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -505,6 +512,7 @@ const dc_utils = {
             }
             let skill = dc_utils.char.skill.get(act, skl);
             let data = {
+                uuid:       dc_utils.uuid(4, 4, 4, 4),
                 type:       type,
                 roller:     act.name,
                 target:     target.name,
@@ -587,6 +595,8 @@ const dc_utils = {
             }
             console.log('new_roll:', r_data);
             roll.toMessage({rollMode: 'gmroll'});
+            game.dc.rolls[data.uuid] = data;
+            dc_utils.journal.save('roll_data', game.dc.rolls);
             return r_data;
         },
         evaluate: function(data) {
@@ -610,6 +620,8 @@ const dc_utils = {
                 data.success = true;
                 data.raises = Math.floor((data.total - data.tn) / 5);
             }
+            game.dc.rolls[data.uuid] = data;
+            dc_utils.journal.save('roll_data', game.dc.rolls);
             return data;
         },
         get_tn: function() {

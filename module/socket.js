@@ -342,6 +342,12 @@ let operations = {
             form.render(true);
         }
     },
+    request_roll: function(data) {
+        let char = dc_utils.get_actor(data.roller);
+        if (char.owner) {
+            operations.skill_roll(data);
+        }
+    },
     //NEW COMBAT OPERATIONS
     //prompt turn is sent by the GM to the players.
     prompt_turn: function(data) {
@@ -963,6 +969,12 @@ Hooks.on("ready", () => {
                 discard: []
             }
             game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
+        }
+        let rolls = game.journal.getName('roll_data');
+        if (rolls) {
+            game.dc.rolls = dc_utils.journal.load('roll_data');
+        }else{
+            game.dc.rolls = dc_utils.journal.load('roll_data', {});
         }
     };
     console.log("DC | Initializing socket listeners...")
