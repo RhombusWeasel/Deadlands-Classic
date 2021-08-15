@@ -450,30 +450,19 @@ let operations = {
                 }
             }
             if (ca.attack_roll > 5) {
-                return dc_utils.socket.emit('roll_location', ca);
+                operations.apply_hit(ca);
             }
             dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
         }
     },
-    roll_location: function(data) {
-        let act = dc_utils.get_actor(data.attacker);
-        if (act.owner) {
-            let raises    = math.floor((data.hit - 5) / 5);
+    apply_hit: function(data) {
+        if (game.user.isGM) {
+            let act = dc_utils.get_actor(data.attacker);
+            let raises    = math.floor((data.attack_roll - 5) / 5);
             let called    = act.data.data.called_shot;
             data.location = dc_utils.roll.location_roll(raises, called);
-            dc_utils.socket.emit('confirm_location', data);
-        }
-    },
-    confirm_location: function(data) {
-        if (game.user.isGM) {
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            dc_utils.socket.emit('roll_damage', data);
-        }
-    },
-    roll_damage: function(data) {
-        let act = dc_utils.get_actor(data.attacker);
-        if (act.owner) {
             let tgt = dc_utils.get_actor(data.target);
             let wep = act.items.filter(function (item) {return item.id == data.weapon});
             if (data.type == 'ranged') {
