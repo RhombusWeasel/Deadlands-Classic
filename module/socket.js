@@ -477,7 +477,7 @@ let operations = {
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let tgt = dc_utils.get_actor(data.target);
-            let wep = act.items.filter(function (item) {return item.id == data.weapon});
+            let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
             if (data.type == 'ranged') {
                 //Check ammo
                 if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
