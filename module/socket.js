@@ -384,9 +384,7 @@ let operations = {
     },
     roll_dodge: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (game.user.isGM) {
-            dc_utils.socket.emit('dodge', data);
-        }else if (char.owner) {
+        if (char.owner) {
             let cards = char.data.data.action_cards;
             if (cards.length > 0) {
                 let card_name = cards[0].name;
@@ -421,8 +419,8 @@ let operations = {
                 });
                 form.render(true);
             }else{
-                dodge.roll = {total: 0};
-                dc_utils.socket.emit('roll_attack', dodge);
+                data.roll = {total: 0};
+                dc_utils.socket.emit('roll_attack', data);
             }
         }
     },
