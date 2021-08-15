@@ -443,6 +443,7 @@ let operations = {
                 atk_roll.player_action = true;
                 return dc_utils.socket.emit('skill_roll', atk_roll);
             }
+            atk_roll.player_action = false;
             operations.skill_roll(atk_roll);
         }
     },
