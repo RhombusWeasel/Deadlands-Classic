@@ -460,7 +460,7 @@ let operations = {
                                     type: 'action_deck',
                                     char: data.target
                                 });
-                                dc_utils.combat.remove_card(char.document.actor, 1);
+                                dc_utils.combat.remove_card(char.document.actor, 0);
                                 console.log('check_dodge', data);
                                 operations.skill_roll(data);
                             }
