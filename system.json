@@ -2,7 +2,7 @@
     "name": "deadlands_classic",
     "title": "Deadlands Classic",
     "description": "An implementation of a classic wild west roleplay system.",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "minimumCoreVersion": "0.8.0",
     "compatibleCoreVersion": "0.8.8",
     "templateVersion": 1,
