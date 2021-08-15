@@ -400,7 +400,7 @@ let operations = {
                                     type: 'action_deck',
                                     char: data.target
                                 });
-                                dc_utils.combat.remove_card(char.document.actor, 0);
+                                dc_utils.combat.remove_card(char, 0);
                                 operations.skill_roll(data);
                             }
                         },
