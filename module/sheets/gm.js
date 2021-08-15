@@ -216,6 +216,13 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         dc_utils.combat.new_round();
         ChatMessage.create({ content: `New Round! Get Down with the Quickness!`});
+        let pcs = dc_utils.gm.get_player_owned_actors();
+        for (let i = 0; i < pcs.length; i++) {
+            let char = pcs[i];
+            if (char.data.data.is_bleeding) {
+                //Do wind damage
+            }
+        }
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
             data: {}

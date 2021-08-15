@@ -261,7 +261,6 @@ let operations = {
     skill_roll: function(data) {
         let char = game.actors.getName(data.roller);
         if (char.isOwner) {
-            let skill = dc_utils.roll.new_roll_packet(char, data.type, data.skill);
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
@@ -278,8 +277,6 @@ let operations = {
                     white: {
                         label: 'White',
                         callback: () => {
-                            console.log('DC | confirm_result |', char);
-                            console.log('DC | confirm_result |', dc_utils.char.chips.spend(char, 'White'));
                             if (dc_utils.char.chips.spend(char, 'White')) {
                                 let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
                                 let res = roll._total;
@@ -440,25 +437,17 @@ let operations = {
         if (game.user.isGM) {
             dc_utils.socket.emit('check_dodge', data);
         }else if (char.owner) {
-            let cards = [];
-            for (let item of char.actor.items.values()) {
-                if (item.type == 'action_deck') {
-                    cards.push(item);
-                }
-            }
-            cards = dc_utils.deck.sort(cards);
-            console.log('dodge:', cards);
+            let cards = char.document.actor.data.data.action_cards;
             if (cards.length > 0) {
-                data.next_op = 'roll_to_hit'
-                data.write_value = 'dodge_roll'
-                data.trait = 'nimbleness'
-                data.skill = 'dodge'
-                data.roller = data.target
-                data.tn = 0
-                data.modifier = 0
-                data.card_name = cards[0].name
-                data.card_id = cards[0]._id
-                console.log('dodge:', data)
+                data.next_op = 'roll_to_hit';
+                data.write_value = 'dodge_roll';
+                data.trait = 'nimbleness';
+                data.skill = 'dodge';
+                data.roller = data.target;
+                data.tn = 0;
+                data.modifier = 0;
+                data.card_name = cards[0].name;
+                data.card_id = cards[0]._id;
                 let form = new Dialog({
                     title: `Dodge!`,
                     content: build_dodge_dialog(data),
@@ -471,7 +460,7 @@ let operations = {
                                     type: 'action_deck',
                                     char: data.target
                                 });
-                                setTimeout(() => {char.actor.deleteOwnedItem(data.card_id)}, 500);
+                                dc_utils.combat.remove_card(char.document.actor, 1);
                                 console.log('check_dodge', data);
                                 operations.skill_roll(data);
                             }
