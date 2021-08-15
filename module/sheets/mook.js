@@ -77,6 +77,9 @@ export default class NPCSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".gen-button").click(this._on_generate.bind(this));
+        html.find(".skill-roll").click(this._on_skill_roll.bind(this));
+        html.find(".skill-buff").click(this._on_skill_buff.bind(this));
+        html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".melee-attack").click(this._on_melee_attack.bind(this));
@@ -106,6 +109,35 @@ export default class NPCSheet extends ActorSheet {
 
         let nimbleness = parseInt(act.data.data.traits.nimbleness.die_type.substring(1, 3));
         this.actor.update({'data.pace': nimbleness});
+    }
+
+    _on_skill_roll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let skl = element.closest(".skill-data").dataset.skill;
+        let skill = dc_utils.char.skill.get(this.actor, skl);
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', skl);
+        if (!(game.user.isGM)) {
+            dc_utils.socket.emit('check_tn', data);
+        }else{
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
+        }
+    }
+
+    _on_skill_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let skill = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
+        dc_utils.char.skill.add_level(this.actor, skill.key, 1);
+    }
+
+    _on_die_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let trait = dc_utils.char.skill.get(element.closest(".skill-data").dataset.skill);
+        dc_utils.char.skill.increase_die_type(this.actor, trait.key);
     }
 
     _on_refresh(event) {
