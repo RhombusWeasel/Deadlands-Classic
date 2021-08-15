@@ -453,17 +453,17 @@ let operations = {
                                     char: data.target
                                 });
                                 dc_utils.combat.remove_card(char.document.actor, 0);
-                                data.next_op = 'roll_to_hit';
                                 data.dodge_roll = dc_utils.roll.new_roll_packet(char.document.actor, 'skill', 'dodge');
                                 console.log('check_dodge', data);
                                 operations.skill_roll(data.dodge_roll);
+                                dc_utils.socket.emit('roll_to_hit', data);
                             }
                         },
                         no: {
                             label: 'Take yer chances.',
                             callback: () => {
                                 console.log('check_dodge', data);
-                                data.dodge_roll = 0;
+                                data.dodge_roll = {total: 0};
                                 dc_utils.socket.emit('roll_to_hit', data);
                             }
                         }
