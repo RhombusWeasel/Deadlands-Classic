@@ -427,7 +427,8 @@ let operations = {
     roll_attack: function(data) {
         if (game.user.isGM) {
             let ca             = game.dc.combat_actions[data.combat_id];
-            ca.dodge           = data.roll.total;
+            ca.dodge_roll      = data.roll.total;
+            game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act            = dc_utils.get_actor(ca.attacker);
             let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
@@ -438,17 +439,17 @@ let operations = {
     },
     check_hit: function(data) {
         if (game.user.isGM) {
-            let ca = game.dc.combat_actions[data.combat_id];
-            ca.hit = data.roll.total;
+            let ca         = game.dc.combat_actions[data.combat_id];
+            ca.attack_roll = data.roll.total;
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             // Check if dodged
-            if (ca.dodge != 'none') {
-                if (ca.dodge > ca.hit) {
+            if (ca.dodge_roll != 'none') {
+                if (ca.dodge_roll > ca.attack_roll) {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
-            if (ca.hit > 5) {
+            if (ca.attack_roll > 5) {
                 return dc_utils.socket.emit('roll_location', ca);
             }
             dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
