@@ -367,6 +367,12 @@ let operations = {
             dodge.next_op = 'roll_attack';
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             dc_utils.socket.emit('roll_dodge', dodge);
+        }else{
+            // GM is attacking a player, that player should bounce back the message.
+            let act = dc_utils.get_actor(data.target);
+            if (act.owner) {
+                dc_utils.socket.emit('register_attack', data);
+            }
         }
     },
     roll_dodge: function(data) {
