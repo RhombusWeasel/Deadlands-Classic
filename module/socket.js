@@ -418,6 +418,9 @@ let operations = {
                     }
                 });
                 form.render(true);
+            }else{
+                dodge.roll = {total: 0};
+                dc_utils.socket.emit('roll_attack', dodge);
             }
         }
     },
