@@ -429,7 +429,7 @@ let operations = {
             let ca             = game.dc.combat_actions[data.combat_id];
             ca.dodge           = data.roll.total;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            let act            = ca.attacker;
+            let act            = dc_utils.get_actor(ca.attacker);
             let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
@@ -1111,9 +1111,8 @@ Hooks.on("ready", () => {
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
-        console.log('RECIEVE:', data.operation, data.data);
         if (data.operation in operations) {
-            console.log('FOUND:', data.operation, data.data);
+            console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);
             return false;
         }
