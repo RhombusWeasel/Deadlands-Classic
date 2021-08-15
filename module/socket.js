@@ -102,13 +102,13 @@ function build_friendly_fire_dialog(data) {
     `;
 }
 
-function build_dodge_dialog(data) {
+function build_dodge_dialog(data, card_name) {
     return `
         <form>
             <div>
                 <h2 style="text-align: center;">Incoming Attack!</h2>
                 <p style="text-align: center;">${data.attacker} is attacking you!</p>
-                <p style="text-align: center;">It'll cost your ${data.card_name} to vamoose,</p>
+                <p style="text-align: center;">It'll cost your ${card_name} to vamoose,</p>
                 <p style="text-align: center;">would you like to try and dodge?</p>
             </div>
         </form>
@@ -390,7 +390,7 @@ let operations = {
                 let card_name = cards[0].name;
                 let form = new Dialog({
                     title: `Dodge!`,
-                    content: build_dodge_dialog(data),
+                    content: build_dodge_dialog(data, card_name),
                     buttons: {
                         yes: {
                             label: 'Dodge',
