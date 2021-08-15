@@ -241,7 +241,7 @@ const dc_utils = {
             },
             set_die_type: function(act, skill_name, sides) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                return act.update({data: {traits: {[skill.trait]: {die_type: `d${sides}`}}}});
+                return act.update({data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
             },
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
