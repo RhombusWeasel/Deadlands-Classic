@@ -959,6 +959,12 @@ Hooks.on("ready", () => {
         aim_bonus: 0,
         level_headed_available: true
     }
+    let rolls = game.journal.getName('roll_data');
+    if (rolls) {
+        game.dc.rolls = dc_utils.journal.load('roll_data');
+    }else{
+        game.dc.rolls = dc_utils.journal.load('roll_data', {});
+    }
     if (game.user.isGM) {
         let journal = game.journal.getName('action_deck');
         if (journal) {
@@ -969,12 +975,6 @@ Hooks.on("ready", () => {
                 discard: []
             }
             game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
-        }
-        let rolls = game.journal.getName('roll_data');
-        if (rolls) {
-            game.dc.rolls = dc_utils.journal.load('roll_data');
-        }else{
-            game.dc.rolls = dc_utils.journal.load('roll_data', {});
         }
     };
     console.log("DC | Initializing socket listeners...")
