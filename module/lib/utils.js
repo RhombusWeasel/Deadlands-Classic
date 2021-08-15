@@ -198,6 +198,14 @@ const dc_utils = {
                 }
                 throw 'DC | ERROR: skill not found.';
             },
+            set_level: function(act, skill_name, lvl) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {level: lvl}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
+                }
+            },
             add_level: function(act, skill_name, amt) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait_fb) {

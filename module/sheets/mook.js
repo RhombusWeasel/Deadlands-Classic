@@ -95,7 +95,7 @@ export default class NPCSheet extends ActorSheet {
         let act = this.getData();
         for(let key in act.data.data.traits){
             let dice = get_dice_from_card(draw_deck.pop(), draw_deck);
-            dc_utils.char.skill.add_level(this.actor, key, dice.amt);
+            dc_utils.char.skill.set_level(this.actor, key, dice.amt);
             dc_utils.char.skill.set_die_type(this.actor, key, dice.die);
         }
         let spirit = parseInt(act.data.data.traits.spirit.die_type.substring(1, 3));
