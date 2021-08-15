@@ -136,7 +136,7 @@ function build_damage_dialog(data) {
         `;
     }else{
         form += `
-                <p style="text-align: center;">${data.target} has taken ${data.wounds - data.soak} wounds to the ${data.loc_label}</p>
+                <p style="text-align: center;">${data.target} has taken ${data.wounds - data.soak} wounds to the ${dc_utils.hit_locations[data.location]}</p>
         `;
     }
     return form += `
