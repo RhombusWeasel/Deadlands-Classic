@@ -350,7 +350,10 @@ let operations = {
             game.dc.rolls[data.uuid] = data;
             dc_utils.journal.save('roll_data', game.dc.rolls);
             if (data.combat_id) {
-                dc_utils.socket.emit(data.next_op, data);
+                if (data.player_action) {
+                    return dc_utils.socket.emit(data.next_op, data);
+                }
+                operations[data.next_op](data);
             }
         }
     },
@@ -369,10 +372,12 @@ let operations = {
             dodge.next_op = 'roll_attack';
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             if (tgt.hasPlayerOwner) {
+                dodge.player_action = true;
                 dc_utils.socket.emit('roll_dodge', dodge);
             }else{
                 dodge.roll = {total: 0};
-                dc_utils.socket.emit('roll_attack', dodge);
+                dodge.player_action = false;
+                operations.roll_attack(dodge);
             }
         }else{
             // GM is attacking a player, that player should bounce back the message.
@@ -435,6 +440,7 @@ let operations = {
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
             if (act.hasPlayerOwner){
+                atk_roll.player_action = true;
                 return dc_utils.socket.emit('skill_roll', atk_roll);
             }
             operations.skill_roll(atk_roll);
