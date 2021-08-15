@@ -350,10 +350,10 @@ let operations = {
             game.dc.rolls[data.uuid] = data;
             dc_utils.journal.save('roll_data', game.dc.rolls);
             if (data.combat_id) {
-                if (data.player_action) {
-                    return dc_utils.socket.emit(data.next_op, data);
+                if (data.gm_action) {
+                    return operations[data.next_op](data);
                 }
-                operations[data.next_op](data);
+                return dc_utils.socket.emit(data.next_op, data);
             }
         }
     },
@@ -372,11 +372,10 @@ let operations = {
             dodge.next_op = 'roll_attack';
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             if (tgt.hasPlayerOwner) {
-                dodge.player_action = true;
                 dc_utils.socket.emit('roll_dodge', dodge);
             }else{
                 dodge.roll = {total: 0};
-                dodge.player_action = false;
+                dodge.gm_action = true;
                 operations.roll_attack(dodge);
             }
         }else{
@@ -440,10 +439,9 @@ let operations = {
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
             if (act.hasPlayerOwner){
-                atk_roll.player_action = true;
                 return dc_utils.socket.emit('skill_roll', atk_roll);
             }
-            atk_roll.player_action = false;
+            atk_roll.gm_action = true;
             operations.skill_roll(atk_roll);
         }
     },
