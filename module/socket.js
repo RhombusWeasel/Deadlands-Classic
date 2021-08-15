@@ -461,6 +461,11 @@ let operations = {
                 operations.apply_hit(ca);
             }
             dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
+        }else{
+            let act = dc_utils.get_actor(data.target);
+            if (act.owner) {
+                dc_utils.socket.emit('check_hit', data);
+            }
         }
     },
     apply_hit: function(data) {
