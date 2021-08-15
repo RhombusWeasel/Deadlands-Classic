@@ -801,7 +801,7 @@ const dc_utils = {
             if (journal) {
                 return JSON.parse(journal.data.content);
             }else{
-                let new_journal = dc_utils.journal.new_data(name, content);
+                dc_utils.journal.new_data(name, content);
                 return content;
             }
         },

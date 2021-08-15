@@ -366,7 +366,12 @@ let operations = {
             dodge.combat_id = attack.uuid;
             dodge.next_op = 'roll_attack';
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            dc_utils.socket.emit('roll_dodge', dodge);
+            if (tgt.hasPlayerOwner) {
+                dc_utils.socket.emit('roll_dodge', dodge);
+            }else{
+                dodge.roll = {total: 0};
+                dc_utils.socket.emit('roll_attack', dodge);
+            }
         }else{
             // GM is attacking a player, that player should bounce back the message.
             let act = dc_utils.get_actor(data.target);
