@@ -88,7 +88,6 @@ export default class GeneratorSheet extends ActorSheet {
             '\u2662': 2,
             '\u2663': 1
         };
-        console.log(suit_types);
         for (let d = 0; d < 12; d++) {
             let card = g_deck.pop();
             let value = dc_utils.deck.get_card_value(card);

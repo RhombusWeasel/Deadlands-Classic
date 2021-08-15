@@ -8,21 +8,19 @@
                 <th>{{localize "dc.player.core.wind"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.pace" value="{{data.pace}}"/></td>
-                <td><input style="text-align: center; " type="text" name="data.size" value="{{data.size}}"/></td>
-                <td><input style="text-align: center; width: 45%" type="text" name="data.wind.value" value="{{data.wind.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.wind.max" value="{{data.wind.max}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.pace" value="{{data.data.pace}}"/></td>
+                <td><input style="text-align: center; " type="text" name="data.size" value="{{data.data.size}}"/></td>
+                <td><input style="text-align: center; width: 45%" type="text" name="data.wind.value" value="{{data.data.wind.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.wind.max" value="{{data.data.wind.max}}"/></td>
             </tr>
             <tr>
                 <th>{{localize "dc.player.core.money"}}</th>
-                <th>{{localize "dc.player.core.bounty"}}</th>
-                <th>{{localize "dc.player.core.off_hand"}}</th>
                 <th>{{localize "dc.player.core.wound_modifier"}}</th>
+                <th>{{localize "dc.player.core.bounty"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.cash" value="{{data.cash}}"/></td>
-                <td><input style="text-align: center; width: 45%" type="text" name="data.bounty.value" value="{{data.bounty.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.bounty.max" value="{{data.bounty.max}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.off_hand_modifier" value="{{data.off_hand_modifier}}"/></td>
-                <td><input style="text-align: center;" type="text" name="data.wound_modifier" value="{{data.wound_modifier}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.cash" value="{{data.data.cash}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.wound_modifier" value="{{data.data.wound_modifier}}"/></td>
+                <td><input style="text-align: center; width: 45%" type="text" name="data.bounty.value" value="{{data.data.bounty.value}}"/>/<input style="text-align: center; width: 45%" type="text" name="data.bounty.max" value="{{data.data.bounty.max}}"/></td>
             </tr>
         </table>
         <button class="gen-button">Generate Stat Block</button>

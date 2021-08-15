@@ -13,34 +13,41 @@ function check_joker(card, deck) {
 }
 
 function get_dice_from_card(card, deck) {
-    card = check_joker(card, deck)
-    let values = card.split(' ');
-    let card_val = values[0];
-    let card_suit = values[2];
-    let amt = 1;
-    let die = 'd4';
-    if (card_suit == 'Spades') {
-        amt = 4
+    let die_types = {
+        Jo: 'd12',
+        A: 'd12',
+        K: 'd10',
+        Q: 'd10',
+        J: 'd8',
+        "10": 'd8',
+        "9": 'd8',
+        "8": 'd8',
+        "7": 'd6',
+        "6": 'd6',
+        "5": 'd6',
+        "4": 'd6',
+        "3": 'd6',
+        "2": 'd4'
+    };
+    let suit_types = {
+        '\u2660': 4,
+        '\u2661': 3,
+        '\u2662': 2,
+        '\u2663': 1
+    };
+    let value = dc_utils.deck.get_card_value(card);
+    let suit = card.name.slice(-1);
+    card.die_type = die_types[value];
+    if (value == 'Jo') {
+        let s_card = deck.pop();
+        if (dc_utils.deck.get_card_value(s_card) == 'Jo') {
+            s_card = deck.pop()
+        }
+        card.level = suit_types[s_card.name.slice(-1)];
+    }else{
+        card.level = suit_types[suit];
     }
-    if (card_suit == 'Hearts') {
-        amt = 3
-    }
-    if (card_suit == 'Diamonds') {
-        amt = 2
-    }
-    if (card_suit == 'Clubs') {
-        amt = 1
-    }
-    if (d6.includes(card_val)) {
-        die = 'd6'
-    }else if (d8.includes(card_val)) {
-        die = 'd8'
-    }else if (d10.includes(card_val)) {
-        die = 'd10'
-    }else if (d12.includes(card_val)) {
-        die = 'd12'
-    }
-    return {amt: amt, die: die, card: card}
+    return {amt: card.level, die: card.die_type, card: card}
 }
 
 export default class NPCSheet extends ActorSheet {
@@ -87,11 +94,9 @@ export default class NPCSheet extends ActorSheet {
         let draw_deck = dc_utils.deck.new('draw');
         let act = this.getData();
         for(let key in act.data.data.traits){
-            let dice = get_dice_from_card(draw_deck.pop().name, draw_deck);
-            let target_lvl = `data.traits.${key}.level`;
-            let target_die = `data.traits.${key}.die_type`;
-            this.actor.update({[target_lvl]: dice.amt});
-            this.actor.update({[target_die]: dice.die});
+            let dice = get_dice_from_card(draw_deck.pop(), draw_deck);
+            dc_utils.char.skill.add_level(this.actor, key, dice.amt);
+            dc_utils.char.skill.set_die_type(this.actor, key, dice.die);
         }
         let spirit = parseInt(act.data.data.traits.spirit.die_type.substring(1, 3));
         let vigor = parseInt(act.data.data.traits.vigor.die_type.substring(1, 3));
