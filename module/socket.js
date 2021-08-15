@@ -264,6 +264,8 @@ let operations = {
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
+            data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
+            operations.confirm_result(data);
             console.log('SKILL_ROLL:', data);
         }
     },
@@ -434,7 +436,10 @@ let operations = {
             let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
-            dc_utils.socket.emit('skill_roll', atk_roll);
+            if (act.hasPlayerOwner){
+                return dc_utils.socket.emit('skill_roll', atk_roll);
+            }
+            operations.skill_roll(atk_roll);
         }
     },
     check_hit: function(data) {
