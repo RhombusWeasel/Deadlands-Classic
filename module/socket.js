@@ -330,7 +330,7 @@ let operations = {
                                 dc_utils.socket.emit(data.next_op, data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }else{
-                                dc_utils.socket.emit('lock_result', data.roll);
+                                dc_utils.socket.emit('lock_result', data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }
                         }
