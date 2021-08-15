@@ -502,7 +502,7 @@ let operations = {
             let dmg_roll = new Roll(dmg_formula).roll();
             dmg_roll.toMessage({rollMode: 'gmroll'});
             data.damage = dmg_roll._total;
-            data.wounds = Math.floor(data.damage / tgt.data.data.size);
+            data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             if (tgt.hasPlayerOwner) {
