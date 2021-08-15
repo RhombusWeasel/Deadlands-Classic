@@ -595,8 +595,6 @@ const dc_utils = {
             }
             console.log('new_roll:', r_data);
             roll.toMessage({rollMode: 'gmroll'});
-            game.dc.rolls[data.uuid] = data;
-            dc_utils.journal.save('roll_data', game.dc.rolls);
             return r_data;
         },
         evaluate: function(data) {
@@ -620,8 +618,6 @@ const dc_utils = {
                 data.success = true;
                 data.raises = Math.floor((data.total - data.tn) / 5);
             }
-            game.dc.rolls[data.uuid] = data;
-            dc_utils.journal.save('roll_data', game.dc.rolls);
             return data;
         },
         get_tn: function() {

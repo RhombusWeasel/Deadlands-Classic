@@ -330,6 +330,7 @@ let operations = {
                                 dc_utils.socket.emit(data.next_op, data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }else{
+                                dc_utils.socket.emit('lock_result', data.roll);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }
                         }
@@ -340,6 +341,12 @@ let operations = {
                 }
             });
             form.render(true);
+        }
+    },
+    lock_result: function(data) {
+        if (game.user.isGM) {
+            game.dc.rolls[data.uuid] = data;
+            dc_utils.journal.save('roll_data', game.dc.rolls);
         }
     },
     request_roll: function(data) {
