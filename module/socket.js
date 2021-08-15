@@ -132,7 +132,7 @@ function build_damage_dialog(data) {
     `;
     if (data.wounds - data.soak == 1){
         form += `
-                <p style="text-align: center;">${data.target} has taken 1 wound to the ${data.loc_label}</p>
+                <p style="text-align: center;">${data.target} has taken 1 wound to the ${dc_utils.hit_locations[data.location]}</p>
         `;
     }else{
         form += `
@@ -503,6 +503,7 @@ let operations = {
             dmg_roll.toMessage({rollMode: 'gmroll'});
             data.damage = dmg_roll._total;
             data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
+            data.soak   = 0;
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             if (tgt.hasPlayerOwner) {
