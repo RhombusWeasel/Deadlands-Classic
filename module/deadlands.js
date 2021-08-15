@@ -90,8 +90,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('if_equipped', function (slot, id, options) {
-        //console.log(id, slot, options);
-        let act = game.actors.get(options.data.root.id);
+        let act = dc_utils.get_actor(options.data.root.actor.name);
         if (dc_utils.char.items.is_equipped(act, slot, id)) {
             return options.fn(this);
         }
@@ -99,7 +98,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('is_one_handed', function(options) {
-        let act = game.actors.get(options.data.root.id);
+        let act = dc_utils.get_actor(options.data.root.actor.name);
         let item = act.items.get(act.data.data.equipped.dominant);
         if (item?.data?.data?.multi_slot == false) {
             return options.fn(this);
