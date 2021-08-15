@@ -886,6 +886,22 @@ const dc_utils = {
         },
         get_cards: function(act) {
 
-        }
+        },
+        new_attack: function(atk, tgt, type, skill, wep) {
+            let data = {
+                attacker:    atk,
+                target:      tgt,
+                type:        type,
+                skill:       skill,
+                weapon:      wep,
+                location:    'unrolled',
+                attack_roll: 'unrolled',
+                dodge_roll:  'unrolled',
+                uuid:        dc_utils.uuid(4, 4, 4, 4)
+            }
+            game.dc.combat_actions[data.uuid] = data;
+            dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            return data;
+        },
     },
 };

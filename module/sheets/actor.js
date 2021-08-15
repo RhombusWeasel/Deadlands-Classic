@@ -420,7 +420,7 @@ export default class PlayerSheet extends ActorSheet {
             }else if (item.type == 'firearm') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
             }
-            dc_utils.socket.emit("declare_attack", data);
+            dc_utils.socket.emit("register_attack", data);
         }
     }
 
