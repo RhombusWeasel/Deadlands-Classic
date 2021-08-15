@@ -502,19 +502,14 @@ let operations = {
             let dmg_roll = new Roll(dmg_formula).roll();
             dmg_roll.toMessage({rollMode: 'gmroll'});
             data.damage = dmg_roll._total;
-            data.wounds = Math.floor(data.damage / tgt.actor.data.data.size);
-            dc_utils.socket.emit('confirm_damage', data);
-        }
-    },
-    confirm_damage: function(data) {
-        if (game.user.isGM) {
+            data.wounds = Math.floor(data.damage / tgt.data.data.size);
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            let tgt = dc_utils.get_actor(data.target);
             if (tgt.hasPlayerOwner) {
-                return dc_utils.socket.emit('apply_damage', data);
+                dc_utils.socket.emit('apply_damage', data);
+            }else{
+                operations.enemy_damage(data);
             }
-            operations.enemy_damage(data);
         }
     },
     //NEW COMBAT OPERATIONS
