@@ -82,8 +82,7 @@ export default class NPCSheet extends ActorSheet {
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
-        html.find(".melee-attack").click(this._on_melee_attack.bind(this));
-        html.find(".gun-attack").click(this._on_gun_attack.bind(this));
+        html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
@@ -144,11 +143,29 @@ export default class NPCSheet extends ActorSheet {
         this.render();
     }
 
+    _on_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId  = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId)
+        if (itemId == 'Nuthin') {
+            return
+        }else{
+            let data
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+            }
+            dc_utils.socket.emit("register_attack", data);
+        }
+    }
+
     _on_item_open(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         return item.sheet.render(true);
     }
 
@@ -156,9 +173,11 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Discarding ${item.type} ${item.name}`});
-        return this.actor.deleteOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
+        ChatMessage.create({ content: `
+            Discarding ${item.type} ${item.name}
+        `});
+        dc_utils.char.items.delete(this.actor, itemId);
     }
 
     _on_melee_attack(event) {
