@@ -782,11 +782,11 @@ const dc_utils = {
     chat: {
         send: function(title) {
             let sheet = `
-                <h3 style="text-align: center;">${title}</h3>
+                <h3 class="center typed">${title}</h3>
             `
             for (let i = 1; i < arguments.length; i++) {
                 sheet += `
-                <p style="text-align: center;">${arguments[i]}</p>
+                <p class="center typed">${arguments[i]}</p>
                 `
             }
             ChatMessage.create({content: sheet})
