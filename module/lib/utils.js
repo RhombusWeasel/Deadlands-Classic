@@ -804,15 +804,16 @@ const dc_utils = {
             for (let c = 0; c < card_pile.length; c++) {
                 const card = card_pile[c];
                 let value = dc_utils.deck.get_card_value(card);
+                let suit = card.name.splice(-1);
                 if (card_instances[value]){
                     card_instances[value] += 1;
                 }else{
                     card_instances[value] = 1;
                 }
-                if (suit_instances[value]) {
-                    suit_instances[value] += 1;
+                if (suit_instances[suit]) {
+                    suit_instances[suit] += 1;
                 }else{
-                    suit_instances[value] = 1;
+                    suit_instances[suit] = 1;
                 }
             }
             console.log(card_instances, suit_instances);
@@ -837,8 +838,8 @@ const dc_utils = {
                     const tot = card_instances[key];
                     if (tot == 4) return '4 of a kind';
                     if (tot == 3) found_3 = true;
-                    if (tot == 2) found_2 = true;
                     if (tot == 2 && found_2) found_2_2 = true;
+                    if (tot == 2) found_2 = true;
                 }
             }
             if (found_3 && found_2) return 'Full House';
