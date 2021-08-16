@@ -778,11 +778,6 @@ const dc_utils = {
             }
             return value;
         },
-        calculate_full_house: function(instances) {
-            let found_3 = false;
-            let found_2 = false;
-            
-        },
         calculate_straight: function(instances){
             let count = 0
             let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
