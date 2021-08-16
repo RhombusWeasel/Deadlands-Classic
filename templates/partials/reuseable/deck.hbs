@@ -23,7 +23,7 @@
             {{/each}}
         </tr>
     </table>
-    {{#if (ne this.type 'action_deck')}}
-        <a class="center discard-hand" data-type="{{deck[0].type}}">Discard All</a>
+    {{#if (ne deck_type 'action_deck')}}
+        <a class="center discard-hand" data-type="{{deck_type}}">Discard All</a>
     {{/if}}
 </div>
