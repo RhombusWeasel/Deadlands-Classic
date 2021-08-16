@@ -832,11 +832,14 @@ const dc_utils = {
             let found_3 = false;
             let found_2 = false;
             let found_2_2 = false;
-            for (let tot of card_instances) {
-                if (tot == 4) return '4 of a kind';
-                if (tot == 3) found_3 = true;
-                if (tot == 2) found_2 = true;
-                if (tot == 2 && found_2) found_2_2 = true;
+            for (const key in card_instances) {
+                if (Object.hasOwnProperty.call(card_instances, key)) {
+                    const tot = card_instances[key];
+                    if (tot == 4) return '4 of a kind';
+                    if (tot == 3) found_3 = true;
+                    if (tot == 2) found_2 = true;
+                    if (tot == 2 && found_2) found_2_2 = true;
+                }
             }
             if (found_3 && found_2) return 'Full House';
             if (flush) return 'Flush';
