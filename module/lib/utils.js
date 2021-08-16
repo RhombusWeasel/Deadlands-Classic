@@ -832,8 +832,7 @@ const dc_utils = {
             let found_3 = false;
             let found_2 = false;
             let found_2_2 = false;
-            for (let i = 0; i < instances.length; i++) {
-                const tot = instances[i];
+            for (let tot of instances) {
                 if (tot == 4) return '4 of a kind';
                 if (tot == 3) found_3 = true;
                 if (tot == 2) found_2 = true;
