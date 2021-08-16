@@ -815,14 +815,14 @@ const dc_utils = {
             }
             console.log(card_instances, suit_instances);
             let flush = false;
-            for (let s = 0; s < suit_instances.length; s++) {
-                const count = suit_instances[s];
+            for (const key in suit_instances) {
+                const count = suit_instances[key];
                 if (count >= 5) {
                     // Flush draw, check for straight
                     if (dc_utils.deck.calculate_straight(card_instances)) {
                         return 'Straight Flush';
                     }else{
-                        flush = true;
+                        flush = key;
                     }
                 }
             }
@@ -833,21 +833,21 @@ const dc_utils = {
             for (const key in card_instances) {
                 if (Object.hasOwnProperty.call(card_instances, key)) {
                     const tot = card_instances[key];
-                    if (tot == 4) return '4 of a kind';
-                    if (tot == 3) found_3 = true;
-                    if (tot == 2 && found_2) found_2_2 = true;
-                    if (tot == 2) found_2 = true;
+                    if (tot == 4) return `4 ${key}'s`;
+                    if (tot == 3) found_3 = key;
+                    if (tot == 2 && found_2) found_2_2 = key;
+                    if (tot == 2) found_2 = key;
                 }
             }
-            if (found_3 && found_2) return 'Full House';
-            if (flush) return 'Flush';
+            if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
+            if (flush) return `Flush (${flush})`;
             // Check for straight
             if (dc_utils.deck.calculate_straight(card_instances)) {
                 return 'Straight'
             }
-            if (found_3) return 'Three of a kind';
-            if (found_2_2) return 'Two pair';
-            if (found_2) return 'Pair';
+            if (found_3) return `Three ${found_3}`;
+            if (found_2_2) return `Two Pair ${found_2}'s and ${found_2_2}'s`;
+            if (found_2) return `Pair of ${found_2}'s`;
             return `High Card: ${card_pile[0].name}`;
         },
     },
