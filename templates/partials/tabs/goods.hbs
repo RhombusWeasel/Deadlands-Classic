@@ -27,11 +27,7 @@
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">{{this.data.data.amount}}</td>
                 <td class="perc50">{{this.name}}</td>
-                {{#if (eq this.boxed_multiple)}}
-                <td class="perc10 right">{{this.data.data.cost / this.data.data.box_amount * this.data.amount}}</td>
-                {{else}}
-                <td class="perc10 right">{{this.data.data.cost * this.data.amount}}</td>
-                {{/if}}
+                <td class="perc10 right">{{this.data.data.total_cost}}</td>
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
             {{/each}}

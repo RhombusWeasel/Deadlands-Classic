@@ -780,7 +780,8 @@
             "amount": "1",
             "is_float": false,
             "boxed_multiple": false,
-            "box_amount": 50
+            "box_amount": 50,
+            "total_cost": 0
         }
     }
 }

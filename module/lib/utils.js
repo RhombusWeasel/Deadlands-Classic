@@ -340,6 +340,19 @@ const dc_utils = {
                 }
                 return data
             },
+            calculate_costs: function(act, items) {
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    let ppu = parseFloat(item.data.data.cost);
+                    if (item.data.data.boxed_multiple) {
+                        ppu = ppu / item.data.data.box_amount
+                    }
+                    let total = (ppu * item.data.data.amount).toFixed(2);
+                    if (total != item.data.data.total_cost) {
+                        item.update({data: {total_cost: total}});
+                    }
+                }
+            },
         },
         wounds: {
             add: function(act, loc, amt) {
