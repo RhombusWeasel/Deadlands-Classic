@@ -778,6 +778,53 @@ const dc_utils = {
             }
             return value;
         },
+        calculate_straight: function(instances){
+            let count = 0
+            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
+            for (let i = 1; i < dc_utils.cards.length; i++) { 
+                let val = dc_utils.cards[i];
+                if (instances[val]) {
+                    count += 1
+                }else{
+                    count = 0
+                }
+                if (count >= 5) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        evaluate_hand: function(card_pile) {
+            let card_instances = {};
+            let suit_instances = {};
+            for (let c = 0; c < card_pile.length; c++) {
+                const card = card_pile[c];
+                let value = dc_utils.deck.get_card_value(card);
+                if (card_instances[value]){
+                    card_instances[value] += 1;
+                }else{
+                    card_instances[value] = 1;
+                }
+                if (suit_instances[value]) {
+                    suit_instances[value] += 1;
+                }else{
+                    suit_instances[value] = 1;
+                }
+            }
+            for (let s = 0; s < suit_instances.length; s++) {
+                const count = suit_instances[s];
+                if (count >= 5) {
+                    // Flush draw, check for straight
+                    if (dc_utils.deck.calculate_straight(card_instances)) {
+                        return 'Straight Flush!'
+                    }else{
+                        return 'Flush'
+                    }
+                }
+            }
+
+            return `High Card: ${card_pile[0].name}`
+        },
     },
     chat: {
         send: function(title) {
