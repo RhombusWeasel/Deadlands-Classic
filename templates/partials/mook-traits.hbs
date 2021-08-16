@@ -1,0 +1,33 @@
+<section>
+<div class="traits typed">
+    <h2 class="h1">Skills 'n' Such</h2>
+    <div>
+    {{#each data.data.traits as |trait|}}
+        <div>
+            <table>
+                <tr class="skill-data" data-skill="{{@key}}">
+                    <td class="perc50 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
+                    <td class="perc10 right"><a class="trait-buff">[+]</a></td>
+                    <td class="perc10 center">{{trait.level}}</td>
+                    <td class="perc10 center"><a class="die-buff">[+]</a></td>
+                    <td class="perc10 center">{{trait.die_type}}</td>
+                    <td class="perc10 center">+{{trait.modifier}}</td>
+                </tr>
+            </table>
+            <div>
+                <table>
+                {{#each skills as |skill|}}
+                    <tr class="skill-data" data-skill="{{@key}}">
+                        <td class="perc70"><a class="skill-roll">{{this.name}}</a></td>
+                        <td class="perc10 right"><a class="skill-buff">[+]</a></td>
+                        <td class="perc10 center">{{this.level}}</td>
+                        <td class="perc10 center">{{this.modifier}}</td>
+                    </tr>
+                {{/each}}
+                </table>
+            </div>
+        </div>
+    {{/each}}
+    </div>
+</div>
+</section>
