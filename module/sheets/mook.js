@@ -129,15 +129,13 @@ export default class NPCSheet extends ActorSheet {
     _on_skill_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let skill = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
-        dc_utils.char.skill.add_level(this.actor, skill.key, 1);
+        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill, 1);
     }
 
     _on_die_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let trait = dc_utils.char.skill.get(element.closest(".skill-data").dataset.skill);
-        dc_utils.char.skill.increase_die_type(this.actor, trait.key);
+        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill);
     }
 
     _on_refresh(event) {
