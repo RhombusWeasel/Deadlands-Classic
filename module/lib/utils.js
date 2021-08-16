@@ -846,7 +846,7 @@ const dc_utils = {
                 return 'Straight'
             }
             if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2}'s and ${found_2_2}'s`;
+            if (found_2_2) return `Two Pair ${found_2_2}'s and ${found_2}'s`;
             if (found_2) return `Pair of ${found_2}'s`;
             return `High Card: ${card_pile[0].name}`;
         },
