@@ -343,11 +343,11 @@ const dc_utils = {
             calculate_costs: function(act, items) {
                 for (let i = 0; i < items.length; i++) {
                     const item = items[i];
-                    let ppu = parseFloat(item.data.data.cost);
+                    let ppu = parseFloat(item.data.data.cost.splice(1));
                     if (item.data.data.boxed_multiple) {
                         ppu = ppu / item.data.data.box_amount
                     }
-                    let total = (ppu * item.data.data.amount).toFixed(2);
+                    let total = '$' + (ppu * item.data.data.amount).toFixed(2);
                     console.log(item, ppu, total);
                     if (total != item.data.data.total_cost) {
                         item.update({data: {total_cost: total}});
