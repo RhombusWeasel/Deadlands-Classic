@@ -343,7 +343,7 @@ const dc_utils = {
             calculate_costs: function(act, items) {
                 for (let i = 0; i < items.length; i++) {
                     const item = items[i];
-                    let ppu = parseFloat(item.data.data.cost.splice(1));
+                    let ppu = parseFloat(item.data.data.cost.slice(1));
                     if (item.data.data.boxed_multiple) {
                         ppu = ppu / item.data.data.box_amount
                     }
