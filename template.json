@@ -779,7 +779,8 @@
             "cost": "$1.00",
             "amount": "1",
             "is_float": false,
-            "boxed_multiple": false
+            "boxed_multiple": false,
+            "box_amount": 50
         }
     }
 }
