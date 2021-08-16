@@ -348,6 +348,7 @@ const dc_utils = {
                         ppu = ppu / item.data.data.box_amount
                     }
                     let total = (ppu * item.data.data.amount).toFixed(2);
+                    console.log(item, ppu, total);
                     if (total != item.data.data.total_cost) {
                         item.update({data: {total_cost: total}});
                     }
