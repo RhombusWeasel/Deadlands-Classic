@@ -109,6 +109,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
+        html.find(".play-item-card").click(this._on_play_item_card.bind(this));
         html.find(".aim-button").click(this._on_aim.bind(this));
         html.find(".recycle-card").click(this._on_recycle.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
@@ -220,6 +221,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
+        dc_utils.chat.send('Discard', `${this.actor.name} discards ${item.name}`);
         ChatMessage.create({ content: `
             Discarding ${item.type} ${item.name}
         `});
@@ -349,6 +351,15 @@ export default class PlayerSheet extends ActorSheet {
             <p style="text-align: center">${reply}</p>
         `;
         ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
+    }
+
+    _on_play_item_card(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        dc_utils.chat.send('Magic', `${this.actor.name} plays ${item.name}`);
+        dc_utils.char.items.delete(this.actor, itemId);
     }
 
     _on_play_card(event) {
