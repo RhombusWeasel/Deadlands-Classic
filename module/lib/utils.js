@@ -742,6 +742,8 @@ const dc_utils = {
         },
         sort: function(card_pile) {
             let r_pile = [];
+            let rj_found = false;
+            let bj_found = false;
             for (let card = 0; card < dc_utils.cards.length ; card++) {
                 const cur_card = dc_utils.cards[card];
                 for (let suit = 0; suit < dc_utils.suits.length; suit++) {
@@ -753,13 +755,13 @@ const dc_utils = {
                             break;
                         }
                         if (cur_card == 'Joker') {
-                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name = 'Joker (Red)'
+                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
                                 r_pile.push(card_pile[chk]);
+                                rj_found = true;
                                 break;
-                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name = 'Joker (Black)'
+                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
                                 r_pile.push(card_pile[chk]);
+                                bj_found = true;
                                 break;
                             }
                         }else if(chk_card == `${cur_card}${cur_suit}`){
@@ -778,15 +780,85 @@ const dc_utils = {
             }
             return value;
         },
+        calculate_straight: function(instances){
+            let count = 0
+            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
+            for (let i = 1; i < cards.length; i++) { 
+                if (instances[cards[i]]) {
+                    count += 1
+                }else{
+                    count = 0
+                }
+                if (count >= 5) {
+                    return true;
+                }
+            }
+            return false;
+        },
+        evaluate_hand: function(card_pile) {
+            let card_instances = {};
+            let suit_instances = {};
+            for (let c = 0; c < card_pile.length; c++) {
+                const card = card_pile[c];
+                let value = dc_utils.deck.get_card_value(card);
+                let suit = card.name.slice(-1);
+                if (card_instances[value]){
+                    card_instances[value] += 1;
+                }else{
+                    card_instances[value] = 1;
+                }
+                if (suit_instances[suit]) {
+                    suit_instances[suit] += 1;
+                }else{
+                    suit_instances[suit] = 1;
+                }
+            }
+            console.log(card_instances, suit_instances);
+            let flush = false;
+            for (const key in suit_instances) {
+                const count = suit_instances[key];
+                if (count >= 5) {
+                    // Flush draw, check for straight
+                    if (dc_utils.deck.calculate_straight(card_instances)) {
+                        return 'Straight Flush';
+                    }else{
+                        flush = key;
+                    }
+                }
+            }
+            // check for quads, check trips, pairs etc while we're here.
+            let found_3 = false;
+            let found_2 = false;
+            let found_2_2 = false;
+            for (const key in card_instances) {
+                if (Object.hasOwnProperty.call(card_instances, key)) {
+                    const tot = card_instances[key];
+                    if (tot == 4) return `4 ${key}'s`;
+                    if (tot == 3) found_3 = key;
+                    if (tot == 2 && found_2) found_2_2 = key;
+                    if (tot == 2 && !(found_2)) found_2 = key;
+                }
+            }
+            if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
+            if (flush) return `Flush (${flush})`;
+            // Check for straight
+            if (dc_utils.deck.calculate_straight(card_instances)) {
+                return 'Straight'
+            }
+            if (found_3) return `Three ${found_3}'s`;
+            if (found_2_2) return `Two Pair ${found_2}'s and ${found_2_2}'s`;
+            if (found_2) return `Pair of ${found_2}'s`;
+            return `High Card: ${card_pile[0].name}`;
+        },
     },
     chat: {
         send: function(title) {
             let sheet = `
-                <h3 style="text-align: center;">${title}</h3>
+                <h3 class="center typed">${title}</h3>
             `
             for (let i = 1; i < arguments.length; i++) {
                 sheet += `
-                <p style="text-align: center;">${arguments[i]}</p>
+                <p class="center typed">${arguments[i]}</p>
                 `
             }
             ChatMessage.create({content: sheet})

@@ -194,7 +194,6 @@ Hooks.once("init", function () {
 });
 
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
-    console.log('W00T', document, createData);
     let act = game.actors.getName(document.name);
     if (!(act.hasPlayerOwner)) {
         let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);

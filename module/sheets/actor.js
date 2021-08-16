@@ -81,6 +81,7 @@ export default class PlayerSheet extends ActorSheet {
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
+        if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
         data.action_deck = this.actor.data.data.action_cards;
         let fate_chips = dc_utils.char.items.get(this.actor, "chip");
         data.targets = dc_utils.called_shots;
@@ -109,6 +110,8 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
+        html.find(".play-item-card").click(this._on_play_item_card.bind(this));
+        html.find(".discard-hand").click(this._on_discard_hand.bind(this));
         html.find(".aim-button").click(this._on_aim.bind(this));
         html.find(".recycle-card").click(this._on_recycle.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
@@ -220,6 +223,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
+        dc_utils.chat.send('Discard', `${this.actor.name} discards ${item.name}`);
         ChatMessage.create({ content: `
             Discarding ${item.type} ${item.name}
         `});
@@ -351,6 +355,15 @@ export default class PlayerSheet extends ActorSheet {
         ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
     }
 
+    _on_play_item_card(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        dc_utils.chat.send('Magic', `${this.actor.name} discards ${item.name}`);
+        dc_utils.char.items.delete(this.actor, itemId);
+    }
+
     _on_play_card(event) {
         event.preventDefault();
         let element = event.currentTarget;
@@ -359,6 +372,21 @@ export default class PlayerSheet extends ActorSheet {
         card.char = this.actor.name;
         dc_utils.socket.emit('discard_card', card);
         dc_utils.combat.remove_card(this.actor, index);
+    }
+
+    _on_discard_hand(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let deck = element.dataset.type;
+        let cards = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, deck));
+        let hand = dc_utils.deck.evaluate_hand(cards);
+        let card_str = '';
+        for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            card_str += ` ${card.name}`
+            setTimeout(() => {dc_utils.char.items.delete(this.actor, card.id)}, i * 500);
+        }
+        dc_utils.chat.send('Hex', `${this.actor.name} plays ${hand}`, card_str);
     }
 
     _on_aim(event) {
