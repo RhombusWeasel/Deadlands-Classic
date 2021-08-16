@@ -857,7 +857,7 @@ const dc_utils = {
             if (flush) return `Flush (${flush})`;
             // Check for straight
             if (dc_utils.deck.calculate_straight(card_instances)) {
-                return 'Straight'
+                return 'a Straight'
             }
             if (found_3) return `Three ${found_3}'s`;
             if (found_2_2) return `Two Pair ${found_2_2}'s and ${found_2}'s`;
