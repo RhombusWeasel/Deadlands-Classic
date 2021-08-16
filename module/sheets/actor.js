@@ -378,8 +378,8 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let deck = element.dataset.type;
-        let cards = dc_utils.char.items.get(this.actor, deck);
-        let hand = dc_utils.deck.evaluate_hand(dc_utils.deck.sort(cards));
+        let cards = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, deck));
+        let hand = dc_utils.deck.evaluate_hand(cards);
         let card_str = '';
         for (let i = 0; i < cards.length; i++) {
             const card = cards[i];
