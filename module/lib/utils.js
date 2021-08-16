@@ -742,6 +742,8 @@ const dc_utils = {
         },
         sort: function(card_pile) {
             let r_pile = [];
+            let rj_found = false;
+            let bj_found = false;
             for (let card = 0; card < dc_utils.cards.length ; card++) {
                 const cur_card = dc_utils.cards[card];
                 for (let suit = 0; suit < dc_utils.suits.length; suit++) {
@@ -753,13 +755,13 @@ const dc_utils = {
                             break;
                         }
                         if (cur_card == 'Joker') {
-                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}`) {
-                                card_pile[chk].name = 'Joker (Red)'
+                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
                                 r_pile.push(card_pile[chk]);
+                                rj_found = true;
                                 break;
-                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}`) {
-                                card_pile[chk].name = 'Joker (Black)'
+                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
                                 r_pile.push(card_pile[chk]);
+                                bj_found = true;
                                 break;
                             }
                         }else if(chk_card == `${cur_card}${cur_suit}`){
