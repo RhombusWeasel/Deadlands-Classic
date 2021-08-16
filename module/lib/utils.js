@@ -809,6 +809,7 @@ const dc_utils = {
             return false;
         },
         evaluate_hand: function(card_pile) {
+            // 2N + 23 operations worst case to find best hand from N cards
             let card_instances = {};
             let suit_instances = {};
             for (let c = 0; c < card_pile.length; c++) {
@@ -861,7 +862,7 @@ const dc_utils = {
             if (found_3) return `Three ${found_3}'s`;
             if (found_2_2) return `Two Pair ${found_2_2}'s and ${found_2}'s`;
             if (found_2) return `Pair of ${found_2}'s`;
-            return `High Card: ${card_pile[0].name}`;
+            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
         },
     },
     chat: {
