@@ -384,9 +384,9 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < cards.length; i++) {
             const card = cards[i];
             card_str += ` ${card.name}`
-            dc_utils.char.items.delete(this.actor, card.id);
+            setTimeout(() => {dc_utils.char.items.delete(this.actor, card.id)}, i * 500);
         }
-        dc_utils.chat.send('Magic', `${this.actor.name} plays ${hand}`, card_str);
+        dc_utils.chat.send('Hex', `${this.actor.name} plays ${hand}`, card_str);
     }
 
     _on_aim(event) {
