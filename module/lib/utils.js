@@ -778,12 +778,16 @@ const dc_utils = {
             }
             return value;
         },
+        calculate_full_house: function(instances) {
+            let found_3 = false;
+            let found_2 = false;
+            
+        },
         calculate_straight: function(instances){
             let count = 0
             let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
-            for (let i = 1; i < dc_utils.cards.length; i++) { 
-                let val = dc_utils.cards[i];
-                if (instances[val]) {
+            for (let i = 1; i < cards.length; i++) { 
+                if (instances[cards[i]]) {
                     count += 1
                 }else{
                     count = 0
@@ -811,19 +815,40 @@ const dc_utils = {
                     suit_instances[value] = 1;
                 }
             }
+            console.log(card_instances, suit_instances);
+            let flush = false;
             for (let s = 0; s < suit_instances.length; s++) {
                 const count = suit_instances[s];
                 if (count >= 5) {
                     // Flush draw, check for straight
                     if (dc_utils.deck.calculate_straight(card_instances)) {
-                        return 'Straight Flush!'
+                        return 'Straight Flush';
                     }else{
-                        return 'Flush'
+                        flush = true;
                     }
                 }
             }
-
-            return `High Card: ${card_pile[0].name}`
+            // check for quads, check trips, pairs etc while we're here.
+            let found_3 = false;
+            let found_2 = false;
+            let found_2_2 = false;
+            for (let i = 0; i < instances.length; i++) {
+                const tot = instances[i];
+                if (tot == 4) return '4 of a kind';
+                if (tot == 3) found_3 = true;
+                if (tot == 2) found_2 = true;
+                if (tot == 2 && found_2) found_2_2 = true;
+            }
+            if (found_3 && found_2) return 'Full House';
+            if (flush) return 'Flush';
+            // Check for straight
+            if (dc_utils.deck.calculate_straight(card_instances)) {
+                return 'Straight'
+            }
+            if (found_3) return 'Three of a kind';
+            if (found_2_2) return 'Two pair';
+            if (found_2) return 'Pair';
+            return `High Card: ${card_pile[0].name}`;
         },
     },
     chat: {
