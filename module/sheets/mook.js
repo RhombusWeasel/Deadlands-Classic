@@ -13,34 +13,41 @@ function check_joker(card, deck) {
 }
 
 function get_dice_from_card(card, deck) {
-    card = check_joker(card, deck)
-    let values = card.split(' ');
-    let card_val = values[0];
-    let card_suit = values[2];
-    let amt = 1;
-    let die = 'd4';
-    if (card_suit == 'Spades') {
-        amt = 4
+    let die_types = {
+        Jo: 'd12',
+        A: 'd12',
+        K: 'd10',
+        Q: 'd10',
+        J: 'd8',
+        "10": 'd8',
+        "9": 'd8',
+        "8": 'd8',
+        "7": 'd6',
+        "6": 'd6',
+        "5": 'd6',
+        "4": 'd6',
+        "3": 'd6',
+        "2": 'd4'
+    };
+    let suit_types = {
+        '\u2660': 4,
+        '\u2661': 3,
+        '\u2662': 2,
+        '\u2663': 1
+    };
+    let value = dc_utils.deck.get_card_value(card);
+    let suit = card.name.slice(-1);
+    card.die_type = die_types[value];
+    if (value == 'Jo') {
+        let s_card = deck.pop();
+        if (dc_utils.deck.get_card_value(s_card) == 'Jo') {
+            s_card = deck.pop()
+        }
+        card.level = suit_types[s_card.name.slice(-1)];
+    }else{
+        card.level = suit_types[suit];
     }
-    if (card_suit == 'Hearts') {
-        amt = 3
-    }
-    if (card_suit == 'Diamonds') {
-        amt = 2
-    }
-    if (card_suit == 'Clubs') {
-        amt = 1
-    }
-    if (d6.includes(card_val)) {
-        die = 'd6'
-    }else if (d8.includes(card_val)) {
-        die = 'd8'
-    }else if (d10.includes(card_val)) {
-        die = 'd10'
-    }else if (d12.includes(card_val)) {
-        die = 'd12'
-    }
-    return {amt: amt, die: die, card: card}
+    return {amt: card.level, die: card.die_type, card: card}
 }
 
 export default class NPCSheet extends ActorSheet {
@@ -70,10 +77,12 @@ export default class NPCSheet extends ActorSheet {
 
     activateListeners(html) {
         html.find(".gen-button").click(this._on_generate.bind(this));
+        html.find(".skill-roll").click(this._on_skill_roll.bind(this));
+        html.find(".skill-buff").click(this._on_skill_buff.bind(this));
+        html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
-        html.find(".melee-attack").click(this._on_melee_attack.bind(this));
-        html.find(".gun-attack").click(this._on_gun_attack.bind(this));
+        html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
@@ -86,21 +95,46 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let draw_deck = dc_utils.deck.new('draw');
         let act = this.getData();
-        for(let key in act.data.traits){
-            let dice = get_dice_from_card(draw_deck.pop().name, draw_deck);
-            let target_lvl = `data.traits.${key}.level`;
-            let target_die = `data.traits.${key}.die_type`;
-            this.actor.update({[target_lvl]: dice.amt});
-            this.actor.update({[target_die]: dice.die});
+        for(let key in act.data.data.traits){
+            let dice = get_dice_from_card(draw_deck.pop(), draw_deck);
+            dc_utils.char.skill.set_level(this.actor, key, dice.amt);
+            dc_utils.char.skill.set_die_type(this.actor, key, dice.die);
         }
-        let spirit = parseInt(act.data.traits.spirit.die_type.substring(1, 3));
-        let vigor = parseInt(act.data.traits.vigor.die_type.substring(1, 3));
+        let spirit = parseInt(act.data.data.traits.spirit.die_type.substring(1, 3));
+        let vigor = parseInt(act.data.data.traits.vigor.die_type.substring(1, 3));
         let max_wind = spirit + vigor
         this.actor.update({'data.wind.value': max_wind});
         this.actor.update({'data.wind.max': max_wind});
 
-        let nimbleness = parseInt(act.data.traits.nimbleness.die_type.substring(1, 3));
+        let nimbleness = parseInt(act.data.data.traits.nimbleness.die_type.substring(1, 3));
         this.actor.update({'data.pace': nimbleness});
+    }
+
+    _on_skill_roll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let skl = element.closest(".skill-data").dataset.skill;
+        let skill = dc_utils.char.skill.get(this.actor, skl);
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', skl);
+        if (!(game.user.isGM)) {
+            dc_utils.socket.emit('check_tn', data);
+        }else{
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
+        }
+    }
+
+    _on_skill_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill, 1);
+    }
+
+    _on_die_buff(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill);
     }
 
     _on_refresh(event) {
@@ -109,11 +143,29 @@ export default class NPCSheet extends ActorSheet {
         this.render();
     }
 
+    _on_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId  = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId)
+        if (itemId == 'Nuthin') {
+            return
+        }else{
+            let data
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+            }
+            dc_utils.socket.emit("register_attack", data);
+        }
+    }
+
     _on_item_open(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
         return item.sheet.render(true);
     }
 
@@ -121,9 +173,11 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Discarding ${item.type} ${item.name}`});
-        return this.actor.deleteOwnedItem(itemId);
+        let item = this.actor.items.get(itemId);
+        ChatMessage.create({ content: `
+            Discarding ${item.type} ${item.name}
+        `});
+        dc_utils.char.items.delete(this.actor, itemId);
     }
 
     _on_melee_attack(event) {

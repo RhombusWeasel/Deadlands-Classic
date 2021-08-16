@@ -198,6 +198,14 @@ const dc_utils = {
                 }
                 throw 'DC | ERROR: skill not found.';
             },
+            set_level: function(act, skill_name, lvl) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                if (skill.trait == skill_name) {
+                    return act.update({data: {traits: {[skill_name]: {level: lvl}}}});
+                } else {
+                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
+                }
+            },
             add_level: function(act, skill_name, amt) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait_fb) {
@@ -238,6 +246,10 @@ const dc_utils = {
                 } else {
                     return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
                 }
+            },
+            set_die_type: function(act, skill_name, sides) {
+                let skill = dc_utils.char.skill.get(act, skill_name);
+                return act.update({data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
             },
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
@@ -762,7 +774,7 @@ const dc_utils = {
         get_card_value: function(card) {
             let value = card.name.charAt(0);
             if (card.name.length > 2) {
-                value = card.name.slice(0, 1);
+                value = card.name.slice(0, 2);
             }
             return value;
         },

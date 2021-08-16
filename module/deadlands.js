@@ -24,6 +24,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/mook-core.hbs",
+        "systems/deadlands_classic/templates/partials/mook-traits.hbs",
         "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"
     ]
     return loadTemplates(template_paths)
