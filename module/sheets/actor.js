@@ -360,7 +360,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        dc_utils.chat.send('Magic', `${this.actor.name} plays ${item.name}`);
+        dc_utils.chat.send('Magic', `${this.actor.name} discards ${item.name}`);
         dc_utils.char.items.delete(this.actor, itemId);
     }
 
