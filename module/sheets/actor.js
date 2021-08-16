@@ -111,6 +111,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".play-item-card").click(this._on_play_item_card.bind(this));
+        html.find(".discard-hand").click(this._on_discard_hand.bind(this));
         html.find(".aim-button").click(this._on_aim.bind(this));
         html.find(".recycle-card").click(this._on_recycle.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
@@ -371,6 +372,21 @@ export default class PlayerSheet extends ActorSheet {
         card.char = this.actor.name;
         dc_utils.socket.emit('discard_card', card);
         dc_utils.combat.remove_card(this.actor, index);
+    }
+
+    _on_discard_hand(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let deck = element.dataset.type;
+        let cards = dc_utils.char.items.get(this.actor, deck);
+        let hand = dc_utils.evaluate_hand(cards);
+        let card_str = '';
+        for (let i = 0; i < cards.length; i++) {
+            const card = cards[i];
+            card_str += ` ${card.name}`
+            dc_utils.char.items.delete(this.actor, card.id);
+        }
+        dc_utils.chat.send('Magic', `${this.actor.name} plays ${hand}`, card_str);
     }
 
     _on_aim(event) {
