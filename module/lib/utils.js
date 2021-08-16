@@ -757,7 +757,7 @@ const dc_utils = {
                                 card_pile[chk].name = 'Joker (Red)'
                                 r_pile.push(card_pile[chk]);
                                 break;
-                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.balck_joker}`) {
+                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}`) {
                                 card_pile[chk].name = 'Joker (Black)'
                                 r_pile.push(card_pile[chk]);
                                 break;
