@@ -804,7 +804,7 @@ const dc_utils = {
             for (let c = 0; c < card_pile.length; c++) {
                 const card = card_pile[c];
                 let value = dc_utils.deck.get_card_value(card);
-                let suit = card.name.splice(-1);
+                let suit = card.name.slice(-1);
                 if (card_instances[value]){
                     card_instances[value] += 1;
                 }else{
