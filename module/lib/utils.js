@@ -1,5 +1,4 @@
 const dc_utils = {
-
     cards: ["Joker", "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
@@ -847,9 +846,9 @@ const dc_utils = {
             for (const key in card_instances) {
                 if (Object.hasOwnProperty.call(card_instances, key)) {
                     const tot = card_instances[key];
-                    if (tot == 4) return `4 ${key}'s`;
+                    if (tot == 4) return `4 of a kind (${key}'s)`;
                     if (tot == 3) found_3 = key;
-                    if (tot == 2 && found_2) found_2_2 = key;
+                    if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
                     if (tot == 2 && !(found_2)) found_2 = key;
                 }
             }
@@ -857,13 +856,74 @@ const dc_utils = {
             if (flush) return `Flush (${flush})`;
             // Check for straight
             if (dc_utils.deck.calculate_straight(card_instances)) {
-                return 'a Straight'
+                return 'Straight'
             }
             if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2_2}'s and ${found_2}'s`;
+            if (found_2_2) return `Two Pair ${found_2_2}'s over ${found_2}'s`;
             if (found_2) return `Pair of ${found_2}'s`;
             return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
         },
+        poker: {
+            generate_hands: function() {
+                let hands = [];
+                let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
+                // Straight flushes
+                for (let c = 0; c < cards.length - 5; c++) {
+                    let hand = 'Straight Flush'
+                    for (let i = c; i < 5; i++) {
+                        hand += ` ${cards[i]}`;
+                    }
+                    hands.push(hand);
+                }
+                // Four of a kind
+                for (let c = 0; c < cards.length - 1; c++) {
+                    hands.push(`Four of a kind ${cards[c]}'s`);
+                }
+                // Full Houses
+                for (let o = 0; o < cards.length - 1; o++) {
+                    for (let u = 0; u < cards.length - 1; u++) {
+                        if (o != u) {
+                            hands.push(`Full House ${cards[o]}'s over ${cards[u]}'s`);
+                        }
+                    }
+                }
+                // Flushes
+                for (let c = 0; c < cards.length - 6; c++) {
+                    for (let s = 0; s < dc_utils.suits.length; s++) {
+                        const suit = dc_utils.suit_symbols[dc_utils.suits[s]];
+                        hands.push(`Flush (${suit}) ${cards[c]} high`);
+                    }
+                }
+                // Straights
+                for (let c = 0; c < cards.length - 5; c++) {
+                    let hand = 'Straight'
+                    for (let i = c; i < 5; i++) {
+                        hand += ` ${cards[i]}`;
+                    }
+                    hands.push(hand);
+                }
+                // Trips
+                for (let c = 0; c < cards.length - 1; c++) {
+                    hands.push(`Three ${cards[c]}'s`);
+                }
+                // Two Pair
+                for (let o = 0; o < cards.length - 1; o++) {
+                    for (let u = 0; u < cards.length - 1; u++) {
+                        if (o != u) {
+                            hands.push(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
+                        }
+                    }
+                }
+                // Pair
+                for (let c = 0; c < cards.length - 1; c++) {
+                    hands.push(`Pair of ${cards[c]}`);
+                }
+                //High Card
+                for (let c = 0; c < cards.length - 1; c++) {
+                    hands.push(`High Card: ${cards[c]}`);
+                }
+            },
+        }
     },
     chat: {
         send: function(title) {
