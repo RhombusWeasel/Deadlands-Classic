@@ -858,7 +858,17 @@ const dc_utils = {
                 }
             }
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
-            if (flush) return `Flush (${flush})`;
+            if (flush) {
+                str = ''
+                for (let c = 0; c < card_pile.length; c++) {
+                    let card = card_pile[c]
+                    let suit = card.name.slice(-1);
+                    if (suit == flush) {
+                        str += ` ${dc_utils.deck.get_card_value(card)}`;
+                    }
+                }
+                return `Flush`+str;
+            }
             // Check for straight
             str = dc_utils.deck.calculate_straight(card_instances);
             if (str) {
