@@ -922,6 +922,7 @@ const dc_utils = {
                 for (let c = 0; c < cards.length - 1; c++) {
                     hands.push(`High Card: ${cards[c]}`);
                 }
+                return hands;
             },
         }
     },
