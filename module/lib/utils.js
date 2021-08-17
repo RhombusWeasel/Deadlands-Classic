@@ -868,7 +868,7 @@ const dc_utils = {
                 let hands = [];
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
-                for (let c = 0; c < cards.length - 5; c++) {
+                for (let c = 0; c < cards.length - 4; c++) {
                     let hand = 'Straight Flush'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
@@ -895,7 +895,7 @@ const dc_utils = {
                     }
                 }
                 // Straights
-                for (let c = 0; c < cards.length - 5; c++) {
+                for (let c = 0; c < cards.length - 4; c++) {
                     let hand = 'Straight'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
