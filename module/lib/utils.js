@@ -793,16 +793,19 @@ const dc_utils = {
             return value;
         },
         calculate_straight: function(instances){
-            let count = 0
-            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
+            let count = 0;
+            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
+            let hand = '';
             for (let i = 1; i < cards.length; i++) { 
                 if (instances[cards[i]]) {
-                    count += 1
+                    count += 1;
+                    hand += ` ${cards[i]}`;
                 }else{
-                    count = 0
+                    count = 0;
+                    hand = '';
                 }
                 if (count >= 5) {
-                    return true;
+                    return hand;
                 }
             }
             return false;
@@ -811,6 +814,7 @@ const dc_utils = {
             // 2N + 23 operations worst case to find best hand from N cards
             let card_instances = {};
             let suit_instances = {};
+            let str;
             for (let c = 0; c < card_pile.length; c++) {
                 const card = card_pile[c];
                 let value = dc_utils.deck.get_card_value(card);
@@ -832,8 +836,9 @@ const dc_utils = {
                 const count = suit_instances[key];
                 if (count >= 5) {
                     // Flush draw, check for straight
-                    if (dc_utils.deck.calculate_straight(card_instances)) {
-                        return 'Straight Flush';
+                    str = dc_utils.deck.calculate_straight(card_instances);
+                    if (str) {
+                        return 'Straight Flush'+str;
                     }else{
                         flush = key;
                     }
@@ -855,8 +860,9 @@ const dc_utils = {
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
             if (flush) return `Flush (${flush})`;
             // Check for straight
-            if (dc_utils.deck.calculate_straight(card_instances)) {
-                return 'Straight'
+            str = dc_utils.deck.calculate_straight(card_instances);
+            if (str) {
+                return 'Straight'+str;
             }
             if (found_3) return `Three ${found_3}'s`;
             if (found_2_2) return `Two Pair ${found_2_2}'s over ${found_2}'s`;
@@ -916,7 +922,7 @@ const dc_utils = {
                 }
                 // Pair
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`Pair of ${cards[c]}`);
+                    hands.push(`Pair of ${cards[c]}'s`);
                 }
                 //High Card
                 for (let c = 0; c < cards.length - 1; c++) {
