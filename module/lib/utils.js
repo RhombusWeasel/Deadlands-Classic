@@ -909,14 +909,13 @@ const dc_utils = {
                     for (let c_2 = c_1 + 1; c_2 < cards.length - 4; c_2++) {
                         for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
-                                for (let c_5 = c_4 + 2; c_5 < cards.length - 1; c_5++) {
-                                    let pkt = {
-                                        [cards[c_1]]: 1,
-                                        [cards[c_2]]: 1,
-                                        [cards[c_3]]: 1,
-                                        [cards[c_4]]: 1,
-                                        [cards[c_5]]: 1,
-                                    }
+                                for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
+                                    let pkt = {};
+                                        pkt[cards[c_1]] = 1;
+                                        pkt[cards[c_2]] = 1;
+                                        pkt[cards[c_3]] = 1;
+                                        pkt[cards[c_4]] = 1;
+                                        pkt[cards[c_5]] = 1;
                                     if (!(dc_utils.deck.calculate_straight(pkt))) {
                                         hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
