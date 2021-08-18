@@ -904,8 +904,8 @@ const dc_utils = {
                     }
                 }
                 // Flushes
-                let str = ''
                 for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
+                    let str = ''
                     for (let c_2 = 0; c_2 < c_1 + 3; c_2++) {
                         str += ` ${cards[c_2]}`
                     }
