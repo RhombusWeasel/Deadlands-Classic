@@ -916,7 +916,8 @@ const dc_utils = {
                                         pkt[cards[c_3]] = 1;
                                         pkt[cards[c_4]] = 1;
                                         pkt[cards[c_5]] = 1;
-                                    if (!(dc_utils.deck.calculate_straight(pkt))) {
+                                    let res = dc_utils.deck.calculate_straight(pkt);
+                                    if (res == false) {
                                         hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
