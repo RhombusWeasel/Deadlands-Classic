@@ -905,7 +905,6 @@ const dc_utils = {
                 }
                 // Flushes
                 for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
-                    let str = `Flush`;
                     for (let c_2 = c_1 + 1; c_2 < cards.length - 4; c_2++) {
                         for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
@@ -943,8 +942,18 @@ const dc_utils = {
                     hands.push(`Pair of ${cards[c]}'s`);
                 }
                 //High Card
-                for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`High Card: ${cards[c]}`);
+                for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
+                    for (let c_2 = c_1 + 1; c_2 < cards.length - 4; c_2++) {
+                        for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
+                            for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
+                                for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
+                                    if (c_5 != c_4 + 1) {
+                                        hands.push(`High Card: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                 return hands;
             },
