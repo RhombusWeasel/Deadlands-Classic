@@ -905,19 +905,15 @@ const dc_utils = {
                 }
                 // Flushes
                 for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
-                    let str = 'Flush';
-                    for (let c_2 = c_1; c_2 < c_1 + 4; c_2++) {
-                        str += ` ${cards[c_2]}`;
-                    }
-                    hands.push(str + ` ${cards[c_1 + 5]}`);
-                    for (let i = 2; i < 6; i++) {
-                        str = `Flush ${cards[c_1]}`;
-                        for (let c_2 = c_1 + 1; c_2 < c_1 + 5; c_2++) {
-                            if (c_2 - c_1 != i) {
-                                str += ` ${cards[c_2]}`;
+                    let str = `Flush`;
+                    for (let c_2 = c_1 + 1; c_2 < cards.length - 5; c_2++) {
+                        for (let c_3 = c_2 + 1; c_3 < cards.length - 4; c_3++) {
+                            for (let c_4 = c_3 + 1; c_4 < cards.length - 3; c_4++) {
+                                for (let c_5 = c_4 + 1; c_5 < cards.length - 2; c_5++) {
+                                    hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                }
                             }
                         }
-                        hands.push(str);
                     }
                 }
                 // Straights
