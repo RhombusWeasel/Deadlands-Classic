@@ -910,8 +910,8 @@ const dc_utils = {
                         str += ` ${cards[c_2]}`;
                     }
                     hands.push(str + ` ${cards[c_1 + 5]}`);
-                    for (let i = 1; i < 6; i++) {
-                        str = 'Flush'
+                    for (let i = 2; i < 6; i++) {
+                        str = `Flush ${cards[c_1]}`;
                         for (let c_2 = c_1; c_2 < c_1 + 6; c_2++) {
                             if (c_2 - c_1 != i) {
                                 str += ` ${cards[c_2]}`;
