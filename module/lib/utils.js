@@ -904,12 +904,12 @@ const dc_utils = {
                     }
                 }
                 // Flushes
+                let str = ''
                 for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
-                    let str = ''
-                    for (let c_2 = 0; c_2 < c_1 + 3; c_2++) {
+                    for (let c_2 = 0; c_2 < c_1 + 4; c_2++) {
                         str += ` ${cards[c_2]}`
                     }
-                    hands.push(`Flush${str}`);
+                    hands.push(`Flush${str} ${cards[c_1 + 5]}`);
                 }
                 // Straights
                 for (let c = 0; c < cards.length - 4; c++) {
