@@ -909,7 +909,7 @@ const dc_utils = {
                     for (let c_2 = 0; c_2 < c_1 + 3; c_2++) {
                         str += ` ${cards[c_2]}`
                     }
-                    hands.push(`Flush${str} ${cards[c_1 + 5]}`);
+                    hands.push(`Flush${str}`);
                 }
                 // Straights
                 for (let c = 0; c < cards.length - 4; c++) {
