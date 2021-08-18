@@ -909,7 +909,7 @@ const dc_utils = {
                     for (let c_2 = c_1; c_2 < c_1 + 4; c_2++) {
                         str += ` ${cards[c_2]}`;
                     }
-                    hands.push(str + `${cards[c_1 + 5]}`);
+                    hands.push(str + ` ${cards[c_1 + 5]}`);
                     for (let i = 1; i < 6; i++) {
                         str = 'Flush'
                         for (let c_2 = c_1; c_2 < c_1 + 6; c_2++) {
