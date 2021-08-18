@@ -910,7 +910,7 @@ const dc_utils = {
                         for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
-                                    if (cards[c_5] != '10') {
+                                    if (c_5 != c_4 + 1) {
                                         hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
