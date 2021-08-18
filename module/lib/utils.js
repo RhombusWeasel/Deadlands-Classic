@@ -893,7 +893,11 @@ const dc_utils = {
                 }
                 // Four of a kind
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`Four of a kind ${cards[c]}'s`);
+                    for (let k = 0; k < cards.length - 1; k++) {
+                        if (k != c) {
+                            hands.push(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
+                        }
+                    }
                 }
                 // Full Houses
                 for (let o = 0; o < cards.length - 1; o++) {
@@ -927,7 +931,13 @@ const dc_utils = {
                 }
                 // Trips
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`Three ${cards[c]}'s`);
+                    for (let k1 = 0; k1 < cards.length - 1; k1++) {
+                        for (let k2 = 0; k2 < cards.length - 1; k2++) {
+                            if (c != u) {
+                                hands.push(`Three ${cards[c]}'s`);
+                            }
+                        }
+                    }
                 }
                 // Two Pair
                 for (let o = 0; o < cards.length - 1; o++) {
