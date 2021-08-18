@@ -904,11 +904,12 @@ const dc_utils = {
                     }
                 }
                 // Flushes
-                for (let c = 0; c < cards.length - 6; c++) {
-                    for (let s = 0; s < dc_utils.suits.length; s++) {
-                        const suit = dc_utils.suit_symbols[dc_utils.suits[s]];
-                        hands.push(`Flush (${suit}) ${cards[c]} high`);
+                let str = ''
+                for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
+                    for (let c_2 = 0; c_2 < c_1 + 3; c_2++) {
+                        str += ` ${cards[c_2]}`
                     }
+                    hands.push(`Flush${str} ${cards[c_1 + 5]}`);
                 }
                 // Straights
                 for (let c = 0; c < cards.length - 4; c++) {
