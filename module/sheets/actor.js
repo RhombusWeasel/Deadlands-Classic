@@ -129,6 +129,8 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".equip-select").change(this._on_item_equip.bind(this));
+        html.find(".joker-value-select").change(this._on_joker_value.bind(this));
+        html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
@@ -219,6 +221,20 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.value;
         let char = dc_utils.get_actor(this.actor.name);
         dc_utils.char.items.equip(char, slot, itemId);
+    }
+
+    _on_joker_value(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        this.actor.update({data: {joker_value: value}});
+    }
+
+    _on_joker_suit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        this.actor.update({data: {joker_suit: value}});
     }
 
     _on_item_delete(event) {
