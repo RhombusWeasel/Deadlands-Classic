@@ -519,6 +519,7 @@ let operations = {
             data.soak   = 0;
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            console.log(data);
             ChatMessage.create({content: battle_report(data)})
             if (tgt.hasPlayerOwner) {
                 dc_utils.socket.emit('apply_damage', data);
