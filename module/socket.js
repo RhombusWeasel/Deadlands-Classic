@@ -503,7 +503,7 @@ let operations = {
     apply_hit: function(data) {
         if (game.user.isGM) {
             let act = dc_utils.get_actor(data.attacker);
-            let raises    = Math.floor((data.attack_roll - 5) / 5);
+            let raises    = Math.floor((data.hit_roll - 5) / 5);
             let called    = act.data.data.called_shot;
             data.location = dc_utils.roll.location_roll(raises, called);
             data.loc_label = dc_utils.hit_locations[data.location];
