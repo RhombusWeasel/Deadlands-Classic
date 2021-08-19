@@ -12,7 +12,7 @@ function build_skill_template(data) {
         <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
         <h3 style="text-align:center">Modifier: ${data.modifier}</h3>
         <h3 style="text-align:center">${data.roll.total}</h3>
-        <table style="table-layout: fixed;">
+        <table class="typed" style="table-layout: fixed;">
             <tr style="text-align:center">
     `;
     r_str += dc_utils.roll.get_result_template(data);
@@ -267,6 +267,11 @@ let operations = {
     //  modifier: 0,                (INTEGER)
     //  next_op: 'next_operation'   (STRING OPTIONAL)
     //}
+    check_tn: function(data) {
+        if (game.user.isGM) {
+            dc_utils.socket.emit('skill_roll', data);
+        }
+    },
     skill_roll: function(data) {
         let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
