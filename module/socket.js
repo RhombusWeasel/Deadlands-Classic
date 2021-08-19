@@ -457,6 +457,8 @@ let operations = {
         if (game.user.isGM) {
             let ca         = game.dc.combat_actions[data.combat_id];
             ca.attack_roll = data.roll.total;
+            ca.range       = data.range;
+            ca.modifiers   = data.modifiers;
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
