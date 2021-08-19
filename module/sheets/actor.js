@@ -83,8 +83,7 @@ export default class PlayerSheet extends ActorSheet {
         dc_utils.char.items.calculate_costs(this.actor, data.goods);
         data.cards = dc_utils.cards;
         data.cards.splice(0, 1);
-        data.suits = dc_utils.suit_symbols;
-        data.suits.splice(4, 2);
+        data.suits = {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663"};
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
         data.action_deck = this.actor.data.data.action_cards;
