@@ -493,7 +493,7 @@ const dc_utils = {
                 for (let t = 0; t < canvas.tokens.placeables.length; t++) {
                     let tgt = canvas.tokens.placeables[t]
                     for (let u of tgt.targeted) {
-                        if (u._id == game.user._id) {
+                        if (u.id == game.user.id) {
                             return tgt;
                         }
                     }
