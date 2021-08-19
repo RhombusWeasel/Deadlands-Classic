@@ -99,9 +99,9 @@ const dc_utils = {
         if (char) {
             return char;
         }
-        char = canvas.tokens.placeables.find(i => i.name == name);
+        char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
         console.log(char);
-        return char.document.actor;
+        return char;
     },
     sort: {
         compare: function(object1, object2, key) {
