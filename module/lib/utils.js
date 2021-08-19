@@ -547,7 +547,7 @@ const dc_utils = {
                 attacker:   act.name,
                 weapon:     wep,
                 range:      dist,
-                tn:         dc_utils.roll.get_tn(),
+                tn:         5,
                 name:       act.name,
                 called:     act.data.data.called_shot,
                 skill:      skl,
@@ -557,6 +557,15 @@ const dc_utils = {
                 modifiers:  {
                     skill: {label: 'Skill + Trait', modifier: skill.modifier},
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
+                }
+            }
+            let mods = game.actors.getName('Marshal').data.data.modifiers;
+            for (const [key, mod] of Object.entries(mods)){
+                if (mod.active) {
+                    data.modifiers[key] = {
+                        label: mod.name,
+                        modifier: mod.modifier
+                    }
                 }
             }
             if (item) {
@@ -577,9 +586,9 @@ const dc_utils = {
                     dc_utils.combat.clear_aim(act);
                 }
             }
-            let tgt = act.data.data.called_shot
-            if (tgt != 'any') {
-                data.modifiers.called = {label: `${dc_utils.called_shots[tgt].name} shot.`, modifier: dc_utils.called_shots[tgt].mod};
+            let tgt_loc = act.data.data.called_shot
+            if (tgt_loc != 'any') {
+                data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
             }
             return data;
         },
