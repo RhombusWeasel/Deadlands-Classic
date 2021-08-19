@@ -678,7 +678,7 @@ const dc_utils = {
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2
-                console.log('Location | ', tot, range, tot - range, tot + range);
+                console.log('Location | ', raises, key, tot, range, tot - range, tot + range);
                 for (let i = tot - range; i < tot + range; i++) {
                     if (i < 19){
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
