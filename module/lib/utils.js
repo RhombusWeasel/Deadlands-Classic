@@ -100,6 +100,7 @@ const dc_utils = {
             return char;
         }
         char = canvas.tokens.placeables.find(i => i.name == name);
+        console.log(char);
         return char.document.actor;
     },
     sort: {
