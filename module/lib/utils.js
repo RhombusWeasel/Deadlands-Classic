@@ -1,4 +1,5 @@
 const dc_utils = {
+    uuid_keys: `0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ`,
     cards: ["Joker", "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
@@ -85,7 +86,7 @@ const dc_utils = {
         let str = ''
         for (let a = 0; a < arguments.length; a++) {
             for (let i = 0; i < arguments[a]; i++) {
-                str += uuid_keys[Math.floor(Math.random() * uuid_keys.length)];
+                str += dc_utils.uuid_keys[Math.floor(Math.random() * dc_utils.uuid_keys.length)];
             }
             if (a < arguments.length - 1) {
                 str += '-'
