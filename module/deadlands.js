@@ -99,6 +99,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('has_joker', function (deck, options) {
+        console.log(options);
         let act = dc_utils.get_actor(options.data.root.actor.name);
         let hand = dc_utils.char.items.get(act, deck);
         for (const card of hand) {
