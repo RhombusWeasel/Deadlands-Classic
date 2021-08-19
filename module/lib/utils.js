@@ -562,6 +562,7 @@ const dc_utils = {
             let mods = game.actors.getName('Marshal').data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
+                    console.log(mod);
                     data.modifiers[key] = {
                         label: mod.name,
                         modifier: parseInt(mod.modifier)
