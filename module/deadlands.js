@@ -205,8 +205,8 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
 Hooks.on('hoverToken', function () {
     if (game.user.isGM) {
         let tkn = arguments[0]
-        if (tkn?.data?.name != tkn?.actor?.name && !(tkn?.actor?.isPC)) {
-            tkn.actor.update({name: tkn.data.name});
+        if (tkn?.data?.data?.name != tkn?.document?.actor?.name && !(tkn?.document?.actor?.hasPlayerOwner)) {
+            tkn.document.actor.update({name: tkn.data.name});
         }
     }
 });

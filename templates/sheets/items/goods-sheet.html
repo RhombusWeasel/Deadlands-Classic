@@ -22,6 +22,16 @@
                 <td><input type="checkbox" name="data.is_float"/></td>
             {{/if}}
             </tr>
+            <tr>
+                <th>{{localize "dc.items.boxed_multiple"}}</th>
+            {{#if (eq data.data.boxed_multiple true)}}
+                <td><input type="checkbox" name="data.boxed_multiple" checked/></td>
+            <tr>
+                <td><input style="text-align: center;" type="text" name="data.box_amount" value="{{data.data.box_amount}}"/></td>
+            {{else}}
+                <td><input type="checkbox" name="data.boxed_multiple"/></td>
+            {{/if}}
+            </tr>
             {{> systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs this}}
         </table>
     </div>

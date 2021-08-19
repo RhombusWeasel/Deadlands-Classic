@@ -259,8 +259,12 @@ let operations = {
     //  next_op: 'next_operation'   (STRING OPTIONAL)
     //}
     skill_roll: function(data) {
+        console.log(`DC | skill_roll |`, data);
         let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
+            if(data == false) {
+                data = dc_utils.roll.new_roll_packet()
+            }
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
@@ -382,7 +386,7 @@ let operations = {
             // GM is attacking a player, that player should bounce back the message.
             let act = dc_utils.get_actor(data.target);
             if (act.owner) {
-                dc_utils.socket.emit('register_attack', data);
+                setTimeout(() => {dc_utils.socket.emit('register_attack', data)}, 500);
             }
         }
     },
@@ -435,7 +439,15 @@ let operations = {
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act            = dc_utils.get_actor(ca.attacker);
-            let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+            let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon, ca.target);
+            if (!(atk_roll)) {
+                for (let i = 0; i < 5; i++) {
+                    atk_roll = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+                    if (atk_roll) {
+                        break;
+                    }
+                }
+            }
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
             if (act.hasPlayerOwner){
@@ -451,16 +463,24 @@ let operations = {
             ca.attack_roll = data.roll.total;
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            let act = dc_utils.get_actor(ca.attacker);
+            if (data.type == 'ranged') {
+                //Check ammo
+                if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
+                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
+                }
+            }
             // Check if dodged
             if (ca.dodge_roll != 'none') {
                 if (ca.dodge_roll > ca.attack_roll) {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
-            if (ca.attack_roll > 5) {
+            if (ca.attack_roll >= 5) {
                 operations.apply_hit(ca);
+            }else {
+                dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
             }
-            dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
         }else{
             let act = dc_utils.get_actor(data.target);
             if (act.owner) {
@@ -478,12 +498,6 @@ let operations = {
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let tgt = dc_utils.get_actor(data.target);
             let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
-            if (data.type == 'ranged') {
-                //Check ammo
-                if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
-                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
-                }
-            }
             let armour_val =  (tgt.data.data.armour[data.location] || 0) * 2;
             let dmg = wep?.data?.data?.damage?.split('d') || ['0', '0'];
             if (data.location == 'noggin') {
@@ -1102,7 +1116,7 @@ Hooks.on("ready", () => {
         }
         // Initialize combat action tracking
         let ca = game.journal.getName('combat_actions');
-        if (rolls) {
+        if (ca) {
             game.dc.combat_actions = dc_utils.journal.load('combat_actions');
         }else{
             game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
@@ -1110,6 +1124,7 @@ Hooks.on("ready", () => {
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
+        console.log('RECIEVE:', data.operation, data.data);
         if (data.operation in operations) {
             console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);

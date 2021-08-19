@@ -1,5 +1,5 @@
 const dc_utils = {
-
+    uuid_keys: `0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ`,
     cards: ["Joker", "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
@@ -86,7 +86,7 @@ const dc_utils = {
         let str = ''
         for (let a = 0; a < arguments.length; a++) {
             for (let i = 0; i < arguments[a]; i++) {
-                str += uuid_keys[Math.floor(Math.random() * uuid_keys.length)];
+                str += dc_utils.uuid_keys[Math.floor(Math.random() * dc_utils.uuid_keys.length)];
             }
             if (a < arguments.length - 1) {
                 str += '-'
@@ -99,8 +99,8 @@ const dc_utils = {
         if (char) {
             return char;
         }
-        char = canvas.tokens.placeables.find(i => i.name == name);
-        return char.document.actor;
+        char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
+        return char;
     },
     sort: {
         compare: function(object1, object2, key) {
@@ -340,6 +340,19 @@ const dc_utils = {
                 }
                 return data
             },
+            calculate_costs: function(act, items) {
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    let ppu = parseFloat(item.data.data.cost.slice(1));
+                    if (item.data.data.boxed_multiple) {
+                        ppu = ppu / item.data.data.box_amount
+                    }
+                    let total = '$' + (ppu * item.data.data.amount).toFixed(2);
+                    if (total != item.data.data.total_cost) {
+                        item.update({data: {total_cost: total}});
+                    }
+                }
+            },
         },
         wounds: {
             add: function(act, loc, amt) {
@@ -480,7 +493,7 @@ const dc_utils = {
                 for (let t = 0; t < canvas.tokens.placeables.length; t++) {
                     let tgt = canvas.tokens.placeables[t]
                     for (let u of tgt.targeted) {
-                        if (u._id == game.user._id) {
+                        if (u.id == game.user.id) {
                             return tgt;
                         }
                     }
@@ -502,14 +515,17 @@ const dc_utils = {
         },
     },
     roll: {
-        new_roll_packet: function(act, type, skl, wep) {
+        new_roll_packet: function(act, type, skl, wep, tgt) {
             let item = act.items.get(wep);
             let dist = 1
             if (!(item)) {
                 wep = 'unarmed'
             }
             let target = dc_utils.char.target.get(act);
-            if (target == false && !(type == 'skill')) {
+            if (tgt) {
+                target = dc_utils.get_actor(tgt);
+            }
+            if (!(target) && !(type == 'skill')) {
                 console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }
@@ -531,7 +547,7 @@ const dc_utils = {
                 attacker:   act.name,
                 weapon:     wep,
                 range:      dist,
-                tn:         dc_utils.roll.get_tn(),
+                tn:         5,
                 name:       act.name,
                 called:     act.data.data.called_shot,
                 skill:      skl,
@@ -541,6 +557,16 @@ const dc_utils = {
                 modifiers:  {
                     skill: {label: 'Skill + Trait', modifier: skill.modifier},
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
+                }
+            }
+            let mods = game.actors.getName('Marshal').data.data.modifiers;
+            for (const [key, mod] of Object.entries(mods)){
+                if (mod.active) {
+                    console.log(mod);
+                    data.modifiers[key] = {
+                        label: mod.name,
+                        modifier: parseInt(mod.mod)
+                    }
                 }
             }
             if (item) {
@@ -561,9 +587,9 @@ const dc_utils = {
                     dc_utils.combat.clear_aim(act);
                 }
             }
-            let tgt = act.data.data.called_shot
-            if (tgt != 'any') {
-                data.modifiers.called = {label: `${dc_utils.called_shots[tgt].name} shot.`, modifier: dc_utils.called_shots[tgt].mod};
+            let tgt_loc = act.data.data.called_shot
+            if (tgt_loc != 'any') {
+                data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
             }
             return data;
         },
@@ -781,23 +807,28 @@ const dc_utils = {
             return value;
         },
         calculate_straight: function(instances){
-            let count = 0
-            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"]
+            let count = 0;
+            let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
+            let hand = '';
             for (let i = 1; i < cards.length; i++) { 
                 if (instances[cards[i]]) {
-                    count += 1
+                    count += 1;
+                    hand += ` ${cards[i]}`;
                 }else{
-                    count = 0
+                    count = 0;
+                    hand = '';
                 }
                 if (count >= 5) {
-                    return true;
+                    return hand;
                 }
             }
             return false;
         },
         evaluate_hand: function(card_pile) {
+            // 2N + 23 operations worst case to find best hand from N cards
             let card_instances = {};
             let suit_instances = {};
+            let str;
             for (let c = 0; c < card_pile.length; c++) {
                 const card = card_pile[c];
                 let value = dc_utils.deck.get_card_value(card);
@@ -819,8 +850,9 @@ const dc_utils = {
                 const count = suit_instances[key];
                 if (count >= 5) {
                     // Flush draw, check for straight
-                    if (dc_utils.deck.calculate_straight(card_instances)) {
-                        return 'Straight Flush';
+                    str = dc_utils.deck.calculate_straight(card_instances);
+                    if (str) {
+                        return 'Straight Flush'+str;
                     }else{
                         flush = key;
                     }
@@ -833,23 +865,123 @@ const dc_utils = {
             for (const key in card_instances) {
                 if (Object.hasOwnProperty.call(card_instances, key)) {
                     const tot = card_instances[key];
-                    if (tot == 4) return `4 ${key}'s`;
+                    if (tot == 4) return `4 of a kind (${key}'s)`;
                     if (tot == 3) found_3 = key;
-                    if (tot == 2 && found_2) found_2_2 = key;
+                    if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
                     if (tot == 2 && !(found_2)) found_2 = key;
                 }
             }
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
-            if (flush) return `Flush (${flush})`;
+            if (flush) {
+                str = ''
+                for (let c = 0; c < card_pile.length; c++) {
+                    let card = card_pile[c]
+                    let suit = card.name.slice(-1);
+                    if (suit == flush) {
+                        str += ` ${dc_utils.deck.get_card_value(card)}`;
+                    }
+                }
+                return `Flush`+str;
+            }
             // Check for straight
-            if (dc_utils.deck.calculate_straight(card_instances)) {
-                return 'Straight'
+            str = dc_utils.deck.calculate_straight(card_instances);
+            if (str) {
+                return 'Straight'+str;
             }
             if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2}'s and ${found_2_2}'s`;
+            if (found_2_2) return `Two Pair ${found_2_2}'s over ${found_2}'s`;
             if (found_2) return `Pair of ${found_2}'s`;
-            return `High Card: ${card_pile[0].name}`;
+            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
         },
+        poker: {
+            generate_hands: function() {
+                let hands = [];
+                let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
+                // Straight flushes
+                for (let c = 0; c < cards.length - 4; c++) {
+                    let hand = 'Straight Flush'
+                    for (let i = c; i < c + 5; i++) {
+                        hand += ` ${cards[i]}`;
+                    }
+                    hands.push(hand);
+                }
+                // Four of a kind
+                for (let c = 0; c < cards.length - 1; c++) {
+                    for (let k = 0; k < cards.length - 1; k++) {
+                        if (k != c) {
+                            hands.push(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
+                        }
+                    }
+                }
+                // Full Houses
+                for (let o = 0; o < cards.length - 1; o++) {
+                    for (let u = 0; u < cards.length - 1; u++) {
+                        if (o != u) {
+                            hands.push(`Full House ${cards[o]}'s over ${cards[u]}'s`);
+                        }
+                    }
+                }
+                // Flushes
+                for (let c_1 = 0; c_1 < cards.length - 6; c_1++) {
+                    for (let c_2 = c_1 + 1; c_2 < cards.length - 4; c_2++) {
+                        for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
+                            for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
+                                for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
+                                    if (c_5 != c_4 + 1) {
+                                        hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                // Straights
+                for (let c = 0; c < cards.length - 4; c++) {
+                    let hand = 'Straight'
+                    for (let i = c; i < c + 5; i++) {
+                        hand += ` ${cards[i]}`;
+                    }
+                    hands.push(hand);
+                }
+                // Trips
+                for (let c = 0; c < cards.length - 1; c++) {
+                    for (let k1 = 0; k1 < cards.length - 1; k1++) {
+                        for (let k2 = 0; k2 < cards.length - 1; k2++) {
+                            if (c != u) {
+                                hands.push(`Three ${cards[c]}'s`);
+                            }
+                        }
+                    }
+                }
+                // Two Pair
+                for (let o = 0; o < cards.length - 1; o++) {
+                    for (let u = 0; u < cards.length - 1; u++) {
+                        if (o != u) {
+                            hands.push(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
+                        }
+                    }
+                }
+                // Pair
+                for (let c = 0; c < cards.length - 1; c++) {
+                    hands.push(`Pair of ${cards[c]}'s`);
+                }
+                //High Card
+                for (let c_1 = 0; c_1 < cards.length - 5; c_1++) {
+                    for (let c_2 = c_1 + 1; c_2 < cards.length - 4; c_2++) {
+                        for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
+                            for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
+                                for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
+                                    if (c_5 != c_4 + 1) {
+                                        hands.push(`High Card: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return hands;
+            },
+        }
     },
     chat: {
         send: function(title) {
