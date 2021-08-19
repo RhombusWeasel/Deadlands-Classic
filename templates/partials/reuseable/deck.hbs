@@ -24,7 +24,7 @@
         </tr>
     </table>
     <div class="center flexrow"></div>
-        {{#has_joker}}
+        {{#has_joker "huckster_deck"}}
         <a class="discard-hand" data-type="huckster_deck">Play {{hand}}</a>
         <select name="data.joker_value" id="joker-value-select">
             {{#each cards as |card|}}
