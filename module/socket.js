@@ -195,7 +195,7 @@ function battle_report(data) {
         `;
     }else{
         msg += `
-            <p style="text-align:center">They suffer ${data.wounds} wounds to the ${data.location}</p>
+            <p style="text-align:center">They suffer ${data.wounds} wounds to the ${data.loc_label}</p>
         `;
     }
     return msg;
@@ -531,6 +531,7 @@ let operations = {
             data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
             data.soak   = 0;
             game.dc.combat_actions[data.uuid] = data;
+            data.loc_label = dc_utils.loc_lookup[data.location];
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             console.log(data);
             ChatMessage.create({content: battle_report(data)})
