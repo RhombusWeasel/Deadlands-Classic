@@ -1014,7 +1014,7 @@ const dc_utils = {
         load: function(name, content) {
             let journal = game.journal.getName(name);
             if (journal) {
-                return JSON.parse(journal.data.content.slice(3,-4));
+                return JSON.parse(journal.data.content);
             }else{
                 dc_utils.journal.new_data(name, content);
                 return content;
