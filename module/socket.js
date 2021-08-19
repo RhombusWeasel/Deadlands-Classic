@@ -456,7 +456,7 @@ let operations = {
     check_hit: function(data) {
         if (game.user.isGM) {
             let ca         = game.dc.combat_actions[data.combat_id];
-            ca.attack_roll = data.roll.total;
+            ca.hit_roll = data.roll.total;
             for (const [key, mod] of Object.entries(data)){
                 if (!(ca[key])) {
                     ca[key] = mod
@@ -465,6 +465,7 @@ let operations = {
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
+            let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
             if (data.type == 'ranged') {
                 //Check ammo
                 if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
@@ -478,9 +479,15 @@ let operations = {
                 }
             }
             // Check Crit Fail
-
+            if (ca.roll.crit_fail) {
+                if (ca.type == 'ranged') {
+                    return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `It was a critical failure!`, `what happens to your gun... [[1d6]]`);
+                }else{
+                    return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `It was a critical failure!`, `You probably dropped your ${wep.name}.`);
+                }
+            }
             // Check hit
-            if (ca.attack_roll >= 5) {
+            if (ca.hit_roll >= 5) {
                 operations.apply_hit(ca);
             }else {
                 dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
