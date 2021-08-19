@@ -564,7 +564,7 @@ const dc_utils = {
                 if (mod.active) {
                     data.modifiers[key] = {
                         label: mod.name,
-                        modifier: mod.modifier
+                        modifier: parseInt(mod.modifier)
                     }
                 }
             }
