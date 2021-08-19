@@ -7,7 +7,6 @@ function restore_discard() {
 }
 
 function build_skill_template(data) {
-    console.log('build_skill_temlpate', data);
     let r_str = `
         <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
         <h3 style="text-align:center">Modifier: ${data.modifier}</h3>
@@ -259,7 +258,6 @@ let operations = {
     //  next_op: 'next_operation'   (STRING OPTIONAL)
     //}
     skill_roll: function(data) {
-        console.log(`DC | skill_roll |`, data);
         let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
             if(data == false) {
@@ -270,7 +268,6 @@ let operations = {
         }else if (game.user.isGM) {
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
-            console.log('SKILL_ROLL:', data);
         }
     },
     confirm_result: function(data) {
@@ -415,7 +412,6 @@ let operations = {
                         no: {
                             label: 'Take yer chances.',
                             callback: () => {
-                                console.log('check_dodge', data);
                                 data.roll = {total: 0};
                                 dc_utils.socket.emit('roll_attack', data);
                             }
@@ -583,7 +579,6 @@ let operations = {
         }
     },
     warn_friendly_fire: function(data) {
-        console.log('warn_friendly_fire', data);
         let char = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (char.owner) {
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
@@ -647,14 +642,12 @@ let operations = {
                                     char: data.target
                                 });
                                 dc_utils.combat.remove_card(char.document.actor, 0);
-                                console.log('check_dodge', data);
                                 operations.skill_roll(data);
                             }
                         },
                         no: {
                             label: 'Take yer chances.',
                             callback: () => {
-                                console.log('check_dodge', data);
                                 data.dodge_roll = 0;
                                 dc_utils.socket.emit('roll_to_hit', data);
                             }
@@ -672,7 +665,6 @@ let operations = {
         }
     },
     roll_to_hit: function(data) {
-        console.log('roll_to_hit:', data);
         let char = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (char.actor.isPC && game.user.isGM) {
             dc_utils.socket.emit('roll_to_hit', data);
@@ -687,7 +679,6 @@ let operations = {
         }
     },
     damage_roll: function(data) {
-        console.log('roll_damage:', data);
         let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
         if (game.user.isGM) {
             dc_utils.socket.emit('roll_damage', data);
@@ -716,7 +707,6 @@ let operations = {
                 }
             }
             let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log(tgt);
             let dmg = itm?.data?.data?.damage?.split('d') || ['0', '0'];
             let dmg_mod = itm?.data?.data?.damage_bonus || 0;
             let loc_key = dc_utils.roll.location_roll(data.roll.raises, atk.document.actor.data.data.called_shot);
@@ -734,8 +724,6 @@ let operations = {
             }else{
                 data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
             }
-            console.log('roll_damage: Location:', dc_utils.loc_lookup.indexOf(loc_key));
-            console.log('roll_damage:', data);
             let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
             if (data.type == 'melee') {
                 let str = atk.actor.data.data.traits.strength
@@ -748,221 +736,12 @@ let operations = {
             data.soak = 0;
             let op = 'enemy_damage';
             if (data.wounds > 0) {
-                console.log(tgt);
                 if (tgt.data.document.hasPlayerOwner) {
                     op = 'apply_damage';
                 }
                 dc_utils.socket.emit(op, data);
             }
             ChatMessage.create({content: battle_report(data)});
-        }
-    },
-    //OLD COMBAT OPERATIONS
-    check_tn: function(data) {
-        if (game.user.isGM) {
-            dc_utils.socket.emit('skill_roll', data);
-        }
-    },
-    trait_check: function(data) {
-        let char = game.actors.getName(data.name);
-        if (char.owner) {
-            let trait = char.data.data.traits[data.trait];
-            let lvl = trait.level;
-            let die = trait.die_type;
-            let mod = trait.modifier;
-            let wound_mod = char.data.data.wound_modifier;
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
-            data.skill_name = trait.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
-        }
-    },
-    skill_check: function(data) {
-        let char = game.actors.getName(data.name);
-        console.log(data, char);
-        if (char.owner) {
-            let trait = char.data.data.traits[data.trait];
-            let skill = trait.skills[data.skill];
-            let lvl = skill.level;
-            let die = trait.die_type;
-            let mod = skill.modifier;
-            let wound_mod = char.data.data.wound_modifier;
-            if (lvl == 0) {
-                lvl = trait.level;
-            }
-            let formula = `${lvl}${die}ex + ${mod} + ${wound_mod}`;
-            let roll = new Roll(formula).roll();
-            let r_data = dc_utils.roll.evaluate(roll, data.tn, mod + wound_mod);
-            data.skill_name = skill.name
-            ChatMessage.create({content: build_skill_template(data, r_data)});
-            roll.toMessage({rollMode: 'gmroll'});
-        }
-    },
-    check_target: function(data) {
-        if (game.user.isGM) {
-            console.log('check_target', data);
-            let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
-            console.log('check_target: Attacker:', atk);
-            let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log('check_target: Target:', tgt);
-            if (atk.data.disposition == -1) {
-                dc_utils.socket.emit('attack', data);
-            }else if (tgt.data.disposition != -1 && atk.actor.data.type == 'player') {
-                dc_utils.socket.emit('warn_law', data);
-            }else{
-                dc_utils.socket.operations.attack(data);
-            }
-        }else{
-            let char = canvas.tokens.placeables.find(i => i.name == data.target);
-            if (char.owner) {
-                dc_utils.socket.emit('check_target', data);
-            }
-        }
-    },
-    proceed_attack: function(data) {
-        console.log('proceed_attack', data);
-        let atk = canvas.tokens.placeables.find(i => i.name == data.attacker);
-        if (atk.owner) {
-            //Attack roll
-            let tgt = canvas.tokens.placeables.find(i => i.name == data.target);
-            console.log(tgt);
-            let itm = atk.actor.getOwnedItem(data.weapon);
-            data.weapon_name = itm.name;
-            let range_mod = 0;
-            let trait = atk.actor.data.data.traits.nimbleness;
-            let skill = trait.skills.fightin;
-            let shots = 1;
-            let dmg = itm.data.data.damage.split('d');
-            let dmg_mod = itm.data.data.damage_bonus || 0;
-            let off_hand_mod = 0;
-            let dist = Math.floor(canvas.grid.measureDistance(atk, tgt));
-            data.range = dist;
-            if(data.type == 'ranged') {
-                trait = atk.actor.data.data.traits.deftness;
-                skill = trait.skills["shootin_".concat(itm.data.data.gun_type)];
-                shots = itm.data.data.chamber;
-                range_mod = Math.max(Math.floor(dist / parseInt(itm.data.data.range)), 0);
-            }
-            data.range_mod = range_mod;
-            if (shots > 0) {
-                if (itm.data.data.off_hand) {
-                    off_hand_mod = atk.actor.data.off_hand_modifier
-                }
-                let lvl = skill.level
-                if (lvl == 0) {
-                    lvl = trait.level
-                }
-                let mods = game.actors.getName('Marshal').data.data.modifiers;
-                data.tn = 5 + range_mod;
-                for (const [key, mod] of Object.entries(mods)){
-                    if (mod.active) {
-                        data.tn -= mod.mod;
-                    }
-                }
-                data.roller = data.attacker;
-                data.trait = 'deftness';
-                data.skill = "shootin_".concat(itm.data.data.gun_type);
-                data.amt = lvl;
-                data.dice = trait.die_type;
-                data.write_value = 'hit_roll';
-                data.modifier = 0;
-                let atk_roll = dc_utils.roll.new(data);
-                data.hit_roll = atk_roll.total;
-                data.result = atk_roll.total;
-                if (atk_roll.success) {
-                    if (atk_roll.total > data.dodge_roll) {
-                        //Location roll
-                        let loc_roll = new Roll('1d20').roll();
-                        loc_roll.toMessage({rollMode: 'gmroll'});
-                        let tot = loc_roll._total - 1;
-                        let found = [];
-                        let range = atk_roll.raises * 2
-                        for (let i = 0; i < dc_utils.locations.length; i++) {
-                            if (i >= tot - range && i <= tot + range && i < 19){
-                                if (!(found.includes(dc_utils.loc_lookup[i]))) {
-                                    found.push(dc_utils.loc_lookup[i]);
-                                }
-                            }
-                        }
-                        console.log('proceed_attack: Location:', found, found.length - 1);
-                        let loc_key = found[found.length - 1];
-                        console.log('proceed_attack: Location:', loc_key);
-                        //Armour Check
-                        let av = (tgt.actor.data.data.armour[loc_key] || 0) * 2;
-                        //Damage
-                        let amt = parseInt(dmg[0]);
-                        let die = Math.max(parseInt(dmg[1]) - av, 4);
-                        if (found.includes('noggin') || loc_roll._total == 20) {
-                            data.loc_key = 'noggin';
-                            data.loc_label = 'Noggin';
-                            amt += 2;
-                        }else if (found.includes('gizzards')) {
-                            data.loc_key = 'gizzards';
-                            data.loc_label = 'Gizzards';
-                            amt += 1;
-                        }else{
-                            data.loc_key = loc_key;
-                            data.loc_label = dc_utils.locations[dc_utils.loc_lookup.indexOf(loc_key)];
-                        }
-                        console.log('proceed_attack: Location:', dc_utils.loc_lookup.indexOf(loc_key));
-                        console.log('proceed_attack:', data);
-                        let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
-                        if (data.type == 'melee') {
-                            let str = atk.actor.data.data.traits.strength
-                            dmg_formula += ` + ${str.level}${str.die_type}ex`
-                        }
-                        let dmg_roll = new Roll(dmg_formula).roll();
-                        dmg_roll.toMessage({rollMode: 'gmroll'});
-                        data.damage = dmg_roll._total;
-                        data.wounds = Math.floor(data.damage / tgt.actor.data.data.size);
-                        data.soak = 0;
-                        let op = 'enemy_damage';
-                        console.log(tgt);
-                        if (data.wounds > 0) {
-                            if (tgt.document._actor.hasPlayerOwner) {
-                                op = 'apply_damage';
-                            }
-                            dc_utils.socket.emit(op, data);
-                        }
-                        ChatMessage.create({content: battle_report(data)});
-                    }else{
-                        //Dodge Success Message
-                        ChatMessage.create({content: `
-                            <h2 style="text-align:center">Attack! [${data.tn}]</h2>
-                            <p style="text-align:center">${data.attacker} attacked ${data.target} but missed.</p>
-                            <p style="text-align:center">They saw it coming and managed to dodge.</p>
-                        `});
-                    }
-                }else{
-                    //Missed Message.
-                    let msg = `
-                        <h2 style="text-align:center">Attack! [${data.tn}]</h2>
-                        <p style="text-align:center">${data.attacker} fired at ${data.target} but missed.</p>
-                    `;
-                    if (atk_roll.ones > atk_roll.pass) {
-                        msg += `
-                        <p style="text-align:center">It was a critical failure!</p>
-                        `;
-                    }
-                    ChatMessage.create({content: msg});
-                }
-                if (data.type == 'ranged') {
-                    //Remove the bullet just fired and reset any aim bonus applied.
-                    shots = shots - 1;
-                    game.dc.aim_bonus = 0;
-                    itm.update({"data.chamber": shots})
-                }
-            }else{
-                //Out of Ammo Message
-                ChatMessage.create({content: `
-                    <h2 style="text-align:center">Out of Ammo!</h2>
-                    <p style="text-align:center">Click...</p>
-                    <p style="text-align:center">Click Click!</p>
-                    <p style="text-align:center">Looks like you're empty partner.</p>
-                `});
-            }
         }
     },
     apply_damage: function(data) {

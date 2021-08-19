@@ -35,9 +35,7 @@ function get_token_count(t) {
     let tokens = canvas.tokens.placeables;
     if (tokens) {
         tokens.forEach(tkn => {
-            console.log(tkn.name, t.name);
             if (tkn.name.search(t.name) != -1) {
-                console.log('Match!', tkn.name.search(t.name));
                 count += 1;
             }
         });
@@ -82,12 +80,10 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('if_has', function (type, val, options) {
-        //console.log(id, type, val, options);
         let act = game.actors.get(options.data.root.id);
         if (dc_utils.char.has(act, type, val)) {
             return options.fn(this);
         }
-        //return options.inverse(this);
     });
 
     Handlebars.registerHelper('if_equipped', function (slot, id, options) {
@@ -99,7 +95,6 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('has_joker', function (deck, options) {
-        console.log(options);
         let act = dc_utils.get_actor(options.data.root.actor.name);
         let hand = dc_utils.char.items.get(act, deck);
         for (const card of hand) {
