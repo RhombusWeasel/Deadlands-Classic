@@ -515,14 +515,17 @@ const dc_utils = {
         },
     },
     roll: {
-        new_roll_packet: function(act, type, skl, wep) {
+        new_roll_packet: function(act, type, skl, wep, tgt) {
             let item = act.items.get(wep);
             let dist = 1
             if (!(item)) {
                 wep = 'unarmed'
             }
             let target = dc_utils.char.target.get(act);
-            if (target == false && !(type == 'skill')) {
+            if (tgt) {
+                target = dc_utils.get_actor(tgt);
+            }
+            if (!(target) && !(type == 'skill')) {
                 console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }

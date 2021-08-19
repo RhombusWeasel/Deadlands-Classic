@@ -262,6 +262,9 @@ let operations = {
         console.log(`DC | skill_roll |`, data);
         let char = dc_utils.get_actor(data.roller);
         if (char.isOwner) {
+            if(data == false) {
+                data = dc_utils.roll.new_roll_packet()
+            }
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
             operations.confirm_result(data);
         }else if (game.user.isGM) {
@@ -436,7 +439,7 @@ let operations = {
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act            = dc_utils.get_actor(ca.attacker);
-            let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+            let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon, ca.target);
             if (!(atk_roll)) {
                 for (let i = 0; i < 5; i++) {
                     atk_roll = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
