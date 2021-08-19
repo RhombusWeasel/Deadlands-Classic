@@ -8,6 +8,7 @@ function restore_discard() {
 
 function build_skill_template(data) {
     let r_str = `
+        <div class="center typed">
         <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
         <h3 style="text-align:center">Modifier: ${data.modifier}</h3>
         <h3 style="text-align:center">${data.roll.total}</h3>
@@ -39,26 +40,32 @@ function build_skill_template(data) {
             <p style="text-align:center">${data.roller} failed.</p>
         `;
     }
-    return r_str;
+    return r_str + `
+        </div>
+    `;
 }
 
 function build_no_fate_chip_message(col) {
     return `
-        <h3 style="text-align:center">Fate</h3>
-        <p style="text-align:center">You have no ${col} fate chips.</p>
+        <div class="center typed">
+            <h3 style="text-align:center">Fate</h3>
+            <p style="text-align:center">You have no ${col} fate chips.</p>
+        </div>
     `;
 }
 
 function build_marshal_draw_message(col) {
     return `
-        <h3 style="text-align:center">Fate</h3>
-        <p style="text-align:center">The Marshal may draw a fate chip.</p>
+        <div class="center typed">
+            <h3 style="text-align:center">Fate</h3>
+            <p style="text-align:center">The Marshal may draw a fate chip.</p>
+        </div>
     `;
 }
 
 function build_roll_dialog(data) {
     let form = `
-        <form>
+        <form class="center typed">
             <div>`
     ;
     form += dc_utils.roll.get_result_template(data);
@@ -90,7 +97,7 @@ function build_roll_dialog(data) {
 
 function build_friendly_fire_dialog(data) {
     return `
-    <form>
+    <form class="center typed">
         <div>
             <h2 style="text-align: center;">Friendly Fire!</h2>
             <p style="text-align: center;">${data.target} is not attacking you!</p>
@@ -103,7 +110,7 @@ function build_friendly_fire_dialog(data) {
 
 function build_dodge_dialog(data, card_name) {
     return `
-        <form>
+        <form class="center typed">
             <div>
                 <h2 style="text-align: center;">Incoming Attack!</h2>
                 <p style="text-align: center;">${data.attacker} is attacking you!</p>
@@ -116,7 +123,7 @@ function build_dodge_dialog(data, card_name) {
 
 function build_turn_dialog(data) {
     return `
-        <form>
+        <form class="center typed">
             <h1 style="text-align: center">${data.card_name}</h1>
             <h3 style="text-align: center">It's ${data.char}'s turn</h3>
         </form>
@@ -125,7 +132,7 @@ function build_turn_dialog(data) {
 
 function build_damage_dialog(data) {
     let form = `
-        <form>
+        <form class="center typed">
             <div id="data" data-wounds="${data.wounds}" data-char="${data.target}" data-loc_key="${data.loc_key}" data-loc_label=${data.loc_label} data-soak="${data.soak}">
                 <h1 style="text-align: center;">Damage!</h1>
     `;
@@ -153,21 +160,22 @@ function soak_damage(data, label){
 
 function battle_report(data) {
     let msg =  `
-        <h3 style="text-align:center">Combat Report:</h3>
-        <table style="table-layout: fixed;">
-            <tr style="text-align:center table-layout: fixed;">
-                <th style="text-align:center">Attack</th>
-                <th style="text-align:center">Mod</th>
-                <th style="text-align:center">Dodge</th>
-                <th style="text-align:center">TN</th>
-            </tr>
-            <tr style="text-align:center table-layout: fixed;">
-                <td style="text-align:center">${data.hit_roll}</td>
-                <td style="text-align:center">${data.modifier}</td>
-                <td style="text-align:center">${data.dodge_roll}</td>
-                <td style="text-align:center">${data.tn}</td>
-            </tr>
-        </table>
+        <div class="center typed">
+            <h3 class="center">Combat Report:</h3>
+            <table style="table-layout: fixed;">
+                <tr style="text-align:center table-layout: fixed;">
+                    <th style="text-align:center">Attack</th>
+                    <th style="text-align:center">Mod</th>
+                    <th style="text-align:center">Dodge</th>
+                    <th style="text-align:center">TN</th>
+                </tr>
+                <tr style="text-align:center table-layout: fixed;">
+                    <td style="text-align:center">${data.hit_roll}</td>
+                    <td style="text-align:center">${data.modifier}</td>
+                    <td style="text-align:center">${data.dodge_roll}</td>
+                    <td style="text-align:center">${data.tn}</td>
+                </tr>
+            </table>
     `;
     if (data.type == 'ranged'){
         msg += `
@@ -198,7 +206,9 @@ function battle_report(data) {
             <p style="text-align:center">They suffer ${data.wounds} wounds to the ${data.loc_label}</p>
         `;
     }
-    return msg;
+    return msg + `
+        </div>
+    `;
 }
 
 let operations = {

@@ -678,7 +678,6 @@ const dc_utils = {
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2
-                console.log('Location | ', raises, key, tot, range, tot - range, tot + range);
                 for (let i = tot - range; i < tot + range; i++) {
                     if (i < 19){
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
@@ -687,6 +686,11 @@ const dc_utils = {
                     }
                 }
                 console.log('roll_damage: Location:', found, found.length - 1);
+                if (found.includes('noggin')) {
+                    return 'noggin';
+                }else if (found.includes('gizzards')) {
+                    return 'gizzards';
+                }
                 loc_key = found[found.length - 1];
                 console.log('roll_damage: Location:', loc_key);
             }else{
@@ -697,6 +701,7 @@ const dc_utils = {
         },
         get_result_template: function(data) {
             let r_str = `
+                <div class="center typed">
                 <p style="text-align:center">${data.roller} rolled ${data.roll.total}</p>
                 <table style="table-layout: fixed;">
                     <tr style="text-align:center">
@@ -741,7 +746,9 @@ const dc_utils = {
                     </table>
                 `;
             }
-            return r_str
+            return r_str + `
+                </div>
+            `;
         },
     },
     deck: {
