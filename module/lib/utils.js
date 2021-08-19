@@ -565,7 +565,7 @@ const dc_utils = {
                     console.log(mod);
                     data.modifiers[key] = {
                         label: mod.name,
-                        modifier: parseInt(mod.modifier)
+                        modifier: parseInt(mod.mod)
                     }
                 }
             }
