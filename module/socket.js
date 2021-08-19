@@ -437,6 +437,14 @@ let operations = {
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act            = dc_utils.get_actor(ca.attacker);
             let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+            if (!(atk_roll)) {
+                for (let i = 0; i < 5; i++) {
+                    atk_roll = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+                    if (atk_roll) {
+                        break;
+                    }
+                }
+            }
             atk_roll.combat_id = ca.uuid;
             atk_roll.next_op   = 'check_hit';
             if (act.hasPlayerOwner){
