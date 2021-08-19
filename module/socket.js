@@ -383,7 +383,7 @@ let operations = {
             // GM is attacking a player, that player should bounce back the message.
             let act = dc_utils.get_actor(data.target);
             if (act.owner) {
-                dc_utils.socket.emit('register_attack', data);
+                setTimeout(() => {dc_utils.socket.emit('register_attack', data)}, 500);
             }
         }
     },
