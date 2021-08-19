@@ -1119,6 +1119,7 @@ Hooks.on("ready", () => {
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
+        console.log('RECIEVE:', data.operation, data.data);
         if (data.operation in operations) {
             console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);
