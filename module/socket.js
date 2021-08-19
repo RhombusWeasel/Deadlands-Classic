@@ -463,16 +463,24 @@ let operations = {
             ca.attack_roll = data.roll.total;
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
+            let wep = act.items.filter(function (item) {return item.id == ca.weapon})[0];
+            if (data.type == 'ranged') {
+                //Check ammo
+                if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
+                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
+                }
+            }
             // Check if dodged
             if (ca.dodge_roll != 'none') {
                 if (ca.dodge_roll > ca.attack_roll) {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
-            if (ca.attack_roll > 5) {
+            if (ca.attack_roll >= 5) {
                 operations.apply_hit(ca);
+            }else {
+                dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
             }
-            dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.attacker} missed.`);
         }else{
             let act = dc_utils.get_actor(data.target);
             if (act.owner) {
@@ -490,12 +498,6 @@ let operations = {
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let tgt = dc_utils.get_actor(data.target);
             let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
-            if (data.type == 'ranged') {
-                //Check ammo
-                if (!(dc_utils.char.weapon.use_ammo(act, data.weapon))) {
-                    return dc_utils.chat.send('Out of Ammo!', 'Click...', 'Click Click!', 'looks like you\'re empty partner.');
-                }
-            }
             let armour_val =  (tgt.data.data.armour[data.location] || 0) * 2;
             let dmg = wep?.data?.data?.damage?.split('d') || ['0', '0'];
             if (data.location == 'noggin') {
