@@ -26,7 +26,7 @@
     <div class="center flexrow"></div>
         {{#if (eq deck_type 'huckster_deck')}}
             {{#has_joker "huckster_deck"}}
-        <a class="discard-hand" data-type="huckster_deck">Play {{hand}}</a>
+        <a class="center">Joker's are Wild!</a>
         <select name="data.joker_value" id="joker-value-select">
                 {{#each cards as |card|}}
                     {{#if (eq card data.data.joker_value)}}
