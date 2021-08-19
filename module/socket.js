@@ -195,7 +195,7 @@ function battle_report(data) {
         `;
     }else{
         msg += `
-            <p style="text-align:center">They suffer ${data.wounds} wounds to the ${data.loc_label}</p>
+            <p style="text-align:center">They suffer ${data.wounds} wounds to the ${data.location}</p>
         `;
     }
     return msg;
@@ -466,6 +466,7 @@ let operations = {
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
             let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
+            ca.weapon_name = wep.name
             if (data.type == 'ranged') {
                 //Check ammo
                 if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
