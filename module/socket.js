@@ -472,6 +472,9 @@ let operations = {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
+            // Check Crit Fail
+
+            // Check hit
             if (ca.attack_roll >= 5) {
                 operations.apply_hit(ca);
             }else {
@@ -517,6 +520,7 @@ let operations = {
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             if (tgt.hasPlayerOwner) {
+                ChatMessage.create({content: battle_report(data)})
                 dc_utils.socket.emit('apply_damage', data);
             }else{
                 operations.enemy_damage(data);

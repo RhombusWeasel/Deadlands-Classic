@@ -29,10 +29,12 @@
         <a class="center">Joker's are Wild!</a>
         <select name="data.joker_value" id="joker-value-select">
                 {{#each cards as |card|}}
-                    {{#if (eq card data.data.joker_value)}}
-            <option value="{{card}}" selected>{{card}}</option>
-                    {{else}}
-            <option value="{{card}}">{{card}}</option>
+                    {{#if (ne card 'Joker')}}
+                        {{#if (eq card data.data.joker_value)}}
+                            <option value="{{card}}" selected>{{card}}</option>
+                        {{else}}
+                            <option value="{{card}}">{{card}}</option>
+                        {{/if}}
                     {{/if}}
                 {{/each}}
         </select>
