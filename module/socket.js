@@ -463,7 +463,7 @@ let operations = {
             ca.attack_roll = data.roll.total;
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            let wep = act.items.filter(function (item) {return item.id == ca.weapon})[0];
+            let act = dc_utils.get_actor(ca.attacker);
             if (data.type == 'ranged') {
                 //Check ammo
                 if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
