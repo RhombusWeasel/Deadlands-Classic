@@ -506,6 +506,7 @@ let operations = {
             let raises    = Math.floor((data.attack_roll - 5) / 5);
             let called    = act.data.data.called_shot;
             data.location = dc_utils.roll.location_roll(raises, called);
+            data.loc_label = dc_utils.hit_locations[data.location];
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let tgt = dc_utils.get_actor(data.target);
@@ -531,7 +532,6 @@ let operations = {
             data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
             data.soak   = 0;
             game.dc.combat_actions[data.uuid] = data;
-            data.loc_label = dc_utils.hit_locations[data.location];
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             console.log(data);
             ChatMessage.create({content: battle_report(data)})

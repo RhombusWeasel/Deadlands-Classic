@@ -678,8 +678,8 @@ const dc_utils = {
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2
-                for (let i = 0; i < dc_utils.locations.length; i++) {
-                    if (i >= tot - range && i <= tot + range && i < 19){
+                for (let i = tot - range; i < tot + range; i++) {
+                    if (i < 19){
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
                             found.push(dc_utils.loc_lookup[i]);
                         }
