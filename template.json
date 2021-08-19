@@ -62,6 +62,8 @@
                 "perks": {
                     "level_headed": false
                 },
+                "joker_value": "A",
+                "joker_suit": "\u2660",
                 "description": "",
                 "notes": "",
                 "nightmare": ""

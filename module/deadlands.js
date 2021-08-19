@@ -98,6 +98,17 @@ Hooks.once("init", function () {
         return options.inverse(this);
     });
 
+    Handlebars.registerHelper('has_joker', function (deck, options) {
+        let act = dc_utils.get_actor(options.data.root.actor.name);
+        let hand = dc_utils.char.items.get(act, deck);
+        for (const card of hand) {
+            let val = dc_utils.deck.get_card_value(card)
+            if (val == 'Jo') {
+                return options.fn(this);
+            }
+        }
+    });
+
     Handlebars.registerHelper('is_one_handed', function(options) {
         let act = dc_utils.get_actor(options.data.root.actor.name);
         let item = act.items.get(act.data.data.equipped.dominant);
