@@ -1114,7 +1114,7 @@ Hooks.on("ready", () => {
         }
         // Initialize combat action tracking
         let ca = game.journal.getName('combat_actions');
-        if (rolls) {
+        if (ca) {
             game.dc.combat_actions = dc_utils.journal.load('combat_actions');
         }else{
             game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
