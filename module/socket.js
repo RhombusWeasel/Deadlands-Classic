@@ -20,24 +20,24 @@ function build_skill_template(data) {
         //Winning
         if (data.roll.raises == 1) {
             r_str += `
-                <p style="text-align:center">${data.roller} passed with a raise</p>
+                <p class="center typed">${data.roller} passed with a raise</p>
             `;
         }else if (data.roll.raises > 0) {
             r_str += `
-                <p style="text-align:center">${data.roller} passed with ${data.roll.raises} raises</p>
+                <p class="center typed">${data.roller} passed with ${data.roll.raises} raises</p>
             `;
         }else{
             r_str += `
-                <p style="text-align:center">${data.roller} passed</p>
+                <p class="center typed">${data.roller} passed</p>
             `;
         }
     }else if (data.roll.ones > data.roll.pass) {
         r_str += `
-            <p style="text-align:center">${data.roller} critically failed!</p>
+            <p class="center typed">${data.roller} critically failed!</p>
         `;
     }else{
         r_str += `
-            <p style="text-align:center">${data.roller} failed.</p>
+            <p class="center typed">${data.roller} failed.</p>
         `;
     }
     return r_str + `
