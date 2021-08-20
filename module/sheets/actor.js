@@ -23,31 +23,31 @@ function get_target() {
 function build_skill_template(data) {
     console.log('DC | build_skill_template', data);
     let r_str = `
-        <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
+        <h2 class="center typed">${data.skill_name}</h2>
     `;
     r_str += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         //Winning
         if (data.roll.raises == 1) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with a raise</p>
+                <p class="center typed">${data.name} passed with a raise</p>
             `;
         }else if (data.roll.raises > 0) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with ${data.roll.raises} raises</p>
+                <p class="center typed">${data.name} passed with ${data.roll.raises} raises</p>
             `;
         }else{
             r_str += `
-                <p style="text-align:center">${data.name} passed</p>
+                <p class="center typed">${data.name} passed</p>
             `;
         }
     }else if (data.roll.ones > data.roll.pass) {
         r_str += `
-            <p style="text-align:center">${data.name} critically failed!</p>
+            <p class="center typed">${data.name} critically failed!</p>
         `;
     }else{
         r_str += `
-            <p style="text-align:center">${data.name} failed.</p>
+            <p class="center typed">${data.name} failed.</p>
         `;
     }
     return r_str;
