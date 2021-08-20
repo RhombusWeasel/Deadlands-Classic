@@ -597,19 +597,13 @@ export default class PlayerSheet extends ActorSheet {
         let draw = 0;
         if (r._total >= 5) {
             draw = Math.floor(r._total / 5)
-            reply = `You rolled ${r._total} granting ${draw} cards.`
+            reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500);
         }
         r.toMessage({rollMode: 'gmroll'});
-        ChatMessage.create({ 
-            content: `
-                <h3 style="text-align:center">Trick</h3>
-                <p style="text-align:center">${reply}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        dc_utils.chat.send('Trick', reply);
     }
 
     _on_cast_hex(event) {
@@ -625,19 +619,13 @@ export default class PlayerSheet extends ActorSheet {
         let draw = 0
         if (r._total >= 5) {
             draw = 5 + (Math.floor(r._total / 5))
-            reply = `You rolled ${r._total} granting ${draw} cards.`
+            reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        r.toMessage({rollMode: 'gmroll'})
-        ChatMessage.create({
-            content: `
-                <h3 style="text-align:center">Hex</h3>
-                <p style="text-align:center">${reply}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        r.toMessage({rollMode: 'gmroll'});
+        dc_utils.chat.send('Hex', reply);
     }
 
     _on_cast_miracle(event) {
