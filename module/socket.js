@@ -72,24 +72,24 @@ function build_roll_dialog(data) {
     if (data.roll.success) {
         if (data.roll.raises == 1) {
             form += `
-                <p style="text-align:center">You passed with a raise.</p>
+                <p class="center typed">You passed with a raise.</p>
             `;
         }else{
             form += `
-                <p style="text-align:center">You passed with ${data.roll.raises} raises.</p>
+                <p class="center typed">You passed with ${data.roll.raises} raises.</p>
             `;
         }
     }else if (data.roll.ones > data.roll.pass) {
         form += `
-                <h2 style="text-align:center">Critical Failure!</h2>
+                <h2 class="center typed">Critical Failure!</h2>
         `;
     }else {
         form += `
-                <h3 style="text-align:center">Failure!</h3>
+                <h3 class="center typed">Failure!</h3>
         `;
     }
     return form += `
-                <p style="text-align:center">Spend Fate Chips?</p>
+                <p class="center typed">Spend Fate Chips?</p>
             </div>
         </form>
     `;
