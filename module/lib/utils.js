@@ -702,9 +702,9 @@ const dc_utils = {
         get_result_template: function(data) {
             let r_str = `
                 <div class="center typed">
-                <p style="text-align:center">${data.roller} rolled:</p>
-                <table style="table-layout: fixed;">
-                    <tr style="text-align:center">
+                    <p style="text-align:center">${data.roller} rolled:</p>
+                    <table style="table-layout: fixed;">
+                        <tr style="text-align:center">
             `;
             for (let i = 0; i < data.roll.amt; i++) {
                 const res = data.roll.results[i];
@@ -735,7 +735,7 @@ const dc_utils = {
                 for (let key of Object.keys(data.modifiers)) {
                     if (data.modifiers[key].modifier != 0) {
                         r_str += `
-                            <tr class="center">
+                            <tr class="center typed">
                                 <td>${data.modifiers[key].label}</td>
                                 <td>${data.modifiers[key].modifier}</td>
                             </tr>
@@ -747,7 +747,7 @@ const dc_utils = {
                 `;
             }
             return r_str + `
-                    <p style="text-align:center">Total: ${data.roll.total}</p>
+                    <p class="center typed">Total: ${data.roll.total}</p>
                 </div>
             `;
         },
