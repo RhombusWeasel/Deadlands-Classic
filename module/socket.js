@@ -9,7 +9,7 @@ function restore_discard() {
 function build_skill_template(data) {
     let r_str = `
         <div class="center typed">
-        <h3 style="text-align:center">${data.skill_name} [${data.tn}]</h3>
+        <h3 style="text-align:center">${data.skill_name}</h3>
         <h3 style="text-align:center">Modifier: ${data.modifier}</h3>
         <h3 style="text-align:center">${data.roll.total}</h3>
         <table class="typed" style="table-layout: fixed;">

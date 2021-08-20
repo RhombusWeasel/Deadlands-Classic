@@ -747,6 +747,7 @@ const dc_utils = {
                 `;
             }
             return r_str + `
+                    <p style="text-align:center">Total: ${data.roll.total}</p>
                 </div>
             `;
         },
