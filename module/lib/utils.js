@@ -702,7 +702,7 @@ const dc_utils = {
         get_result_template: function(data) {
             let r_str = `
                 <div class="center typed">
-                <p style="text-align:center">${data.roller} rolled ${data.roll.total}</p>
+                <p style="text-align:center">${data.roller} rolled:</p>
                 <table style="table-layout: fixed;">
                     <tr style="text-align:center">
             `;
