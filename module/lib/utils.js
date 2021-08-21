@@ -324,6 +324,7 @@ const dc_utils = {
             },
             compress: function(act, data) {
                 let r_data = [];
+                del_list = [];
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
                     let numParse = parseInt;
@@ -335,11 +336,12 @@ const dc_utils = {
                         const copy = copies[i];
                         if (copy.id != data[a].id) {
                             total += numParse(copy.data.data.amount);
-                            copy.delete();
+                            del_list.push(copy.id);
                         }
                     }
                     data[a].update({data: {amount: total}});
                 }
+                act.deleteEmbeddedDocuments("Item", del_list)
                 return data
             },
             calculate_costs: function(act, items) {
