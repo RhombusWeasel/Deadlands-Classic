@@ -651,10 +651,12 @@ const dc_utils = {
                     data.total = res + data.modifier
                 }
             }
-            if (data.pass > data.ones) {
+            if (data.pass >= data.ones) {
                 data.crit_fail = false;
+            }else{
+                data.crit_fail = true;
             }
-            if (data.pass > data.ones && data.total >= data.tn) {
+            if (data.pass >= data.ones && data.total >= data.tn) {
                 data.success = true;
                 data.raises = Math.floor((data.total - data.tn) / 5);
             }
