@@ -659,13 +659,13 @@ let operations = {
         }
         if (char.isOwner) {
             console.log('enemy_damage:', data, char);
-            let current = parseInt(char.document.actor.data.data.wounds[data.location]) || 0;
+            let current = parseInt(char.data.data.wounds[data.location]) || 0;
             let wind_roll = new Roll(`${data.wounds}d6`).roll();
             wind_roll.toMessage({rollMode: 'gmroll'});
             let highest = 0;
-            Object.keys(char.document.actor.data.data.wounds).forEach(function(key) {
-                if (char.document.actor.data.data.wounds[key] >= highest) {
-                    highest = char.document.actor.data.data.wounds[key];
+            Object.keys(char.data.data.wounds).forEach(function(key) {
+                if (char.data.data.wounds[key] >= highest) {
+                    highest = char.data.data.wounds[key];
                 }
             });
             if ((highest == 0 && data.wounds > 0) || data.wounds > highest) {
@@ -673,7 +673,7 @@ let operations = {
             }
             let w_data = {
                 wind: {
-                    value: char.document.actor.data.data.wind.value - wind_roll._total
+                    value: char.data.data.wind.value - wind_roll._total
                 },
                 wounds: {
                     [data.location]: current + data.wounds
@@ -684,7 +684,7 @@ let operations = {
                 char.toggleEffect('icons/svg/blood.svg', {active: true});
                 dc_utils.char.wounds.set_bleeding(char, true);
             }
-            if (char.document.actor.data.data.wind.value - wind_roll._total <= 0) {
+            if (char.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                 char.toggleEffect('icons/svg/skull.svg', {active: true});
                 char.toggleEffect('icons/svg/blood.svg', {active: false});
@@ -697,10 +697,10 @@ let operations = {
                     char.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
-            if (char.document.actor.hasPlayerOwner) {
-                Actor.updateDocuments([{_id: char.document.actor._id, data: w_data}]);
+            if (char.hasPlayerOwner) {
+                Actor.updateDocuments([{_id: char.id, data: w_data}]);
             } else {
-                char.document.actor.update({data: w_data});
+                char.update({data: w_data});
             }
         }
     },
