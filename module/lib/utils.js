@@ -493,7 +493,7 @@ const dc_utils = {
                     let wind = act.data.data.wind.value - roll._total;
                     roll.toMessage();
                     dc_utils.char.wind.set(act, wind);
-                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${wind} wind!`);
+                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${roll._total} wind!`);
                 }
             },
         },
