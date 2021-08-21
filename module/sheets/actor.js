@@ -227,7 +227,8 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let value = element.value;
-        this.actor.update({data: {joker_value: value}});
+        let char = dc_utils.get_actor(this.actor.name);
+        char.update({data: {joker_value: value}});
     }
 
     _on_joker_suit(event) {
