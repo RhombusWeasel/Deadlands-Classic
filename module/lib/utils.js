@@ -571,6 +571,12 @@ const dc_utils = {
                     }
                 }
             }
+            if (skl == 'guts') {
+                data.modifiers.grit = {
+                    label: 'Grit',
+                    modifier: act.data.data.grit,
+                };
+            }
             if (item) {
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
