@@ -23,7 +23,7 @@
     padding-right: 10px;
 }
 .small-drop{
-    width: 1em;
+    width: 1em !important;
 }
 .perc90 {
     width: 90%
