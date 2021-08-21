@@ -709,7 +709,7 @@ const dc_utils = {
                 loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];
-                let range = raises * 2
+                let range = raises * 2 || 0;
                 for (let i = tot - range; i < tot + range; i++) {
                     if (i < 19){
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
@@ -724,7 +724,7 @@ const dc_utils = {
                     return 'gizzards';
                 }
                 loc_key = found[found.length - 1];
-                console.log('roll_damage: Location:', found, loc_key);
+                console.log('roll_damage: Location:', loc_key);
             }else{
                 let locs = dc_utils.called_shots[key].locations
                 loc_key = locs[Math.floor(Math.random() * locs.length)]
