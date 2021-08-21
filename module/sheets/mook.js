@@ -103,11 +103,11 @@ export default class NPCSheet extends ActorSheet {
         let spirit = dc_utils.char.skill.get(act, 'spirit');
         let vigor = dc_utils.char.skill.get(act, 'vigor');
         let max_wind = spirit.sides + vigor.sides;
-        this.actor.update({data: {wind: {value: max_wind}}});
-        this.actor.update({data: {wind: {max: max_wind}}});
+        act.update({data: {wind: {value: max_wind}}});
+        act.update({data: {wind: {max: max_wind}}});
 
         let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
-        this.actor.update({data: {pace: nimbleness.sides}});
+        act.update({data: {pace: nimbleness.sides}});
     }
 
     _on_skill_roll(event) {
