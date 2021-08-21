@@ -634,6 +634,9 @@
         "gm": {
             "combat_active": false,
             "modifiers": {
+                "foolproof": {"name": "Foolproof", "mod": 2, "active":false},
+                "onerous": {"name": "Onerous", "mod": -2, "active":false},
+                "incredible": {"name": "Incredible", "mod": -4, "active":false},
                 "low_light": {"name": "Low Light", "mod": -2, "active":false},
                 "no_light": {"name": "No Light", "mod": -4, "active":false},
                 "firer_running": {"name": "Firer Runnin'", "mod": -4, "active":false},
@@ -641,13 +644,7 @@
                 "target_moving": {"name": "Target Movin'", "mod": -4, "active":false},
                 "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
                 "fannin": {"name": "Fannin", "mod": -2, "active":false},
-                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false},
-                "head_shot": {"name": "Head Shot!", "mod": -6, "active":false},
-                "hand_shot": {"name": "Hand Shot", "mod": -6, "active":false},
-                "arm_shot": {"name": "Arm Shot", "mod": -4, "active":false},
-                "leg_shot": {"name": "Leg Shot", "mod": -4, "active":false},
-                "body_shot": {"name": "Body Shot", "mod": -2, "active":false},
-                "eye_shot": {"name": "Eye Shot", "mod": -10, "active":false}
+                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
             }
         }
     },
