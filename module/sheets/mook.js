@@ -100,14 +100,14 @@ export default class NPCSheet extends ActorSheet {
             dc_utils.char.skill.set_level(this.actor, key, dice.amt);
             dc_utils.char.skill.set_die_type(this.actor, key, dice.die);
         }
-        let spirit = parseInt(act.data.data.traits.spirit.die_type.substring(1, 3));
-        let vigor = parseInt(act.data.data.traits.vigor.die_type.substring(1, 3));
-        let max_wind = spirit + vigor
+        let spirit = dc_utils.char.skill.get(act, 'spirit');
+        let vigor = dc_utils.char.skill.get(act, 'vigor');
+        let max_wind = spirit.sides + vigor.sides;
         this.actor.update({data: {wind: {value: max_wind}}});
         this.actor.update({data: {wind: {max: max_wind}}});
 
-        let nimbleness = parseInt(act.data.data.traits.nimbleness.die_type.substring(1, 3));
-        this.actor.update({data: {pace: nimbleness}});
+        let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
+        this.actor.update({data: {pace: nimbleness.sides}});
     }
 
     _on_skill_roll(event) {
