@@ -473,6 +473,27 @@ const dc_utils = {
                 return false;
             },
         },
+        wind: {
+            get: function(act) {
+                return act.data.data.wind;
+            },
+            set: function(act, value) {
+                act.update({data: {wind: {value: value}}});
+            },
+            reset: function(act) {
+                let max = act.data.data.wind.max;
+                act.update({data: {wind: {value: max}}});
+            },
+            bleed: function(act) {
+                if (act.data.data.is_bleeding) {
+                    let roll = new Roll(`1d6`).roll();
+                    let wind = act.data.data.wind.value - roll._total;
+                    roll.toMessage();
+                    dc_utils.char.wind.set(act, wind);
+                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${wind} wind!`);
+                }
+            },
+        },
         token: {
             get: function(act) {
                 let owned = canvas.tokens.placeables.find(i => i.owner == true);

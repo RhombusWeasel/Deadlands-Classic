@@ -219,9 +219,7 @@ export default class GMSheet extends ActorSheet {
         let pcs = dc_utils.gm.get_player_owned_actors();
         for (let i = 0; i < pcs.length; i++) {
             let char = pcs[i];
-            if (char.data.data.is_bleeding) {
-                //Do wind damage
-            }
+            dc_utils.char.wind.bleed(char);
         }
         game.socket.emit("system.deadlands_classic", {
             operation: 'roll_quickness',
@@ -238,6 +236,7 @@ export default class GMSheet extends ActorSheet {
             const char = pcs[i];
             char.update({data: {action_cards: []}});
             char.update({data: {aim_bonus: 0}});
+            dc_utils.char.wind.reset(char);
         }
         game.socket.emit("system.deadlands_classic", {
             operation: 'end_combat',
