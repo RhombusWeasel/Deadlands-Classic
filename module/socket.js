@@ -682,6 +682,7 @@ let operations = {
             };
             if (data.wounds > 0) {
                 char.toggleEffect('icons/svg/blood.svg', {active: true});
+                dc_utils.char.wounds.set_bleeding(char, true);
             }
             if (char.document.actor.data.data.wind.value - wind_roll._total <= 0) {
                 char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});

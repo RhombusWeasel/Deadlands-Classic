@@ -387,6 +387,9 @@ const dc_utils = {
                     return act.update({data: {wound_modifier: 0}});
                 }
             },
+            set_bleeding: function(act, bool) {
+                act.update({data: {is_bleeding: bool}});
+            },
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
                 let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
