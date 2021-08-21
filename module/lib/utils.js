@@ -724,7 +724,7 @@ const dc_utils = {
                     return 'gizzards';
                 }
                 loc_key = found[found.length - 1];
-                console.log('roll_damage: Location:', loc_key);
+                console.log('roll_damage: Location:', found, loc_key);
             }else{
                 let locs = dc_utils.called_shots[key].locations
                 loc_key = locs[Math.floor(Math.random() * locs.length)]
