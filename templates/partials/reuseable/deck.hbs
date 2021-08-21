@@ -27,8 +27,8 @@
         <div class="flexrow"></div>
         {{#if (eq deck_type 'huckster_deck')}}
             {{#has_joker "huckster_deck"}}
-            <a class="center">Joker's are Wild!</a>
-            <select name="data.joker_value" id="joker-value-select">
+            <p class="center">Joker's are Wild!</p>
+            <select class="small-drop" name="data.joker_value" id="joker-value-select">
                 {{#each cards as |card|}}
                     {{#if (ne card 'Joker')}}
                         {{#if (eq card ../data.data.joker_value)}}
@@ -39,7 +39,7 @@
                     {{/if}}
                 {{/each}}
             </select>
-            <select name="data.joker_suit" id="joker-suit-select">
+            <select class="small-drop" name="data.joker_suit" id="joker-suit-select">
                 {{#each suits as |suit|}}
                     {{#if (eq suit ../data.data.joker_suit)}}
                 <option value="{{suit}}" selected>{{suit}}</option>

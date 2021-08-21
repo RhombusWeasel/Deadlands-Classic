@@ -22,6 +22,9 @@
     text-align: right;
     padding-right: 10px;
 }
+.small-drop{
+    width: 1em;
+}
 .perc90 {
     width: 90%
 }
