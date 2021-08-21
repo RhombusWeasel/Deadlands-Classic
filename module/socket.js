@@ -640,7 +640,7 @@ let operations = {
         }
     },
     enemy_damage: function(data) {
-        let char = canvas.tokens.placeables.find(i => i?.actor?.name == data.target);
+        let char = dc_utils.get_actor(data.target);
         if (!(char)) {
             for (let t = 0; t < 5; t++) {
                 ChatMessage.create({ content: `
