@@ -680,6 +680,7 @@ let operations = {
                 },
                 wound_modifier: highest * -1
             };
+            let tkn = canvas.tokens.placeables.find(i => i.name == char.name);
             if (data.wounds > 0) {
                 char.toggleEffect('icons/svg/blood.svg', {active: true});
                 dc_utils.char.wounds.set_bleeding(char, true);
