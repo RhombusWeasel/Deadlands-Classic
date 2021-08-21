@@ -27,7 +27,7 @@
         {{#if (eq deck_type 'huckster_deck')}}
             {{#has_joker "huckster_deck"}}
         <div class="flexrow">
-            <p class="center">Joker's are Wild!</p>
+            <a class="center wild-joker-hex">Joker's are Wild!</a>
             <select class="small-drop" name="data.joker_value" id="joker-value-select">
                 {{#each cards as |card|}}
                     {{#if (ne card 'Joker')}}
