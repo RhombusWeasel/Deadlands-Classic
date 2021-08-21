@@ -94,7 +94,7 @@ export default class NPCSheet extends ActorSheet {
     _on_generate(event) {
         event.preventDefault();
         let draw_deck = dc_utils.deck.new('draw');
-        let act = this.getData();
+        let act = dc_utils.get_actor(this.actor.name);
         for(let key in act.data.data.traits){
             let dice = get_dice_from_card(draw_deck.pop(), draw_deck);
             dc_utils.char.skill.set_level(this.actor, key, dice.amt);
