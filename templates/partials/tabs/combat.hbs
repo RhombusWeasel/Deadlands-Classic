@@ -58,6 +58,14 @@
                     <th class="perc12 center">{{localize "dc.player.core.wound_modifier"}}</th>
                     <td class="perc12 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"/></td>
                 </tr>
+                <tr>
+                    <th class="perc12 center">Bleeding</th>
+                    {{#if data.data.is_bleeding}}
+                    <td><input type="checkbox" name="data.is_bleeding" checked/></td>
+                    {{else}}
+                    <td><input type="checkbox" name="data.is_bleeding"/></td>
+                    {{/if}}
+                </tr>
             </table>
             <table>
                 <tr>
