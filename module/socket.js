@@ -682,20 +682,20 @@ let operations = {
             };
             let tkn = canvas.tokens.placeables.find(i => i.name == char.name);
             if (data.wounds > 0) {
-                char.toggleEffect('icons/svg/blood.svg', {active: true});
+                tkn.toggleEffect('icons/svg/blood.svg', {active: true});
                 dc_utils.char.wounds.set_bleeding(char, true);
             }
             if (char.data.data.wind.value - wind_roll._total <= 0) {
-                char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
-                char.toggleEffect('icons/svg/skull.svg', {active: true});
-                char.toggleEffect('icons/svg/blood.svg', {active: false});
+                tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                tkn.toggleEffect('icons/svg/skull.svg', {active: true});
+                tkn.toggleEffect('icons/svg/blood.svg', {active: false});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (data.location in critical) {
                 if (current + data.wounds >= 5) {
-                    char.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
-                    char.toggleEffect('icons/svg/skull.svg', {active: true});
-                    char.toggleEffect('icons/svg/blood.svg', {active: false});
+                    tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                    tkn.toggleEffect('icons/svg/skull.svg', {active: true});
+                    tkn.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
             }
             if (char.hasPlayerOwner) {
