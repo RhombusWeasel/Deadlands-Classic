@@ -31,7 +31,7 @@
             <select name="data.joker_value" id="joker-value-select">
                 {{#each cards as |card|}}
                     {{#if (ne card 'Joker')}}
-                        {{#if (eq card data.data.joker_value)}}
+                        {{#if (eq card ../data.data.joker_value)}}
                 <option value="{{card}}" selected>{{card}}</option>
                         {{else}}
                 <option value="{{card}}">{{card}}</option>
@@ -41,7 +41,7 @@
             </select>
             <select name="data.joker_suit" id="joker-suit-select">
                 {{#each suits as |suit|}}
-                    {{#if (eq suit data.data.joker_suit)}}
+                    {{#if (eq suit ../data.data.joker_suit)}}
                 <option value="{{suit}}" selected>{{suit}}</option>
                     {{else}}
                 <option value="{{suit}}">{{suit}}</option>
