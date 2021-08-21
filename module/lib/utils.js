@@ -616,7 +616,7 @@ const dc_utils = {
             data.modifier = modifier
             let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
             r_data.total = roll._total;
-            let count = 0
+            let count = 0;
             roll.terms[0].results.forEach(die => {
                 if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
@@ -641,14 +641,14 @@ const dc_utils = {
             data.pass = 0;
             data.ones = 0;
             for (let i = 0; i < data.amt; i++) {
-                const res = data.results[i]
+                const res = data.results[i];
                 if (res + data.modifier >= data.tn) {
                     data.pass += 1;
                 }else if (res == 1) {
                     data.ones += 1;
                 }
                 if (res + data.modifier > data.total) {
-                    data.total = res + data.modifier
+                    data.total = res + data.modifier;
                 }
             }
             if (data.pass >= data.ones) {
