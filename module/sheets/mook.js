@@ -103,11 +103,11 @@ export default class NPCSheet extends ActorSheet {
         let spirit = parseInt(act.data.data.traits.spirit.die_type.substring(1, 3));
         let vigor = parseInt(act.data.data.traits.vigor.die_type.substring(1, 3));
         let max_wind = spirit + vigor
-        this.actor.update({'data.wind.value': max_wind});
-        this.actor.update({'data.wind.max': max_wind});
+        this.actor.update({data: {wind: {value: max_wind}}});
+        this.actor.update({data: {wind: {max: max_wind}}});
 
         let nimbleness = parseInt(act.data.data.traits.nimbleness.die_type.substring(1, 3));
-        this.actor.update({'data.pace': nimbleness});
+        this.actor.update({data: {pace: nimbleness}});
     }
 
     _on_skill_roll(event) {
