@@ -7,7 +7,7 @@
     "compatibleCoreVersion": "0.8.8",
     "templateVersion": 1,
     "author": "Rhombus Weasel",
-    "esmodules": ["module/deadlands.js"],
+    "esmodules": ["module/deadlands.js", "module/sheets/poker.js"],
     "scripts":  ["module/socket.js", "module/lib/utils.js"],
     "styles": ["styles/player-sheet.css", "styles/doc.css"],
     "socket": true,
