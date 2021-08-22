@@ -966,13 +966,13 @@ const dc_utils = {
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
-                    hands.push(hand);
+                    hands.add(hand);
                 }
                 // Four of a kind
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k = 0; k < cards.length - 1; k++) {
                         if (k != c) {
-                            hands.push(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
+                            hands.add(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
                         }
                     }
                 }
@@ -980,7 +980,7 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.push(`Full House ${cards[o]}'s over ${cards[u]}'s`);
+                            hands.add(`Full House ${cards[o]}'s over ${cards[u]}'s`);
                         }
                     }
                 }
@@ -991,7 +991,7 @@ const dc_utils = {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
                                     if (c_5 != c_4 + 1) {
-                                        hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                        hands.add(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
                             }
@@ -1004,14 +1004,14 @@ const dc_utils = {
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
-                    hands.push(hand);
+                    hands.add(hand);
                 }
                 // Trips
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k1 = 0; k1 < cards.length - 1; k1++) {
                         for (let k2 = 0; k2 < cards.length - 1; k2++) {
                             if (k1 != k2) {
-                                hands.push(`Three ${cards[c]}'s ${cards[k1]} ${cards[k2]}`);
+                                hands.add(`Three ${cards[c]}'s ${cards[k1]} ${cards[k2]}`);
                             }
                         }
                     }
@@ -1020,13 +1020,13 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.push(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
+                            hands.add(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
                         }
                     }
                 }
                 // Pair
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`Pair of ${cards[c]}'s`);
+                    hands.add(`Pair of ${cards[c]}'s`);
                 }
                 //High Card
                 for (let c_1 = 0; c_1 < cards.length - 5; c_1++) {
@@ -1035,7 +1035,7 @@ const dc_utils = {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
                                     if (c_5 != c_4 + 1) {
-                                        hands.push(`High Card: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                        hands.add(`High Card: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
                             }
