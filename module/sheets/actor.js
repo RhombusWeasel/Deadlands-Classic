@@ -135,7 +135,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".equip-select").change(this._on_item_equip.bind(this));
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
-        html.find(".wild-joker-hex").change(this._on_joker_wild_hex.bind(this));
+        html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
