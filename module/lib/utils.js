@@ -959,11 +959,12 @@ const dc_utils = {
             get_best_kicker: function(hand, block_list, count=1) {
                 if (hand.length <= count) return '';
                 let r_str = '';
-                for (const card of hand) {
+                for (let i = 0; i < hand.length; i++) {
+                    let card = hand[i];
                     let val = dc_utils.deck.get_card_value(card);
                     if (!(block_list.includes(val))) {
-                        r_str += ` ${val}`
-                        count -= 1
+                        r_str += ` ${val}`;
+                        count -= 1;
                     }
                     if (count == 0) return r_str;
                 }
