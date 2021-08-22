@@ -897,7 +897,6 @@ const dc_utils = {
                     suit_instances[suit] = 1;
                 }
             }
-            console.log(card_instances, suit_instances);
             let flush = false;
             for (const key in suit_instances) {
                 const count = suit_instances[key];

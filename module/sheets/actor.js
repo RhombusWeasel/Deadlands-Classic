@@ -250,6 +250,7 @@ export default class PlayerSheet extends ActorSheet {
             name: `${this.actor.data.data.joker_value}${this.actor.data.data.joker_suit}`,
             type: 'huckster_deck'
         };
+        console.log(jk, card);
         dc_utils.chat.send(`Hex`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
         jk.delete();
         setTimeout(() => {this.actor.createOwnedItem(card)}, 500);
