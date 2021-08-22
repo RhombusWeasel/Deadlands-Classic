@@ -955,7 +955,7 @@ const dc_utils = {
                 return 'Straight'+str;
             }
             if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2_2}'s over ${found_2}'s`;
+            if (found_2_2) return `Two Pair ${found_2}'s over ${found_2_2}'s`;
             if (found_2) return `Pair of ${found_2}'s`;
             return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
         },
