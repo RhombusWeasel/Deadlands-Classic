@@ -17,6 +17,7 @@ class Poker extends FormApplication {
         data.players = [
             {
                 name: 'Jeff',
+                hasPlayerOwner: false,
                 data: {
                     data: {
                         cash: 250,
@@ -41,9 +42,10 @@ class Poker extends FormApplication {
   
     activateListeners(html) {
         super.activateListeners(html);
+        html.find(".add-player").click(this._on_draw_fate.bind(this));
     }
-  
-    async _updateObject(event, formData) {
-        console.log(formData.exampleInput);
+    
+    _on_add_player(event) {
+        
     }
   }

@@ -2,7 +2,7 @@
     <div>
         <h1 class="center">Poker</h1>
         {{#isGM}}
-        <a>Add Player</a>
+            {{> "systems/deadlands_classic/templates/misc/partials/gm-poker-opts.hbs"}}
         {{/isGM}}
         <table>
         {{#each players as |player|}}
