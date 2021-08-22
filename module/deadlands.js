@@ -174,7 +174,7 @@ Hooks.once("init", function () {
         }
     });
 
-    Handlebars.registerHelper('isGM', function (val, options) {
+    Handlebars.registerHelper('isGM', function (options) {
         if (game.user.isGM) {
             return options.fn(this);
         }
