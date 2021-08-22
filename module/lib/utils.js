@@ -268,6 +268,14 @@ const dc_utils = {
                     .filter(function (item) {return item.type == item_type})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
+            get_card: function(act, name, deck) {
+                let hand = dc_utils.char.items.get(act, deck);
+                for (let card of hand) {
+                    if (dc_utils.deck.get_card_value(card) == name) {
+                        return card;
+                    }
+                }
+            },
             get_equippable: function(act) {
                 let eq = act.data.data.equipped
                 return act.items.filter(function(i) {return i.data.data.equippable == true})

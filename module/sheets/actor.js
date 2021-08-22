@@ -135,6 +135,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".equip-select").change(this._on_item_equip.bind(this));
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
+        html.find(".wild-joker-hex").change(this._on_joker_wild_hex.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
@@ -240,6 +241,18 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let value = element.value;
         this.actor.update({data: {joker_suit: value}});
+    }
+
+    _on_joker_wild_hex(event) {
+        event.preventDefault();
+        let jk = dc_utils.char.items.get_card(this.actor, 'Jo', 'huckster_deck');
+        let card = {
+            name: `${this.actor.data.data.joker_value}${this.actor.data.data.joker_suit}`,
+            type: 'huckster_deck'
+        };
+        dc_utils.chat.send(`Hex`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
+        jk.delete();
+        setTimeout(() => {this.actor.createOwnedItem(card)}, 500);
     }
 
     _on_item_delete(event) {

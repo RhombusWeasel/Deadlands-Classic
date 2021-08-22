@@ -665,7 +665,8 @@
             "huckster_deck",
             "action_deck",
             "blueprint_deck",
-            "goods"
+            "goods",
+            "components"
         ],
         "templates": {
             "description": {
@@ -766,13 +767,10 @@
             "value": "white",
             "bounty": 1
         },
-        "huckster_deck": {},
-        "action_deck": {},
         "gen_deck": {
             "die_type":"d4",
             "level":1
         },
-        "blueprint_deck": {},
         "goods": {
             "templates": [
                 "description"
@@ -783,6 +781,22 @@
             "boxed_multiple": false,
             "box_amount": 50,
             "total_cost": 0
-        }
+        },
+        "components": {
+            "templates": [
+                "description"
+            ],
+            "cost": "$2.00",
+            "amount": 1,
+            "size": "small"
+        },
+        "coup": {
+            "templates": [
+                "description"
+            ]
+        },
+        "action_deck": {},
+        "huckster_deck": {},
+        "blueprint_deck": {}
     }
 }
