@@ -958,7 +958,7 @@ const dc_utils = {
         },
         poker: {
             generate_hands: function() {
-                let hands = set();
+                let hands = new Set();
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
                 for (let c = 0; c < cards.length - 4; c++) {
