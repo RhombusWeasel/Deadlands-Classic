@@ -6,8 +6,8 @@ class Poker extends FormApplication {
             template: `systems/deadlands_classic/templates/sheets/poker/poker.html`,
             id: 'poker-app',
             title: 'Poker',
-            width: 500,
-            height: 300,
+            width: 800,
+            height: 600,
         });
     }
   
