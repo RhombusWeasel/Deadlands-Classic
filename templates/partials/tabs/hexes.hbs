@@ -2,6 +2,7 @@
     {{#if huckster_deck}}
         {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=huckster_deck deck_type='huckster_deck' hand=huckster_hand}}
     {{/if}}
+    <div class="flexrow">
     {{#if tricks}}
     <div>
         <h2 class="center">Tricks</h2>
@@ -40,4 +41,5 @@
         {{/each}}
     </div>
     {{/if}}
+    </div>
 </section>
