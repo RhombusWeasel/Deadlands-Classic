@@ -956,6 +956,7 @@ const dc_utils = {
             return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}` + dc_utils.deck.poker.get_best_kicker(card_pile, [dc_utils.deck.get_card_value(card_pile[0])], 4);
         },
         poker: {
+            // Don't forget to sort the hand before calling this...
             get_best_kicker: function(hand, block_list, count=1) {
                 if (hand.length <= count) return '';
                 let r_str = '';
@@ -969,7 +970,7 @@ const dc_utils = {
                     if (count == 0) return r_str;
                 }
             },
-            generate_hands: function() {
+            generate_scoring_hands: function() {
                 let hands =[];
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
