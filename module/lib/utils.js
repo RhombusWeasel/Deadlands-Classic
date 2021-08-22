@@ -958,7 +958,7 @@ const dc_utils = {
         },
         poker: {
             generate_hands: function() {
-                let hands = [];
+                let hands = set();
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
                 for (let c = 0; c < cards.length - 4; c++) {
@@ -1010,7 +1010,7 @@ const dc_utils = {
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k1 = 0; k1 < cards.length - 1; k1++) {
                         for (let k2 = 0; k2 < cards.length - 1; k2++) {
-                            if (k1 != k2 && c != k1 && c != k2) {
+                            if (k1 != k2) {
                                 hands.push(`Three ${cards[c]}'s ${cards[k1]} ${cards[k2]}`);
                             }
                         }
