@@ -1008,8 +1008,8 @@ const dc_utils = {
                 }
                 // Trips
                 for (let c = 0; c < cards.length - 1; c++) {
-                    for (let k1 = 0; k1 < cards.length - 1; k1++) {
-                        for (let k2 = 0; k2 < cards.length - 1; k2++) {
+                    for (let k1 = 0; k1 < cards.length - 2; k1++) {
+                        for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
                             if (c != k1 && c != k2 && k1 != k2) {
                                 hands.add(`Three ${cards[c]}'s ${cards[k1]} ${cards[k2]}`);
                             }
