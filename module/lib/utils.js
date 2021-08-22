@@ -953,7 +953,8 @@ const dc_utils = {
             if (found_3) return `Three of a kind: ${found_3} ${found_3} ${found_3}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_3], 2);
             if (found_2_2) return `Two Pair: ${found_2} ${found_2} ${found_2_2} ${found_2_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2, found_2_2], 1);
             if (found_2) return `Pair: ${found_2} ${found_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2], 3);
-            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}` + dc_utils.deck.poker.get_best_kicker(card_pile, [dc_utils.deck.get_card_value(card_pile[0])], 4);
+            let val = dc_utils.deck.get_card_value(card_pile[0])
+            return `High Card: ${val}` + dc_utils.deck.poker.get_best_kicker(card_pile, [val], 4);
         },
         poker: {
             // Don't forget to sort the hand before calling this...
