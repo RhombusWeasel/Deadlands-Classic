@@ -863,11 +863,14 @@ const dc_utils = {
             let count = 0;
             let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
             let hand = '';
-            for (let i = 1; i < cards.length; i++) { 
+            for (let i = 1; i < cards.length; i++) {
+                console.log('Checking ', cards[i]);
                 if (instances[cards[i]]) {
+                    console.log('Found ', cards[i]);
                     count += 1;
                     hand += ` ${cards[i]}`;
                 }else{
+                    console.log('Not found ', cards[i]);
                     count = 0;
                     hand = '';
                 }
