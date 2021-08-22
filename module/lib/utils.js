@@ -958,6 +958,7 @@ const dc_utils = {
         },
         poker: {
             get_best_kicker: function(hand, block_list, count=1) {
+                if (hand.length <= count) return '';
                 let r_str = '';
                 for (const card of hand) {
                     let val = dc_utils.deck.get_card_value(card);
