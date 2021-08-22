@@ -8,7 +8,7 @@ class Poker extends FormApplication {
       return mergeObject(super.defaultOptions, {
         classes: ['doc'],
         popOut: true,
-        template: `systems/deadlands_classic/templates/misc/poker.html`,
+        template: `systems/deadlands_classic/templates/sheets/misc/poker.html`,
         id: 'poker-app',
         title: 'Poker',
       });
