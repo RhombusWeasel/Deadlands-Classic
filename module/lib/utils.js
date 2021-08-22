@@ -920,7 +920,7 @@ const dc_utils = {
                     if (tot == 4) return `4 of a kind (${key}'s)`;
                     if (tot == 3) found_3 = key;
                     if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
-                    if (tot == 2 && !(found_2) && !(found_2_2)) found_2 = key;
+                    if (tot == 2 && !(found_2)) found_2 = key;
                 }
             }
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
