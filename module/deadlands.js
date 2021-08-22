@@ -211,6 +211,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     if (!(act.hasPlayerOwner)) {
         let rn = Math.random();
+        console.log(rn);
         if (rn <= 0.5) {
             document.data.update({name: dc_utils.char.random_name('male')});
         }else{
