@@ -919,8 +919,22 @@ const dc_utils = {
                     const tot = card_instances[key];
                     if (tot == 4) return `4 of a kind (${key}'s)`;
                     if (tot == 3) found_3 = key;
-                    if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
-                    if (tot == 2 && !(found_2)) found_2 = key;
+                    if (tot == 2) {
+                        if (found_2) {
+                            if (dc_utils.cards.indexOf(key) < dc_utils.cards.indexOf(found_2)) {
+                                found_2_2 = found_2;
+                                found_2 = key;
+                            }else if(found_2_2) {
+                                if (dc_utils.cards.indexOf(key) < dc_utils.cards.indexOf(found_2_2)) {
+                                    found_2_2 = key;
+                                }
+                            }
+                        }else{
+                            found_2 = key;
+                        }
+                    }
+                    //if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
+                    //if (tot == 2 && !(found_2)) found_2 = key;
                 }
             }
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
