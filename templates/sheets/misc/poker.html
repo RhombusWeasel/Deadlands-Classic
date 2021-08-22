@@ -1,6 +1,16 @@
 <form class="typed">
     <div>
-        <h1>Poker</h1>
-        
+        <h1 class="center">Poker</h1>
+        {{#isGM}}
+        <a>Add Player</a>
+        {{/isGM}}
+        <table>
+        {{#each players as |player|}}
+            <tr>
+                <td class="center">{{player.name}}</td>
+                <td class="right">${{player.data.data.cash}}</td>
+            </tr>
+        {{/each}}
+        </table>
     </div>
 </form>
