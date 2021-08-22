@@ -962,7 +962,7 @@ const dc_utils = {
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
                 for (let c = 0; c < cards.length - 4; c++) {
-                    let hand = 'Straight Flush'
+                    let hand = 'Straight Flush:'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
@@ -972,7 +972,7 @@ const dc_utils = {
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k = 0; k < cards.length - 1; k++) {
                         if (k != c) {
-                            hands.add(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
+                            hands.add(`Four of a kind: ${cards[c]} ${cards[c]} ${cards[c]} ${cards[c]} ${cards[k]}`);
                         }
                     }
                 }
@@ -980,7 +980,7 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.add(`Full House ${cards[o]}'s over ${cards[u]}'s`);
+                            hands.add(`Full House: ${cards[o]}'s over ${cards[u]}'s`);
                         }
                     }
                 }
@@ -991,7 +991,7 @@ const dc_utils = {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
                                     if (c_5 != c_4 + 1) {
-                                        hands.add(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                        hands.add(`Flush: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
                             }
@@ -1000,7 +1000,7 @@ const dc_utils = {
                 }
                 // Straights
                 for (let c = 0; c < cards.length - 4; c++) {
-                    let hand = 'Straight'
+                    let hand = 'Straight:'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
@@ -1011,7 +1011,7 @@ const dc_utils = {
                     for (let k1 = 0; k1 < cards.length - 2; k1++) {
                         for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
                             if (c != k1 && c != k2 && k1 != k2) {
-                                hands.add(`Three ${cards[c]}'s ${cards[k1]} ${cards[k2]}`);
+                                hands.add(`Three of a kind: ${cards[c]} ${cards[c]} ${cards[c]} ${cards[k1]} ${cards[k2]}`);
                             }
                         }
                     }
@@ -1022,7 +1022,7 @@ const dc_utils = {
                         if (o != u) {
                             for (let k = 0; k < cards.length - 1; k++) {
                                 if (k != o && k != u) {
-                                    hands.add(`Two Pair ${cards[o]}'s over ${cards[u]}'s with an ${cards[k]} kicker`);
+                                    hands.add(`Two Pair: ${cards[o]} ${cards[o]} ${cards[u]} ${cards[u]} ${cards[k]}`);
                                 }
                             }
                         }
@@ -1034,7 +1034,7 @@ const dc_utils = {
                         for (let k1 = k + 1; k1 < cards.length - 1; k1++) {
                             for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
                                 if (k != c && k1 != c && k2 != c) {
-                                    hands.add(`Pair of ${cards[c]} ${cards[k]} ${cards[k1]} ${cards[k2]}`);
+                                    hands.add(`Pair: ${cards[c]} ${cards[c]} ${cards[k]} ${cards[k1]} ${cards[k2]}`);
                                 }
                             }
                         }
