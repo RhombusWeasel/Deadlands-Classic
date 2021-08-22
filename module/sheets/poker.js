@@ -42,7 +42,7 @@ class Poker extends FormApplication {
   
     activateListeners(html) {
         super.activateListeners(html);
-        html.find(".add-player").click(this._on_draw_fate.bind(this));
+        html.find(".add-player").click(this._on_add_player.bind(this));
     }
     
     _on_add_player(event) {
