@@ -1011,7 +1011,7 @@ const dc_utils = {
                     for (let k1 = 0; k1 < cards.length - 1; k1++) {
                         for (let k2 = 0; k2 < cards.length - 1; k2++) {
                             if (k1 != k2) {
-                                hands.push(`Three ${cards[c]}'s`);
+                                hands.push(`Three ${cards[c]}'s ${k1} ${k2}`);
                             }
                         }
                     }
