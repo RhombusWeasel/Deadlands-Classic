@@ -210,9 +210,12 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     if (!(act.hasPlayerOwner)) {
-        let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
-        let amt = get_token_count(act);
-        document.data.update({name: createData.name += ` ${amt}`});
+        let rn = Math.random()
+        if (rn >= 0.5) {
+            document.data.update({name: dc_utils.char.random_name('male')});
+        }else{
+            document.data.update({name: dc_utils.char.random_name('female')});
+        }
     }
 });
 
