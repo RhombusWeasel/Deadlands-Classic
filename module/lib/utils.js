@@ -1847,8 +1847,10 @@ const dc_utils = {
                 for (let i = tot - range; i < tot + range; i++) {
                     console.log(i, dc_utils.loc_lookup[i]);
                     if (i <= 19){
-                        if (!(found.includes(dc_utils.loc_lookup[i]))) {
-                            found.push(dc_utils.loc_lookup[i]);
+                        if (dc_utils.loc_lookup[i]) {
+                            if (!(found.includes(dc_utils.loc_lookup[i]))) {
+                                found.push(dc_utils.loc_lookup[i]);
+                            }
                         }
                     }
                 }
