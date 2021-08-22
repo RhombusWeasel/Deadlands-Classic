@@ -264,9 +264,8 @@ const dc_utils = {
         },
         items: {
             get: function(act, item_type, sort_key = 'name') {
-                return act.items
-                    .filter(function (item) {return item.type == item_type})
-                    .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
+                return act.items.filter(function (item) {return item.type == item_type})
+                                .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
             get_card: function(act, name, deck) {
                 let hand = dc_utils.char.items.get(act, deck);
@@ -954,7 +953,7 @@ const dc_utils = {
             if (found_3) return `Three of a kind: ${found_3} ${found_3} ${found_3}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_3], 2);
             if (found_2_2) return `Two Pair: ${found_2} ${found_2} ${found_2_2} ${found_2_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2, found_2_2], 1);
             if (found_2) return `Pair: ${found_2} ${found_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2], 3);
-            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}` + dc_utils.deck.poker.get_best_kicker(card_pile, [card_pile[0]], 4);
+            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}` + dc_utils.deck.poker.get_best_kicker(card_pile, [dc_utils.deck.get_card_value(card_pile[0])], 4);
         },
         poker: {
             get_best_kicker: function(hand, block_list, count=1) {
