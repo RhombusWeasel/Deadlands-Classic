@@ -903,7 +903,7 @@ const dc_utils = {
                     // Flush draw, check for straight
                     str = dc_utils.deck.calculate_straight(card_instances);
                     if (str) {
-                        return 'Straight Flush'+str;
+                        return 'Straight Flush:'+str;
                     }else{
                         flush = key;
                     }
@@ -916,7 +916,7 @@ const dc_utils = {
             for (const key in card_instances) {
                 if (Object.hasOwnProperty.call(card_instances, key)) {
                     const tot = card_instances[key];
-                    if (tot == 4) return `4 of a kind (${key}'s)`;
+                    if (tot == 4) return `4 of a kind: ${key} ${key} ${key} ${key}` + dc_utils.deck.poker.get_best_kicker(card_pile, [key], 1);
                     if (tot == 3) found_3 = key;
                     if (tot == 2) {
                         if (found_2) {
@@ -934,7 +934,7 @@ const dc_utils = {
                     }
                 }
             }
-            if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
+            if (found_3 && found_2) return `Full House: ${found_3}'s over ${found_2}'s`;
             if (flush) {
                 str = ''
                 for (let c = 0; c < card_pile.length; c++) {
@@ -944,19 +944,30 @@ const dc_utils = {
                         str += ` ${dc_utils.deck.get_card_value(card)}`;
                     }
                 }
-                return `Flush`+str;
+                return `Flush:`+str;
             }
             // Check for straight
             str = dc_utils.deck.calculate_straight(card_instances);
             if (str) {
-                return 'Straight'+str;
+                return 'Straight:'+str;
             }
-            if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2}'s over ${found_2_2}'s`;
-            if (found_2) return `Pair of ${found_2}'s`;
-            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
+            if (found_3) return `Three of a kind: ${found_3} ${found_3} ${found_3}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_3], 2);
+            if (found_2_2) return `Two Pair: ${found_2} ${found_2} ${found_2_2} ${found_2_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2, found_2_2], 1);
+            if (found_2) return `Pair: ${found_2} ${found_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2], 3);
+            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}` + dc_utils.deck.poker.get_best_kicker(card_pile, [card_pile[0]], 4);
         },
         poker: {
+            get_best_kicker: function(hand, block_list, count=1) {
+                let r_str = '';
+                for (const card of hand) {
+                    let val = dc_utils.deck.get_card_value(card);
+                    if (!(block_list.includes(val))) {
+                        r_str += ` ${val}`
+                        count -= 1
+                    }
+                    if (count == 0) return r_str;
+                }
+            },
             generate_hands: function() {
                 let hands = new Set();
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
