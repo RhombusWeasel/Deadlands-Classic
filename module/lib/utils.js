@@ -864,13 +864,10 @@ const dc_utils = {
             let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
             let hand = '';
             for (let i = 0; i < cards.length; i++) {
-                console.log('Checking ', cards[i]);
                 if (instances[cards[i]]) {
-                    console.log('Found ', cards[i]);
                     count += 1;
                     hand += ` ${cards[i]}`;
                 }else{
-                    console.log('Not found ', cards[i]);
                     count = 0;
                     hand = '';
                 }
@@ -881,7 +878,6 @@ const dc_utils = {
             return false;
         },
         evaluate_hand: function(card_pile) {
-            // 2N + 23 operations worst case to find best hand from N cards
             let card_instances = {};
             let suit_instances = {};
             let str;
@@ -936,8 +932,6 @@ const dc_utils = {
                             found_2 = key;
                         }
                     }
-                    //if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
-                    //if (tot == 2 && !(found_2)) found_2 = key;
                 }
             }
             if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
@@ -1016,7 +1010,7 @@ const dc_utils = {
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k1 = 0; k1 < cards.length - 1; k1++) {
                         for (let k2 = 0; k2 < cards.length - 1; k2++) {
-                            if (c != u) {
+                            if (k1 != k2) {
                                 hands.push(`Three ${cards[c]}'s`);
                             }
                         }
