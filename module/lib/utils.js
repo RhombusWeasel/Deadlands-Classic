@@ -1845,7 +1845,8 @@ const dc_utils = {
                 let found = [];
                 let range = raises * 2 || 0;
                 for (let i = tot - range; i < tot + range; i++) {
-                    if (i < 19){
+                    console.log(i, dc_utils.loc_lookup[i]);
+                    if (i <= 19){
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
                             found.push(dc_utils.loc_lookup[i]);
                         }
