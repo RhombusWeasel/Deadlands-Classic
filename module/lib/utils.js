@@ -1020,13 +1020,25 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.add(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
+                            for (let k = 0; k < cards.length - 1; k++) {
+                                if (k != o && k != u) {
+                                    hands.add(`Two Pair ${cards[o]}'s over ${cards[u]}'s with an ${cards[k]} kicker`);
+                                }
+                            }
                         }
                     }
                 }
                 // Pair
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.add(`Pair of ${cards[c]}'s`);
+                    for (let k = 0; k < cards.length - 1; k++) {
+                        for (let k1 = k + 1; k1 < cards.length - 1; k1++) {
+                            for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
+                                if (k != c && k1 != c && k2 != c) {
+                                    hands.add(`Pair of ${cards[c]} ${cards[k]} ${cards[k1]} ${cards[k2]}`);
+                                }
+                            }
+                        }
+                    }
                 }
                 //High Card
                 for (let c_1 = 0; c_1 < cards.length - 5; c_1++) {
