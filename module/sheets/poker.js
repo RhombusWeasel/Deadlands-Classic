@@ -27,10 +27,10 @@ class Poker extends FormApplication {
         event.preventDefault();
         let element    = event.currentTarget;
         let name       = dc_utils.char.random_name('male');
-        let gamblin    = element.closest('difficulty-gamblin').value;
-        let bluff      = element.closest('difficulty-bluff').value;
-        let scrutinize = element.closest('difficulty-scrutinize').value;
-        let cash       = element.closest('player-cash').value;
+        let gamblin    = element.closest('#difficulty-gamblin').value;
+        let bluff      = element.closest('#difficulty-bluff').value;
+        let scrutinize = element.closest('#difficulty-scrutinize').value;
+        let cash       = element.closest('#player-cash').value;
         this.add_ai(name, gamblin, bluff, scrutinize, cash);
     }
 
@@ -57,7 +57,7 @@ class Poker extends FormApplication {
                 modifier: 2
             }
         }
-        game.dc.poker_game.players[name] = {
+        game.dc.poker_game.players.push({
             hasPlayerOwner: false,
             name: name,
             cash: cash,
@@ -66,6 +66,6 @@ class Poker extends FormApplication {
                 bluff:      `${diff[blf].level}${diff[blf].die_type} + ${diff[blf].modifier}`,
                 scrutinize: `${diff[scr].level}${diff[scr].die_type} + ${diff[scr].modifier}`,
             }
-        }
+        });
     }
 }
