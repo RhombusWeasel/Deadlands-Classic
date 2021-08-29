@@ -719,7 +719,10 @@ Hooks.on("ready", () => {
     game.dc = {
         combat_active: false,
         aim_bonus: 0,
-        level_headed_available: true
+        level_headed_available: true,
+        poker: {
+            players: [],
+        }
     }
     if (game.user.isGM) {
         // Initialize action deck

@@ -69,9 +69,3 @@ class Poker extends FormApplication {
         }
     }
 }
-
-Hooks.on("ready", () => {
-    game.dc.poker = {
-        players = {}
-    }
-});
