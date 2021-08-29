@@ -27,10 +27,10 @@ class Poker extends FormApplication {
         event.preventDefault();
         let element    = event.currentTarget;
         let name       = dc_utils.char.random_name('male');
-        let gamblin    = element.closest('select#difficulty-gamblin').value;
-        let bluff      = element.closest('select#difficulty-bluff').value;
-        let scrutinize = element.closest('select#difficulty-scrutinize').value;
-        let cash       = element.closest('input#player-cash').value;
+        let gamblin    = document.getElementById('difficulty-gamblin').value;
+        let bluff      = document.getElementById('difficulty-bluff').value;
+        let scrutinize = document.getElementById('difficulty-scrutinize').value;
+        let cash       = document.getElementById('player-cash').value;
         this.add_ai(name, gamblin, bluff, scrutinize, cash);
     }
 
