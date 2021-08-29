@@ -57,7 +57,7 @@ class Poker extends FormApplication {
                 modifier: 2
             }
         }
-        game.dc.poker_game.players.push({
+        game.dc.poker.players.push({
             hasPlayerOwner: false,
             name: name,
             cash: cash,
