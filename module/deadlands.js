@@ -143,6 +143,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('die_upgrade', function (val, options) {
+        // This needs fixing so it checks at the start for the d12 and calculates cost based on the characters modifier.
         if (!(game.user.isGM)) {
             let upgrades = {
                 d4:  {next: "d6", cost: 18},
