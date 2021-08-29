@@ -67,5 +67,6 @@ class Poker extends FormApplication {
                 scrutinize: `${diff[scr].level}${diff[scr].die_type} + ${diff[scr].modifier}`,
             }
         });
+        return this.render();
     }
 }
