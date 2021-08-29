@@ -35,12 +35,6 @@ class Poker extends FormApplication {
     }
 
     add_ai(name, gam, blf, scr, cash){
-        if (!(game.dc.poker_game)) {
-            game.dc.poker_game = {
-                players: {},
-                log: [],
-            };
-        }
         let diff = {
             sucker: {
                 level:    1,
@@ -75,3 +69,9 @@ class Poker extends FormApplication {
         }
     }
 }
+
+Hooks.on("ready", () => {
+    game.dc.poker = {
+        players = {}
+    }
+});
