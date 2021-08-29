@@ -62,6 +62,8 @@
                 "perks": {
                     "level_headed": false
                 },
+                "joker_value": "A",
+                "joker_suit": "\u2660",
                 "description": "",
                 "notes": "",
                 "nightmare": ""
@@ -632,6 +634,11 @@
         "gm": {
             "combat_active": false,
             "modifiers": {
+                "foolproof": {"name": "Foolproof", "mod": 2, "active":false},
+                "onerous": {"name": "Onerous", "mod": -2, "active":false},
+                "impressive": {"name": "Impressive", "mod": -4, "active":false},
+                "incredible": {"name": "Incredible", "mod": -6, "active":false},
+                "heroic": {"name": "Heroic", "mod": -8, "active":false},
                 "low_light": {"name": "Low Light", "mod": -2, "active":false},
                 "no_light": {"name": "No Light", "mod": -4, "active":false},
                 "firer_running": {"name": "Firer Runnin'", "mod": -4, "active":false},
@@ -639,13 +646,7 @@
                 "target_moving": {"name": "Target Movin'", "mod": -4, "active":false},
                 "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
                 "fannin": {"name": "Fannin", "mod": -2, "active":false},
-                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false},
-                "head_shot": {"name": "Head Shot!", "mod": -6, "active":false},
-                "hand_shot": {"name": "Hand Shot", "mod": -6, "active":false},
-                "arm_shot": {"name": "Arm Shot", "mod": -4, "active":false},
-                "leg_shot": {"name": "Leg Shot", "mod": -4, "active":false},
-                "body_shot": {"name": "Body Shot", "mod": -2, "active":false},
-                "eye_shot": {"name": "Eye Shot", "mod": -10, "active":false}
+                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
             }
         }
     },
@@ -664,7 +665,8 @@
             "huckster_deck",
             "action_deck",
             "blueprint_deck",
-            "goods"
+            "goods",
+            "components"
         ],
         "templates": {
             "description": {
@@ -765,13 +767,10 @@
             "value": "white",
             "bounty": 1
         },
-        "huckster_deck": {},
-        "action_deck": {},
         "gen_deck": {
             "die_type":"d4",
             "level":1
         },
-        "blueprint_deck": {},
         "goods": {
             "templates": [
                 "description"
@@ -782,6 +781,22 @@
             "boxed_multiple": false,
             "box_amount": 50,
             "total_cost": 0
-        }
+        },
+        "components": {
+            "templates": [
+                "description"
+            ],
+            "cost": "$2.00",
+            "amount": 1,
+            "size": "small"
+        },
+        "coup": {
+            "templates": [
+                "description"
+            ]
+        },
+        "action_deck": {},
+        "huckster_deck": {},
+        "blueprint_deck": {}
     }
 }

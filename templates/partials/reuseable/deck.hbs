@@ -23,9 +23,35 @@
             {{/each}}
         </tr>
     </table>
-    {{#if (eq deck_type 'huckster_deck')}}
-    <div class="center">
-        <a class="discard-hand" data-type="huckster_deck">Play {{hand}}</a>
+    <div class="center flexrow">
+        {{#if (eq deck_type 'huckster_deck')}}
+            {{#has_joker "huckster_deck"}}
+        <div class="flexrow">
+            <p class="center">Joker's are Wild!</p>
+            <select class="small-drop" name="data.joker_value" id="joker-value-select">
+                {{#each cards as |card|}}
+                    {{#if (ne card 'Joker')}}
+                        {{#if (eq card ../data.data.joker_value)}}
+                <option value="{{card}}" selected>{{card}}</option>
+                        {{else}}
+                <option value="{{card}}">{{card}}</option>
+                        {{/if}}
+                    {{/if}}
+                {{/each}}
+            </select>
+            <select class="small-drop" name="data.joker_suit" id="joker-suit-select">
+                {{#each suits as |suit|}}
+                    {{#if (eq suit ../data.data.joker_suit)}}
+                <option value="{{suit}}" selected>{{suit}}</option>
+                    {{else}}
+                <option value="{{suit}}">{{suit}}</option>
+                    {{/if}}
+                {{/each}}
+            </select>
+            <a class="wild-joker-hex">Set Card</a>
+        </div>
+            {{/has_joker}}
+        <a class="center discard-hand" data-type="huckster_deck">Play {{hand}}</a>
+        {{/if}}
     </div>
-    {{/if}}
 </div>

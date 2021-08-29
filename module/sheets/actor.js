@@ -23,31 +23,31 @@ function get_target() {
 function build_skill_template(data) {
     console.log('DC | build_skill_template', data);
     let r_str = `
-        <h2 style="text-align:center">${data.skill_name} [${data.tn}]</h2>
+        <h2 class="center typed">${data.skill_name}</h2>
     `;
     r_str += dc_utils.roll.get_result_template(data);
     if (data.roll.success) {
         //Winning
         if (data.roll.raises == 1) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with a raise</p>
+                <p class="center typed">${data.name} passed with a raise</p>
             `;
         }else if (data.roll.raises > 0) {
             r_str += `
-                <p style="text-align:center">${data.name} passed with ${data.roll.raises} raises</p>
+                <p class="center typed">${data.name} passed with ${data.roll.raises} raises</p>
             `;
         }else{
             r_str += `
-                <p style="text-align:center">${data.name} passed</p>
+                <p class="center typed">${data.name} passed</p>
             `;
         }
     }else if (data.roll.ones > data.roll.pass) {
         r_str += `
-            <p style="text-align:center">${data.name} critically failed!</p>
+            <p class="center typed">${data.name} critically failed!</p>
         `;
     }else{
         r_str += `
-            <p style="text-align:center">${data.name} failed.</p>
+            <p class="center typed">${data.name} failed.</p>
         `;
     }
     return r_str;
@@ -58,7 +58,9 @@ export default class PlayerSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
             classes: ["player-sheet", "doc"],
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }]
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }],
+            width: 500,
+            height: 700
         });
     }
 
@@ -79,8 +81,14 @@ export default class PlayerSheet extends ActorSheet {
         data.hinderances = dc_utils.char.items.get(this.actor, "hinderance");
         data.edges = dc_utils.char.items.get(this.actor, "edge");
         //data.level_headed_available = game.dc.level_headed_available;
-        data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
+        if (this.actor.hasPlayerOwner) {
+            data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
+        }else{
+            data.goods = dc_utils.char.items.get(this.actor, "goods");
+        }
         dc_utils.char.items.calculate_costs(this.actor, data.goods);
+        data.cards = dc_utils.joker_cards;
+        data.suits = dc_utils.joker_suits;
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
         data.action_deck = this.actor.data.data.action_cards;
@@ -127,6 +135,9 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".equip-select").change(this._on_item_equip.bind(this));
+        html.find(".joker-value-select").change(this._on_joker_value.bind(this));
+        html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
+        html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
@@ -217,6 +228,33 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.value;
         let char = dc_utils.get_actor(this.actor.name);
         dc_utils.char.items.equip(char, slot, itemId);
+    }
+
+    _on_joker_value(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        let char = dc_utils.get_actor(this.actor.name);
+        char.update({data: {joker_value: value}});
+    }
+
+    _on_joker_suit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        this.actor.update({data: {joker_suit: value}});
+    }
+
+    _on_joker_wild_hex(event) {
+        event.preventDefault();
+        let jk = dc_utils.char.items.get_card(this.actor, 'Jo', 'huckster_deck');
+        let card = {
+            name: `${this.actor.data.data.joker_value}${this.actor.data.data.joker_suit}`,
+            type: 'huckster_deck'
+        };
+        dc_utils.chat.send(`Hex`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
+        jk.delete();
+        setTimeout(() => {this.actor.createOwnedItem(card)}, 500);
     }
 
     _on_item_delete(event) {
@@ -579,19 +617,13 @@ export default class PlayerSheet extends ActorSheet {
         let draw = 0;
         if (r._total >= 5) {
             draw = Math.floor(r._total / 5)
-            reply = `You rolled ${r._total} granting ${draw} cards.`
+            reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500);
         }
         r.toMessage({rollMode: 'gmroll'});
-        ChatMessage.create({ 
-            content: `
-                <h3 style="text-align:center">Trick</h3>
-                <p style="text-align:center">${reply}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        dc_utils.chat.send('Trick', reply);
     }
 
     _on_cast_hex(event) {
@@ -607,19 +639,13 @@ export default class PlayerSheet extends ActorSheet {
         let draw = 0
         if (r._total >= 5) {
             draw = 5 + (Math.floor(r._total / 5))
-            reply = `You rolled ${r._total} granting ${draw} cards.`
+            reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
-        r.toMessage({rollMode: 'gmroll'})
-        ChatMessage.create({
-            content: `
-                <h3 style="text-align:center">Hex</h3>
-                <p style="text-align:center">${reply}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        r.toMessage({rollMode: 'gmroll'});
+        dc_utils.chat.send('Hex', reply);
     }
 
     _on_cast_miracle(event) {

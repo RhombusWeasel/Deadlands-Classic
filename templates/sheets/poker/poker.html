@@ -1,0 +1,19 @@
+<form class="typed">
+    <div>
+        <h1 class="center">Poker</h1>
+        {{#isGM}}
+            {{> "systems/deadlands_classic/templates/sheets/poker/partials/gm-poker-opts.hbs"}}
+        {{/isGM}}
+        <table>
+        {{#each players as |player|}}
+            <tr>
+                <td class="center">{{player.name}}</td>
+                <td class="right">${{player.data.data.cash}}</td>
+            </tr>
+        {{/each}}
+        </table>
+        {{#isGM}}
+            <a class="center">Launch Game</a>
+        {{/isGM}}
+    </div>
+</form>

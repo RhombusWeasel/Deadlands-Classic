@@ -1,8 +1,11 @@
 const dc_utils = {
+    // Raw Data:
     uuid_keys: `0123456789aAbBcCdDeEfFgGhHiIjJkKlLmMnNoOpPqQrRsStTuUvVwWxXyYzZ`,
     cards: ["Joker", "A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     suits: ["Spades", "Hearts", "Diamonds", "Clubs"],
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
+    joker_cards: ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
+    joker_suits: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663"},
     bounty: {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5},
     skills: [
         {key: "cognition", label: "Cognition"},
@@ -64,6 +67,537 @@ const dc_utils = {
         {key: "strength", label: "Strength"},
         {key: "vigor", label: "Vigor"},
     ],
+    surnames: [
+        "Ahlborn",
+        "Albers",
+        "Allis",
+        "Allum",
+        "Anderson",
+        "Andley",
+        "Badger",
+        "Barmes",
+        "Barnett",
+        "Baunaf",
+        "Baylis",
+        "Becker",
+        "Berry",
+        "Bershini",
+        "Bien",
+        "Bigs",
+        "Book",
+        "Bosworth",
+        "Brady",
+        "Brenker",
+        "Bresnahan",
+        "Briedekamp",
+        "Brodrick",
+        "Brooks",
+        "Brown",
+        "Bruir",
+        "Bruno",
+        "Bungh",
+        "Burke",
+        "Burnes",
+        "Cabanne",
+        "Café",
+        "Cahill",
+        "Cain",
+        "Callahan",
+        "Campbell",
+        "Carter",
+        "Clay",
+        "Coboy?",
+        "Collins",
+        "Conely",
+        "Conn",
+        "Conner",
+        "Conway",
+        "Cook",
+        "Cooley",
+        "Corceran?",
+        "Craven",
+        "Creuser",
+        "Criley",
+        "Cullinan",
+        "Cullivan",
+        "Cumming",
+        "Daffern",
+        "Davis",
+        "Denerwald",
+        "Denning",
+        "Derne",
+        "Devlin",
+        "Devoll",
+        "Diamond",
+        "Dickmeyer",
+        "Dionysius",
+        "Dollenberg",
+        "Donahoe",
+        "Donnelly",
+        "Downey",
+        "Doyle",
+        "Droste",
+        "Dryer",
+        "Duhring",
+        "Eagers",
+        "East",
+        "Eicherman",
+        "Ellay",
+        "Elly",
+        "Elwein",
+        "Estha",
+        "Evans",
+        "Evecker",
+        "Evert",
+        "Faile",
+        "Farrelley",
+        "Fink",
+        "Fisher",
+        "Flannery",
+        "Flint",
+        "Flower",
+        "Fluchel",
+        "Flynn",
+        "Frohrmann",
+        "Fulkos",
+        "Geitz",
+        "Gettins",
+        "Gillrohy",
+        "Gleisen",
+        "Gobson",
+        "Goodall",
+        "Graham",
+        "Gratiot",
+        "Graves",
+        "Gray",
+        "Griffeth",
+        "Groeh",
+        "Haas",
+        "Hall",
+        "Hampsted",
+        "Hanrahan",
+        "Harrison",
+        "Havely",
+        "Heanley",
+        "Heides",
+        "Heines",
+        "Heinkel",
+        "Hennessy",
+        "Henry",
+        "Hill",
+        "Hoffmeister",
+        "Hollan",
+        "Holton",
+        "Hondoff",
+        "Hopkins",
+        "Howard",
+        "Humes",
+        "Hunter",
+        "Hussey",
+        "Jackson",
+        "Jefeat",
+        "Jephson",
+        "Johnson",
+        "Jones",
+        "Keath",
+        "Kehaler",
+        "Keif",
+        "Kelly",
+        "Kemeny",
+        "Kenke",
+        "Kennedy",
+        "Kenny",
+        "Kiebler",
+        "Kimball",
+        "King",
+        "Kinker",
+        "Kleinschmidt",
+        "Kruse",
+        "Kruul",
+        "Lafs",
+        "Lancaster",
+        "Lane",
+        "Lauman",
+        "Legler",
+        "Lewis",
+        "Litzinger",
+        "Loftus",
+        "Logan",
+        "Lovey",
+        "Low",
+        "Lubering",
+        "LuGafs",
+        "Lynch",
+        "Maher",
+        "Martin",
+        "Maxfield",
+        "McCarty",
+        "McCormac",
+        "McDonald",
+        "McKenzie",
+        "McSweeney",
+        "Meier",
+        "Merriman",
+        "Merrimann",
+        "Meyer",
+        "Mitchell",
+        "Mode",
+        "Moledord",
+        "Montgomery",
+        "Morgan",
+        "Mormans",
+        "Muegge",
+        "Munson",
+        "Music",
+        "Nicholson",
+        "Noel",
+        "O'Brien",
+        "O'Gorman",
+        "Owens",
+        "Parker",
+        "Parms",
+        "Parry",
+        "Pittman",
+        "Pitts",
+        "Pollman",
+        "Powell",
+        "Powells",
+        "Powers",
+        "Quayle",
+        "Quinn",
+        "Ragan",
+        "Rannells",
+        "Reigert",
+        "Reily",
+        "Rhode",
+        "Richard",
+        "Rickel",
+        "Rickhardt",
+        "Roberts",
+        "Robinson",
+        "Rohaugh",
+        "Ryan",
+        "Schaefer",
+        "Schiefer",
+        "Schield",
+        "Schillinger",
+        "Schoney",
+        "Schwake",
+        "Schweneck",
+        "Schwenker",
+        "Sennett",
+        "Sexton",
+        "Shepard",
+        "Shepherd",
+        "Simes",
+        "Smith",
+        "Sohriss",
+        "Sprott",
+        "St.",
+        "Stack",
+        "Stapleton",
+        "Stein",
+        "Steinroder",
+        "Steinrooks",
+        "Stephens",
+        "Stigerwald",
+        "Stoope",
+        "Suedmeier",
+        "Sullivan",
+        "Swable",
+        "Sweeney",
+        "Tarrants",
+        "Taveril",
+        "Thomas",
+        "Thresen",
+        "Tice",
+        "Toban",
+        "Tulley",
+        "Uding",
+        "Unn",
+        "Vaden",
+        "Valentine",
+        "Vinsot",
+        "Vitery",
+        "Vogel",
+        "Volz",
+        "Vonderheist",
+        "Walker",
+        "Walsh",
+        "Ward",
+        "Washington",
+        "Wayne",
+        "Weinand",
+        "Weise",
+        "Weston",
+        "White",
+        "Wilkerson",
+        "William",
+        "Williams",
+        "Wingart",
+        "Wise",
+        "Wyatt",
+        "Yates"
+    ],
+    forenames: {
+        male: [
+            "A.",
+            "A.S.",
+            "Adolph",
+            "Albert",
+            "Alden",
+            "Alexander",
+            "Allen",
+            "Almoth",
+            "Andre",
+            "Andrew",
+            "Anthony",
+            "Antone",
+            "August",
+            "Barney",
+            "Barnhard",
+            "Beaumont",
+            "Benard",
+            "Benj",
+            "Benjamin",
+            "Benton",
+            "Bernard",
+            "Bernhard",
+            "Bernhardt",
+            "C.B.",
+            "Carl",
+            "Charles",
+            "Chas",
+            "Christ",
+            "Claus",
+            "Conrad",
+            "Cornelius",
+            "Daniel",
+            "David",
+            "Dennis",
+            "Eddie",
+            "Edward",
+            "Edwin",
+            "Elias",
+            "Eliot",
+            "Emil",
+            "Englebert",
+            "Ernst",
+            "Eugene",
+            "Ezekiel",
+            "Felix",
+            "Ferdinand",
+            "Florance",
+            "Francis",
+            "Frank",
+            "Fred",
+            "Fritz",
+            "George",
+            "Gotleib",
+            "Gred",
+            "Gumer",
+            "Gust",
+            "Gustave",
+            "H.",
+            "H.F.A.",
+            "Harry",
+            "Henry",
+            "Herman",
+            "Hiram",
+            "Hugh",
+            "Hunter",
+            "Isaac",
+            "J.D.",
+            "J.H.",
+            "J.M.",
+            "J.W.",
+            "Jack",
+            "Jackson",
+            "Jacob",
+            "James",
+            "Jas",
+            "Jeremiah",
+            "John",
+            "Joseph",
+            "Julious",
+            "Julius",
+            "Langdon",
+            "Lawrence",
+            "Leo",
+            "Leonard",
+            "Leopold",
+            "Levestus",
+            "Louis",
+            "Lucy",
+            "Lugar",
+            "M.",
+            "Martin",
+            "Mason",
+            "Mathais",
+            "Michael",
+            "Morris",
+            "Ned",
+            "Nicholas",
+            "Orson",
+            "Oswald",
+            "Otto",
+            "Patrick",
+            "Peter",
+            "Philip",
+            "Phillip",
+            "Rich",
+            "Richard",
+            "Robert",
+            "Robt",
+            "Roda",
+            "Saml",
+            "Sampson",
+            "Sampson?",
+            "Samuel",
+            "Sandy",
+            "Sebastian",
+            "Sherman",
+            "Shompine",
+            "Sieg",
+            "Siegfried",
+            "Solomon",
+            "Stanislaw",
+            "Stephen",
+            "Thomas",
+            "Timothy",
+            "Toby",
+            "Tom",
+            "Tusta",
+            "Vincent",
+            "Waldo",
+            "Willard",
+            "William",
+            "Willie",
+            "Wm",
+            "Zachariah"
+        ],
+        female: [
+            "Abbie",
+            "Abigal",
+            "Adeline",
+            "Alice",
+            "Amanda",
+            "America",
+            "Angerona",
+            "Ann",
+            "Anna",
+            "Annie",
+            "Augusa",
+            "Barbara",
+            "Belle",
+            "Bertha",
+            "Bessie",
+            "Birdie",
+            "Bridget",
+            "Caroline",
+            "Catherine",
+            "Celeste",
+            "Charles",
+            "Charlotte",
+            "Christena",
+            "Christina",
+            "Clara",
+            "Cora",
+            "Cornelia",
+            "Cresentia?",
+            "Dora",
+            "Dortha",
+            "E.M.",
+            "Eda",
+            "Edith",
+            "Eleanor",
+            "Elija",
+            "Eliza",
+            "Elizabeth",
+            "Ellen",
+            "Emily",
+            "Emma",
+            "Essie",
+            "Etta",
+            "Fannie",
+            "Feronica",
+            "Frances",
+            "Fredericka",
+            "Fredreka",
+            "Genevia",
+            "Gertrude",
+            "Gumia?",
+            "Gusta",
+            "Gustine",
+            "Hannah",
+            "Hanora",
+            "Harriet",
+            "Henrietta",
+            "Hulda",
+            "Ida",
+            "Isabella",
+            "Isoline",
+            "Jane",
+            "Jennie",
+            "Johannah",
+            "Josephine",
+            "Julia",
+            "Kate",
+            "Katie",
+            "Laura",
+            "Lavinia",
+            "Lena",
+            "Lizzetta",
+            "Lizzie",
+            "Lora",
+            "Louisa",
+            "Louise",
+            "Lucy",
+            "Lyda",
+            "Magdalene",
+            "Maggie",
+            "Mamie",
+            "Manda",
+            "Margaret",
+            "Maria",
+            "Mary",
+            "Matilda",
+            "Maud",
+            "Mena",
+            "Metta",
+            "Mildet",
+            "Mira",
+            "Monica",
+            "Nancy",
+            "Nannie",
+            "Nellie",
+            "Nottlie",
+            "Octavia",
+            "Ophelia",
+            "Phoeba",
+            "Rachael",
+            "Rachel",
+            "Rebecca",
+            "Rega",
+            "Rosa",
+            "Rose",
+            "Ruth",
+            "S.E.",
+            "Sally",
+            "Samantha",
+            "Sarah",
+            "Savina",
+            "Severn",
+            "Sophia",
+            "Susan",
+            "Susanna",
+            "Tamar",
+            "Theresa",
+            "Victoria",
+            "Virginia",
+            "Winnie"
+        ]
+    },
     called_shots: {
         any:  {name: "None" , mod:  0,  locations: ['any']},
         head: {name: "Head", mod: -6,  locations: ['noggin'], msg: `They're aimin' for the head!`},
@@ -78,6 +612,8 @@ const dc_utils = {
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
+
+    // Helper Functions:
 
     /** UUID
     * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
@@ -94,6 +630,11 @@ const dc_utils = {
         }
         return str
     },
+    /** GET_ACTOR
+     * Gets an actor from a name, will check actors and tokens and return just the Actor object.
+     * @param {string} name 
+     * @returns Actor
+     */
     get_actor: function(name) {
         let char = game.actors.getName(name);
         if (char) {
@@ -132,6 +673,11 @@ const dc_utils = {
         },
     },
     char: {
+        random_name: function(sex) {
+            let fn = Math.floor(Math.random() * dc_utils.forenames[sex].length)
+            let sn = Math.floor(Math.random() * dc_utils.surnames.length)
+            return `${dc_utils.forenames[sex][fn]} ${dc_utils.surnames[sn]}`
+        },
         has: function(act, type, name) {
             let items = dc_utils.char.items.get(act, type);
             for (const item of items) {
@@ -262,9 +808,16 @@ const dc_utils = {
         },
         items: {
             get: function(act, item_type, sort_key = 'name') {
-                return act.items
-                    .filter(function (item) {return item.type == item_type})
-                    .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
+                return act.items.filter(function (item) {return item.type == item_type})
+                                .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
+            },
+            get_card: function(act, name, deck) {
+                let hand = dc_utils.char.items.get(act, deck);
+                for (let card of hand) {
+                    if (dc_utils.deck.get_card_value(card) == name) {
+                        return card;
+                    }
+                }
             },
             get_equippable: function(act) {
                 let eq = act.data.data.equipped
@@ -322,6 +875,7 @@ const dc_utils = {
             },
             compress: function(act, data) {
                 let r_data = [];
+                del_list = [];
                 for (let a = 0; a < data.length; a++) {
                     let copies = act.items.filter(function (i) {return i.name == data[a].name});
                     let numParse = parseInt;
@@ -333,11 +887,12 @@ const dc_utils = {
                         const copy = copies[i];
                         if (copy.id != data[a].id) {
                             total += numParse(copy.data.data.amount);
-                            copy.delete();
+                            del_list.push(copy.id);
                         }
                     }
                     data[a].update({data: {amount: total}});
                 }
+                act.deleteEmbeddedDocuments("Item", del_list)
                 return data
             },
             calculate_costs: function(act, items) {
@@ -384,6 +939,9 @@ const dc_utils = {
                 }else{
                     return act.update({data: {wound_modifier: 0}});
                 }
+            },
+            set_bleeding: function(act, bool) {
+                act.update({data: {is_bleeding: bool}});
             },
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
@@ -469,6 +1027,27 @@ const dc_utils = {
                     return true;
                 }
                 return false;
+            },
+        },
+        wind: {
+            get: function(act) {
+                return act.data.data.wind;
+            },
+            set: function(act, value) {
+                act.update({data: {wind: {value: value}}});
+            },
+            reset: function(act) {
+                let max = act.data.data.wind.max;
+                act.update({data: {wind: {value: max}}});
+            },
+            bleed: function(act) {
+                if (act.data.data.is_bleeding) {
+                    let roll = new Roll(`1d6`).roll();
+                    let wind = act.data.data.wind.value - roll._total;
+                    roll.toMessage();
+                    dc_utils.char.wind.set(act, wind);
+                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${roll._total} wind!`);
+                }
             },
         },
         token: {
@@ -569,6 +1148,12 @@ const dc_utils = {
                     }
                 }
             }
+            if (skl == 'guts') {
+                data.modifiers.grit = {
+                    label: 'Grit',
+                    modifier: act.data.data.grit,
+                };
+            }
             if (item) {
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
@@ -614,7 +1199,7 @@ const dc_utils = {
             data.modifier = modifier
             let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
             r_data.total = roll._total;
-            let count = 0
+            let count = 0;
             roll.terms[0].results.forEach(die => {
                 if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
@@ -639,20 +1224,22 @@ const dc_utils = {
             data.pass = 0;
             data.ones = 0;
             for (let i = 0; i < data.amt; i++) {
-                const res = data.results[i]
+                const res = data.results[i];
                 if (res + data.modifier >= data.tn) {
                     data.pass += 1;
                 }else if (res == 1) {
                     data.ones += 1;
                 }
                 if (res + data.modifier > data.total) {
-                    data.total = res + data.modifier
+                    data.total = res + data.modifier;
                 }
             }
-            if (data.pass > data.ones) {
+            if (data.pass >= data.ones) {
                 data.crit_fail = false;
+            }else{
+                data.crit_fail = true;
             }
-            if (data.pass > data.ones && data.total >= data.tn) {
+            if (data.pass >= data.ones && data.total >= data.tn) {
                 data.success = true;
                 data.raises = Math.floor((data.total - data.tn) / 5);
             }
@@ -675,15 +1262,21 @@ const dc_utils = {
                 loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];
-                let range = raises * 2
-                for (let i = 0; i < dc_utils.locations.length; i++) {
-                    if (i >= tot - range && i <= tot + range && i < 19){
+                let range = raises * 2 || 0;
+                for (let i = tot - range; i < tot + range; i++) {
+                    console.log(i, dc_utils.loc_lookup[i]);
+                    if (dc_utils.loc_lookup[i] != undefined) {
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
                             found.push(dc_utils.loc_lookup[i]);
                         }
                     }
                 }
                 console.log('roll_damage: Location:', found, found.length - 1);
+                if (found.includes('noggin')) {
+                    return 'noggin';
+                }else if (found.includes('gizzards')) {
+                    return 'gizzards';
+                }
                 loc_key = found[found.length - 1];
                 console.log('roll_damage: Location:', loc_key);
             }else{
@@ -694,9 +1287,10 @@ const dc_utils = {
         },
         get_result_template: function(data) {
             let r_str = `
-                <p style="text-align:center">${data.roller} rolled ${data.roll.total}</p>
-                <table style="table-layout: fixed;">
-                    <tr style="text-align:center">
+                <div class="center typed">
+                    <p style="text-align:center">${data.roller} rolled:</p>
+                    <table style="table-layout: fixed;">
+                        <tr style="text-align:center">
             `;
             for (let i = 0; i < data.roll.amt; i++) {
                 const res = data.roll.results[i];
@@ -727,7 +1321,7 @@ const dc_utils = {
                 for (let key of Object.keys(data.modifiers)) {
                     if (data.modifiers[key].modifier != 0) {
                         r_str += `
-                            <tr class="center">
+                            <tr class="center typed">
                                 <td>${data.modifiers[key].label}</td>
                                 <td>${data.modifiers[key].modifier}</td>
                             </tr>
@@ -738,7 +1332,10 @@ const dc_utils = {
                     </table>
                 `;
             }
-            return r_str
+            return r_str + `
+                    <p class="center typed">Total: ${data.roll.total}</p>
+                </div>
+            `;
         },
     },
     deck: {
@@ -810,7 +1407,7 @@ const dc_utils = {
             let count = 0;
             let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
             let hand = '';
-            for (let i = 1; i < cards.length; i++) { 
+            for (let i = 0; i < cards.length; i++) {
                 if (instances[cards[i]]) {
                     count += 1;
                     hand += ` ${cards[i]}`;
@@ -825,7 +1422,6 @@ const dc_utils = {
             return false;
         },
         evaluate_hand: function(card_pile) {
-            // 2N + 23 operations worst case to find best hand from N cards
             let card_instances = {};
             let suit_instances = {};
             let str;
@@ -844,7 +1440,6 @@ const dc_utils = {
                     suit_instances[suit] = 1;
                 }
             }
-            console.log(card_instances, suit_instances);
             let flush = false;
             for (const key in suit_instances) {
                 const count = suit_instances[key];
@@ -852,7 +1447,7 @@ const dc_utils = {
                     // Flush draw, check for straight
                     str = dc_utils.deck.calculate_straight(card_instances);
                     if (str) {
-                        return 'Straight Flush'+str;
+                        return 'Straight Flush:'+str;
                     }else{
                         flush = key;
                     }
@@ -865,13 +1460,25 @@ const dc_utils = {
             for (const key in card_instances) {
                 if (Object.hasOwnProperty.call(card_instances, key)) {
                     const tot = card_instances[key];
-                    if (tot == 4) return `4 of a kind (${key}'s)`;
+                    if (tot == 4) return `4 of a kind: ${key} ${key} ${key} ${key}` + dc_utils.deck.poker.get_best_kicker(card_pile, [key], 1);
                     if (tot == 3) found_3 = key;
-                    if (tot == 2 && found_2 && !(found_2_2)) found_2_2 = key;
-                    if (tot == 2 && !(found_2)) found_2 = key;
+                    if (tot == 2) {
+                        if (found_2) {
+                            if (dc_utils.cards.indexOf(key) < dc_utils.cards.indexOf(found_2)) {
+                                found_2_2 = found_2;
+                                found_2 = key;
+                            }else if(found_2_2) {
+                                if (dc_utils.cards.indexOf(key) < dc_utils.cards.indexOf(found_2_2)) {
+                                    found_2_2 = key;
+                                }
+                            }
+                        }else{
+                            found_2 = key;
+                        }
+                    }
                 }
             }
-            if (found_3 && found_2) return `Full House ${found_3}'s over ${found_2}'s`;
+            if (found_3 && found_2) return `Full House: ${found_3}'s over ${found_2}'s`;
             if (flush) {
                 str = ''
                 for (let c = 0; c < card_pile.length; c++) {
@@ -881,25 +1488,40 @@ const dc_utils = {
                         str += ` ${dc_utils.deck.get_card_value(card)}`;
                     }
                 }
-                return `Flush`+str;
+                return `Flush:`+str;
             }
             // Check for straight
             str = dc_utils.deck.calculate_straight(card_instances);
             if (str) {
-                return 'Straight'+str;
+                return 'Straight:'+str;
             }
-            if (found_3) return `Three ${found_3}'s`;
-            if (found_2_2) return `Two Pair ${found_2_2}'s over ${found_2}'s`;
-            if (found_2) return `Pair of ${found_2}'s`;
-            return `High Card: ${dc_utils.deck.get_card_value(card_pile[0])}`;
+            if (found_3) return `Three of a kind: ${found_3} ${found_3} ${found_3}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_3], 2);
+            if (found_2_2) return `Two Pair: ${found_2} ${found_2} ${found_2_2} ${found_2_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2, found_2_2], 1);
+            if (found_2) return `Pair: ${found_2} ${found_2}` + dc_utils.deck.poker.get_best_kicker(card_pile, [found_2], 3);
+            let val = dc_utils.deck.get_card_value(card_pile[0])
+            return `High Card: ${val}` + dc_utils.deck.poker.get_best_kicker(card_pile, [val], 4);
         },
         poker: {
-            generate_hands: function() {
-                let hands = [];
+            // Don't forget to sort the hand before calling this...
+            get_best_kicker: function(hand, block_list, count=1) {
+                if (hand.length <= count) return '';
+                let r_str = '';
+                for (let i = 0; i < hand.length; i++) {
+                    let card = hand[i];
+                    let val = dc_utils.deck.get_card_value(card);
+                    if (!(block_list.includes(val))) {
+                        r_str += ` ${val}`;
+                        count -= 1;
+                    }
+                    if (count == 0) return r_str;
+                }
+            },
+            generate_scoring_hands: function() {
+                let hands =[];
                 let cards = ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2", "A"];
                 // Straight flushes
                 for (let c = 0; c < cards.length - 4; c++) {
-                    let hand = 'Straight Flush'
+                    let hand = 'Straight Flush:'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
@@ -909,7 +1531,7 @@ const dc_utils = {
                 for (let c = 0; c < cards.length - 1; c++) {
                     for (let k = 0; k < cards.length - 1; k++) {
                         if (k != c) {
-                            hands.push(`Four of a kind ${cards[c]}'s ${cards[k]} kicker`);
+                            hands.push(`Four of a kind: ${cards[c]} ${cards[c]} ${cards[c]} ${cards[c]} ${cards[k]}`);
                         }
                     }
                 }
@@ -917,7 +1539,7 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.push(`Full House ${cards[o]}'s over ${cards[u]}'s`);
+                            hands.push(`Full House: ${cards[o]}'s over ${cards[u]}'s`);
                         }
                     }
                 }
@@ -928,7 +1550,7 @@ const dc_utils = {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
                                     if (c_5 != c_4 + 1) {
-                                        hands.push(`Flush ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
+                                        hands.push(`Flush: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }
                             }
@@ -937,7 +1559,7 @@ const dc_utils = {
                 }
                 // Straights
                 for (let c = 0; c < cards.length - 4; c++) {
-                    let hand = 'Straight'
+                    let hand = 'Straight:'
                     for (let i = c; i < c + 5; i++) {
                         hand += ` ${cards[i]}`;
                     }
@@ -945,10 +1567,10 @@ const dc_utils = {
                 }
                 // Trips
                 for (let c = 0; c < cards.length - 1; c++) {
-                    for (let k1 = 0; k1 < cards.length - 1; k1++) {
-                        for (let k2 = 0; k2 < cards.length - 1; k2++) {
-                            if (c != u) {
-                                hands.push(`Three ${cards[c]}'s`);
+                    for (let k1 = 0; k1 < cards.length - 2; k1++) {
+                        for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
+                            if (c != k1 && c != k2 && k1 != k2) {
+                                hands.push(`Three of a kind: ${cards[c]} ${cards[c]} ${cards[c]} ${cards[k1]} ${cards[k2]}`);
                             }
                         }
                     }
@@ -957,13 +1579,25 @@ const dc_utils = {
                 for (let o = 0; o < cards.length - 1; o++) {
                     for (let u = 0; u < cards.length - 1; u++) {
                         if (o != u) {
-                            hands.push(`Two Pair ${cards[o]}'s over ${cards[u]}'s`);
+                            for (let k = 0; k < cards.length - 1; k++) {
+                                if (k != o && k != u) {
+                                    hands.push(`Two Pair: ${cards[o]} ${cards[o]} ${cards[u]} ${cards[u]} ${cards[k]}`);
+                                }
+                            }
                         }
                     }
                 }
                 // Pair
                 for (let c = 0; c < cards.length - 1; c++) {
-                    hands.push(`Pair of ${cards[c]}'s`);
+                    for (let k = 0; k < cards.length - 1; k++) {
+                        for (let k1 = k + 1; k1 < cards.length - 1; k1++) {
+                            for (let k2 = k1 + 1; k2 < cards.length - 1; k2++) {
+                                if (k != c && k1 != c && k2 != c) {
+                                    hands.push(`Pair: ${cards[c]} ${cards[c]} ${cards[k]} ${cards[k1]} ${cards[k2]}`);
+                                }
+                            }
+                        }
+                    }
                 }
                 //High Card
                 for (let c_1 = 0; c_1 < cards.length - 5; c_1++) {
@@ -971,7 +1605,7 @@ const dc_utils = {
                         for (let c_3 = c_2 + 1; c_3 < cards.length - 3; c_3++) {
                             for (let c_4 = c_3 + 1; c_4 < cards.length - 2; c_4++) {
                                 for (let c_5 = c_4 + 1; c_5 < cards.length - 1; c_5++) {
-                                    if (c_5 != c_4 + 1) {
+                                    if (!(dc_utils.deck.calculate_straight({[cards[c_1]]: 1, [cards[c_2]]: 1, [cards[c_3]]: 1, [cards[c_4]]: 1, [cards[c_5]]: 1}))) {
                                         hands.push(`High Card: ${cards[c_1]} ${cards[c_2]} ${cards[c_3]} ${cards[c_4]} ${cards[c_5]}`);
                                     }
                                 }

@@ -25,7 +25,8 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
         "systems/deadlands_classic/templates/partials/mook-core.hbs",
         "systems/deadlands_classic/templates/partials/mook-traits.hbs",
-        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"
+        "systems/deadlands_classic/templates/partials/mook-sidebar.hbs",
+        "systems/deadlands_classic/templates/sheets/poker/partials/gm-poker-opts.hbs"
     ]
     return loadTemplates(template_paths)
 }
@@ -35,9 +36,7 @@ function get_token_count(t) {
     let tokens = canvas.tokens.placeables;
     if (tokens) {
         tokens.forEach(tkn => {
-            console.log(tkn.name, t.name);
             if (tkn.name.search(t.name) != -1) {
-                console.log('Match!', tkn.name.search(t.name));
                 count += 1;
             }
         });
@@ -82,12 +81,10 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('if_has', function (type, val, options) {
-        //console.log(id, type, val, options);
         let act = game.actors.get(options.data.root.id);
         if (dc_utils.char.has(act, type, val)) {
             return options.fn(this);
         }
-        //return options.inverse(this);
     });
 
     Handlebars.registerHelper('if_equipped', function (slot, id, options) {
@@ -96,6 +93,17 @@ Hooks.once("init", function () {
             return options.fn(this);
         }
         return options.inverse(this);
+    });
+
+    Handlebars.registerHelper('has_joker', function (deck, options) {
+        let act = dc_utils.get_actor(options.data.root.actor.name);
+        let hand = dc_utils.char.items.get(act, deck);
+        for (const card of hand) {
+            let val = dc_utils.deck.get_card_value(card)
+            if (val == 'Jo') {
+                return options.fn(this);
+            }
+        }
     });
 
     Handlebars.registerHelper('is_one_handed', function(options) {
@@ -135,6 +143,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('die_upgrade', function (val, options) {
+        // This needs fixing so it checks at the start for the d12 and calculates cost based on the characters modifier.
         if (!(game.user.isGM)) {
             let upgrades = {
                 d4:  {next: "d6", cost: 18},
@@ -167,6 +176,12 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('isGM', function (options) {
+        if (game.user.isGM) {
+            return options.fn(this);
+        }
+    });
+
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
             case '==':
@@ -196,9 +211,13 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     if (!(act.hasPlayerOwner)) {
-        let same = canvas.tokens.placeables.find(i => i.data.actorId == arguments[1].actorId);
-        let amt = get_token_count(act);
-        document.data.update({name: createData.name += ` ${amt}`});
+        let rn = Math.random();
+        console.log(rn);
+        if (rn <= 0.5) {
+            document.data.update({name: dc_utils.char.random_name('male')});
+        }else{
+            document.data.update({name: dc_utils.char.random_name('female')});
+        }
     }
 });
 
