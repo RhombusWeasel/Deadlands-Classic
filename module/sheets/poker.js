@@ -14,30 +14,8 @@ class Poker extends FormApplication {
     getData() {
         // Return data to the template
         let data = super.getData();
-        data.players = [
-            {
-                name: 'Jeff',
-                hasPlayerOwner: false,
-                data: {
-                    data: {
-                        cash: 250,
-                        traits: {
-                            smarts: {
-                                level: 3,
-                                die_type: 'd10',
-                                skills: {
-                                    gamblin: {
-                                        level: 3,
-                                        modifier: 0
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        ];
-      return data;
+        data.players = game.dc.poker.players;
+        return data;
     }
   
     activateListeners(html) {
@@ -46,6 +24,49 @@ class Poker extends FormApplication {
     }
     
     _on_add_player(event) {
-
+        event.preventDefault();
+        let element    = event.currentTarget;
+        let name       = dc_utils.char.random_name('male');
+        let gamblin    = document.getElementById('difficulty-gamblin').value;
+        let bluff      = document.getElementById('difficulty-bluff').value;
+        let scrutinize = document.getElementById('difficulty-scrutinize').value;
+        let cash       = document.getElementById('player-cash').value;
+        this.add_ai(name, gamblin, bluff, scrutinize, cash);
     }
-  }
+
+    add_ai(name, gam, blf, scr, cash){
+        let diff = {
+            sucker: {
+                level:    1,
+                die_type: 'd6',
+                modifier: -8
+            },
+            player: {
+                level:    2,
+                die_type: 'd8',
+                modifier: 0
+            },
+            gambler: {
+                level:    3,
+                die_type: 'd10',
+                modifier: 0
+            },
+            huckster: {
+                level:    5,
+                die_type: 'd12',
+                modifier: 2
+            }
+        }
+        game.dc.poker.players.push({
+            hasPlayerOwner: false,
+            name: name,
+            cash: cash,
+            skills: {
+                gamblin:    `${diff[gam].level}${diff[gam].die_type} + ${diff[gam].modifier}`,
+                bluff:      `${diff[blf].level}${diff[blf].die_type} + ${diff[blf].modifier}`,
+                scrutinize: `${diff[scr].level}${diff[scr].die_type} + ${diff[scr].modifier}`,
+            }
+        });
+        return this.render();
+    }
+}
