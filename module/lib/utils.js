@@ -1122,7 +1122,7 @@ const dc_utils = {
                 return `${dc_utils.names.american.forenames[sex][fn]} ${dc_utils.names.american.surnames[sn]}`
             }else if (eth == 'native_american') {
                 let fn = Math.floor(Math.random() * dc_utils.names.native_american[sex].length);
-                return `${fn}`;
+                return `${dc_utils.names.native_american[sex][fn]}`;
             }
         },
         has: function(act, type, name) {
