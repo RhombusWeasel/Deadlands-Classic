@@ -210,7 +210,8 @@ Hooks.once("init", function () {
 
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
-    console.log(document, createData, options, userId);
+    let o_name = act.name;
+    console.log(name, document, createData, options, userId);
     if (!(act.hasPlayerOwner)) {
         let eth = act.data.data.ethnicity;
         let rn = Math.random();
@@ -220,8 +221,9 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
             name = dc_utils.char.random_name(eth, 'female');
         }
         document.data.update({name: name});
-        document._actor.update({name: name});
+        document.actor.update({name: name});
     }
+    act.update({name: o_name})
 });
 
 /* Hooks.on('hoverToken', function () {
