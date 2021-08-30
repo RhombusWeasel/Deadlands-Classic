@@ -220,7 +220,9 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
             name = dc_utils.char.random_name(eth, 'female');
         }
         document.data.update({name: name});
-        document._actor.data.update({name: name});
+        setTimeout(() => {
+            game.actors.getName(name).update({name: name});
+        }, 500);
     }
 });
 
