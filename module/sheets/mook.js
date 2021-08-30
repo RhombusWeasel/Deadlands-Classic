@@ -88,6 +88,7 @@ export default class NPCSheet extends ActorSheet {
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+        html.find(".ethnicity-select").change(this._on_ethnicity_select.bind(this));
         return super.activateListeners(html);
     }
 
@@ -108,6 +109,14 @@ export default class NPCSheet extends ActorSheet {
 
         let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
         act.update({data: {pace: nimbleness.sides}});
+    }
+
+    _on_ethnicity_select(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        let char = dc_utils.get_actor(this.actor.name);
+        char.update({data: {ethnicity: value}});
     }
 
     _on_skill_roll(event) {
