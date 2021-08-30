@@ -1121,7 +1121,7 @@ const dc_utils = {
                 let sn = Math.floor(Math.random() * dc_utils.names.american.surnames.length)
                 return `${dc_utils.names.american.forenames[sex][fn]} ${dc_utils.names.american.surnames[sn]}`
             }else if (eth == 'native_american') {
-                let fn = Math.floor(Math.random() * dc_utils.names.native_american.forenames[sex].length);
+                let fn = Math.floor(Math.random() * dc_utils.names.native_american[sex].length);
                 return `${fn}`;
             }
         },
