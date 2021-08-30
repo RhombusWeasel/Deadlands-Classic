@@ -221,6 +221,8 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
         }
         document.data.update({name: name});
         document.actor.update({'actorData.name': name});
+        act = game.actors.getName(name);
+        act.update({name: o_name});
     }
 });
 
