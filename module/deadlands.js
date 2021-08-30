@@ -220,9 +220,8 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
             name = dc_utils.char.random_name(eth, 'female');
         }
         document.data.update({name: name});
-        document.actor.update({name: name});
+        document.actor.update({'actorData.name': name});
     }
-    act.update({name: o_name})
 });
 
 /* Hooks.on('hoverToken', function () {
