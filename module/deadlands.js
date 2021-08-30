@@ -211,6 +211,7 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
+    console.log(document, createData, options, userId);
     if (!(act.hasPlayerOwner)) {
         let eth = act.data.data.ethnicity;
         let rn = Math.random();
