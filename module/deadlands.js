@@ -221,7 +221,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
         }
         document.data.update({name: name});
         setTimeout(() => {
-            game.actors.getName(name).update({name: name});
+            canvas.tokens.placeables.find(i => i.name == name).document.actor.update({name: name});
         }, 500);
     }
 });
