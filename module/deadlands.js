@@ -220,6 +220,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
             name = dc_utils.char.random_name(eth, 'female');
         }
         document.data.update({name: name});
+        // This is stupid and wrong, don't be like me.
         setTimeout(() => {
             canvas.tokens.placeables.find(i => i.name == name).document.actor.update({name: name});
         }, 500);
