@@ -6,6 +6,19 @@
                 {{> "systems/deadlands_classic/templates/partials/mook-traits.hbs"}}
             </div>
             <div class="sidebar">
+                <select name="data.ethnicity" id="ethnicity-select">
+                    {{log data.data.ethnicity}}
+                    {{#if (eq data.data.ethnicity "american")}}
+                    <option value="american" selected>American/European</option>
+                    {{else}}
+                    <option value="american">American/European</option>
+                    {{/if}}
+                    {{#if (eq data.data.ethnicity "native_american")}}
+                    <option value="native_american" selected>Native American</option>
+                    {{else}}
+                    <option value="native_american">Native American</option>
+                    {{/if}}
+                </select>
                 {{> "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"}}
             </div>
         </div>

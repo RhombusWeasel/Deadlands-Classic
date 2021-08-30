@@ -9,6 +9,7 @@
         "templates": {
             "core": {
                 "generated": false,
+                "ethnicity": "american",
                 "size": 6,
                 "pace": 4,
                 "wind": {
