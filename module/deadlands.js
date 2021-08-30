@@ -219,7 +219,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
             name = dc_utils.char.random_name(eth, 'female');
         }
         document.data.update({name: name});
-        document.overrides.update({name: name});
+        document.overrides.name = name;
     }
 });
 
