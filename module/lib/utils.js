@@ -1710,6 +1710,9 @@ const dc_utils = {
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2 || 0;
+                if (range == 0) {
+                    return dc_utils.loc_lookup[tot];
+                }
                 for (let i = tot - range; i < tot + range; i++) {
                     console.log(i, dc_utils.loc_lookup[i]);
                     if (dc_utils.loc_lookup[i] != undefined) {
