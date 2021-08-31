@@ -1333,8 +1333,10 @@ const dc_utils = {
                     for (let i = 1; i < copies.length; i++) {
                         const copy = copies[i];
                         if (copy.id != data[a].id) {
-                            total += numParse(copy.data.data.amount);
-                            del_list.push(copy.id);
+                            if (!(del_list.includes(copy.id))) {
+                                total += numParse(copy.data.data.amount);
+                                del_list.push(copy.id);
+                            }
                         }
                     }
                     data[a].update({data: {amount: total}});
