@@ -1322,9 +1322,9 @@ const dc_utils = {
             },
             compress: function(act, data) {
                 let r_data = [];
-                del_list = [];
                 seen = [];
                 for (let a = 0; a < data.length; a++) {
+                    let str = "Checking " + data[a].name;
                     if (!(seen.includes(data[a].name))) {
                         seen.push(data[a].name);
                         let copies = act.items.filter(function (i) {return i.name == data[a].name});
@@ -1333,6 +1333,7 @@ const dc_utils = {
                             numParse = parseFloat;
                         }
                         let total = numParse(data[a].data.data.amount);
+                        let del_list = [];
                         for (let i = 1; i < copies.length; i++) {
                             const copy = copies[i];
                             if (copy.id != data[a].id) {
@@ -1345,9 +1346,9 @@ const dc_utils = {
                         if(data[a]) {
                             data[a].update({data: {amount: total}});
                         }
+                        act.deleteEmbeddedDocuments("Item", del_list)
                     }
                 }
-                act.deleteEmbeddedDocuments("Item", del_list)
                 return data
             },
             calculate_costs: function(act, items) {
