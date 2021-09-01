@@ -1341,6 +1341,7 @@ const dc_utils = {
                             const copy = copies[i];
                             if (copy.id != data[a].id) {
                                 if (!(del_list.includes(copy.id))) {
+                                    console.log('Adding ' + copy.data.data.amount);
                                     total += numParse(copy.data.data.amount);
                                     del_list.push(copy.id);
                                 }
