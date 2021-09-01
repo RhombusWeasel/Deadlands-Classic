@@ -233,8 +233,12 @@ Hooks.on('dropActorSheetData', function(actor, sheet, data) {
         let item = game.items.get(data.id);
         if (item.type == 'goods') {
             let found_item = actor.items.filter(function (i) {return i.name == item.name});
-            let has = found_item[0].data.data.amount;
-            let amt = item.data.data.amount;
+            let numParse = parseInt;
+            if (found_item[0].data.data.is_float) {
+                numParse = parseFloat;
+            }
+            let has = numParse(found_item[0].data.data.amount);
+            let amt = numParse(item.data.data.amount);
             console.log(has, amt);
             if (found_item.length > 0) {
                 found_item[0].update({data: {amount: has + amt}});
