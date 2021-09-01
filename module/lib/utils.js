@@ -1324,8 +1324,9 @@ const dc_utils = {
                 let r_data = [];
                 seen = [];
                 for (let a = 0; a < data.length; a++) {
-                    let str = "Checking " + data[a].name;
+                    let str = "Checking: " + data[a].name;
                     if (!(seen.includes(data[a].name))) {
+                        str += ' Not found... '
                         seen.push(data[a].name);
                         let copies = act.items.filter(function (i) {return i.name == data[a].name});
                         let numParse = parseInt;
@@ -1334,7 +1335,9 @@ const dc_utils = {
                         }
                         let total = numParse(data[a].data.data.amount);
                         let del_list = [];
-                        for (let i = 1; i < copies.length; i++) {
+                        str += copies.length + ' copies found.'
+                        console.log(str);
+                        for (let i = 0; i < copies.length; i++) {
                             const copy = copies[i];
                             if (copy.id != data[a].id) {
                                 if (!(del_list.includes(copy.id))) {
