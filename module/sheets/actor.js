@@ -78,14 +78,11 @@ export default class PlayerSheet extends ActorSheet {
         data.tricks = dc_utils.char.items.get(this.actor, "trick");
         data.hexes = dc_utils.char.items.get(this.actor, "hex");
         data.favors = dc_utils.char.items.get(this.actor, "favor");
+        data.components = dc_utils.char.items.get(this.actor, "components");
         data.hinderances = dc_utils.char.items.get(this.actor, "hinderance");
         data.edges = dc_utils.char.items.get(this.actor, "edge");
         //data.level_headed_available = game.dc.level_headed_available;
-        if (this.actor.hasPlayerOwner) {
-            data.goods = dc_utils.char.items.compress(this.actor, dc_utils.char.items.get(this.actor, "goods"));
-        }else{
-            data.goods = dc_utils.char.items.get(this.actor, "goods");
-        }
+        data.goods = dc_utils.char.items.get(this.actor, "goods");
         dc_utils.char.items.calculate_costs(this.actor, data.goods);
         data.cards = dc_utils.joker_cards;
         data.suits = dc_utils.joker_suits;

@@ -19,6 +19,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/science.hbs",
         "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
@@ -224,6 +225,27 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
         setTimeout(() => {
             canvas.tokens.placeables.find(i => i.name == name).document.actor.update({name: name});
         }, 500);
+    }
+});
+
+Hooks.on('dropActorSheetData', function(actor, sheet, data) {
+    console.log(actor, sheet, data);
+    if (data.type == 'Item') {
+        let item = game.items.get(data.id);
+        if (item.type == 'goods') {
+            let found_item = actor.items.filter(function (i) {return i.name == item.name});
+            let numParse = parseInt;
+            if (found_item[0].data.data.is_float) {
+                numParse = parseFloat;
+            }
+            let has = numParse(found_item[0].data.data.amount);
+            let amt = numParse(item.data.data.amount);
+            console.log(has, amt);
+            if (found_item.length > 0) {
+                found_item[0].update({data: {amount: has + amt}});
+                return false;
+            }
+        }
     }
 });
 
