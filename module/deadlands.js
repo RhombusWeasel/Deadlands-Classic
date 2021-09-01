@@ -19,6 +19,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/science.hbs",
         "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",

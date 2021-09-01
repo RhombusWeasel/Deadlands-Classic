@@ -1,0 +1,20 @@
+<section>
+    <div class="flexrow">
+        <div>
+            {{!-- Components --}}
+            <h2 class="center">Components</h2>
+            <table>
+            {{#each components as |comp|}}
+                <tr>
+                    <td>{{comp.name}}</td>
+                    <td>{{comp.amount}}</td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        <div>
+            {{!-- Blueprints --}}
+            <h2 class="center">Blueprints</h2>
+        </div>
+    </div>
+</section>
