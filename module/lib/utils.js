@@ -1323,10 +1323,8 @@ const dc_utils = {
             compress: function(act, data) {
                 let r_data = [];
                 seen = [];
-                for (let a = 0; a < data.length; a++) {
-                    let str = "Checking: " + data[a].name;
+                /* for (let a = 0; a < data.length; a++) {
                     if (!(seen.includes(data[a].name))) {
-                        str += ' Not found... '
                         seen.push(data[a].name);
                         let copies = act.items.filter(function (i) {return i.name == data[a].name});
                         let numParse = parseInt;
@@ -1335,13 +1333,10 @@ const dc_utils = {
                         }
                         let total = numParse(data[a].data.data.amount);
                         let del_list = [];
-                        str += copies.length + ' copies found.'
-                        console.log(str);
                         for (let i = 0; i < copies.length; i++) {
                             const copy = copies[i];
                             if (copy.id != data[a].id) {
                                 if (!(del_list.includes(copy.id))) {
-                                    console.log('Adding ' + copy.data.data.amount);
                                     total += numParse(copy.data.data.amount);
                                     del_list.push(copy.id);
                                 }
@@ -1352,7 +1347,7 @@ const dc_utils = {
                         }
                         act.deleteEmbeddedDocuments("Item", del_list)
                     }
-                }
+                } */
                 return data
             },
             calculate_costs: function(act, items) {
