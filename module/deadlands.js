@@ -227,6 +227,13 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     }
 });
 
+Hooks.on('dropActorSheetData', function(actor, sheet, data) {
+    console.log(actor, sheet, data);
+    if (data.type == 'goods') {
+        console.log('Goods item found');
+    }
+});
+
 /* Hooks.on('hoverToken', function () {
     if (game.user.isGM) {
         let tkn = arguments[0]
