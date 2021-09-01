@@ -229,8 +229,9 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
 
 Hooks.on('dropActorSheetData', function(actor, sheet, data) {
     console.log(actor, sheet, data);
-    if (data.type == 'goods') {
-        console.log('Goods item found');
+    if (data.type == 'Item') {
+        let item = game.items.get(data.id);
+        console.log(item);
     }
 });
 
