@@ -5,10 +5,10 @@
             <h2 class="center">Components</h2>
             <table>
             {{#each components as |comp|}}
-                <tr class="item" data-itemId="{{this.id}}">
+                <tr class="item" data-itemId="{{comp.id}}">
                     <td>{{comp.name}}</td>
                     <td>x{{comp.data.data.amount}}</td>
-                    <td><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+                    <td><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>
