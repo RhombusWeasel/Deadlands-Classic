@@ -229,7 +229,6 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
 });
 
 Hooks.on('dropActorSheetData', function(actor, sheet, data) {
-    console.log(actor, sheet, data);
     if (data.type == 'Item') {
         let item = game.items.get(data.id);
         let stackable = ['goods', 'components']
