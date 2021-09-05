@@ -1626,10 +1626,10 @@ const dc_utils = {
                     data.modifiers.aim = {label: 'Aim', modifier: act.data.data.aim_bonus};
                     dc_utils.combat.clear_aim(act);
                 }
-            }
-            let tgt_loc = act.data.data.called_shot
-            if (tgt_loc != 'any') {
-                data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                let tgt_loc = act.data.data.called_shot
+                if (tgt_loc != 'any') {
+                    data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                }
             }
             return data;
         },
