@@ -706,9 +706,11 @@ let operations = {
         }
     },
     soak: function(data) {
-        console.log('soak:', data);
-        if (data.wounds > 0) {
-            dc_utils.socket.emit('soak', data);
+        if (game.user.isGM) {
+            console.log('soak:', data);
+            if (data.wounds > 0) {
+                dc_utils.socket.emit('apply_damage', data);
+            }
         }
     }
 }
