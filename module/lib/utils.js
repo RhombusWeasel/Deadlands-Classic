@@ -1387,7 +1387,7 @@ const dc_utils = {
                 let wind_roll = new Roll(`${amt}d6`).roll();
                 wind_roll.toMessage({rollMode: 'gmroll'});
                 return setTimeout(() => {
-                    act.update({data: {wind: {value: act.data.data.wind.value - wind_roll._total}}});
+                    act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
                     dc_utils.chat.send('Wind', `${act.name} takes ${wound_roll._total} wind.`);
                 }, Math.random() * 500);
             },
