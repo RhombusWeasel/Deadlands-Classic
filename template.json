@@ -47,6 +47,7 @@
                     "feet": "Nuthin"
                 },
                 "wound_modifier": 0,
+                "wound_soak": 0,
                 "grit": 0,
                 "cash": 0,
                 "bounty": {
@@ -68,7 +69,8 @@
                 "wound_soak": 0,
                 "description": "",
                 "notes": "",
-                "nightmare": ""
+                "nightmare": "",
+                "player_target": "none"
             }
         },
         "player": {
@@ -649,7 +651,8 @@
                 "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
                 "fannin": {"name": "Fannin", "mod": -2, "active":false},
                 "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
-            }
+            },
+            "player_target": "all"
         }
     },
     "Item": {

@@ -603,7 +603,8 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     _on_new_blueprint(event) {
-
+        event.preventDefault();
+        
     }
 
     _on_cast_trick(event) {
