@@ -1388,7 +1388,7 @@ const dc_utils = {
                 wind_roll.toMessage({rollMode: 'gmroll'});
                 return setTimeout(() => {
                     act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
-                    dc_utils.chat.send('Wind', `${act.name} takes ${wound_roll._total} wind.`);
+                    dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
                 }, Math.random() * 500);
             },
             calculate_wound_modifier: function(act) {
