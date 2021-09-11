@@ -659,49 +659,25 @@ let operations = {
         }
         if (char.isOwner) {
             console.log('enemy_damage:', data, char);
-            let current = parseInt(char.data.data.wounds[data.location]) || 0;
-            let wind_roll = new Roll(`${data.wounds}d6`).roll();
-            wind_roll.toMessage({rollMode: 'gmroll'});
-            let highest = 0;
-            Object.keys(char.data.data.wounds).forEach(function(key) {
-                if (char.data.data.wounds[key] >= highest) {
-                    highest = char.data.data.wounds[key];
-                }
-            });
-            if ((highest == 0 && data.wounds > 0) || data.wounds > highest) {
-                highest = data.wounds
-            }
-            let w_data = {
-                wind: {
-                    value: char.data.data.wind.value - wind_roll._total
-                },
-                wounds: {
-                    [data.location]: current + data.wounds
-                },
-                wound_modifier: highest * -1
-            };
+            let tot = char.data.data.wounds[data.location] + data.wounds;
+            dc_utils.char.wounds.add(char, data.location, data.wounds);
             let tkn = canvas.tokens.placeables.find(i => i.name == char.name);
             if (data.wounds > 0) {
                 tkn.toggleEffect('icons/svg/blood.svg', {active: true});
                 dc_utils.char.wounds.set_bleeding(char, true);
             }
-            if (char.data.data.wind.value - wind_roll._total <= 0) {
+            if (char.data.data.wind.value <= 0) {
                 tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                 tkn.toggleEffect('icons/svg/skull.svg', {active: true});
                 tkn.toggleEffect('icons/svg/blood.svg', {active: false});
             }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
-            if (data.location in critical) {
-                if (current + data.wounds >= 5) {
+            if (char.hasPlayerOwner && data.location in critical) {
+                if (tot >= 5) {
                     tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
                     tkn.toggleEffect('icons/svg/skull.svg', {active: true});
                     tkn.toggleEffect('icons/svg/blood.svg', {active: false});
                 }
-            }
-            if (char.hasPlayerOwner) {
-                Actor.updateDocuments([{_id: char.id, data: w_data}]);
-            } else {
-                char.update({data: w_data});
             }
         }
     },
