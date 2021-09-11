@@ -1134,6 +1134,10 @@ const dc_utils = {
             }
             return false;
         },
+        pluralize: function(amt, a, b) {
+            if (amt > 1) return `${amt} ${a}`;
+            return `${amt} ${b}`
+        },
         bounty: {
             get: function(act) {
                 return act.data.data.bounty.value;
@@ -1366,15 +1370,18 @@ const dc_utils = {
         },
         wounds: {
             add: function(act, loc, amt) {
-                if (parseInt(act.data.data.wound_soak) <= amt) {
-                    act.update({data: {wound_soak: act.data.data.wound_soak - amt}});
-                    dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${amt} wounds supernaturally!`);
-                    return true;
-                }
+                let ws = parseInt(act.data.data.wound_soak);
                 let tot = act.data.data.wounds[loc] + amt;
+                if (ws <= amt) {
+                    act.update({data: {wound_soak: ws - amt}});
+                    dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
+                    return true;
+                }else{
+                    tot -= ws;
+                }
                 return setTimeout(() => {
                     act.update({data: {wounds: {[loc]: tot}}});
-                    dc_utils.chat.send('Wound', `${act.name} takes ${amt} wounds to the ${dc_utils.hit_locations[loc]}`);
+                    dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                     dc_utils.char.wounds.calculate_wound_modifier(act);
                     dc_utils.char.wounds.apply_wind_damage(act, amt);
                 }, Math.random() * 500);
