@@ -1366,7 +1366,7 @@ const dc_utils = {
         },
         wounds: {
             add: function(act, loc, amt) {
-                if (act.data.data.wound_soak <= amt) {
+                if (parseInt(act.data.data.wound_soak) <= amt) {
                     act.update({data: {wound_soak: act.data.data.wound_soak - amt}});
                     dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${amt} wounds supernaturally!`);
                     return true;
