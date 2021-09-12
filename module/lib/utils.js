@@ -1378,12 +1378,13 @@ const dc_utils = {
                     return true;
                 }else{
                     tot -= ws;
+                    act.update({data: {wound_soak: 0}});
                 }
                 return setTimeout(() => {
                     act.update({data: {wounds: {[loc]: tot}}});
-                    dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
+                    dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                     dc_utils.char.wounds.calculate_wound_modifier(act);
-                    dc_utils.char.wounds.apply_wind_damage(act, amt);
+                    dc_utils.char.wounds.apply_wind_damage(act, tot);
                 }, Math.random() * 500);
             },
             remove: function(act, loc, amt) {
@@ -1402,7 +1403,7 @@ const dc_utils = {
                 let wm = act.data.data.wound_modifier
                 let is_wounded = false
                 for (const loc in act.data.data.wounds) {
-                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
+                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
                         let cur = act.data.data.wounds[loc];
                         if (cur * -1 < wm) {
                             wm = cur * -1
