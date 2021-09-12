@@ -127,6 +127,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
+        html.find(".blueprint").click(this._on_new_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
@@ -599,6 +600,11 @@ export default class PlayerSheet extends ActorSheet {
             `,
             whisper: ChatMessage.getWhisperRecipients('GM')
         });
+    }
+
+    _on_new_blueprint(event) {
+        event.preventDefault();
+        
     }
 
     _on_cast_trick(event) {

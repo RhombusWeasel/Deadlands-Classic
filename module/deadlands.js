@@ -229,10 +229,10 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
 });
 
 Hooks.on('dropActorSheetData', function(actor, sheet, data) {
-    console.log(actor, sheet, data);
     if (data.type == 'Item') {
         let item = game.items.get(data.id);
-        if (item.type == 'goods') {
+        let stackable = ['goods', 'components']
+        if (stackable.includes(item.type)) {
             let found_item = actor.items.filter(function (i) {return i.name == item.name});
             let numParse = parseInt;
             if (found_item[0].data.data.is_float) {

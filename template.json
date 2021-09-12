@@ -47,6 +47,7 @@
                     "feet": "Nuthin"
                 },
                 "wound_modifier": 0,
+                "wound_soak": 0,
                 "grit": 0,
                 "cash": 0,
                 "bounty": {
@@ -65,9 +66,11 @@
                 },
                 "joker_value": "A",
                 "joker_suit": "\u2660",
+                "wound_soak": 0,
                 "description": "",
                 "notes": "",
-                "nightmare": ""
+                "nightmare": "",
+                "player_target": "none"
             }
         },
         "player": {
@@ -648,7 +651,8 @@
                 "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
                 "fannin": {"name": "Fannin", "mod": -2, "active":false},
                 "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
-            }
+            },
+            "player_target": "all"
         }
     },
     "Item": {
@@ -680,6 +684,7 @@
                 "slot": "hand",
                 "multi_slot": false,
                 "reliability": false,
+                "reliability_value": 20,
                 "type_select": "skill_mod",
                 "target_select": "cognition",
                 "value_select": 2,

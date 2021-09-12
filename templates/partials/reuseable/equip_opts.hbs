@@ -1,4 +1,16 @@
 <section>
+    <tr>
+        <th>Use Reliability</th>
+        {{#if (eq data.data.reliability true)}}
+        <td><input type="checkbox" name="data.reliability" checked/></td>
+    </tr>
+    <tr>
+        <th>Reliability</th>
+        <td><input type="number" name="data.reliability_value" value="{{data.data.reliability_value}}"></td>
+        {{else}}
+        <td><input type="checkbox" name="data.reliability"/></td>
+        {{/if}}
+    </tr>
 {{#if (eq data.data.equippable true)}}
     <tr>
         <th>{{localize "dc.items.goods.equippable"}}</th>

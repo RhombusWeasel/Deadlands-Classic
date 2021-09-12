@@ -9,7 +9,6 @@
             {{#if action_deck}}
             {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}
             {{/if}}
-            <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
             <nav class="sheet-tabs tabs" data-group="primary">
                 <a class="item" data-tab="description">Description</a>
                 <a class="item" data-tab="core">Core</a>
@@ -21,6 +20,9 @@
                 {{#if_has "edge" "Arcane Background (Huckster)"}}
                 <a class="item" data-tab="hexes">Hexes</a>
                 {{/if_has}}
+                {{#if components}}
+                <a class="item" data-tab="science">Science</a>
+                {{/if}}
                 <a class="item" data-tab="goods">Goods</a>
                 <a class="item" data-tab="notes">Notes</a>
             </nav>
@@ -62,7 +64,7 @@
             {{#if components}}
             <div class="tab science" data-group="primary" data-tab="science">
                 <div class="sidebar">
-                    {{> "systems/deadlands_classic/templates/partials/tabs/science.hbs"}}
+                    {{> "systems/deadlands_classic/templates/partials/tabs/science.hbs" this}}
                 </div>
             </div>
             {{/if}}

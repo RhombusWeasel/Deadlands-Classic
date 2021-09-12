@@ -5,9 +5,10 @@
             <h2 class="center">Components</h2>
             <table>
             {{#each components as |comp|}}
-                <tr>
+                <tr class="item" data-itemId="{{comp.id}}">
                     <td>{{comp.name}}</td>
-                    <td>{{comp.amount}}</td>
+                    <td>x{{comp.data.data.amount}}</td>
+                    <td><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>
@@ -15,6 +16,7 @@
         <div>
             {{!-- Blueprints --}}
             <h2 class="center">Blueprints</h2>
+            <a class="blueprint center">Create Blueprint</a>
         </div>
     </div>
 </section>

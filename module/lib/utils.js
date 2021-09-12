@@ -1085,6 +1085,10 @@ const dc_utils = {
         char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
         return char;
     },
+    pluralize: function(amt, a, b) {
+        if (amt == 1) return `${amt} ${a}`;
+        return `${amt} ${b}`
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -1129,7 +1133,7 @@ const dc_utils = {
             let items = dc_utils.char.items.get(act, type);
             for (const item of items) {
                 if (item.name == name) {
-                    return true;
+                    return item;
                 }
             }
             return false;
@@ -1366,18 +1370,43 @@ const dc_utils = {
         },
         wounds: {
             add: function(act, loc, amt) {
+                let ws = parseInt(act.data.data.wound_soak);
                 let tot = act.data.data.wounds[loc] + amt;
-                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+                if (ws >= amt) {
+                    act.update({data: {wound_soak: ws - amt}});
+                    dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
+                    return true;
+                }else{
+                    tot -= ws;
+                    if (ws > 0) {
+                        dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
+                    }
+                    act.update({data: {wound_soak: 0}});
+                }
+                return setTimeout(() => {
+                    act.update({data: {wounds: {[loc]: tot}}});
+                    dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
+                    dc_utils.char.wounds.calculate_wound_modifier(act);
+                    dc_utils.char.wounds.apply_wind_damage(act, tot);
+                }, Math.random() * 500);
             },
             remove: function(act, loc, amt) {
                 let tot = act.data.data.wounds[loc] - amt;
                 return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
             },
+            apply_wind_damage: function(act, amt) {
+                let wind_roll = new Roll(`${amt}d6`).roll();
+                wind_roll.toMessage({rollMode: 'gmroll'});
+                return setTimeout(() => {
+                    act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
+                    dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
+                }, Math.random() * 500);
+            },
             calculate_wound_modifier: function(act) {
                 let wm = act.data.data.wound_modifier
                 let is_wounded = false
                 for (const loc in act.data.data.wounds) {
-                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc)) {
+                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
                         let cur = act.data.data.wounds[loc];
                         if (cur * -1 < wm) {
                             wm = cur * -1
@@ -1614,8 +1643,15 @@ const dc_utils = {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
                 }
                 if (act.data.data.equipped.off == item.id) {
-                    if (dc_utils.char.has(act, 'edge', 'Two Fisted')) {
-                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                    if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
+                        let tgk = dc_utils.char.has(act, 'edge', 'Two-Gun Kid')
+                        if (tgk) {
+                            if (Math.abs(parseInt(tgk.data.data.cost)) == 3) {
+                                data.modifiers.off_hand = {label: 'Off Hand', modifier: -1}
+                            }
+                        }else{
+                            data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                        }
                     }else{
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
                     }
@@ -1626,10 +1662,10 @@ const dc_utils = {
                     data.modifiers.aim = {label: 'Aim', modifier: act.data.data.aim_bonus};
                     dc_utils.combat.clear_aim(act);
                 }
-            }
-            let tgt_loc = act.data.data.called_shot
-            if (tgt_loc != 'any') {
-                data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                let tgt_loc = act.data.data.called_shot
+                if (tgt_loc != 'any') {
+                    data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                }
             }
             return data;
         },

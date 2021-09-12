@@ -1,5 +1,7 @@
 <section class="form typed">
-    <h2 class="center">Targeting</h2>
+    <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
+    <div class="border">
+        <h2 class="center">Targeting</h2>
         <div class="flexrow">
             {{#each targets as |target|}}
                 {{#if (eq @key ../data.data.called_shot)}}
@@ -10,48 +12,51 @@
                 <label for="select-{{@key}}">{{target.name}} [{{target.mod}}]</label>
             {{/each}}
         </div>
-    <h2 class="center">Equipment</h2>
+    </div>
+    <div class="border">
+        <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
-            <div class="flexrow">
-                <div>
-                    <h3 class="center">Dominant Hand</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
-                </div>
-                <div>
-                    <h3 class="center">Off Hand</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
-                </div>
-            </div>
-        {{else}}
+        <div class="flexrow border">
             <div>
+                <h3 class="center">Dominant Hand</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
+            </div>
+            <div>
+                <h3 class="center">Off Hand</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
+            </div>
+        </div>
+        {{else}}
+            <div class="border">
                 <h3 class="center">Two Handed</h3>
                 {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
             </div>
         {{/is_one_handed}}
-    <div class="flexrow">
-        <div>
-            <h3 class="center">Head</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="head" slot="head" id=data.data.equipped.head}}
-        </div>
-        <div>
-            <h3 class="center">Body</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="body" slot="body" id=data.data.equipped.body}}
-        </div>
-        <div>
-            <h3 class="center">Belt</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="belt" slot="belt" id=data.data.equipped.belt}}
-        </div>
-        <div>
-            <h3 class="center">Legs</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="legs" slot="legs" id=data.data.equipped.legs}}
-        </div>
-        <div>
-            <h3 class="center">Feet</h3>
-            {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="feet" slot="feet" id=data.data.equipped.feet}}
+        <div class="flexrow border">
+            <div>
+                <h3 class="center">Head</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="head" slot="head" id=data.data.equipped.head}}
+            </div>
+            <div>
+                <h3 class="center">Body</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="body" slot="body" id=data.data.equipped.body}}
+            </div>
+            <div>
+                <h3 class="center">Belt</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="belt" slot="belt" id=data.data.equipped.belt}}
+            </div>
+            <div>
+                <h3 class="center">Legs</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="legs" slot="legs" id=data.data.equipped.legs}}
+            </div>
+            <div>
+                <h3 class="center">Feet</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="feet" slot="feet" id=data.data.equipped.feet}}
+            </div>
         </div>
     </div>
     <div class="flexrow">
-        <div>
+        <div class="border">
             <h2 class="center">Wounds:</h2>
             <table style="table-layout: fixed;">
                 <tr>
@@ -65,6 +70,10 @@
                     {{else}}
                     <td><input type="checkbox" name="data.is_bleeding"/></td>
                     {{/if}}
+                </tr>
+                <tr>
+                    <th>Wound Soak</th>
+                    <td><input type="text" name="data.wound_soak" value="{{data.data.wound_soak}}"></td>
                 </tr>
             </table>
             <table>
@@ -115,7 +124,7 @@
                 </tr>
             </table>
         </div>
-        <div>
+        <div class="border">
             {{#if equippable}}
             <h2 class="center">Equippable Items</h2>
             <table>
