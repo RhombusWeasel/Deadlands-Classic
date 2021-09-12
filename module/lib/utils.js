@@ -1644,8 +1644,11 @@ const dc_utils = {
                 }
                 if (act.data.data.equipped.off == item.id) {
                     if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
-                        if (dc_utils.char.has(act, 'edge', 'Two-Gun Kid')) {
-                            let edge = dc_utils.char.items.get
+                        let tgk = dc_utils.char.has(act, 'edge', 'Two-Gun Kid')
+                        if (tgk) {
+                            if (Math.abs(parseInt(tgk.data.data.cost)) == 3) {
+                                data.modifiers.off_hand = {label: 'Off Hand', modifier: -1}
+                            }
                         }else{
                             data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
                         }
