@@ -1,6 +1,7 @@
 <section class="form typed">
     <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
-    <h2 class="center">Targeting</h2>
+    <div class="border">
+        <h2 class="center">Targeting</h2>
         <div class="flexrow">
             {{#each targets as |target|}}
                 {{#if (eq @key ../data.data.called_shot)}}
@@ -11,24 +12,27 @@
                 <label for="select-{{@key}}">{{target.name}} [{{target.mod}}]</label>
             {{/each}}
         </div>
-    <h2 class="center">Equipment</h2>
+    </div>
+    <div class="border">
+        <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
-            <div class="flexrow">
-                <div>
-                    <h3 class="center">Dominant Hand</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
-                </div>
-                <div>
-                    <h3 class="center">Off Hand</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
-                </div>
+        <div class="flexrow">
+            <div>
+                <h3 class="center">Dominant Hand</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
             </div>
+            <div>
+                <h3 class="center">Off Hand</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="off" slot="hand" id=data.data.equipped.off}}
+            </div>
+        </div>
         {{else}}
             <div>
                 <h3 class="center">Two Handed</h3>
                 {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
             </div>
         {{/is_one_handed}}
+    </div>
     <div class="flexrow">
         <div>
             <h3 class="center">Head</h3>
