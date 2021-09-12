@@ -165,24 +165,18 @@ export default class GMSheet extends ActorSheet {
     _on_use_fate(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let chip_type = element.closest(".use-fate").dataset.chip;
+        let chip_type = element.closest(".fate-data").dataset.chip;
         let act = this.getData();
-        let fate_chips = dc_utils.char.chips.get(act);
+        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         let responses = [
             `I think you might've pissed 'im off`,
             `Let's hope he doesn't have it in fer ya.`,
             `I don't like it when he gets like this...`,
         ];
-        for(let chip of fate_chips) {
-            console.log(chip.name, chip_type);
+        for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                let r_msg = responses[get_random_int(0, responses.length - 1)]
-                ChatMessage.create({ content: `
-                    <h3 style="text-align:center">Fate</h3>
-                    <p style="text-align:center">The Marshal uses a ${chip_type} fate chip.</p>
-                    <p style="text-align:center">${r_msg}</p>
-                `});
-                this.actor.deleteOwnedItem(chip._id);
+                dc_utils.chat.send('Fate', `The Marshal uses a ${chip_type} fate chip.`, `${r_msg}`);
+                dc_utils.char.items.delete(act, chip._id);
                 break;
             }
         }
