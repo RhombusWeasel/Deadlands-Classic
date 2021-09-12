@@ -543,6 +543,7 @@ let operations = {
                 if (dc_utils.char.has(act, 'edge', 'Don\'t Get \'Im Riled!')) {
                     let wound_level = act.data.data.wound_modifier * -1;
                     dmg_formula += ` + ${wound_level}d4x=`;
+                    dc_utils.chat.send(`Don't Get 'Im Riled!`, `${act.name} is wounded and angry!`, `They deal ${wound_level}d4 extra damage!`);
                 }
             }
             let dmg_roll = new Roll(dmg_formula).roll();

@@ -1133,7 +1133,7 @@ const dc_utils = {
             let items = dc_utils.char.items.get(act, type);
             for (const item of items) {
                 if (item.name == name) {
-                    return true;
+                    return item;
                 }
             }
             return false;
@@ -1643,8 +1643,12 @@ const dc_utils = {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
                 }
                 if (act.data.data.equipped.off == item.id) {
-                    if (dc_utils.char.has(act, 'edge', 'Two Fisted')) {
-                        data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                    if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
+                        if (dc_utils.char.has(act, 'edge', 'Two-Gun Kid')) {
+                            let edge = dc_utils.char.items.get
+                        }else{
+                            data.modifiers.off_hand = {label: 'Off Hand', modifier: -2}
+                        }
                     }else{
                         data.modifiers.off_hand = {label: 'Off Hand', modifier: -6}
                     }
