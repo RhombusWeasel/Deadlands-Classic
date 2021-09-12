@@ -1085,6 +1085,10 @@ const dc_utils = {
         char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
         return char;
     },
+    pluralize: function(amt, a, b) {
+        if (amt > 1) return `${amt} ${a}`;
+        return `${amt} ${b}`
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -1133,10 +1137,6 @@ const dc_utils = {
                 }
             }
             return false;
-        },
-        pluralize: function(amt, a, b) {
-            if (amt > 1) return `${amt} ${a}`;
-            return `${amt} ${b}`
         },
         bounty: {
             get: function(act) {
