@@ -1378,6 +1378,9 @@ const dc_utils = {
                     return true;
                 }else{
                     tot -= ws;
+                    if (ws > 0) {
+                        dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
+                    }
                     act.update({data: {wound_soak: 0}});
                 }
                 return setTimeout(() => {
