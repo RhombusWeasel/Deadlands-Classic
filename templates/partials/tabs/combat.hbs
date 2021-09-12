@@ -16,7 +16,7 @@
     <div class="border">
         <h2 class="center">Equipment</h2>
         {{#is_one_handed}}
-        <div class="flexrow">
+        <div class="flexrow border">
             <div>
                 <h3 class="center">Dominant Hand</h3>
                 {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
@@ -27,12 +27,12 @@
             </div>
         </div>
         {{else}}
-            <div>
+            <div class="border">
                 <h3 class="center">Two Handed</h3>
                 {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="dominant" slot="hand" id=data.data.equipped.dominant}}
             </div>
         {{/is_one_handed}}
-        <div class="flexrow">
+        <div class="flexrow border">
             <div>
                 <h3 class="center">Head</h3>
                 {{> "systems/deadlands_classic/templates/partials/reuseable/equip.hbs" this items=equippable label="head" slot="head" id=data.data.equipped.head}}
