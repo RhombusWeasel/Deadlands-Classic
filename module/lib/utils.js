@@ -1372,7 +1372,7 @@ const dc_utils = {
             add: function(act, loc, amt) {
                 let ws = parseInt(act.data.data.wound_soak);
                 let tot = act.data.data.wounds[loc] + amt;
-                if (ws <= amt) {
+                if (ws >= amt) {
                     act.update({data: {wound_soak: ws - amt}});
                     dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
                     return true;
