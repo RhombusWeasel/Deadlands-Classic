@@ -175,6 +175,7 @@ export default class GMSheet extends ActorSheet {
         ];
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
+                let r_msg = responses[Math.random() * responses.length]
                 dc_utils.chat.send('Fate', `The Marshal uses a ${chip_type} fate chip.`, `${r_msg}`);
                 dc_utils.char.items.delete(act, chip._id);
                 break;
