@@ -1086,7 +1086,7 @@ const dc_utils = {
         return char;
     },
     pluralize: function(amt, a, b) {
-        if (amt > 1) return `${amt} ${a}`;
+        if (amt == 1) return `${amt} ${a}`;
         return `${amt} ${b}`
     },
     sort: {
