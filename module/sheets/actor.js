@@ -343,7 +343,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = this.getData();
+        let act = dc_utils.get_actor(this.actor.name);
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
