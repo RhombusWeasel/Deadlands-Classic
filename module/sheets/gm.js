@@ -9,7 +9,9 @@ export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/gm-sheet.html`,
-            classes: ["doc"]
+            classes: ["doc"],
+            width: 500,
+            height: 700
         });
     }
 
