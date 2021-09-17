@@ -166,7 +166,6 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = dc_utils.get_actor(this.actor.name);
         let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         let responses = [
             `I think you might've pissed 'im off`,
@@ -175,9 +174,9 @@ export default class GMSheet extends ActorSheet {
         ];
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                let r_msg = responses[Math.random() * responses.length]
+                let r_msg = responses[Math.floor(Math.random() * responses.length)]
                 dc_utils.chat.send('Fate', `The Marshal uses a ${chip_type} fate chip.`, `${r_msg}`);
-                dc_utils.char.items.delete(act, chip._id);
+                dc_utils.char.items.delete(this.actor, chip._id);
                 break;
             }
         }
