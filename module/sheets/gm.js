@@ -166,7 +166,7 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = this.getData();
+        let act = dc_utils.get_actor(this.actor.name);
         let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         let responses = [
             `I think you might've pissed 'im off`,
