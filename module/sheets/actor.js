@@ -179,12 +179,12 @@ export default class PlayerSheet extends ActorSheet {
     _on_die_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let trait = dc_utils.char.skill.get(element.closest(".skill-data").dataset.skill);
+        let trait = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
         let cost = (trait.sides + trait.modifier) * 3
         let bounty = dc_utils.char.bounty.get(this.actor);
         if (bounty >= cost){
             if (trait.sides == 12) {
-                dc_utils.char.skill.add_modifier(this.actor, trait.key);
+                dc_utils.char.skill.add_modifier(this.actor, trait.key, 2);
             }else{
                 dc_utils.char.skill.increase_die_type(this.actor, trait.key);
             }
