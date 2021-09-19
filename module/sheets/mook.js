@@ -103,12 +103,12 @@ export default class NPCSheet extends ActorSheet {
         }
         let spirit = dc_utils.char.skill.get(act, 'spirit');
         let vigor = dc_utils.char.skill.get(act, 'vigor');
-        let max_wind = spirit.sides + vigor.sides;
+        let max_wind = spirit.die_sides + vigor.die_sides;
         act.update({data: {wind: {value: max_wind}}});
         act.update({data: {wind: {max: max_wind}}});
 
         let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
-        act.update({data: {pace: nimbleness.sides}});
+        act.update({data: {pace: nimbleness.die_sides}});
     }
 
     _on_ethnicity_select(event) {
