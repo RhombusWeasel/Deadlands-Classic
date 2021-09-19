@@ -1430,7 +1430,7 @@ const dc_utils = {
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
                 let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
-                data.tn = tn
+                data.tn = tn;
                 data.roll = dc_utils.roll.new(data);
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);

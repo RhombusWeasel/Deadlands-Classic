@@ -310,7 +310,7 @@ let operations = {
                         label: 'Red',
                         callback: () => {
                             if (dc_utils.char.chips.spend(char, 'Red')) {
-                                let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
+                                let roll = new Roll(`1${data.roll.dice}`).roll();
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
                                 data.roll.results[index] += result;
@@ -326,7 +326,7 @@ let operations = {
                         label: 'Blue',
                         callback: () => {
                             if (dc_utils.char.chips.spend(char, 'Blue')) {
-                                let roll = new Roll(`1${data.roll.dice} + ${data.modifier}`).roll();
+                                let roll = new Roll(`1${data.roll.dice}`).roll();
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
                                 data.roll.results[index] += result;
