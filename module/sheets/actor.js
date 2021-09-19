@@ -170,7 +170,6 @@ export default class PlayerSheet extends ActorSheet {
         }else if (skill.level + 1 > 5) {
             cost *= 2;
         }
-        console.log('Skill Buff!', skill, cost);
         if (dc_utils.char.bounty.get(this.actor) >= cost){
             dc_utils.char.bounty.remove(this.actor, cost);
             dc_utils.char.skill.add_level(this.actor, skill.key, 1);
