@@ -9,7 +9,9 @@ export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/gm-sheet.html`,
-            classes: ["doc"]
+            classes: ["doc"],
+            width: 500,
+            height: 700
         });
     }
 
@@ -166,8 +168,7 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = this.getData();
-        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         let responses = [
             `I think you might've pissed 'im off`,
             `Let's hope he doesn't have it in fer ya.`,
@@ -175,8 +176,9 @@ export default class GMSheet extends ActorSheet {
         ];
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
+                let r_msg = responses[Math.floor(Math.random() * responses.length)]
                 dc_utils.chat.send('Fate', `The Marshal uses a ${chip_type} fate chip.`, `${r_msg}`);
-                dc_utils.char.items.delete(act, chip._id);
+                dc_utils.char.items.delete(this.actor, chip._id);
                 break;
             }
         }

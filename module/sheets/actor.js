@@ -164,9 +164,11 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let skill = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
-        let cost = skill.level + 1
-        if (skill.level + 1 > 5) {
-            cost *= 2
+        let cost = skill.level + 1;
+        if (skill.trait_fb) {
+            cost = 1;
+        }else if (skill.level + 1 > 5) {
+            cost *= 2;
         }
         if (dc_utils.char.bounty.get(this.actor) >= cost){
             dc_utils.char.bounty.remove(this.actor, cost);
@@ -177,11 +179,16 @@ export default class PlayerSheet extends ActorSheet {
     _on_die_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let trait = dc_utils.char.skill.get(element.closest(".skill-data").dataset.skill);
-        let cost = (trait.sides + trait.modifier) * 3
+        let trait = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
+        let cost = (trait.die_sides + trait.modifier) * 3
         let bounty = dc_utils.char.bounty.get(this.actor);
         if (bounty >= cost){
-            dc_utils.char.skill.increase_die_type(this.actor, trait.key);
+            dc_utils.char.bounty.remove(this.actor, cost);
+            if (trait.die_sides == 12) {
+                dc_utils.char.skill.add_modifier(this.actor, trait.key, 2);
+            }else{
+                dc_utils.char.skill.increase_die_type(this.actor, trait.key);
+            }
         }
     }
 
@@ -343,7 +350,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = this.getData();
+        let act = dc_utils.get_actor(this.actor.name);
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {

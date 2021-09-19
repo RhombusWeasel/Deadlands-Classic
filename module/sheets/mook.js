@@ -103,12 +103,12 @@ export default class NPCSheet extends ActorSheet {
         }
         let spirit = dc_utils.char.skill.get(act, 'spirit');
         let vigor = dc_utils.char.skill.get(act, 'vigor');
-        let max_wind = spirit.sides + vigor.sides;
+        let max_wind = spirit.die_sides + vigor.die_sides;
         act.update({data: {wind: {value: max_wind}}});
         act.update({data: {wind: {max: max_wind}}});
 
         let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
-        act.update({data: {pace: nimbleness.sides}});
+        act.update({data: {pace: nimbleness.die_sides}});
     }
 
     _on_ethnicity_select(event) {
@@ -137,13 +137,19 @@ export default class NPCSheet extends ActorSheet {
     _on_skill_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill, 1);
+        let skill = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
+        dc_utils.char.skill.add_level(this.actor, skill.key, 1);
     }
 
     _on_die_buff(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        dc_utils.char.skill.add_level(this.actor, element.closest(".skill-data").dataset.skill);
+        let trait = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
+        if (trait.die_sides == 12) {
+            dc_utils.char.skill.add_modifier(this.actor, trait.key, 2);
+        }else{
+            dc_utils.char.skill.increase_die_type(this.actor, trait.key);
+        }
     }
 
     _on_refresh(event) {

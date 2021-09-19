@@ -8,7 +8,7 @@
                 <tr class="skill-data" data-skill="{{@key}}">
                     <td class="perc50 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
             {{#has_bounty trait.level 'trait'}}
-                    <td class="perc10 right"><a class="trait-buff">[+]</a></td>
+                    <td class="perc10 right"><a class="skill-buff">[+]</a></td>
             {{/has_bounty}}
                     <td class="perc10 center">{{trait.level}}</td>
             {{#die_upgrade trait.die_type}}

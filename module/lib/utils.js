@@ -1221,6 +1221,10 @@ const dc_utils = {
                 if (skill.trait == skill_name) {
                     return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
+                    if (skill.trait_fb) {
+                        let trait = dc_utils.char.skill.get(act, skill.trait);
+                        sk_mod -= trait.modifier;
+                    }
                     return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
                 }
             },
@@ -1250,10 +1254,8 @@ const dc_utils = {
             },
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                if (skill.sides < 12) {
-                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.sides + 2}`}}}});
-                }else{
-                    return act.update({data: {traits: {[skill.trait]: {modifier: skill.modifier + 2}}}});
+                if (skill.die_sides < 12) {
+                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
                 }
             },
         },
@@ -1372,7 +1374,7 @@ const dc_utils = {
             add: function(act, loc, amt) {
                 let ws = parseInt(act.data.data.wound_soak);
                 let tot = act.data.data.wounds[loc] + amt;
-                if (ws >= amt) {
+                if (ws >= amt && amt > 0) {
                     act.update({data: {wound_soak: ws - amt}});
                     dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
                     return true;
@@ -1430,7 +1432,7 @@ const dc_utils = {
             heal_roll: function(act, loc) {
                 let tn = 3 + (act.data.data.wounds[loc] * 2);
                 let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
-                data.tn = tn
+                data.tn = tn;
                 data.roll = dc_utils.roll.new(data);
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);
