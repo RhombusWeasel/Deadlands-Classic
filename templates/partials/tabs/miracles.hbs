@@ -2,8 +2,11 @@
     <h2 class="center">Miracles</h2>
     <div>
         {{#each miracles as |mir|}}
-        <td class="center"><a class="info-button"><i class="fas fa-info-circle"></i></a><h3>{{this.name}}</h3></td>
         <table>
+            <tr>
+                <td class="center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td><h3>{{this.name}}</h3></td>
+            </tr>
             <tr>
                 <th>TN</th>
                 <th>Pray</th>
