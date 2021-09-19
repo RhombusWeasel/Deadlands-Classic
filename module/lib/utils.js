@@ -1221,6 +1221,10 @@ const dc_utils = {
                 if (skill.trait == skill_name) {
                     return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
+                    if (skill.trait_fb) {
+                        let trait = dc_utils.char.skill.get(act, skill.trait);
+                        sk_mod -= trait.modifier;
+                    }
                     return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
                 }
             },

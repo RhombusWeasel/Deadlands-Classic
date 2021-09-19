@@ -183,6 +183,7 @@ export default class PlayerSheet extends ActorSheet {
         let cost = (trait.die_sides + trait.modifier) * 3
         let bounty = dc_utils.char.bounty.get(this.actor);
         if (bounty >= cost){
+            dc_utils.char.bounty.remove(this.actor, cost);
             if (trait.die_sides == 12) {
                 dc_utils.char.skill.add_modifier(this.actor, trait.key, 2);
             }else{
