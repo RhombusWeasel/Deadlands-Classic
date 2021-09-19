@@ -164,9 +164,11 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let skill = dc_utils.char.skill.get(this.actor, element.closest(".skill-data").dataset.skill);
-        let cost = skill.level + 1
-        if (skill.level + 1 > 5) {
-            cost *= 2
+        let cost = skill.level + 1;
+        if (skill.trait_fb) {
+            cost = 1;
+        }else if (skill.level + 1 > 5) {
+            cost *= 2;
         }
         console.log('Skill Buff!', skill, cost);
         if (dc_utils.char.bounty.get(this.actor) >= cost){
