@@ -1255,7 +1255,7 @@ const dc_utils = {
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.die_sides < 12) {
-                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.sides + 2}`}}}});
+                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
                 }
             },
         },
