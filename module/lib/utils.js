@@ -1204,6 +1204,7 @@ const dc_utils = {
                 }
             },
             add_level: function(act, skill_name, amt) {
+                console.log(skill_name, act);
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait_fb) {
                     skill.level = 0;
