@@ -1374,35 +1374,41 @@ const dc_utils = {
             add: function(act, loc, amt) {
                 let ws = parseInt(act.data.data.wound_soak);
                 let tot = act.data.data.wounds[loc] + amt;
-                if (ws >= amt && amt > 0) {
-                    act.update({data: {wound_soak: ws - amt}});
-                    dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
-                    return true;
-                }else{
-                    tot -= ws;
-                    if (ws > 0) {
-                        dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
+                if (amt > 0) {
+                    if (ws >= amt) {
+                        act.update({data: {wound_soak: ws - amt}});
+                        dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
+                        return true;
+                    }else{
+                        tot -= ws;
+                        if (ws > 0) {
+                            dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
+                        }
+                        act.update({data: {wound_soak: 0}});
                     }
-                    act.update({data: {wound_soak: 0}});
+                    return setTimeout(() => {
+                        act.update({data: {wounds: {[loc]: tot}}});
+                        dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
+                        dc_utils.char.wounds.calculate_wound_modifier(act);
+                        dc_utils.char.wounds.apply_wind_damage(act, tot);
+                    }, Math.random() * 500);
+                }else{
+                    dc_utils.chat.send('Wound', `${act.name} was lucky they just winged 'em.`);
                 }
-                return setTimeout(() => {
-                    act.update({data: {wounds: {[loc]: tot}}});
-                    dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
-                    dc_utils.char.wounds.calculate_wound_modifier(act);
-                    dc_utils.char.wounds.apply_wind_damage(act, tot);
-                }, Math.random() * 500);
             },
             remove: function(act, loc, amt) {
                 let tot = act.data.data.wounds[loc] - amt;
                 return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
             },
             apply_wind_damage: function(act, amt) {
-                let wind_roll = new Roll(`${amt}d6`).roll();
-                wind_roll.toMessage({rollMode: 'gmroll'});
-                return setTimeout(() => {
-                    act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
-                    dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
-                }, Math.random() * 500);
+                if (amt > 0) {
+                    let wind_roll = new Roll(`${amt}d6`).roll();
+                    wind_roll.toMessage({rollMode: 'gmroll'});
+                    return setTimeout(() => {
+                        act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
+                        dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
+                    }, Math.random() * 500);
+                }
             },
             calculate_wound_modifier: function(act) {
                 let wm = act.data.data.wound_modifier
