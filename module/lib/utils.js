@@ -1401,12 +1401,14 @@ const dc_utils = {
                 return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
             },
             apply_wind_damage: function(act, amt) {
-                let wind_roll = new Roll(`${amt}d6`).roll();
-                wind_roll.toMessage({rollMode: 'gmroll'});
-                return setTimeout(() => {
-                    act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
-                    dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
-                }, Math.random() * 500);
+                if (amt > 0) {
+                    let wind_roll = new Roll(`${amt}d6`).roll();
+                    wind_roll.toMessage({rollMode: 'gmroll'});
+                    return setTimeout(() => {
+                        act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
+                        dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
+                    }, Math.random() * 500);
+                }
             },
             calculate_wound_modifier: function(act) {
                 let wm = act.data.data.wound_modifier
