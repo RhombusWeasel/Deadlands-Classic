@@ -27,6 +27,7 @@ export default class GMSheet extends ActorSheet {
         ];
         data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
         data.modifiers = this.actor.data.data.modifiers;
+        data.chars = dc_utils.gm.get_player_owned_actors();
         data.tn = 5;
         for (const [key, mod] of Object.entries(data.modifiers)){
             if (mod.active) {
