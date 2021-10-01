@@ -6,9 +6,9 @@
                 {{> "systems/deadlands_classic/templates/partials/mook-traits.hbs"}}
             </div>
             <div class="sidebar">
-                <h2>Random Names</h2>
+                <h1 class="center">Random Names</h1>
                 <div class="flexrow">
-                {{#if (eq data.data.random_name)}}
+                {{#if (eq data.data.random_name true)}}
                     <input type="checkbox" name="data.random_name" checked>
                 {{else}}
                     <input type="checkbox" name="data.random_name">
