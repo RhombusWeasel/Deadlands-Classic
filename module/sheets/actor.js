@@ -372,13 +372,12 @@ export default class PlayerSheet extends ActorSheet {
         if (data.combat_active == true) {
             let element = event.currentTarget;
             let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'quickness');
-            let r = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
             let draw = 1;
             if (r.total >= 5) {
                 draw = Math.min(1 + Math.ceil((r.total - 4) / 5), 5)
-                reply = `You get ${draw} cards`
-            }else{
-                reply = 'You draw 1 card'
             }
             game.socket.emit("system.deadlands_classic", {
                 operation: "request_cards",
@@ -390,11 +389,7 @@ export default class PlayerSheet extends ActorSheet {
             });
             this.actor.update({'data.perks.level_headed': true});
         }
-        let msg = `
-            <h3 style="text-align: center">Action Deck</h3>
-            <p style="text-align: center">${reply}</p>
-        `;
-        ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
+        dc_utils.chat.send('Action Deck', `${this.actor.name} gets ${draw} ${dc_utils.pluralize(draw, 'card', 'cards')}`)
     }
 
     _on_play_item_card(event) {
