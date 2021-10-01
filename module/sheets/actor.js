@@ -371,13 +371,11 @@ export default class PlayerSheet extends ActorSheet {
         let data = this.getData();
         if (data.combat_active == true) {
             let element = event.currentTarget;
-            let act = this.getData();
-            let trait = act.data.data.traits.quickness;
-            let roll = `${trait.level}${trait.die_type}ex + ${trait.modifier}`
-            let draw = 1
-            let r = new Roll(roll).roll();
-            if (r._total >= 5) {
-                draw = Math.min(1 + Math.ceil((r._total - 4) / 5), 5)
+            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'quickness');
+            let r = dc_utils.roll.new(data);
+            let draw = 1;
+            if (r.total >= 5) {
+                draw = Math.min(1 + Math.ceil((r.total - 4) / 5), 5)
                 reply = `You get ${draw} cards`
             }else{
                 reply = 'You draw 1 card'
