@@ -369,13 +369,13 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let reply = `There ain't no combat right now, is ${this.actor.name} wantin' to start somethin'?`
         let data = this.getData();
+        let draw = 1;
         if (data.combat_active == true) {
             let element = event.currentTarget;
             let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'quickness');
             data.roll = dc_utils.roll.new(data);
             data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
-            let draw = 1;
             if (data.roll.total >= 5) {
                 draw = Math.min(1 + Math.ceil((data.roll.total - 4) / 5), 5)
             }
