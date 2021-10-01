@@ -213,7 +213,7 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
     console.log(document, createData, options, userId);
-    if (!(act.hasPlayerOwner)) {
+    if (!(act.data.data.random_name)) {
         let eth = act.data.data.ethnicity;
         let rn = Math.random();
         name = dc_utils.char.random_name(eth, 'male');
