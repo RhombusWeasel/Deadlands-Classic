@@ -1656,7 +1656,7 @@ const dc_utils = {
                         if (mod.target == skl) {
                             data.modifiers[`boon_${i}`] = {
                                 label: boons[i].name,
-                                modifier: parseInt(mod.mod)
+                                modifier: parseInt(mod.modifier)
                             };
                         }
                     }
