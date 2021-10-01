@@ -805,14 +805,14 @@
         },
         "action_deck": {},
         "huckster_deck": {},
-        "blueprint_deck": {}
-    },
-    "boon": {
-        "description": "",
-        "script": "",
-        "type_select": "skill_mod",
-        "target_select": "cognition",
-        "value_select": 2,
-        "modifiers": []
+        "blueprint_deck": {},
+        "boon": {
+            "description": "",
+            "script": "",
+            "type_select": "skill_mod",
+            "target_select": "cognition",
+            "value_select": 2,
+            "modifiers": []
+        }
     }
 }
