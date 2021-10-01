@@ -1,6 +1,7 @@
 <section>
     <div>
         <h3 class="center">Modifiers</h3>
+        {{#isGM}}
         <table>
             <tr>
                 <td>
@@ -53,6 +54,7 @@
                 <td><a class="center"><p class="add-modifier">Add</p></a></td>
             </tr>
         </table>
+        {{/isGM}}
         <table>
         {{#each modifiers as |mod|}}
             <tr class="item" data-id="{{@index}}">

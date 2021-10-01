@@ -54,7 +54,9 @@ export default class NPCSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/mook-sheet.html`,
-            classes: ["player-sheet"]
+            classes: ["player-sheet"],
+            width: 500,
+            height: 700
         });
     }
 

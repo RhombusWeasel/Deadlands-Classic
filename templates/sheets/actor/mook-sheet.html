@@ -1,4 +1,9 @@
 <form class="{{cssClass}} typed" autocomplete="off">
+    <h1 style="text-align: center; width: 100%">
+        <div data-edit="data.name" contenteditable>
+            {{data.name}}
+        </div>
+    </h1>
     <div class="form">
         <div class="flexbox">
             <div class="sheet">
@@ -6,19 +11,26 @@
                 {{> "systems/deadlands_classic/templates/partials/mook-traits.hbs"}}
             </div>
             <div class="sidebar">
-                <select name="data.ethnicity" id="ethnicity-select">
-                    {{log data.data.ethnicity}}
+                <h1 class="center">Random Names</h1>
+                <div class="flexrow">
+                {{#if (eq data.data.random_name true)}}
+                    <input type="checkbox" name="data.random_name" checked>
+                {{else}}
+                    <input type="checkbox" name="data.random_name">
+                {{/if}}
+                    <select name="data.ethnicity" id="ethnicity-select">
                     {{#if (eq data.data.ethnicity "american")}}
-                    <option value="american" selected>American/European</option>
+                        <option value="american" selected>American/European</option>
                     {{else}}
-                    <option value="american">American/European</option>
+                        <option value="american">American/European</option>
                     {{/if}}
                     {{#if (eq data.data.ethnicity "native_american")}}
-                    <option value="native_american" selected>Native American</option>
+                        <option value="native_american" selected>Native American</option>
                     {{else}}
-                    <option value="native_american">Native American</option>
+                        <option value="native_american">Native American</option>
                     {{/if}}
-                </select>
+                    </select>
+                </div>
                 {{> "systems/deadlands_classic/templates/partials/mook-sidebar.hbs"}}
             </div>
         </div>

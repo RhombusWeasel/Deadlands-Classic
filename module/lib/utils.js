@@ -1085,6 +1085,12 @@ const dc_utils = {
         char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
         return char;
     },
+    /** PLURALIZE
+     * @param {INT} amt The numerical value to check against
+     * @param {STR} a The Singular version
+     * @param {STR} b The Plural version
+     * @returns STR The singular or Plural provided as a and b
+     */
     pluralize: function(amt, a, b) {
         if (amt == 1) return `${amt} ${a}`;
         return `${amt} ${b}`
@@ -1629,7 +1635,7 @@ const dc_utils = {
                     skill: {label: 'Skill + Trait', modifier: skill.modifier},
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
-            }
+            };
             let mods = game.actors.getName('Marshal').data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
@@ -1637,9 +1643,26 @@ const dc_utils = {
                     data.modifiers[key] = {
                         label: mod.name,
                         modifier: parseInt(mod.mod)
+                    };
+                }
+            }
+            let boons = dc_utils.char.items.get(act, "boon");
+            for (let i = 0; i < boons.length; i++) {
+                let boon = boons[i].data.data;
+                console.log(boon);
+                for (let m = 0; m < boon.modifiers.length; m++) {
+                    const mod = boon.modifiers[m];
+                    if (mod.type == 'skill_mod') {
+                        if (mod.target == skl) {
+                            data.modifiers[`boon_${i}`] = {
+                                label: boons[i].name,
+                                modifier: parseInt(mod.modifier)
+                            };
+                        }
                     }
                 }
             }
+            console.log(data.modifiers);
             if (skl == 'guts') {
                 data.modifiers.grit = {
                     label: 'Grit',

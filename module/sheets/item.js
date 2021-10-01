@@ -33,6 +33,7 @@ export default class DCItem extends ItemSheet {
         }
         let mods = item.data.data.modifiers;
         mods.push({
+            name: item.name,
             type: item.data.data.type_select,
             target: item.data.data.target_select,
             modifier: item.data.data.value_select
