@@ -70,7 +70,8 @@
                 "description": "",
                 "notes": "",
                 "nightmare": "",
-                "player_target": "none"
+                "player_target": "none",
+                "boons": []
             }
         },
         "player": {
