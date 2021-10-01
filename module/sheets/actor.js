@@ -376,8 +376,8 @@ export default class PlayerSheet extends ActorSheet {
             data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
             ChatMessage.create({content: build_skill_template(data)});
             let draw = 1;
-            if (r.total >= 5) {
-                draw = Math.min(1 + Math.ceil((r.total - 4) / 5), 5)
+            if (data.roll.total >= 5) {
+                draw = Math.min(1 + Math.ceil((data.roll.total - 4) / 5), 5)
             }
             game.socket.emit("system.deadlands_classic", {
                 operation: "request_cards",
