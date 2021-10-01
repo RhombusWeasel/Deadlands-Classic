@@ -1661,6 +1661,7 @@ const dc_utils = {
                     }
                 }
             }
+            console.log(data.modifiers);
             if (skl == 'guts') {
                 data.modifiers.grit = {
                     label: 'Grit',
