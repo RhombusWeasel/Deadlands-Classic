@@ -380,7 +380,6 @@ export default class PlayerSheet extends ActorSheet {
             }else{
                 reply = 'You draw 1 card'
             }
-            r.toMessage({whisper: ChatMessage.getWhisperRecipients('GM')})
             game.socket.emit("system.deadlands_classic", {
                 operation: "request_cards",
                 data: {
