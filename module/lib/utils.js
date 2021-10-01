@@ -1648,7 +1648,8 @@ const dc_utils = {
             }
             let boons = dc_utils.char.items.get(act, "boon");
             for (let i = 0; i < boons.length; i++) {
-                const boon = boons[i].data.data;
+                let boon = boons[i].data.data;
+                console.log(boon);
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
                     if (mod.type == 'skill_mod') {
