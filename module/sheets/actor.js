@@ -389,7 +389,7 @@ export default class PlayerSheet extends ActorSheet {
             });
             this.actor.update({'data.perks.level_headed': true});
         }
-        dc_utils.chat.send('Action Deck', `${this.actor.name} gets ${draw} ${dc_utils.pluralize(draw, 'card', 'cards')}`)
+        dc_utils.chat.send('Action Deck', `${this.actor.name} gets ${dc_utils.pluralize(draw, 'card', 'cards')}`)
     }
 
     _on_play_item_card(event) {
