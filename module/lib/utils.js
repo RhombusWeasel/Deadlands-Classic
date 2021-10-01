@@ -1635,7 +1635,7 @@ const dc_utils = {
                     skill: {label: 'Skill + Trait', modifier: skill.modifier},
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
-            }
+            };
             let mods = game.actors.getName('Marshal').data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
@@ -1643,11 +1643,22 @@ const dc_utils = {
                     data.modifiers[key] = {
                         label: mod.name,
                         modifier: parseInt(mod.mod)
-                    }
+                    };
                 }
             }
-            for (const [key, mod] of Object.entries(act.data.data.boons)) {
-                
+            let boons = dc_utils.char.items.get(this.actor, "boon");
+            for (let i = 0; i < boons.length; i++) {
+                for (let m = 0; m < boons[i].modifiers.length; m++) {
+                    const mod = boons[i].modifiers[m];
+                    if (mod.type == 'skill_mod') {
+                        if (mod.target == skl) {
+                            data.modifiers[mod.name] = {
+                                label: mod.name,
+                                modifier: parseInt(mod.mod)
+                            };
+                        }
+                    }
+                }
             }
             if (skl == 'guts') {
                 data.modifiers.grit = {
