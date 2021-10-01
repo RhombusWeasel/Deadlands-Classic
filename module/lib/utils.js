@@ -1648,11 +1648,12 @@ const dc_utils = {
             }
             let boons = dc_utils.char.items.get(this.actor, "boon");
             for (let i = 0; i < boons.length; i++) {
-                for (let m = 0; m < boons[i].modifiers.length; m++) {
-                    const mod = boons[i].modifiers[m];
+                const boon = boons[i].data.data;
+                for (let m = 0; m < boon.modifiers.length; m++) {
+                    const mod = boon.modifiers[m];
                     if (mod.type == 'skill_mod') {
                         if (mod.target == skl) {
-                            data.modifiers[mod.name] = {
+                            data.modifiers[`boon_${i}`] = {
                                 label: mod.name,
                                 modifier: parseInt(mod.mod)
                             };
