@@ -1646,7 +1646,7 @@ const dc_utils = {
                     };
                 }
             }
-            let boons = dc_utils.char.items.get(this.actor, "boon");
+            let boons = dc_utils.char.items.get(act, "boon");
             for (let i = 0; i < boons.length; i++) {
                 const boon = boons[i].data.data;
                 for (let m = 0; m < boon.modifiers.length; m++) {
