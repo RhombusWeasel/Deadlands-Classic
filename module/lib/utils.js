@@ -1654,7 +1654,7 @@ const dc_utils = {
                     if (mod.type == 'skill_mod') {
                         if (mod.target == skl) {
                             data.modifiers[`boon_${i}`] = {
-                                label: mod.name,
+                                label: boons[i].name,
                                 modifier: parseInt(mod.mod)
                             };
                         }
