@@ -14,7 +14,9 @@ export default class GeneratorSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/generator-sheet.html`,
-            classes: ["player-sheet"]
+            classes: ["player-sheet"],
+            width: 500,
+            height: 700
         });
     }
 

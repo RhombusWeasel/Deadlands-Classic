@@ -1085,6 +1085,12 @@ const dc_utils = {
         char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
         return char;
     },
+    /** PLURALIZE
+     * @param {INT} amt The numerical value to check against
+     * @param {STR} a The Singular version
+     * @param {STR} b The Plural version
+     * @returns STR The singular or Plural provided as a and b
+     */
     pluralize: function(amt, a, b) {
         if (amt == 1) return `${amt} ${a}`;
         return `${amt} ${b}`
