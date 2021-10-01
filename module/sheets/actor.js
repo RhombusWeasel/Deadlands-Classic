@@ -369,20 +369,16 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let reply = `There ain't no combat right now, is ${this.actor.name} wantin' to start somethin'?`
         let data = this.getData();
+        let draw = 1;
         if (data.combat_active == true) {
             let element = event.currentTarget;
-            let act = this.getData();
-            let trait = act.data.data.traits.quickness;
-            let roll = `${trait.level}${trait.die_type}ex + ${trait.modifier}`
-            let draw = 1
-            let r = new Roll(roll).roll();
-            if (r._total >= 5) {
-                draw = Math.min(1 + Math.ceil((r._total - 4) / 5), 5)
-                reply = `You get ${draw} cards`
-            }else{
-                reply = 'You draw 1 card'
+            let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'quickness');
+            data.roll = dc_utils.roll.new(data);
+            data.roll = dc_utils.roll.evaluate(data.roll, data.tn, data.modifier);
+            ChatMessage.create({content: build_skill_template(data)});
+            if (data.roll.total >= 5) {
+                draw = Math.min(1 + Math.ceil((data.roll.total - 4) / 5), 5)
             }
-            r.toMessage({whisper: ChatMessage.getWhisperRecipients('GM')})
             game.socket.emit("system.deadlands_classic", {
                 operation: "request_cards",
                 data: {
@@ -393,11 +389,7 @@ export default class PlayerSheet extends ActorSheet {
             });
             this.actor.update({'data.perks.level_headed': true});
         }
-        let msg = `
-            <h3 style="text-align: center">Action Deck</h3>
-            <p style="text-align: center">${reply}</p>
-        `;
-        ChatMessage.create({content: msg, whisper: ChatMessage.getWhisperRecipients('GM')});
+        dc_utils.chat.send('Action Deck', `${this.actor.name} gets ${dc_utils.pluralize(draw, 'card', 'cards')}`)
     }
 
     _on_play_item_card(event) {
