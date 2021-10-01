@@ -1646,6 +1646,9 @@ const dc_utils = {
                     }
                 }
             }
+            for (const [key, mod] of Object.entries(act.data.data.boons)) {
+                
+            }
             if (skl == 'guts') {
                 data.modifiers.grit = {
                     label: 'Grit',
