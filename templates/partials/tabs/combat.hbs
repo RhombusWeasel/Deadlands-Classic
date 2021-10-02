@@ -146,9 +146,9 @@
                     <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                     <td class="perc80">{{this.name}}</td>
                     {{#if (eq boon.data.data.active true)}}
-                    <td><input type="checkbox" name="data.boons.{{@key}}.data.data.active" checked></td>
+                    <td><input type="checkbox" name="this.data.data.active" checked></td>
                     {{else}}
-                    <td><input type="checkbox" name="boon.boons.{{@key}}.data.data.active"></td>
+                    <td><input type="checkbox" name="this.data.data.active"></td>
                     {{/if}}
                     <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
                 </tr>
