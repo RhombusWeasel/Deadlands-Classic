@@ -21,7 +21,6 @@ function get_target() {
 }
 
 function build_skill_template(data) {
-    console.log('DC | build_skill_template', data);
     let r_str = `
         <h2 class="center typed">${data.skill_name}</h2>
     `;

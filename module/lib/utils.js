@@ -1815,22 +1815,22 @@ const dc_utils = {
                 <div class="center typed">
                     <p style="text-align:center">${data.roller} rolled:</p>
                     <table style="table-layout: fixed;">
-                        <tr style="text-align:center">
+                        <tr class="center">
             `;
             for (let i = 0; i < data.roll.amt; i++) {
                 const res = data.roll.results[i];
                 if(res){
                     if (res + data.modifier >= data.tn) {
                         r_str += `
-                            <td style="color: green">${res}</td>
+                            <td class="center" style="color: green">${res}</td>
                         `;
                     }else if (res == 1) {
                         r_str += `
-                            <td style="color: red">${res}</td>
+                            <td class="center" style="color: red">${res}</td>
                         `;
                     }else {
                         r_str += `
-                            <td>${res}</td>
+                            <td class="center">${res}</td>
                         `;
                     }
                 }
