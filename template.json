@@ -809,6 +809,7 @@
         "boon": {
             "description": "",
             "script": "",
+            "active": true,
             "type_select": "skill_mod",
             "target_select": "cognition",
             "value_select": 2,
