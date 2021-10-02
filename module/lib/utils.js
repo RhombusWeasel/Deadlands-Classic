@@ -1847,8 +1847,7 @@ const dc_utils = {
                     if (data.modifiers[key].modifier != 0) {
                         r_str += `
                             <tr class="center typed">
-                                <td class="center">${data.modifiers[key].label}</td>
-                                <td class="center">${data.modifiers[key].modifier}</td>
+                                <td class="center">${data.modifiers[key].label} [${data.modifiers[key].modifier}]</td>
                             </tr>
                         `;
                     }
