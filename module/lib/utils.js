@@ -1290,7 +1290,6 @@ const dc_utils = {
                 let item = dc_utils.char.items.get_equipped(act, slot);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
-                        console.log('dc | dc_utils.char.item.unequip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.remove_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
@@ -1307,7 +1306,6 @@ const dc_utils = {
                 let item = act.items.get(id);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
-                        console.log('dc | dc_utils.char.item.equip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.add_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
@@ -1457,12 +1455,10 @@ const dc_utils = {
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                console.log('dc | dc_utils.char.armour.add |', location, amt, cur);
                 setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                console.log('dc | dc_utils.char.armour.remove |', location, amt, cur);
                 setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
             },
         },
@@ -1475,7 +1471,6 @@ const dc_utils = {
                 let chips = dc_utils.char.chips.get(act, 'chip');
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
-                        console.log('DC | dc_utils.char.chips.spend |', item);
                         dc_utils.char.items.delete(act, item.id);
                         let reply = `
                             <h3 style="text-align:center">Fate</h3>
@@ -1581,12 +1576,10 @@ const dc_utils = {
     },
     item: {
         add_modifier: function(item, data){
-            console.log('DC | dc_utils.item.add_modifier |', data, item);
             item.update({data: {modifiers: data}});
         },
         remove_modifier: function(item, index) {
             let mods = item.data.data.modifiers;
-            console.log('DC | dc_utils.item.remove_modifier |', index, item);
             mods.splice(index);
             item.update({data: {modifiers: mods}});
         },
@@ -1603,7 +1596,6 @@ const dc_utils = {
                 target = dc_utils.get_actor(tgt);
             }
             if (!(target) && !(type == 'skill')) {
-                console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }
             if (target) {
@@ -1639,7 +1631,6 @@ const dc_utils = {
             let mods = game.actors.getName('Marshal').data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
-                    console.log(mod);
                     data.modifiers[key] = {
                         label: mod.name,
                         modifier: parseInt(mod.mod)
@@ -1649,7 +1640,6 @@ const dc_utils = {
             let boons = dc_utils.char.items.get(act, "boon");
             for (let i = 0; i < boons.length; i++) {
                 let boon = boons[i].data.data;
-                console.log(boon);
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
                     if (mod.type == 'skill_mod' && boon.active) {
@@ -1662,7 +1652,6 @@ const dc_utils = {
                     }
                 }
             }
-            console.log(data.modifiers);
             if (skl == 'guts') {
                 data.modifiers.grit = {
                     label: 'Grit',
@@ -1738,7 +1727,6 @@ const dc_utils = {
                 r_data.success = false;
                 r_data.crit_fail = true;
             }
-            console.log('new_roll:', r_data);
             roll.toMessage({rollMode: 'gmroll'});
             return r_data;
         },
@@ -1789,7 +1777,6 @@ const dc_utils = {
                     return dc_utils.loc_lookup[tot];
                 }
                 for (let i = tot - range; i < tot + range; i++) {
-                    console.log(i, dc_utils.loc_lookup[i]);
                     if (dc_utils.loc_lookup[i] != undefined) {
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
                             found.push(dc_utils.loc_lookup[i]);

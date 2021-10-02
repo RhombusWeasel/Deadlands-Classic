@@ -553,7 +553,6 @@ let operations = {
             data.soak   = 0;
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
-            console.log(data);
             ChatMessage.create({content: battle_report(data)})
             if (tgt.hasPlayerOwner) {
                 dc_utils.socket.emit('apply_damage', data);
@@ -588,7 +587,7 @@ let operations = {
                     }
                 },
                 close: () => {
-                    console.log('Damage Dialog Closed');
+                    console.log('Turn Prompt Dialog Closed');
                 }
             });
             form.render(true);
@@ -663,7 +662,6 @@ let operations = {
             }
         }
         if (char.isOwner) {
-            console.log('enemy_damage:', data, char);
             let tot = char.data.data.wounds[data.location] + data.wounds;
             dc_utils.char.wounds.add(char, data.location, data.wounds);
             let tkn = canvas.tokens.placeables.find(i => i.name == char.name);
@@ -688,7 +686,6 @@ let operations = {
     },
     soak: function(data) {
         if (game.user.isGM) {
-            console.log('soak:', data);
             if (data.wounds > 0) {
                 dc_utils.socket.emit('apply_damage', data);
             }
@@ -734,7 +731,6 @@ Hooks.on("ready", () => {
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
-        console.log('RECIEVE:', data.operation, data.data);
         if (data.operation in operations) {
             console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);

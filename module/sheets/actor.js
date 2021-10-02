@@ -201,11 +201,9 @@ export default class PlayerSheet extends ActorSheet {
         let level = parseInt(item.data.data.level);
         let bounty = this.actor.data.data.bounty.value;
         let cost = level + 1
-        console.log(`Attempting to increase ${name}`);
         if (level >= 5) {
             cost *= 2
         }
-        console.log(name, level, bounty, cost, item,);
         if (bounty >= cost) {
             this.actor.update({data: {bounty: {value: bounty - cost}}});
             item.update({'data.level': level + 1});
@@ -473,7 +471,6 @@ export default class PlayerSheet extends ActorSheet {
     _on_attack(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        console.log(element)
         let itemId  = element.dataset.itemid;
         let item = this.actor.items.get(itemId)
         if (itemId == 'Nuthin') {
@@ -555,13 +552,11 @@ export default class PlayerSheet extends ActorSheet {
         let shots = parseInt(item.data.data.chamber);
         let max = item.data.data.max;
         let ammo = this.actor.items.find(i => i.name == item.data.data.calibur) ;
-        console.log(max);
         if (shots >= max) {
             reply = 'Your gun is full of ammo!';
             shots = max;
         }else{
             max -= shots;
-            console.log('- shots remaining.', max);
             let act = this.getData();
             let trait = act.data.data.traits.deftness;
             let skill = trait.skills.speed_load;
@@ -569,7 +564,6 @@ export default class PlayerSheet extends ActorSheet {
             if (ammo){
                 if (ammo.data.data.amount <= max) {
                     max = ammo.data.data.amount;
-                    console.log('less ammo than needed.', max);
                 }
                 let roll = `${lvl}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
                 if (lvl < 1){
@@ -584,7 +578,6 @@ export default class PlayerSheet extends ActorSheet {
                 }else{
                     max = 1;
                     shots += max;
-                    console.log('Failed check.', max);
                 }
                 ammo.update({"data.amount": ammo.data.data.amount - max});
                 item.update({"data.chamber": shots});

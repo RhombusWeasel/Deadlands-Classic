@@ -212,7 +212,6 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
-    console.log(document, createData, options, userId, act.data.data);
     if (act.data.data.random_name) {
         let eth = act.data.data.ethnicity;
         let rn = Math.random();
@@ -240,7 +239,6 @@ Hooks.on('dropActorSheetData', function(actor, sheet, data) {
             }
             let has = numParse(found_item[0].data.data.amount);
             let amt = numParse(item.data.data.amount);
-            console.log(has, amt);
             if (found_item.length > 0) {
                 found_item[0].update({data: {amount: has + amt}});
                 return false;

@@ -234,7 +234,6 @@ export default class NPCSheet extends ActorSheet {
         let skill = trait.skills["shootin_".concat(item.data.data.gun_type)];
         if (shots > 0) {
             if (item.data.data.off_hand) {
-                console.log(act)
                 off_hand_mod = act.data.off_hand_modifier
             }
             let lvl = skill.level
