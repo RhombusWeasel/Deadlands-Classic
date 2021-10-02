@@ -7,10 +7,11 @@
         <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
         <table>
             <tr>
-            {{#if (eq boon.data.data.active true)}}
-                <td><input type="checkbox" name="this.data.data.active" checked></td>
+                <td class="center"><p>Active:</p></td>
+            {{#if (eq data.active true)}}
+                <td class="center"><input type="checkbox" name="data.active" checked></td>
             {{else}}
-                <td><input type="checkbox" name="this.data.data.active"></td>
+                <td class="center"><input type="checkbox" name="data.active"></td>
             {{/if}}
             </tr>
             {{> systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs this}}
