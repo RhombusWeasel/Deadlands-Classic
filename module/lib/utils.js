@@ -1652,7 +1652,7 @@ const dc_utils = {
                 console.log(boon);
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
-                    if (mod.type == 'skill_mod' && mod.active) {
+                    if (mod.type == 'skill_mod' && boon.active) {
                         if (mod.target == skl) {
                             data.modifiers[`boon_${i}`] = {
                                 label: boons[i].name,
