@@ -12,8 +12,7 @@
                         <td class="perc10 center">{{mod.mod}}</td>
                     {{#if (eq mod.active true)}}
                         <td><input type="checkbox" name="data.modifiers.{{@key}}.active" checked/></td>
-                    {{/if}}
-                    {{#if (eq mod.active false)}}
+                    {{else}}
                         <td><input type="checkbox" name="data.modifiers.{{@key}}.active"/></td>
                     {{/if}}
                     </tr>
