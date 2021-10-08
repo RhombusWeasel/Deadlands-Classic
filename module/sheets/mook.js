@@ -160,24 +160,6 @@ export default class NPCSheet extends ActorSheet {
         this.render();
     }
 
-    _on_attack(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId  = element.closest(".item").dataset.itemid;
-        let item = this.actor.items.get(itemId)
-        if (itemId == 'Nuthin') {
-            return
-        }else{
-            let data
-            if (item.type == 'melee') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
-            }else if (item.type == 'firearm') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
-            }
-            dc_utils.socket.emit("register_attack", data);
-        }
-    }
-
     _on_item_open(event) {
         event.preventDefault();
         let element = event.currentTarget;
@@ -195,6 +177,28 @@ export default class NPCSheet extends ActorSheet {
             Discarding ${item.type} ${item.name}
         `});
         dc_utils.char.items.delete(this.actor, itemId);
+    }
+
+    _on_attack(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId  = element.dataset.itemid;
+        let item = this.actor.items.get(itemId)
+        if (itemId == 'Nuthin') {
+            return
+        }else{
+            let data
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+            }
+            if (!(game.user.isGM)) {
+                dc_utils.socket.emit("register_attack", data);
+            }else{
+                operations.register_attack(data);
+            }
+        }
     }
 
     _on_melee_attack(event) {
