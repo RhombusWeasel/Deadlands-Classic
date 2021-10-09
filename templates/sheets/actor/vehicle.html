@@ -16,6 +16,7 @@
                 <th class="center">Climb</th>
                 <th class="center">Turn</th>
             </tr>
+            {{#isGM}}
             <tr>
                 <td class="perc12 center"><input style="width: 45%;" type="number" name="data.durability.value" value="{{data.data.durability.value}}"/>/<input style="width: 45%;" type="number" name="data.durability.max" value="{{data.data.durability.max}}"/></td>
                 <td class="perc12 center"><input style="width: 45%;" type="number" name="data.passengers.value" value="{{data.data.passengers.value}}"/>/<input style="width: 45%;" type="number" name="data.passengers.max" value="{{data.data.passengers.max}}"/></td>
@@ -23,18 +24,36 @@
                 <td class="perc12 center"><input style="width: 45%;" type="number" name="data.climb.value" value="{{data.data.climb.value}}"/>/<input style="width: 45%;" type="number" name="data.climb.max" value="{{data.data.climb.max}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.turn" value="{{data.data.turn}}"/></td>
             </tr>
+            {{else}}
+            <tr>
+                <td class="perc12 center"><p>{{data.data.durability.value}}</p>/<p>{{data.data.durability.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.passengers.value}}</p>/<p>{{data.data.passengers.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.pace}}</p></td>
+                <td class="perc12 center"><p>{{data.data.climb.value}}</p>/<p>{{data.data.climb.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.turn}}</p></td>
+            </tr>
+            {{/isGM}}
             <tr>
                 <th class="center">Travel</th>
                 <th class="center">Fuel</th>
                 <th class="center">Reliability</th>
                 <th class="center">Hit Modifier</th>
             </tr>
+            {{#isGM}}
             <tr>
                 <td class="perc12 center"><input type="number" name="data.travel" value="{{data.data.travel}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.fuel" value="{{data.data.fuel}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.reliability" value="{{data.data.reliability}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.modifier" value="{{data.data.modifier}}"/></td>
             </tr>
+            {{else}}
+            <tr>
+                <td class="perc12 center"><p>{{data.data.travel}}</p></td>
+                <td class="perc12 center"><p>{{data.data.fuel}}</p></td>
+                <td class="perc12 center"><p>{{data.data.reliability}}</p></td>
+                <td class="perc12 center"><p>{{data.data.modifier}}</p></td>
+            </tr>
+            {{/isGM}}
         </table>
     </div>
     <nav class="sheet-tabs tabs" data-group="vehicle">
