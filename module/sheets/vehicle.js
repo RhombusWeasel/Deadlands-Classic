@@ -27,5 +27,23 @@ export default class VehicleSheet extends ActorSheet {
         return super.activateListeners(html);
     }
 
-    
+    _on_item_open(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        return item.sheet.render(true);
+    }
+
+    _on_item_delete(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        dc_utils.chat.send('Discard', `${this.actor.name} discards ${item.name}`);
+        ChatMessage.create({ content: `
+            Discarding ${item.type} ${item.name}
+        `});
+        dc_utils.char.items.delete(this.actor, itemId);
+    }
 }
