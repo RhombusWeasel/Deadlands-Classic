@@ -5,7 +5,7 @@ export default class VehicleSheet extends ActorSheet {
             classes: ["player-sheet", "doc"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "passengers" }],
             width: 500,
-            height: 650
+            height: 660
         });
     }
 
