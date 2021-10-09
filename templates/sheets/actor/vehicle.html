@@ -1,4 +1,42 @@
 <form>
+    <div>
+        <h1 class="center">
+            <div data-edit="name" contenteditable="">{{actor.name}}</div>
+        </h1>
+    </div>
+    <div>
+        <h2 class="center">
+            <div data-edit="type" contenteditable="">{{data.data.type}}</div>
+        </h2>
+        <table>
+            <tr>
+                <th class="center">Durability</th>
+                <th class="center">Passengers</th>
+                <th class="center">Pace</th>
+                <th class="center">Climb</th>
+                <th class="center">Turn</th>
+            </tr>
+            <tr>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.durability.value" value="{{data.data.durability.value}}"/>/<input style="width: 45%;" type="number" name="data.durability.max" value="{{data.data.durability.max}}"/></td>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.passengers.value" value="{{data.data.passengers.value}}"/>/<input style="width: 45%;" type="number" name="data.passengers.max" value="{{data.data.passengers.max}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.climb.value" value="{{data.data.climb.value}}"/>/<input style="width: 45%;" type="number" name="data.climb.max" value="{{data.data.climb.max}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.turn" value="{{data.data.turn}}"/></td>
+            </tr>
+            <tr>
+                <th class="center">Travel</th>
+                <th class="center">Fuel</th>
+                <th class="center">Reliability</th>
+                <th class="center">Hit Modifier</th>
+            </tr>
+            <tr>
+                <td class="perc12 center"><input type="number" name="data.travel" value="{{data.data.travel}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.fuel" value="{{data.data.fuel}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.reliability" value="{{data.data.reliability}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.modifier" value="{{data.data.modifier}}"/></td>
+            </tr>
+        </table>
+    </div>
     <nav class="sheet-tabs tabs" data-group="vehicle">
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="core">Core</a>
@@ -9,6 +47,11 @@
     <section class="sheet-body scroller trait_scroller border">
         <div class="tab description" data-group="vehicle" data-tab="description">
             {{> "systems/deadlands_classic/templates/partials/tabs/description.hbs"}}
+        </div>
+        <div class="tab core" data-group="vehicle" data-tab="core">
+            <div class="sidebar">
+                
+            </div>
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
             <div class="sidebar">

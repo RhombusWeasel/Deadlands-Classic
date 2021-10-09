@@ -657,6 +657,7 @@
             "player_target": "all"
         },
         "vehicle": {
+            "type": "Steamwagon",
             "description": "",
             "notes": "",
             "durability": {
@@ -665,6 +666,7 @@
                 "value": 10
             },
             "passengers": {
+                "value": 0,
                 "max": 2,
                 "driver": "None",
                 "onboard": {}
