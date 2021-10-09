@@ -4,7 +4,8 @@
             "player",
             "npc",
             "mook",
-            "gm"
+            "gm",
+            "vehicle"
         ],
         "templates": {
             "core": {
@@ -654,6 +655,30 @@
                 "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
             },
             "player_target": "all"
+        },
+        "vehicle": {
+            "durability": {
+                "min": 0,
+                "max": 10,
+                "value": 10
+            },
+            "passengers": {
+                "max": 2,
+                "driver": "None",
+                "onboard": {}
+            },
+            "pace": 10,
+            "climb": {
+                "min": 0,
+                "max": 0,
+                "value": 0
+            },
+            "turn": 5,
+            "travel": 15,
+            "fuel": "Ghost Rock",
+            "reliability": 17,
+            "modifier": 2,
+            "hit_locations": {}
         }
     },
     "Item": {
