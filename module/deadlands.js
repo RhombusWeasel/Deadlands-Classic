@@ -183,6 +183,7 @@ Hooks.once("init", function () {
         if (game.user.isGM) {
             return options.fn(this);
         }
+        return options.inverse(this)
     });
 
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
