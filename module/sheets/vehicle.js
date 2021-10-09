@@ -1,4 +1,4 @@
-export default class DCVehicle extends ActorSheet {
+export default class VehicleSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,

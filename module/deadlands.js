@@ -4,6 +4,7 @@ import actor_sheet from "./sheets/actor.js"
 import generator_sheet from "./sheets/generator.js"
 import marshal_sheet from "./sheets/gm.js"
 import mook_sheet from "./sheets/mook.js"
+import vehicle_sheet from "./sheets/vehicle.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
@@ -58,6 +59,7 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: true});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
+    Actors.registerSheet("deadlands_classic", vehicle_sheet, { makeDefault: false});
 
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
