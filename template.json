@@ -657,6 +657,7 @@
             "player_target": "all"
         },
         "vehicle": {
+            "description": "",
             "durability": {
                 "min": 0,
                 "max": 10,
@@ -675,10 +676,17 @@
             },
             "turn": 5,
             "travel": 15,
-            "fuel": "Ghost Rock",
+            "fuel": 0,
             "reliability": 17,
             "modifier": 2,
-            "hit_locations": {}
+            "hit_add": {
+                "name": "",
+                "min": 0,
+                "max": 20,
+                "armour": 0
+            },
+            "hit_locations": {},
+            "weapons": {}
         }
     },
     "Item": {
