@@ -658,6 +658,7 @@
         },
         "vehicle": {
             "description": "",
+            "notes": "",
             "durability": {
                 "min": 0,
                 "max": 10,
