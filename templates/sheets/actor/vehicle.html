@@ -1,19 +1,19 @@
 <form>
     <section class="sheet-body scroller trait_scroller border">
-        <div class="tab description" data-group="primary" data-tab="description">
+        <div class="tab description" data-group="vehicle" data-tab="description">
             {{> "systems/deadlands_classic/templates/partials/tabs/description.hbs"}}
         </div>
-        <div class="tab combat" data-group="primary" data-tab="combat">
+        <div class="tab combat" data-group="vehicle" data-tab="combat">
             <div class="sidebar">
                 
             </div>
         </div>
-        <div class="tab goods" data-group="primary" data-tab="goods">
+        <div class="tab goods" data-group="vehicle" data-tab="goods">
             <div class="sidebar">
                 {{> "systems/deadlands_classic/templates/partials/tabs/goods.hbs"}}
             </div>
         </div>
-        <div class="tab notes" data-group="primary" data-tab="notes">
+        <div class="tab notes" data-group="vehicle" data-tab="notes">
             <textarea name="data.notes" id="notes" cols="30" rows="30">{{data.data.notes}}</textarea>
         </div>
     </section>
