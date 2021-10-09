@@ -3,7 +3,7 @@ export default class VehicleSheet extends ActorSheet {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
             classes: ["player-sheet", "doc"],
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "core" }],
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "passengers" }],
             width: 500,
             height: 700
         });
