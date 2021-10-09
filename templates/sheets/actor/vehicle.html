@@ -46,12 +46,7 @@
     </nav>
     <section class="sheet-body scroller trait_scroller border">
         <div class="tab description" data-group="vehicle" data-tab="description">
-            {{> "systems/deadlands_classic/templates/partials/tabs/description.hbs"}}
-        </div>
-        <div class="tab core" data-group="vehicle" data-tab="core">
-            <div class="sidebar">
-                
-            </div>
+            <textarea name="data.description" id="notes" cols="30" rows="30">{{data.data.description}}</textarea>
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
             <div class="sidebar">
