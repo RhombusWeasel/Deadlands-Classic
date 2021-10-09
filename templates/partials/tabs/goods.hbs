@@ -1,8 +1,8 @@
 <section class="form typed">
-    <h2 class="center">Trappin's</h2>
     <div>
-        {{#if goods}}
         <div>
+            {{#if melee_weapons}}
+            <h2>Melee Weapons</h2>
             <table>
             {{#each melee_weapons as |wep|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -13,6 +13,11 @@
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
             {{/each}}
+            </table>
+            {{/if}}
+            {{#if firearms}}
+            <h2>Firearms</h2>
+            <table>
             {{#each firearms as |gun|}}
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
@@ -22,6 +27,11 @@
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
             {{/each}}
+            </table>
+            {{/if}}
+            {{#if goods}}
+            <h2>Goods</h2>
+            <table>
             {{#each goods as |good|}}
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
@@ -32,7 +42,7 @@
             </tr>
             {{/each}}
             </table>
+            {{/if}}
         </div>
-        {{/if}}
     </div>
 </section>
