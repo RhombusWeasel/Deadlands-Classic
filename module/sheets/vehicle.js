@@ -1,5 +1,3 @@
-import { dc } from "../config";
-
 export default class VehicleSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
