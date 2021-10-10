@@ -2263,4 +2263,23 @@ const dc_utils = {
             return data;
         },
     },
+    vehicle: {
+        passenger: {
+            add_slot: function(act, name, driver, gunner) {
+                let onboard = act.data.data.passengers.onboard;
+                onboard.push({
+                    name: name,
+                    driver: driver,
+                    gunner: gunner,
+                    character: 'Empty'
+                });
+                act.update({data: {
+                    passengers: {
+                        onboard: onboard
+                    }
+                }});
+            },
+            
+        },
+    },
 };

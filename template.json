@@ -665,6 +665,11 @@
                 "max": 10,
                 "value": 10
             },
+            "passenger_add": {
+                "name": "",
+                "driver": false,
+                "gunner": false
+            },
             "passengers": {
                 "value": 0,
                 "max": 2,
