@@ -95,7 +95,22 @@
             {{/isGM}}
             <div>
                 <table>
-
+                    {{#each data.data.passengers.onboard as |pass|}}
+                    <tr>
+                        <td><p>{{pass.name}}</p></td>
+                        {{#if (eq pass.driver true)}}
+                        <td class="center"><input type="checkbox" name="is-driver" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="is-driver"></td>
+                        {{/if}}
+                        {{#if (eq pass.gunner true)}}
+                        <td class="center"><input type="checkbox" name="is-gunner" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="is-gunner"></td>
+                        {{/if}}
+                        <td><p>{{pass.character}}</p></td>
+                    </tr>
+                    {{/each}}
                 </table>
             </div>
         </div>

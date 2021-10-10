@@ -2279,7 +2279,9 @@ const dc_utils = {
                     }
                 }});
             },
-            
+            enter: function(act, passenger, seat) {
+                
+            }
         },
     },
 };
