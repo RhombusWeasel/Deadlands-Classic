@@ -26,6 +26,7 @@ export default class VehicleSheet extends ActorSheet {
     activateListeners(html) {
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
+        html.find(".add-passenger").click(this._on_passenger_add.bind(this));
         return super.activateListeners(html);
     }
 
