@@ -674,7 +674,7 @@
                 "value": 0,
                 "max": 2,
                 "driver": "None",
-                "onboard": {}
+                "onboard": []
             },
             "pace": 10,
             "climb": {
