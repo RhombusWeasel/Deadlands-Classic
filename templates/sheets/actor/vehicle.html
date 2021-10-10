@@ -96,7 +96,7 @@
             <div>
                 <table>
                     {{#each data.data.passengers.onboard as |pass|}}
-                    <tr>
+                    <tr class="item" data-itemId="{{@index}}">
                         <td><p>{{pass.name}}</p></td>
                         {{#if (eq pass.driver true)}}
                         <td class="center"><input type="checkbox" name="is-driver" checked></td>

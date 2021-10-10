@@ -1,3 +1,5 @@
+import { dc } from "../config";
+
 export default class VehicleSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -45,5 +47,12 @@ export default class VehicleSheet extends ActorSheet {
             Discarding ${item.type} ${item.name}
         `});
         dc_utils.char.items.delete(this.actor, itemId);
+    }
+
+    _on_passenger_add(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let details = this.actor.data.data.passenger_add
+        dc_utils.vehicle.passenger.add_slot(this.actor, details.name, details.driver, details.gunner);
     }
 }
