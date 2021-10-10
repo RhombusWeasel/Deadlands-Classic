@@ -79,14 +79,14 @@
                     <tr>
                         <td class="center"><input type="text" name="data.passenger_add.name" value="{{data.data.passenger_add.name}}"/></td>
                         {{#if (eq data.data.passenger_add.driver true)}}
-                        <td><input type="checkbox" name="data.passenger_add.driver" checked></td>
+                        <td class="center"><input type="checkbox" name="data.passenger_add.driver" checked></td>
                         {{else}}
-                        <td><input type="checkbox" name="data.passenger_add.driver"></td>
+                        <td class="center"><input type="checkbox" name="data.passenger_add.driver"></td>
                         {{/if}}
                         {{#if (eq data.data.passenger_add.gunner true)}}
-                        <td><input type="checkbox" name="data.passenger_add.gunner" checked></td>
+                        <td class="center"><input type="checkbox" name="data.passenger_add.gunner" checked></td>
                         {{else}}
-                        <td><input type="checkbox" name="data.passenger_add.gunner"></td>
+                        <td class="center"><input type="checkbox" name="data.passenger_add.gunner"></td>
                         {{/if}}
                     </tr>
                 </table>
