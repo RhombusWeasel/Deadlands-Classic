@@ -111,6 +111,7 @@
                         <td>
                             <select name="data.passengers.onboard[{{@index}}].character">
                             {{#each owners as |owner|}}
+                            {{log owner}}
                                 {{#if (eq owner.name @../this.character)}}
                                 <option value="{{owner.name}}" selected></option>
                                 {{else}}
