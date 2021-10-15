@@ -2265,6 +2265,10 @@ const dc_utils = {
     },
     vehicle: {
         passenger: {
+            get_owner: function(act) {
+                let online = dc_utils.gm.get_online_users();
+                console.log(online);
+            },
             add_slot: function(act, name, driver, gunner) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard.push({
