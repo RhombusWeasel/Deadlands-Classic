@@ -1123,6 +1123,22 @@ const dc_utils = {
         get_player_owned_actors: function() {
             return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
         },
+        get_online_actors: function(act) {
+            let users = dc_utils.gm.get_online_users();
+            let pcs   = dc_utils.gm.get_player_owned_actors();
+            let r_tab = []
+            for (let i = 0; i < users.length; i++) {
+                if (!(users[i].isGM)) {
+                    for (let p = 0; p < pcs.length; p++) {
+                        let char = pcs[p];
+                        if (char.data.data.permission[users[i].id]) {
+                            r_tab.push(char);
+                        }
+                    }
+                }
+            }
+            return r_tab;
+        },
     },
     char: {
         random_name: function(eth, sex) {
@@ -2265,10 +2281,6 @@ const dc_utils = {
     },
     vehicle: {
         passenger: {
-            get_owner: function(act) {
-                let online = dc_utils.gm.get_online_users();
-                console.log(online);
-            },
             add_slot: function(act, name, driver, gunner) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard.push({

@@ -108,6 +108,15 @@
                         {{else}}
                         <td class="center"><input type="checkbox" name="is-gunner"></td>
                         {{/if}}
+                        <select name="data.passengers.onboard[{{@index}}].character">
+                            {{#each owners as |owner|}}
+                                {{#if (eq owner.name data.data.passengers.onboard[@index].character)}}
+                            <option value="{{owner.name}}" selected></option>
+                                {{else}}
+                            <option value="{{owner.name}}"></option>
+                                {{/if}}
+                            {{/each}}
+                        </select>
                         <td><p>{{pass.character}}</p></td>
                     </tr>
                     {{/each}}
