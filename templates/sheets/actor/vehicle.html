@@ -110,7 +110,7 @@
                         {{/if}}
                         <select name="data.passengers.onboard[{{@index}}].character">
                             {{#each owners as |owner|}}
-                                {{#if (eq owner.name data.data.passengers.onboard[@index].character)}}
+                                {{#if (eq owner.name @../this.character)}}
                             <option value="{{owner.name}}" selected></option>
                                 {{else}}
                             <option value="{{owner.name}}"></option>
