@@ -1131,7 +1131,7 @@ const dc_utils = {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
                         let char = pcs[p];
-                        if (char.data.data.permission[users[i].id]) {
+                        if (users[i].id in char.data.data.permission) {
                             r_tab.push(char);
                         }
                     }
