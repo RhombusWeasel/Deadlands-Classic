@@ -1126,7 +1126,11 @@ const dc_utils = {
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();
             let pcs   = dc_utils.gm.get_player_owned_actors();
-            let r_tab = []
+            let r_tab = [
+                {
+                    name: "Empty"
+                }
+            ]
             for (let i = 0; i < users.length; i++) {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
