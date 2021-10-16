@@ -2300,7 +2300,13 @@ const dc_utils = {
                 }});
             },
             enter: function(act, passenger, seat) {
-                
+                let onboard = act.data.data.passengers.onboard;
+                onboard[seat].character = passenger.name
+                act.update({data: {
+                    passengers: {
+                        onboard: onboard
+                    }
+                }});
             }
         },
     },
