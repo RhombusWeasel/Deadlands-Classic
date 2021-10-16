@@ -26,6 +26,7 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".add-passenger").click(this._on_passenger_add.bind(this));
+        html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
         return super.activateListeners(html);
     }
 
@@ -54,5 +55,9 @@ export default class VehicleSheet extends ActorSheet {
         let element = event.currentTarget;
         let details = this.actor.data.data.passenger_add
         dc_utils.vehicle.passenger.add_slot(this.actor, details.name, details.driver, details.gunner);
+    }
+
+    _on_enter_vehicle(event) {
+
     }
 }

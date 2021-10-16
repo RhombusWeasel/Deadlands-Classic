@@ -90,7 +90,7 @@
                         {{/if}}
                     </tr>
                 </table>
-                <a class="center add-passenger">Add</a>
+                <div><a class="center add-passenger">Add</a></div>
             </div>
             {{/isGM}}
             <div>
@@ -108,18 +108,7 @@
                         {{else}}
                         <td class="center"><input type="checkbox" name="is-gunner"></td>
                         {{/if}}
-                        <td>
-                            <select name="data.passengers.onboard[{{@index}}].character">
-                            {{log owners}}
-                            {{#each owners as |owner|}}
-                                {{#if (eq owner.name @../this.character)}}
-                                <option value="{{owner.name}}" selected></option>
-                                {{else}}
-                                <option value="{{owner.name}}"></option>
-                                {{/if}}
-                            {{/each}}
-                            </select>
-                        </td>
+                        <td><a class="enter-vehicle center">Enter</a></td>
                     </tr>
                     {{/each}}
                 </table>
