@@ -60,7 +60,7 @@ export default class VehicleSheet extends ActorSheet {
     _on_enter_vehicle(event) {
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
-        let char = game.actors.get(game.user.character);
+        let char = game.user.character;
         dc_utils.vehicle.passenger.enter(this.actor, char, index);
     }
 }
