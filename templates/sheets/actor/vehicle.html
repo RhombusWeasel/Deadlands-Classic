@@ -108,7 +108,11 @@
                         {{else}}
                         <td class="center"><input type="checkbox" name="is-gunner"></td>
                         {{/if}}
+                        {{#if (eq pass.character "Empty")}}
                         <td><a class="enter-vehicle center">Enter</a></td>
+                        {{else}}
+                        <td>{{pass.character}}</td>
+                        {{/if}}
                     </tr>
                     {{/each}}
                 </table>
