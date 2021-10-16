@@ -113,9 +113,9 @@
                         <td class="center"><input type="checkbox" name="is-gunner"></td>
                         {{/if}}
                         {{#if (eq pass.character "Empty")}}
-                        <td><a class="enter-vehicle center">Enter</a></td>
+                        <td class="center"><a class="enter-vehicle">Enter</a></td>
                         {{else}}
-                        <td class="center">{{pass.character}}</td>
+                        <td class="center"><a class="exit-vehicle">{{pass.character}}</a></td>
                         {{/if}}
                     </tr>
                     {{/each}}

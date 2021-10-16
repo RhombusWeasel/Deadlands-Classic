@@ -2307,6 +2307,15 @@ const dc_utils = {
                         onboard: onboard
                     }
                 }});
+            },
+            exit: function(act, seat) {
+                let onboard = act.data.data.passengers.onboard;
+                onboard[seat].character = 'Empty'
+                act.update({data: {
+                    passengers: {
+                        onboard: onboard
+                    }
+                }});
             }
         },
     },

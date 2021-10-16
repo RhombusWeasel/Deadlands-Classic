@@ -27,6 +27,7 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".add-passenger").click(this._on_passenger_add.bind(this));
         html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
+        html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
         return super.activateListeners(html);
     }
 
@@ -62,5 +63,11 @@ export default class VehicleSheet extends ActorSheet {
         let index = element.closest(".item").dataset.itemid;
         let char = game.user.character;
         dc_utils.vehicle.passenger.enter(this.actor, char, index);
+    }
+
+    _on_exit_vehicle(event) {
+        let element = event.currentTarget;
+        let index = element.closest(".item").dataset.itemid;
+        dc_utils.vehicle.passenger.exit(this.actor, index);
     }
 }
