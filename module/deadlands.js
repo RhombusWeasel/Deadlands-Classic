@@ -186,6 +186,21 @@ Hooks.once("init", function () {
         return options.inverse(this)
     });
 
+    Handlebars.registerHelper('isDriver', function (vehicle, options) {
+        console.log(vehicle);
+        if (game.user.isGM) {
+            return options.fn(this);
+        }
+        return options.inverse(this)
+    });
+
+    Handlebars.registerHelper('isGunner', function (vehicle, options) {
+        if (game.user.isGM) {
+            return options.fn(this);
+        }
+        return options.inverse(this)
+    });
+
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
         switch (operator) {
             case '==':

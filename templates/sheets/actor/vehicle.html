@@ -38,6 +38,7 @@
                 <th class="center">Fuel</th>
                 <th class="center">Reliability</th>
                 <th class="center">Hit Modifier</th>
+                <th class="center">Speed</th>
             </tr>
             {{#isGM}}
             <tr>
@@ -45,6 +46,7 @@
                 <td class="perc12 center"><input type="number" name="data.fuel" value="{{data.data.fuel}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.reliability" value="{{data.data.reliability}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.modifier" value="{{data.data.modifier}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.speed" value="{{data.data.speed}}"/></td>
             </tr>
             {{else}}
             <tr>
@@ -52,6 +54,7 @@
                 <td class="perc12 center"><p>{{data.data.fuel}}</p></td>
                 <td class="perc12 center"><p>{{data.data.reliability}}</p></td>
                 <td class="perc12 center"><p>{{data.data.modifier}}</p></td>
+                <td class="perc12 center"><p>{{data.data.speed}}</p></td>
             </tr>
             {{/isGM}}
         </table>
@@ -59,7 +62,12 @@
     <nav class="sheet-tabs tabs" data-group="vehicle">
         <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="passengers">Passengers</a>
+        {{#isDriver this}}
+        <a class="item" data-tab="drivin">Drivin</a>
+        {{/isDriver}}
+        {{#isGunner this}}
         <a class="item" data-tab="combat">Combat</a>
+        {{/isGunner}}
         <a class="item" data-tab="goods">Goods</a>
         <a class="item" data-tab="notes">Notes</a>
     </nav>
