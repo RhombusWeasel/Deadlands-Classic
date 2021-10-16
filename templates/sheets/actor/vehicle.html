@@ -95,6 +95,11 @@
             {{/isGM}}
             <div>
                 <table>
+                    <th>Seat</th>
+                    <th>Driver</th>
+                    <th>Gunner</th>
+                    <th>Occupant</th>
+                    <th>Enter</th>
                     {{#each data.data.passengers.onboard as |pass|}}
                     <tr class="item" data-itemId="{{@index}}">
                         <td><p>{{pass.name}}</p></td>
