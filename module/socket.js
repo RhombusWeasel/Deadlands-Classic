@@ -279,10 +279,10 @@ let operations = {
                 data = dc_utils.roll.new_roll_packet()
             }
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
-            operations.confirm_result(data);
+            return operations.confirm_result(data);
         }else if (game.user.isGM) {
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
-            operations.confirm_result(data);
+            return operations.confirm_result(data);
         }
     },
     confirm_result: function(data) {
@@ -351,6 +351,7 @@ let operations = {
                                 dc_utils.socket.emit('lock_result', data);
                                 ChatMessage.create({content: build_skill_template(data)});
                             }
+                            return data;
                         }
                     }
                 },
