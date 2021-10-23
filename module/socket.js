@@ -279,10 +279,12 @@ let operations = {
                 data = dc_utils.roll.new_roll_packet()
             }
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
-            return operations.confirm_result(data);
+            let result = operations.confirm_result(data);
+            return result;
         }else if (game.user.isGM) {
             data.roll = dc_utils.roll.evaluate(dc_utils.roll.new(data));
-            return operations.confirm_result(data);
+            let result = operations.confirm_result(data);
+            return result;
         }
     },
     confirm_result: function(data) {
