@@ -134,6 +134,9 @@
                         {{else}}
                         <td class="center"><a class="exit-vehicle">{{pass.character}}</a></td>
                         {{/if}}
+                        {{#isGM}}
+                        <td class="center"><a class="fas fa-trash remove-passenger-slot"></a></td>
+                        {{/isGM}}
                     </tr>
                     {{/each}}
                 </table>
@@ -173,6 +176,9 @@
                         <td><p>{{loc.min}}</p></td>
                         <td><p>{{loc.max}}</p></td>
                         <td><p>{{loc.armour}}</p></td>
+                        {{#isGM}}
+                        <td class="center"><a class="fas fa-trash remove-hit-location"></a></td>
+                        {{/isGM}}
                     </tr>
                     {{/each}}
                 </table>
