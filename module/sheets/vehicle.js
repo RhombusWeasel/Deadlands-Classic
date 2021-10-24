@@ -79,7 +79,7 @@ export default class VehicleSheet extends ActorSheet {
         let details = this.actor.data.data.hit_add;
         dc_utils.vehicle.locations.add_location(this.actor, details.name, details.min, details.max, details.armour);
     }
-    _on_passenger_remove(event) {
+    _on_hit_location_remove(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
