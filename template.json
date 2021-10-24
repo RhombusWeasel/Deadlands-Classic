@@ -658,6 +658,7 @@
         },
         "vehicle": {
             "type": "Steamwagon",
+            "show_editor": true,
             "description": "",
             "notes": "",
             "durability": {
@@ -689,9 +690,10 @@
             "modifier": 2,
             "hit_add": {
                 "name": "",
-                "min": 0,
+                "min": 1,
                 "max": 20,
-                "armour": 0
+                "armour": 0,
+                "show_malfunctions": false
             },
             "hit_locations": {},
             "weapons": {}

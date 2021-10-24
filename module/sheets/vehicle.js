@@ -23,12 +23,17 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        html.find(".edit-toggle").click(this._on_edit_toggle.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".add-passenger").click(this._on_passenger_add.bind(this));
         html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
         return super.activateListeners(html);
+    }
+
+    _on_edit_toggle(event) {
+        
     }
 
     _on_item_open(event) {

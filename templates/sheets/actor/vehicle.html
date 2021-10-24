@@ -71,12 +71,18 @@
         <a class="item" data-tab="goods">Goods</a>
         <a class="item" data-tab="notes">Notes</a>
     </nav>
+    {{#if (eq data.data.show_editor true)}}
+        <a class="center edit-toggle">Hide Editor</a>
+    {{else}}
+    <a class="center edit-toggle">Show Editor</a>
+    {{/if}}
     <section class="sheet-body vehicle-scroller trait_scroller border">
         <div class="tab description" data-group="vehicle" data-tab="description">
             <textarea name="data.description" id="notes" cols="30" rows="24">{{data.data.description}}</textarea>
         </div>
         <div class="tab passengers" data-group="vehicle" data-tab="passengers">
             {{#isGM}}
+                {{#if (eq data.data.show_editor true)}}
             <div class="sidebar">
                 <table>
                     <tr>
@@ -100,6 +106,7 @@
                 </table>
                 <div><a class="add-passenger">Add</a></div>
             </div>
+                {{/if}}
             {{/isGM}}
             <div>
                 <table>
