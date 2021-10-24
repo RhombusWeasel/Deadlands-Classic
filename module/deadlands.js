@@ -188,6 +188,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('isDriver', function (vehicle, options) {
         let onboard = vehicle.actor.data.data.passengers.onboard;
+        if (game.user.isGM) return options.fn(this);
         for (let i = 0; i < onboard.length; i++) {
             const pos = onboard[i].driver;
             if (pos) {
@@ -201,6 +202,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('isGunner', function (vehicle, options) {
         let onboard = vehicle.actor.data.data.passengers.onboard;
+        if (game.user.isGM) return options.fn(this);
         for (let i = 0; i < onboard.length; i++) {
             const pos = onboard[i].gunner;
             if (pos) {
