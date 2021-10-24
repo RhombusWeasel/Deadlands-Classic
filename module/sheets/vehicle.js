@@ -33,7 +33,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_edit_toggle(event) {
-        
+        this.actor.update({data: {show_editor: !(this.actor.data.data.show_editor)}});
     }
 
     _on_item_open(event) {
