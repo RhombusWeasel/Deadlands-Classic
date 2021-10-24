@@ -98,7 +98,7 @@
                         {{/if}}
                     </tr>
                 </table>
-                <div><a class="center add-passenger">Add</a></div>
+                <div><a class="add-passenger">Add</a></div>
             </div>
             {{/isGM}}
             <div>
@@ -132,7 +132,24 @@
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
             <div class="sidebar">
-                
+                {{#isGM}}
+                    <table>
+                        <tr>
+                            <th>Location</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Armour</th>
+                        </tr>
+                        <tr>
+                            <td class="center"><input type="text" name="data.hit_add.name" value="{{data.data.hit_add.name}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.min" value="{{data.data.hit_add.min}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.max" value="{{data.data.hit_add.max}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.armour" value="{{data.data.hit_add.armour}}"/></td>
+                        </tr>
+                    </table>
+                {{else}}
+
+                {{/isGM}}
             </div>
         </div>
         <div class="tab goods" data-group="vehicle" data-tab="goods">

@@ -191,7 +191,7 @@ Hooks.once("init", function () {
         for (let i = 0; i < onboard.length; i++) {
             const pos = onboard[i].driver;
             if (pos) {
-                if (game.user.character.name == onboard[i].character) {
+                if (game.user.character.name == onboard[i].character || game.user.isGM) {
                     return options.fn(this);
                 }
                 return options.inverse(this);
@@ -204,7 +204,7 @@ Hooks.once("init", function () {
         for (let i = 0; i < onboard.length; i++) {
             const pos = onboard[i].gunner;
             if (pos) {
-                if (game.user.character.name == onboard[i].character) {
+                if (game.user.character.name == onboard[i].character || game.user.isGM) {
                     return options.fn(this);
                 }
                 return options.inverse(this);
