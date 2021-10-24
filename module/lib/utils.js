@@ -2327,6 +2327,11 @@ const dc_utils = {
                     max,
                     armour
                 });
+                act.update({
+                    data: {
+                        hit_locations: locs
+                    }
+                });
             },
         },
     },
