@@ -160,7 +160,22 @@
                     <div class="center"><a class="add-hit-location">Add</a></div>
                     {{/if}}
                 {{else}}
-
+                    <table>
+                        <tr>
+                            <th>Location</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Armour</th>
+                        </tr>
+                        {{each data.data.hit_locations as |loc|}}
+                        <tr class="item" data-itemId="{{@index}}">
+                            <td><p>{{loc.name}}</p></td>
+                            <td><p>{{loc.min}}</p></td>
+                            <td><p>{{loc.max}}</p></td>
+                            <td><p>{{loc.armour}}</p></td>
+                        </tr>
+                        {{/each}}
+                    </table>
                 {{/isGM}}
             </div>
         </div>
