@@ -2318,5 +2318,16 @@ const dc_utils = {
                 }});
             }
         },
+        locations: {
+            add_location: function(act, name, min, max, armour) {
+                let locs = act.data.data.hit_locations;
+                locs.push({
+                    name,
+                    min,
+                    max,
+                    armour
+                });
+            },
+        },
     },
 };
