@@ -695,7 +695,7 @@
                 "armour": 0,
                 "show_malfunctions": false
             },
-            "hit_locations": {},
+            "hit_locations": [],
             "weapons": {}
         }
     },
