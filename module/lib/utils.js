@@ -2299,6 +2299,15 @@ const dc_utils = {
                     }
                 }});
             },
+            remove_slot: function(act, index) {
+                let onboard = act.data.data.passengers.onboard;
+                onboard.splice(index, 1);
+                act.update({data: {
+                    passengers: {
+                        onboard: onboard
+                    }
+                }});
+            },
             enter: function(act, passenger, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = passenger.name
@@ -2327,6 +2336,15 @@ const dc_utils = {
                     max,
                     armour
                 });
+                act.update({
+                    data: {
+                        hit_locations: locs
+                    }
+                });
+            },
+            remove_location: function(act, index) {
+                let locs = act.data.data.hit_locations;
+                locs.splice(index, 1);
                 act.update({
                     data: {
                         hit_locations: locs
