@@ -60,7 +60,6 @@
         </table>
     </div>
     <nav class="sheet-tabs tabs" data-group="vehicle">
-        <a class="item" data-tab="description">Description</a>
         <a class="item" data-tab="passengers">Passengers</a>
         {{#isDriver this}}
         <a class="item" data-tab="drivin">Drivin</a>
@@ -80,9 +79,6 @@
     {{/if}}
     </div>
     <section class="sheet-body vehicle-scroller trait_scroller border">
-        <div class="tab description" data-group="vehicle" data-tab="description">
-            <textarea name="data.description" id="notes" cols="30" rows="24">{{data.data.description}}</textarea>
-        </div>
         <div class="tab passengers" data-group="vehicle" data-tab="passengers">
             {{#isGM}}
                 {{#if (eq data.data.show_editor true)}}
@@ -144,7 +140,7 @@
             </div>
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
-            
+
         </div>
         <div class="tab repair" data-group="vehicle" data-tab="repair">
             <div class="sidebar">
