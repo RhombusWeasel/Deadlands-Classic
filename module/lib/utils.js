@@ -2304,20 +2304,38 @@ const dc_utils = {
                 act.update({data: {passengers: {onboard: onboard}}});
             },
             enter: function(act, passenger, seat) {
-                let onboard = act.data.data.passengers.onboard;
-                onboard[seat].character = passenger.name
-                act.update({data: {passengers: {onboard: onboard}}});
-                if (onboard[seat].gunner) {
-                    dc_utils.vehicle.weapons.set_gunner(act, passenger.name, seat);
+                let data = {
+                    onboard: act.data.data.passengers.onboard,
+                    weapons: act.data.data.weapons
                 }
+                data.onboard[seat].character = passenger.name
+                if (onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
+                        if (gun.gunner_slot == seat) {
+                            data.weapons[i].gunner = passenger.name;
+                            break;
+                        }
+                    }
+                }
+                act.update({data: data});
             },
             exit: function(act, seat) {
-                let onboard = act.data.data.passengers.onboard;
-                onboard[seat].character = 'Empty'
-                act.update({data: {passengers: {onboard: onboard}}});
-                if (onboard[seat].gunner) {
-                    dc_utils.vehicle.weapons.set_gunner(act, 'Empty', seat);
+                let data = {
+                    onboard: act.data.data.passengers.onboard,
+                    weapons: act.data.data.weapons
                 }
+                data.onboard[seat].character = 'Empty'
+                if (onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
+                        if (gun.gunner_slot == seat) {
+                            data.weapons[i].gunner = 'Empty';
+                            break;
+                        }
+                    }
+                }
+                act.update({data: data});
             }
         },
         locations: {
