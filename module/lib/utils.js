@@ -2304,29 +2304,42 @@ const dc_utils = {
                 act.update({data: {passengers: {onboard: onboard}}});
             },
             enter: function(act, passenger, seat) {
-                act.data.data.passengers.onboard[seat].character = passenger.name
-                if (act.data.data.passengers.onboard[seat].gunner) {
-                    for (let i = 0; i < act.data.data.weapons.length; i++) {
-                        const gun = act.data.data.weapons[i];
+                let data = {
+                    passengers: {
+                        onboard: act.data.data.passengers.onboard
+                    },
+                    weapons: act.data.data.weapons
+                }
+                data.passengers.onboard[seat].character = passenger.name
+                if (data.passengers.onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
                         if (gun.gunner_slot == seat) {
-                            act.data.data.weapons[i].gunner = passenger.name;
+                            data.weapons[i].gunner = passenger.name;
                             break;
                         }
                     }
                 }
-                act.update({data: act.data.data});
+                act.update({data: data});
             },
             exit: function(act, seat) {
-                act.data.data.passengers.onboard[seat].character = 'Empty'
-                if (act.data.data.passengers.onboard[seat].gunner) {
-                    for (let i = 0; i < act.data.data.weapons.length; i++) {
-                        if (act.data.data.weapons[i].gunner_slot == seat) {
-                            act.data.data.weapons[i].gunner = 'Empty';
+                let data = {
+                    passengers: {
+                        onboard: act.data.data.passengers.onboard
+                    },
+                    weapons: act.data.data.weapons
+                }
+                data.passengers.onboard[seat].character = 'Empty'
+                if (data.passengers.onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
+                        if (gun.gunner_slot == seat) {
+                            data.weapons[i].gunner = 'Empty';
                             break;
                         }
                     }
                 }
-                act.update({data: act.data.data});
+                act.update({data: data});
             }
         },
         locations: {
