@@ -2293,38 +2293,25 @@ const dc_utils = {
                     gunner: gunner,
                     character: 'Empty'
                 });
-                act.update({data: {
-                    passengers: {
-                        onboard: onboard
-                    }
-                }});
+                act.update({data: {passengers: {onboard: onboard}}});
+                if (gunner) {
+                    dc_utils.vehicle.weapons.add_slot(act, onboard.length);
+                }
             },
             remove_slot: function(act, index) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard.splice(index, 1);
-                act.update({data: {
-                    passengers: {
-                        onboard: onboard
-                    }
-                }});
+                act.update({data: {passengers: {onboard: onboard}}});
             },
             enter: function(act, passenger, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = passenger.name
-                act.update({data: {
-                    passengers: {
-                        onboard: onboard
-                    }
-                }});
+                act.update({data: {passengers: {onboard: onboard}}});
             },
             exit: function(act, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = 'Empty'
-                act.update({data: {
-                    passengers: {
-                        onboard: onboard
-                    }
-                }});
+                act.update({data: {passengers: {onboard: onboard}}});
             }
         },
         locations: {
@@ -2351,6 +2338,22 @@ const dc_utils = {
                         hit_locations: locs
                     }
                 });
+            },
+        },
+        weapons: {
+            add_slot: function(act, index) {
+                let weapons = act.data.data.weapons;
+                weapons.push({
+                    gunner: 'Empty',
+                    gunner_slot: index,
+                    weapon: 'None'
+                });
+                act.update({data: {weapons: weapons}});
+            },
+            remove_slot: function(act, index) {
+                let weapons = act.data.data.weapons;
+                weapons.splice(index, 1);
+                act.update({data: {weapons: weapons}});
             },
         },
     },

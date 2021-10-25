@@ -140,7 +140,18 @@
             </div>
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
-
+            <table>
+                <tr>
+                    <th>Gunner</th>
+                    <th>Weapon</th>
+                </tr>
+            {{#each weapons as |wep|}}
+                <tr>
+                    <td>{{wep.gunner}}</td>
+                    <td>{{wep.weapon}}</td>
+                </tr>
+            {{/each}}
+            </table>
         </div>
         <div class="tab repair" data-group="vehicle" data-tab="repair">
             <div class="sidebar">
