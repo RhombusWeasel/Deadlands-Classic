@@ -189,16 +189,14 @@
                 {{/isGM}}
                 <table>
                     <tr>
+                        <th>Roll</th>
                         <th>Location</th>
-                        <th>Min</th>
-                        <th>Max</th>
                         <th>Armour</th>
                     </tr>
                     {{#each data.data.hit_locations as |loc|}}
                     <tr class="item center" data-itemId="{{@index}}">
+                        <th>{{loc.min}}-{{loc.max}}</th>
                         <td><p>{{loc.name}}</p></td>
-                        <td><p>{{loc.min}}</p></td>
-                        <td><p>{{loc.max}}</p></td>
                         <td><p>{{loc.armour}}</p></td>
                         {{#isGM}}
                         <td class="center"><a class="fas fa-trash remove-hit-location"></a></td>
