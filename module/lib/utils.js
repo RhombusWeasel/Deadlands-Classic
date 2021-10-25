@@ -2306,7 +2306,7 @@ const dc_utils = {
             enter: function(act, passenger, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = passenger.name
-                act.contents({data: {passengers: {onboard: onboard}}});
+                act.update({data: {passengers: {onboard: onboard}}});
                 if (onboard[seat].gunner) {
                     dc_utils.vehicle.weapons.set_gunner(act, passenger.name, seat);
                 }
