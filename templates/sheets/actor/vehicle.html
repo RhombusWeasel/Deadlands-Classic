@@ -68,6 +68,7 @@
         {{#isGunner this}}
         <a class="item" data-tab="combat">Combat</a>
         {{/isGunner}}
+        <a class="item" data-tab="goods">Repair</a>
         <a class="item" data-tab="goods">Goods</a>
         <a class="item" data-tab="notes">Notes</a>
     </nav>
@@ -143,6 +144,9 @@
             </div>
         </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
+            
+        </div>
+        <div class="tab repair" data-group="vehicle" data-tab="repair">
             <div class="sidebar">
                 {{#isGM}}
                     {{#if (eq data.data.show_editor true)}}
