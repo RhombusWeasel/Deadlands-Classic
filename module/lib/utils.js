@@ -2310,8 +2310,8 @@ const dc_utils = {
                     },
                     weapons: act.data.data.weapons
                 }
-                data.onboard[seat].character = passenger.name
-                if (onboard[seat].gunner) {
+                data.passengers.onboard[seat].character = passenger.name
+                if (data.passengers.onboard[seat].gunner) {
                     for (let i = 0; i < data.weapons.length; i++) {
                         const gun = data.weapons[i];
                         if (gun.gunner_slot == seat) {
@@ -2329,8 +2329,8 @@ const dc_utils = {
                     },
                     weapons: act.data.data.weapons
                 }
-                data.onboard[seat].character = 'Empty'
-                if (onboard[seat].gunner) {
+                data.passengers.onboard[seat].character = 'Empty'
+                if (data.passengers.onboard[seat].gunner) {
                     for (let i = 0; i < data.weapons.length; i++) {
                         const gun = data.weapons[i];
                         if (gun.gunner_slot == seat) {
