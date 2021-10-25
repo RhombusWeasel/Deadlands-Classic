@@ -2305,7 +2305,9 @@ const dc_utils = {
             },
             enter: function(act, passenger, seat) {
                 let data = {
-                    onboard: act.data.data.passengers.onboard,
+                    passengers: {
+                        onboard: act.data.data.passengers.onboard
+                    },
                     weapons: act.data.data.weapons
                 }
                 data.onboard[seat].character = passenger.name
@@ -2322,7 +2324,9 @@ const dc_utils = {
             },
             exit: function(act, seat) {
                 let data = {
-                    onboard: act.data.data.passengers.onboard,
+                    passengers: {
+                        onboard: act.data.data.passengers.onboard
+                    },
                     weapons: act.data.data.weapons
                 }
                 data.onboard[seat].character = 'Empty'
