@@ -2314,7 +2314,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: act.data});
+                act.update({data: act.data.data});
             },
             exit: function(act, seat) {
                 act.data.data.passengers.onboard[seat].character = 'Empty'
@@ -2326,7 +2326,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: act.data});
+                act.update({data: act.data.data});
             }
         },
         locations: {
