@@ -2326,7 +2326,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: data});
+                act.update({data: act.data});
             }
         },
         locations: {
