@@ -2307,11 +2307,17 @@ const dc_utils = {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = passenger.name
                 act.update({data: {passengers: {onboard: onboard}}});
+                if (onboard[seat].gunner) {
+                    dc_utils.vehicle.weapons.set_gunner(act, passenger.name, seat);
+                }
             },
             exit: function(act, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = 'Empty'
                 act.update({data: {passengers: {onboard: onboard}}});
+                if (onboard[seat].gunner) {
+                    dc_utils.vehicle.weapons.set_gunner(act, 'Empty', seat);
+                }
             }
         },
         locations: {
@@ -2353,6 +2359,17 @@ const dc_utils = {
             remove_slot: function(act, index) {
                 let weapons = act.data.data.weapons;
                 weapons.splice(index, 1);
+                act.update({data: {weapons: weapons}});
+            },
+            set_gunner: function(act, name, seat) {
+                let weapons = act.data.data.weapons;
+                for (let i = 0; i < weapons.length; i++) {
+                    const gun = weapons[i];
+                    if (gun.gunner_slot == seat) {
+                        weapons[i].gunner = name;
+                        break;
+                    }
+                }
                 act.update({data: {weapons: weapons}});
             },
         },
