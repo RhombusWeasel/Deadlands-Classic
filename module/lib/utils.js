@@ -1118,10 +1118,10 @@ const dc_utils = {
     },
     gm: {
         get_online_users: function() {
-            return game.users.entities.filter(function(i) {return i.active});
+            return game.users.contents.filter(function(i) {return i.active});
         },
         get_player_owned_actors: function() {
-            return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
+            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner});
         },
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();
@@ -2306,7 +2306,7 @@ const dc_utils = {
             enter: function(act, passenger, seat) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard[seat].character = passenger.name
-                act.update({data: {passengers: {onboard: onboard}}});
+                act.contents({data: {passengers: {onboard: onboard}}});
                 if (onboard[seat].gunner) {
                     dc_utils.vehicle.weapons.set_gunner(act, passenger.name, seat);
                 }
