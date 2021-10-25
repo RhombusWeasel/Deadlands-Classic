@@ -693,10 +693,14 @@
                 "min": 1,
                 "max": 20,
                 "armour": 0,
-                "show_malfunctions": false
+                "malfunctions": {
+                    "minor": {"name": "", "description": ""},
+                    "major": {"name": "", "description": ""},
+                    "catastrophic": {"name": "", "description": ""}
+                }
             },
             "hit_locations": [],
-            "weapons": {}
+            "weapons": []
         }
     },
     "Item": {

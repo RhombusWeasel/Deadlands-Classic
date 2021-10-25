@@ -2328,13 +2328,14 @@ const dc_utils = {
             }
         },
         locations: {
-            add_location: function(act, name, min, max, armour) {
+            add_location: function(act, name, min, max, armour, malfunctions) {
                 let locs = act.data.data.hit_locations;
                 locs.push({
                     name,
                     min,
                     max,
-                    armour
+                    armour,
+                    malfunctions
                 });
                 act.update({
                     data: {
