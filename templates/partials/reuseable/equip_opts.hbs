@@ -11,11 +11,6 @@
         <td><input type="checkbox" name="data.reliability"/></td>
         {{/if}}
     </tr>
-{{#if (eq data.data.equippable true)}}
-    <tr>
-        <th>{{localize "dc.items.goods.equippable"}}</th>
-        <td><input type="checkbox" name="data.equippable" checked/></td>
-    </tr>
     <tr>
     {{#if (eq data.data.vehicle_mountable true)}}
         <th>{{localize "dc.items.combat.firearm.vehicle_mountable"}}</th>
@@ -25,6 +20,11 @@
         <td><input type="checkbox" name="data.vehicle_mountable"/></td>
         {{/if}}
     {{/if}}
+    </tr>
+{{#if (eq data.data.equippable true)}}
+    <tr>
+        <th>{{localize "dc.items.goods.equippable"}}</th>
+        <td><input type="checkbox" name="data.equippable" checked/></td>
     </tr>
     <tr>
         <th>Slot</th>
