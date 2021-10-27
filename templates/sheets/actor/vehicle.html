@@ -158,7 +158,7 @@
                             <option value="Empty">None</option>
                             {{/if}}
                             {{#each mountable as |mount|}}
-                                {{log mount ../}}
+                                {{log mount ../weapon}}
                                 {{#if (eq ../weapon mount.id)}}
                             <option value="{{mount.id}}" selected>{{mount.name}}</option>
                                 {{else}}
