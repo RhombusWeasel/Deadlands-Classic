@@ -103,5 +103,6 @@
 }
 
 .throttle-slider {
-    -webkit-appearance: slider-vertical
+    top: 40%;
+    transform: rotate(270deg);
 }
