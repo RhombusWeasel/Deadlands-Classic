@@ -2308,6 +2308,8 @@ const dc_utils = {
                     passengers: { onboard: act.data.data.passengers.onboard },
                     weapons: act.data.data.weapons
                 }
+                console.log('dc_utils.vehicle.passenger.enter', act, passenger, seat);
+                console.log('dc_utils.vehicle.passenger.enter', data);
                 data.passengers.onboard[seat].character = passenger.name
                 if (data.passengers.onboard[seat].gunner) {
                     for (let i = 0; i < data.weapons.length; i++) {
