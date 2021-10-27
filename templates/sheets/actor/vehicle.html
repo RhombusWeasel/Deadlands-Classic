@@ -149,7 +149,7 @@
                 </tr>
             {{#each weapons as |wep|}}
                 <tr>
-                    <td>{{wep.gunner}}</td>
+                    <td class="center">{{wep.gunner}}</td>
                     <td class="item center" data-itemId="{{@index}}">
                         <select class="vehicle-weapon-select">
                             {{#if (eq wep.weapon 'Empty')}}
@@ -158,7 +158,7 @@
                             <option value="Empty">None</option>
                             {{/if}}
                             {{#each mountable as |mount|}}
-                                {{#if (eq wep.weapon 'Empty')}}
+                                {{#if (eq ../weapon mount.id)}}
                             <option value="{{mount.id}}" selected>{{mount.name}}</option>
                                 {{else}}
                             <option value="{{mount.id}}">{{mount.name}}</option>
