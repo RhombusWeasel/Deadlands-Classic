@@ -59,7 +59,8 @@
                     "off_hand": "Off Hand",
                     "equippable": "Equippable",
                     "slot": "Equip Slot",
-                    "multi_slot": "Two Handed"
+                    "multi_slot": "Two Handed",
+                    "vehicle_mountable": "Vehicle Mountable"
                 },
                 "hex": {
                     "level": "Level",

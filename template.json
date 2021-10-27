@@ -737,6 +737,7 @@
                 "type_select": "skill_mod",
                 "target_select": "cognition",
                 "value_select": 2,
+                "vehicle_mountable": false,
                 "modifiers": []
             }
         },

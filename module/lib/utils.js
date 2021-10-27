@@ -2395,6 +2395,11 @@ const dc_utils = {
                 }
                 act.update({data: {weapons: weapons}});
             },
+            get_mountable: function(act) {
+                let eq = act.data.data.equipped
+                return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
+                    .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
+            },
         },
     },
 };
