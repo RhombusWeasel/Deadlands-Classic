@@ -684,6 +684,8 @@
                 "value": 0
             },
             "turn": 5,
+            "turnin": 0,
+            "throttle": 0,
             "travel": 15,
             "fuel": 0,
             "reliability": 17,

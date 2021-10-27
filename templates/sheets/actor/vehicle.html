@@ -141,6 +141,22 @@
                 </table>
             </div>
         </div>
+        <div class="tab drivin" data-group="vehicle" data-tab="drivin">
+            <div>
+                <h2>Throttle</h2>
+                <div class="center">
+                    <input type="range" min="-{{data.pace}}" max="{{data.pace}}" value="{{data.data.throttle}}" class="slider" name="data.throttle"/>
+                    <p>{{data.data.throttle}}</p>
+                </div>
+                <div>
+                {{#ifCond data.throttle > 0}}
+                    <a class="apply-throttle">Pedal to the Metal!</a>
+                {{else}}
+                    <a class="apply-throttle">Hit the Brakes!</a>
+                {{/ifCond}}
+                </div>
+            </div>
+        </div>
         <div class="tab combat" data-group="vehicle" data-tab="combat">
             <table>
                 <tr>
