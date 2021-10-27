@@ -147,6 +147,7 @@
                     <th>Gunner</th>
                     <th>Weapon</th>
                 </tr>
+            {{log mountable}}
             {{#each weapons as |wep|}}
                 <tr>
                     <td class="center">{{wep.gunner}}</td>
@@ -158,7 +159,6 @@
                             <option value="Empty">None</option>
                             {{/if}}
                             {{#each mountable as |mount|}}
-                                {{log mount}}
                                 {{#if (eq ../weapon mount.id)}}
                             <option value="{{mount.id}}" selected>{{mount.name}}</option>
                                 {{else}}
