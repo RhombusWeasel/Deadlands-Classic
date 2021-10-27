@@ -150,7 +150,7 @@
             {{#each weapons as |wep|}}
                 <tr>
                     <td>{{wep.gunner}}</td>
-                    <tr class="item center" data-itemId="{{@index}}">
+                    <td class="item center" data-itemId="{{@index}}">
                         <select class="vehicle-weapon-select">
                             {{#if (eq wep.weapon 'Empty')}}
                             <option value="Empty" selected>None</option>
@@ -166,7 +166,6 @@
                             {{/each}}
                         </select>
                     </td>
-                    <td>{{wep.weapon}}</td>
                 </tr>
             {{/each}}
             </table>
