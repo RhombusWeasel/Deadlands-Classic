@@ -25,6 +25,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        //Click Binds:
         html.find(".edit-toggle").click(this._on_edit_toggle.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
@@ -34,6 +35,9 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".remove-hit-location").click(this._on_hit_location_remove.bind(this));
         html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
+        //Selector Binds
+        html.find(".vehicle-weapon-select").change(this._on_equip_weapon.bind(this));
+
         return super.activateListeners(html);
     }
 
@@ -99,5 +103,12 @@ export default class VehicleSheet extends ActorSheet {
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         dc_utils.vehicle.passenger.exit(this.actor, index);
+    }
+
+    _on_equip_weapon(event) {
+        let element = event.currentTarget;
+        let slot    = element.closest(".item").dataset.itemid;
+        let item_id = element.value;
+        dc_utils.vehicle.weapons.equip(this.actor, slot, item_id);
     }
 }

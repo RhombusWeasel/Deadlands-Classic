@@ -154,16 +154,16 @@
                     <td class="item center" data-itemId="{{@index}}">
                         <select class="vehicle-weapon-select">
                             {{#if (eq wep.weapon 'Empty')}}
-                            <option value="Empty" selected>None</option>
+                            <option value="Empty" selected>Empty</option>
                             {{else}}
-                            <option value="Empty">None</option>
+                            <option value="Empty">Empty</option>
                             {{/if}}
                             {{#each ../mountable as |mount|}}
                                 {{log mount}}
                                 {{#if (eq ../weapon mount.id)}}
-                            <option value="{{mount.id}}" selected>{{mount.name}}</option>
+                            <option value="{{mount.id}}" selected>{{@index}}: {{mount.name}}</option>
                                 {{else}}
-                            <option value="{{mount.id}}">{{mount.name}}</option>
+                            <option value="{{mount.id}}">{{@index}}: {{mount.name}}</option>
                                 {{/if}}
                             {{/each}}
                         </select>

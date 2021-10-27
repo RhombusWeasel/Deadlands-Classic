@@ -2399,6 +2399,11 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
+            equip: function(act, slot, item_id) {
+                let weapons = act.data.data.weapons;
+                weapons[slot].weapon = item_id;
+                act.update({data: {weapons: weapons}});
+            },
         },
     },
 };

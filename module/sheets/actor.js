@@ -229,8 +229,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let slot = element.closest(".item").dataset.slot;
         let itemId = element.value;
-        let char = dc_utils.get_actor(this.actor.name);
-        dc_utils.char.items.equip(char, slot, itemId);
+        dc_utils.char.items.equip(this.actor, slot, itemId);
     }
 
     _on_joker_value(event) {
