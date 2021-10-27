@@ -102,7 +102,7 @@
     margin-left: 2%;
 }
 
-.throttle-slider {
+.throttle [type='range'] {
     width: 128px;
     transform: translate(-200px, 200px) rotate(270deg);
 }
