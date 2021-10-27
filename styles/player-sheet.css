@@ -102,7 +102,11 @@
     margin-left: 2%;
 }
 
-.throttle[type="range"] {
-    width: 128px;
-    transform: translate(-200px, 200px) rotate(270deg);
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 175px;
+    padding: 0 5px;
 }
