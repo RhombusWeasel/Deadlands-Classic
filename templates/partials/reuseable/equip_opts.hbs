@@ -16,6 +16,7 @@
         <th>{{localize "dc.items.goods.equippable"}}</th>
         <td><input type="checkbox" name="data.equippable" checked/></td>
     </tr>
+    <tr>
     {{#if (eq data.data.vehicle_mountable true)}}
         <th>{{localize "dc.items.combat.firearm.vehicle_mountable"}}</th>
         {{#if (eq data.data.vehicle_mountable true)}}
@@ -24,6 +25,7 @@
         <td><input type="checkbox" name="data.vehicle_mountable"/></td>
         {{/if}}
     {{/if}}
+    </tr>
     <tr>
         <th>Slot</th>
         <td><input style="text-align: center;" type="text" name="data.slot" value="{{data.data.slot}}"/></td>
