@@ -149,7 +149,7 @@
                     <p>{{data.data.throttle}}</p>
                 </div>
                 <div>
-                {{#ifCond data.throttle ">" 0}}
+                {{#ifCond data.throttle ">=" 0}}
                     <a class="apply-throttle">Pedal to the Metal!</a>
                 {{else}}
                     <a class="apply-throttle">Hit the Brakes!</a>
