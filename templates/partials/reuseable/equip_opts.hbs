@@ -12,14 +12,12 @@
         {{/if}}
     </tr>
     <tr>
-    {{#if (eq data.data.vehicle_mountable true)}}
         <th>{{localize "dc.items.combat.firearm.vehicle_mountable"}}</th>
         {{#if (eq data.data.vehicle_mountable true)}}
         <td><input type="checkbox" name="data.vehicle_mountable" checked/></td>
         {{else}}
         <td><input type="checkbox" name="data.vehicle_mountable"/></td>
         {{/if}}
-    {{/if}}
     </tr>
 {{#if (eq data.data.equippable true)}}
     <tr>
