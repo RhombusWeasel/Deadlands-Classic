@@ -109,6 +109,11 @@ export default class VehicleSheet extends ActorSheet {
         let element = event.currentTarget;
         let slot    = element.closest(".item").dataset.itemid;
         let item_id = element.value;
-        dc_utils.vehicle.weapons.equip(this.actor, slot, item_id);
+        let item_name = 'Empty';
+        let wep = this.actor.items.find(item_id)
+        if (wep) {
+            item_name = wep.name;
+        }
+        dc_utils.vehicle.weapons.equip(this.actor, slot, item_id, item_name);
     }
 }

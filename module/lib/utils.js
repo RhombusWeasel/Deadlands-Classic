@@ -2375,7 +2375,8 @@ const dc_utils = {
                 weapons.push({
                     gunner: 'Empty',
                     gunner_slot: index,
-                    weapon: 'None'
+                    weapon: 'Empty',
+                    weapon_name: 'Empty'
                 });
                 act.update({data: {weapons: weapons}});
             },
@@ -2399,9 +2400,11 @@ const dc_utils = {
                 return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
                     .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
             },
-            equip: function(act, slot, item_id) {
+            equip: function(act, slot, item_id, item_name) {
                 let weapons = act.data.data.weapons;
+                let wep = act.items.find(item_id);
                 weapons[slot].weapon = item_id;
+                weapons[slot].weapon_name = item_name;
                 act.update({data: {weapons: weapons}});
             },
         },
