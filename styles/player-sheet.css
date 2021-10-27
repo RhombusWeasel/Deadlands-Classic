@@ -103,7 +103,6 @@
 }
 
 .throttle-slider {
-    top: 40%;
-    height: 128px;
-    transform: rotate(270deg);
+    width: 128px;
+    transform: translate(-200px, 200px) rotate(270deg);
 }
