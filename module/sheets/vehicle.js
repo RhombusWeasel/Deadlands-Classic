@@ -110,7 +110,7 @@ export default class VehicleSheet extends ActorSheet {
         let slot    = element.closest(".item").dataset.itemid;
         let item_id = element.value;
         let item_name = 'Empty';
-        let wep = this.actor.items.find(item_id)
+        let wep = this.actor.items.get(item_id);
         if (wep) {
             item_name = wep.name;
         }
