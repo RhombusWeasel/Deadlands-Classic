@@ -143,12 +143,12 @@
         </div>
         <div class="tab drivin" data-group="vehicle" data-tab="drivin">
             <div>
-                <h2>Throttle</h2>
+                <h2 class="center">Throttle</h2>
                 <div class="center">
-                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" name="data.throttle"/>
+                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider throttle-slider" name="data.throttle"/>
                     <p>{{data.data.throttle}}</p>
                 </div>
-                <div>
+                <div class="center">
                 {{#ifCond throttle ">=" 0}}
                     <a class="apply-throttle">Pedal to the Metal!</a>
                 {{else}}
