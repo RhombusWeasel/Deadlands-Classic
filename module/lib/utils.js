@@ -2402,7 +2402,7 @@ const dc_utils = {
             },
             equip: function(act, slot, item_id, item_name) {
                 let weapons = act.data.data.weapons;
-                let wep = act.items.find(item_id);
+                let wep = act.items.collection.find(item_id);
                 weapons[slot].weapon = item_id;
                 weapons[slot].weapon_name = item_name;
                 act.update({data: {weapons: weapons}});
