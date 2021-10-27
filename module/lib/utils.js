@@ -2305,9 +2305,7 @@ const dc_utils = {
             },
             enter: function(act, passenger, seat) {
                 let data = {
-                    passengers: {
-                        onboard: act.data.data.passengers.onboard
-                    },
+                    passengers: { onboard: act.data.data.passengers.onboard },
                     weapons: act.data.data.weapons
                 }
                 data.passengers.onboard[seat].character = passenger.name
@@ -2320,6 +2318,7 @@ const dc_utils = {
                         }
                     }
                 }
+                console.log('dc_utils.vehicle.passenger.enter', data);
                 act.update({data: data});
             },
             exit: function(act, seat) {
