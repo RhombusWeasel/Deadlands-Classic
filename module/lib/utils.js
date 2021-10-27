@@ -2295,7 +2295,7 @@ const dc_utils = {
                 });
                 act.update({data: {passengers: {onboard: onboard}}});
                 if (gunner) {
-                    dc_utils.vehicle.weapons.add_slot(act, onboard.length);
+                    dc_utils.vehicle.weapons.add_slot(act, onboard.length - 1);
                 }
             },
             remove_slot: function(act, index) {
