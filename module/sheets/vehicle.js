@@ -14,6 +14,8 @@ export default class VehicleSheet extends ActorSheet {
         data.config        = CONFIG.dc;
         data.hit_locations = this.actor.data.data.hit_locations;
         data.driver        = this.actor.data.data.driver;
+        data.throttle      = this.actor.data.data.throttle;
+        data.turnin        = this.actor.data.data.turnin;
         data.passengers    = this.actor.data.data.passengers.onboard;
         data.weapons       = this.actor.data.data.weapons;
         data.mountable     = dc_utils.vehicle.weapons.get_mountable(this.actor);

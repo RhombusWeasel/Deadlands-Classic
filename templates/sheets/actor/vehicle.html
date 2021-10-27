@@ -149,7 +149,7 @@
                     <p>{{data.data.throttle}}</p>
                 </div>
                 <div>
-                {{#ifCond data.throttle ">=" 0}}
+                {{#ifCond throttle ">=" 0}}
                     <a class="apply-throttle">Pedal to the Metal!</a>
                 {{else}}
                     <a class="apply-throttle">Hit the Brakes!</a>
@@ -163,7 +163,6 @@
                     <th>Gunner</th>
                     <th>Weapon</th>
                 </tr>
-            {{log mountable}}
             {{#each weapons as |wep|}}
                 <tr>
                     <td class="center">{{wep.gunner}}</td>
@@ -175,7 +174,6 @@
                             <option value="Empty">Empty</option>
                             {{/if}}
                             {{#each ../mountable as |mount|}}
-                                {{log mount}}
                                 {{#if (eq ../weapon mount.id)}}
                             <option value="{{mount.id}}" selected>{{@index}}: {{mount.name}}</option>
                                 {{else}}
