@@ -150,6 +150,22 @@
             {{#each weapons as |wep|}}
                 <tr>
                     <td>{{wep.gunner}}</td>
+                    <tr class="item center" data-itemId="{{@index}}">
+                        <select class="vehicle-weapon-select">
+                            {{#if (eq wep.weapon 'Empty')}}
+                            <option value="Empty" selected>None</option>
+                            {{else}}
+                            <option value="Empty">None</option>
+                            {{/if}}
+                            {{#each mountable as |mount|}}
+                                {{#if (eq wep.weapon 'Empty')}}
+                            <option value="{{mount.id}}" selected>{{mount.name}}</option>
+                                {{else}}
+                            <option value="{{mount.id}}">{{mount.name}}</option>
+                                {{/if}}
+                            {{/each}}
+                        </select>
+                    </td>
                     <td>{{wep.weapon}}</td>
                 </tr>
             {{/each}}

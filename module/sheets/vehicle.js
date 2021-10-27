@@ -16,6 +16,7 @@ export default class VehicleSheet extends ActorSheet {
         data.driver        = this.actor.data.data.driver;
         data.passengers    = this.actor.data.data.passengers.onboard;
         data.weapons       = this.actor.data.data.weapons;
+        data.mountable     = dc_utils.vehicle.weapons.get_mountable(this.actor);
         data.owners        = dc_utils.gm.get_online_actors();
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
