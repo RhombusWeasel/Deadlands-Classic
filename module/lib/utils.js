@@ -1417,8 +1417,12 @@ const dc_utils = {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
                 console.log(`${act.name} passing ${item.name} to ${reciever}`);
-                let total = parseInt(item.data.data.amount);
-                amount = parseInt(amount);
+                let parseNum = parseInt;
+                if (item.data.data.is_float){
+                    parseNum = parseFloat
+                }
+                let total = parseNum(item.data.data.amount);
+                amount = parseNum(amount);
                 if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
@@ -2457,8 +2461,12 @@ const dc_utils = {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
                 console.log(`${act.name} takes ${item.name} from ${reciever}`);
-                let total = parseInt(item.data.data.amount);
-                amount = parseInt(amount);
+                let parseNum = parseInt;
+                if (item.data.data.is_float){
+                    parseNum = parseFloat
+                }
+                let total = parseNum(item.data.data.amount);
+                amount = parseNum(amount);
                 if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
