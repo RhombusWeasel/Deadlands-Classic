@@ -1417,7 +1417,8 @@ const dc_utils = {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
                 console.log(`${act.name} passing ${item.name} to ${reciever}`);
-                let total = item.data.data.amount;
+                let total = toInt(item.data.data.amount);
+                amount = toInt(amount)
                 if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
