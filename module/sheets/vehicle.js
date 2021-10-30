@@ -72,8 +72,31 @@ export default class VehicleSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
         let target = game.user.character.name;
-        dc_utils.char.items.pass(this.actor, target, itemId, amount);
+        if (item.data.data.amount == 1) {
+            dc_utils.char.items.pass(this.actor, target, itemId, amount);
+            return true;
+        }
+        let dialog = new Dialog({
+            title: `Select amount`,
+            content: `
+                <div>
+                    <h1 class="center">Move Items</h1>
+                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
+                </div>
+            `,
+            buttons: {
+                send: {
+                    label: `Give ${item.name} to ${target}`,
+                    callback: (html) => {
+                        let amount = html.find('[name="amount-slider"]').val();
+                        dc_utils.char.items.pass(this.actor, target, itemId, amount);
+                    }
+                }
+            }
+        });
+        dialog.render(true)
     }
 
     _on_passenger_add(event) {
