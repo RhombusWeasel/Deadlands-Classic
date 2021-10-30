@@ -260,7 +260,8 @@ export default class PlayerSheet extends ActorSheet {
                 send: {
                     label: `Give ${item.name} to ${target}`,
                     callback: (html) => {
-                        let amount = html.find('[name="amount-slider"]').val();
+                        let amount = html.find('[name="amount-slider"]')[0].value;
+                        console.log(amount);
                         dc_utils.char.items.pass(this.actor, target, itemId, amount);
                     }
                 }
