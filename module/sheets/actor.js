@@ -118,6 +118,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
         html.find(".magic-buff").click(this._on_magic_buff.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
+        html.find(".item-give").click(this._on_item_pass.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".play-item-card").click(this._on_play_item_card.bind(this));
