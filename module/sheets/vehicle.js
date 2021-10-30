@@ -75,7 +75,7 @@ export default class VehicleSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
         let target = game.user.character.name;
         if (item.data.data.amount == 1) {
-            dc_utils.char.items.pass(this.actor, target, itemId, 1);
+            dc_utils.vehicle.cargo.get(this.actor, target, itemId, 1);
             return true;
         }
         let dialog = new Dialog({
@@ -91,7 +91,7 @@ export default class VehicleSheet extends ActorSheet {
                     label: `Give ${item.name} to ${target}`,
                     callback: (html) => {
                         let amount = html.find('[name="amount-slider"]').val();
-                        dc_utils.char.items.pass(this.actor, target, itemId, amount);
+                        dc_utils.vehicle.cargo.get(this.actor, target, itemId, amount);
                     }
                 }
             }
