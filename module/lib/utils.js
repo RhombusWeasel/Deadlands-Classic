@@ -1412,7 +1412,7 @@ const dc_utils = {
                 console.log(`${act.name} passing ${item.name} to ${reciever}`);
                 if (item.data.data.amount <= amount) {
                     let rec = dc_utils.get_actor(reciever);
-                    dc_utils.char.items.recieve(rec, item.data.data, amount);
+                    dc_utils.char.items.recieve(rec, item, amount);
                     if (item.data.data.amount - amount > 0) {
                         item.update({data: {amount: item.data.data.amount - amount}});
                     }else{
