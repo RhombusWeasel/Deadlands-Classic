@@ -23,6 +23,9 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
+        if (this.actor.data.data.send_target != 'Any') {
+            this.actor.update({data: {send_target: 'Any'}});
+        }
         return data;
     }
 
@@ -65,6 +68,33 @@ export default class VehicleSheet extends ActorSheet {
             Discarding ${item.type} ${item.name}
         `});
         dc_utils.char.items.delete(this.actor, itemId);
+    }
+
+    _on_item_pass(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        let target = game.user.character.name;
+        let dialog = new Dialog({
+            title: `Confirm item transfer`,
+            content: `
+                <div>
+                    <h1 class="center">Move Items</h1>
+                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
+                </div>
+            `,
+            buttons: {
+                send: {
+                    label: `Give ${item.name} to ${target}`,
+                    callback: (html) => {
+                        let amount = html.find('[name="amount-slider"]').val();
+                        dc_utils.char.items.pass(this.actor, target, itemId, amount);
+                    }
+                }
+            }
+        });
+        dialog.render(true)
     }
 
     _on_passenger_add(event) {
