@@ -1417,11 +1417,12 @@ const dc_utils = {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
                 console.log(`${act.name} passing ${item.name} to ${reciever}`);
-                if (item.data.data.amount >= amount) {
+                let total = item.data.data.amount;
+                if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
-                    console.log(item.data.data.amount, amount, item.data.data.amount - amount);
-                    if (item.data.data.amount - amount <= 0) {
+                    console.log(total, amount, total - amount);
+                    if (total - amount <= 0) {
                         if (item.data.data.equippable) {
                             if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
                                 dc_utils.char.items.unequip(item.data.data.slot);
@@ -1430,7 +1431,7 @@ const dc_utils = {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        item.update({data: {amount: item.data.data.amount - amount}});
+                        item.update({data: {amount: total - amount}});
                         return true;
                     }
                 }
@@ -2454,15 +2455,17 @@ const dc_utils = {
             get: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
-                console.log(`${act.name} passing ${item.name} to ${reciever}`);
-                if (item.data.data.amount >= amount) {
+                console.log(`${act.name} takes ${item.name} from ${reciever}`);
+                let total = item.data.data.amount;
+                if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
-                    if (item.data.data.amount - amount > 0) {
-                        item.update({data: {amount: item.data.data.amount - amount}});
+                    console.log(total, amount, total - amount);
+                    if (total - amount <= 0) {
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        item.update({data: {amount: total - amount}});
                         return true;
                     }
                 }
