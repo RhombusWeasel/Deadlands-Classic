@@ -1405,6 +1405,7 @@ const dc_utils = {
                     data: item.data.data
                 }
                 i.data.amount = amount;
+                console.log(i);
                 act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
