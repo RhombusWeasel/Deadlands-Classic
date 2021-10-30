@@ -74,8 +74,8 @@ export default class VehicleSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
         let target = game.user.character.name;
-        if (item.type == 'melee' || item.type == 'firearm' || item.data.data.amount == 1) {
-            dc_utils.char.items.pass(this.actor, target, itemId, amount);
+        if (item.data.data.amount == 1) {
+            dc_utils.char.items.pass(this.actor, target, itemId, 1);
             return true;
         }
         let dialog = new Dialog({
