@@ -1408,6 +1408,7 @@ const dc_utils = {
                 act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
+                if (amount <= 0) return false;
                 let item = act.items.get(item_id);
                 console.log(`${act.name} passing ${item.name} to ${reciever}`);
                 if (item.data.data.amount <= amount) {
@@ -1415,8 +1416,15 @@ const dc_utils = {
                     dc_utils.char.items.recieve(rec, item, amount);
                     if (item.data.data.amount - amount > 0) {
                         item.update({data: {amount: item.data.data.amount - amount}});
+                        return true;
                     }else{
-                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 500);
+                        if (item.data.data.equippable) {
+                            if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
+                                dc_utils.char.items.unequip(item.data.data.slot);
+                            }
+                        }
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        return true;
                     }
                 }
                 return false;
