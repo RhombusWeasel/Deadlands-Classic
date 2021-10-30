@@ -22,13 +22,19 @@
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">1</td>
-                {{#ifCond ../data.data.send_target "!=" "None"}}
+                {{#ifCond ../type "==" "player"}}
+                    {{#ifCond ../data.data.send_target "!=" "None"}}
                 <td class="perc40">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
                 <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Give {{this.name}} to {{../data.data.send_target}}"></i></a></td>
-                {{else}}
+                    {{else}}
                 <td class="perc50">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
+                    {{/ifCond}}
+                {{else}}
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Take {{this.name}}"></i></a></td>
                 {{/ifCond}}
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
@@ -42,13 +48,19 @@
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">1</td>
-                {{#ifCond ../data.data.send_target "!=" "None"}}
+                {{#ifCond ../type "==" "player"}}
+                    {{#ifCond ../data.data.send_target "!=" "None"}}
                 <td class="perc40">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
                 <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Give {{this.name}} to {{../data.data.send_target}}"></i></a></td>
-                {{else}}
+                    {{else}}
                 <td class="perc50">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
+                    {{/ifCond}}
+                {{else}}
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Take {{this.name}}"></i></a></td>
                 {{/ifCond}}
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
@@ -62,13 +74,19 @@
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">{{this.data.data.amount}}</td>
-                {{#ifCond ../data.data.send_target "!=" "None"}}
+                {{#ifCond ../type "==" "player"}}
+                    {{#ifCond ../data.data.send_target "!=" "None"}}
                 <td class="perc40">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
                 <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Give {{this.name}} to {{../data.data.send_target}}"></i></a></td>
-                {{else}}
+                    {{else}}
                 <td class="perc50">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
+                    {{/ifCond}}
+                {{else}}
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc 10 center"><a class="item-give"><i class="fas fa-hand-paper" title="Take {{this.name}}"></i></a></td>
                 {{/ifCond}}
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
             </tr>
