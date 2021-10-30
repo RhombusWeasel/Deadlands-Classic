@@ -1146,7 +1146,7 @@ const dc_utils = {
     },
     user: {
         get_owned_actors: function() {
-            return game.actors.filter(i => i.owner == true);
+            return game.actors.filter(i => i.isOwner == true);
         },
     },
     char: {
