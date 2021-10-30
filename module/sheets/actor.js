@@ -245,7 +245,7 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.items.get(itemId);
         let target = this.actor.data.data.send_target;
         let dialog = new Dialog({
-            title: `Confirm skill roll`,
+            title: `Confirm item transfer`,
             content: `
                 <div>
                     <h1 class="center">Move Items</h1>
@@ -257,7 +257,7 @@ export default class PlayerSheet extends ActorSheet {
                     label: `Give ${item.name} to ${target}`,
                     callback: (html) => {
                         let amount = html.find('[name="amount-slider"]').val();
-                        dc_utils.char.items.pass(this.actor, target, item, amount);
+                        dc_utils.char.items.pass(this.actor, target, itemId, amount);
                     }
                 }
             }
