@@ -1415,16 +1415,16 @@ const dc_utils = {
                 if (item.data.data.amount >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
-                    if (item.data.data.amount - amount > 0) {
-                        item.update({data: {amount: item.data.data.amount - amount}});
-                        return true;
-                    }else{
+                    if (item.data.data.amount - amount == 0) {
                         if (item.data.data.equippable) {
                             if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
                                 dc_utils.char.items.unequip(item.data.data.slot);
                             }
                         }
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        return true;
+                    }else{
+                        item.update({data: {amount: item.data.data.amount - amount}});
                         return true;
                     }
                 }
