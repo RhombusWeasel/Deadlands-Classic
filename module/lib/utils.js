@@ -1408,6 +1408,7 @@ const dc_utils = {
                 act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
+                console.log(reciever, item_id, amount, act);
                 let item = act.items.get(item_id);
                 if (item.data.data.amount <= amount) {
                     let rec = dc_utils.get_actor(reciever);
