@@ -693,7 +693,14 @@ let operations = {
                 dc_utils.socket.emit('apply_damage', data);
             }
         }
-    }
+    },
+    //ITEM PASSING OPERATIONS
+    send_item: function(data) {
+        if (game.user.isGM) {
+            let sender = dc_utils.get_actor(data.sender);
+            dc_utils.char.items.pass(sender, data.reciever, data.item_id, data.amount);
+        }
+    },
 }
 
 Hooks.on("ready", () => {

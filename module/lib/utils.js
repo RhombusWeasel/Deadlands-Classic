@@ -1144,6 +1144,11 @@ const dc_utils = {
             return r_tab;
         },
     },
+    user: {
+        get_owned_actors: function() {
+            return game.actors.filter(i => i.owner == true);
+        },
+    },
     char: {
         random_name: function(eth, sex) {
             if (eth == 'american') {
@@ -1392,6 +1397,28 @@ const dc_utils = {
                         item.update({data: {total_cost: total}});
                     }
                 }
+            },
+            recieve: function(act, item, amount) {
+                let item = {
+                    type: item.type,
+                    name: item.name,
+                    data: item.data.data
+                }
+                item.data.amount = amount;
+                act.createOwnedItem(item);
+            },
+            pass: function(act, reciever, item_id, amount) {
+                let item = act.items.get(item_id);
+                if (item.data.data.amount <= amount) {
+                    let rec = dc_utils.get_actor(reciever);
+                    dc_utils.char.items.recieve(rec, item.data.data, amount);
+                    if (item.data.data.amount - amount > 0) {
+                        item.update({data: {amount: item.data.data.amount - amount}});
+                    }else{
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 500);
+                    }
+                }
+                return false;
             },
         },
         wounds: {

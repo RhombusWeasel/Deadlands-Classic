@@ -64,34 +64,35 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     getData() {
-        const data = super.getData();
-        data.config = CONFIG.dc;
-        data.id = this.actor.id;
+        const data         = super.getData();
+        data.config        = CONFIG.dc;
+        data.id            = this.actor.id;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        data.firearms = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
-        data.equippable = dc_utils.char.items.get_equippable(this.actor);
-        data.hand_slots = dc_utils.hand_slots;
-        data.equip_slots = dc_utils.equip_slots;
+        data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
+        data.equippable    = dc_utils.char.items.get_equippable(this.actor);
+        data.hand_slots    = dc_utils.hand_slots;
+        data.equip_slots   = dc_utils.equip_slots;
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
-        data.miracles = dc_utils.char.items.get(this.actor, "miracle");
-        data.tricks = dc_utils.char.items.get(this.actor, "trick");
-        data.hexes = dc_utils.char.items.get(this.actor, "hex");
-        data.favors = dc_utils.char.items.get(this.actor, "favor");
-        data.components = dc_utils.char.items.get(this.actor, "components");
-        data.hinderances = dc_utils.char.items.get(this.actor, "hinderance");
-        data.edges = dc_utils.char.items.get(this.actor, "edge");
+        data.miracles      = dc_utils.char.items.get(this.actor, "miracle");
+        data.tricks        = dc_utils.char.items.get(this.actor, "trick");
+        data.hexes         = dc_utils.char.items.get(this.actor, "hex");
+        data.favors        = dc_utils.char.items.get(this.actor, "favor");
+        data.components    = dc_utils.char.items.get(this.actor, "components");
+        data.hinderances   = dc_utils.char.items.get(this.actor, "hinderance");
+        data.edges         = dc_utils.char.items.get(this.actor, "edge");
         //data.level_headed_available = game.dc.level_headed_available;
-        data.goods = dc_utils.char.items.get(this.actor, "goods");
-        data.boons = dc_utils.char.items.get(this.actor, "boon");
+        data.goods         = dc_utils.char.items.get(this.actor, "goods");
+        data.boons         = dc_utils.char.items.get(this.actor, "boon");
         dc_utils.char.items.calculate_costs(this.actor, data.goods);
-        data.cards = dc_utils.joker_cards;
-        data.suits = dc_utils.joker_suits;
+        data.cards         = dc_utils.joker_cards;
+        data.suits         = dc_utils.joker_suits;
+        data.players       = [...dc_utils.user.get_owned_actors(), ...dc_utils.gm.get_online_actors()];
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
-        data.action_deck = this.actor.data.data.action_cards;
-        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
-        data.targets = dc_utils.called_shots;
-        data.fate_chips = [
+        data.action_deck   = this.actor.data.data.action_cards;
+        let fate_chips     = dc_utils.char.items.get(this.actor, "chip");
+        data.targets       = dc_utils.called_shots;
+        data.fate_chips    = [
             {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
             {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
             {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
@@ -109,6 +110,7 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        // Buttons:
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
@@ -132,10 +134,11 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
+        html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
+        // Selector Boxes:
         html.find(".equip-select").change(this._on_item_equip.bind(this));
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
-        html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller");
         traits[0].addEventListener("scroll", () => {
@@ -230,6 +233,33 @@ export default class PlayerSheet extends ActorSheet {
         let slot = element.closest(".item").dataset.slot;
         let itemId = element.value;
         dc_utils.char.items.equip(this.actor, slot, itemId);
+    }
+
+    _on_item_pass(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        let target = this.actor.data.data.send_target;
+        let dialog = new Dialog({
+            title: `Confirm skill roll`,
+            content: `
+                <div>
+                    <h1 class="center">Move Items</h1>
+                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
+                </div>
+            `,
+            buttons: {
+                send: {
+                    label: `Give ${item.name} to ${target}`,
+                    callback: (html) => {
+                        let amount = html.find('[name="amount-slider"]').val();
+                        dc_utils.char.items.pass(this.actor, target, item, amount);
+                    }
+                }
+            }
+        });
+        dialog.render(true)
     }
 
     _on_joker_value(event) {

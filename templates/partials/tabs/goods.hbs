@@ -1,5 +1,18 @@
 <section class="form typed">
     <div>
+        <div class="flexrow">
+            <p>Send items to</p>
+            <select name="data.send_target">
+                <option value="None">None</option>
+            {{#each players as |player|}}
+                {{#if (eq ../data.data.send_target player.name)}}
+                <option value="{{player.name}}" selected>{{player.name}}</option>
+                {{else}}
+                <option value="{{player.name}}">{{player.name}}</option>
+                {{/if}}
+            {{/each}}
+            </select>
+        </div>
         <div>
             {{#if melee_weapons}}
             <h2>Melee Weapons</h2>

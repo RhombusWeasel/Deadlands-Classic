@@ -72,7 +72,10 @@
                 "notes": "",
                 "nightmare": "",
                 "player_target": "none",
-                "boons": []
+                "boons": [],
+                "send_target": "None",
+                "send_amount": 0,
+                "current_vehicle": "None"
             }
         },
         "player": {
