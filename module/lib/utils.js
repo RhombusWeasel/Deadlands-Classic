@@ -1404,12 +1404,12 @@ const dc_utils = {
                     name: item.name,
                     data: item.data.data
                 }
-                item.data.amount = amount;
+                i.data.amount = amount;
                 act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
-                console.log(reciever, item_id, amount, act);
                 let item = act.items.get(item_id);
+                console.log(`${act.name} passing ${item.name} to ${reciever}`);
                 if (item.data.data.amount <= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item.data.data, amount);
