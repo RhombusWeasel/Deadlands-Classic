@@ -1399,14 +1399,19 @@ const dc_utils = {
                 }
             },
             recieve: function(act, item, amount) {
-                let i = {
-                    type: item.type,
-                    name: item.name,
-                    data: item.data.data
+                let has_item = dc_utils.char.has(act, item.type, item.name);
+                if (has_item) {
+                    has_item.update({data: {amount: has_item.data.data.amount + amount}});
+                }else{
+                    let i = {
+                        type: item.type,
+                        name: item.name,
+                        data: item.data.data
+                    }
+                    i.data.amount = amount;
+                    console.log(i.data);
+                    act.createOwnedItem(i);
                 }
-                i.data.amount = amount;
-                console.log(i.data);
-                act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
