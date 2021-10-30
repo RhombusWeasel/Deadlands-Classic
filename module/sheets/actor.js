@@ -253,7 +253,8 @@ export default class PlayerSheet extends ActorSheet {
             content: `
                 <div>
                     <h1 class="center">Move Items</h1>
-                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
+                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider" oninput="this.nextElementSibling.value = this.value"/>
+                    <output>1</output>
                 </div>
             `,
             buttons: {
