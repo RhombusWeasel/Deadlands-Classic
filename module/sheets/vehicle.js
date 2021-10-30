@@ -30,6 +30,7 @@ export default class VehicleSheet extends ActorSheet {
         //Click Binds:
         html.find(".edit-toggle").click(this._on_edit_toggle.bind(this));
         html.find(".info-button").click(this._on_item_open.bind(this));
+        html.find(".item-give").click(this._on_item_pass.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
         html.find(".add-passenger").click(this._on_passenger_add.bind(this));
         html.find(".remove-passenger").click(this._on_passenger_remove.bind(this));
