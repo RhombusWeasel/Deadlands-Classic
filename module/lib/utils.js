@@ -1399,13 +1399,13 @@ const dc_utils = {
                 }
             },
             recieve: function(act, item, amount) {
-                let item = {
+                let i = {
                     type: item.type,
                     name: item.name,
                     data: item.data.data
                 }
                 item.data.amount = amount;
-                act.createOwnedItem(item);
+                act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
                 let item = act.items.get(item_id);
