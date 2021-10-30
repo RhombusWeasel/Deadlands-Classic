@@ -2443,5 +2443,24 @@ const dc_utils = {
                 act.update({data: {weapons: weapons}});
             },
         },
+        cargo: {
+            get: function(act, reciever, item_id, amount) {
+                if (amount <= 0) return false;
+                let item = act.items.get(item_id);
+                console.log(`${act.name} passing ${item.name} to ${reciever}`);
+                if (item.data.data.amount <= amount) {
+                    let rec = dc_utils.get_actor(reciever);
+                    dc_utils.char.items.recieve(rec, item, amount);
+                    if (item.data.data.amount - amount > 0) {
+                        item.update({data: {amount: item.data.data.amount - amount}});
+                        return true;
+                    }else{
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        return true;
+                    }
+                }
+                return false;
+            },
+        },
     },
 };
