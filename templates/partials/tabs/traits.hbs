@@ -6,7 +6,7 @@
         <div>
             <table>
                 <tr class="skill-data" data-skill="{{@key}}">
-            {{#if (eq ../data.data.edit_mode true)}}
+            {{#if (eq ../data.data.show_editor true)}}
                     <td class="perc70 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
                     <td class="perc10 center"><input style="display:inline-block; width: 12%; text-align: center;" class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/></td>
                     <td class="perc10 center"><input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/></td>
@@ -29,7 +29,7 @@
                 <table>
                 {{#each skills as |skill|}}
                     <tr class="skill-data" data-skill="{{@key}}">
-                     {{#if (eq ../data.data.edit_mode true)}}
+                     {{#if (eq ../data.data.show_editor true)}}
                         <td><input class="perc80 input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
                         <td><input class="perc10 center input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
                         <td><input class="perc10 center input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
