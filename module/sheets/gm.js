@@ -249,13 +249,11 @@ export default class GMSheet extends ActorSheet {
     _on_play_card(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Playing ${item.name}`});
-        game.dc.action_deck.discard.push(item);
-        dc_utils.journal.save('action_deck', game.dc.action_deck);
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
-        return this.getData();
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        dc_utils.socket.emit('discard_card', card);
+        dc_utils.combat.remove_card(this.actor, index);
     }
 
     _on_next_turn(event) {
