@@ -1580,7 +1580,7 @@ const dc_utils = {
         },
         weapon: {
             use_ammo: function(act, weapon_id) {
-                let item = game.items.get(weapon_id);
+                let item = dc_utils.char.weapon.find(act, weapon_id);
                 if (item) {
                     let shots = item.data.data.chamber;
                     if (shots < 1) {
@@ -1595,8 +1595,8 @@ const dc_utils = {
             find: function(act, id) {
                 let item = act.items.get(id);
                 if (item) return item;
-                if (act.current_vehicle != 'None') {
-                    let v = dc_utils.get_actor(act.current_vehicle);
+                if (act.data.data.current_vehicle != 'None') {
+                    let v = dc_utils.get_actor(act.data.data.current_vehicle);
                     return v.items.get(id);
                 }
             }
