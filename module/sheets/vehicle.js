@@ -143,14 +143,22 @@ export default class VehicleSheet extends ActorSheet {
             dc_utils.vehicle.passenger.enter(this.actor, char, index);
             game.user.character.update({data: {current_vehicle: this.name}});
             dc_utils.token.remove(char.name);
+        }else{
+            dc_utils.chat.send('Missing Token', `Failed to find tokens for ${char.name} and ${this.actor.name}.`, 'Check both tokens exist on the current map.');
         }
     }
 
     _on_exit_vehicle(event) {
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
-        dc_utils.vehicle.passenger.exit(this.actor, index);
-        game.user.character.update({data: {current_vehicle: 'None'}});
+        let tkn = dc_utils.char.token.get_name(this.actor.name);
+        if (tkn) {
+            dc_utils.vehicle.passenger.exit(this.actor, index);
+            game.user.character.update({data: {current_vehicle: 'None'}});
+            dc_utils.token.add(game.user.character.name, tkn.x + 100, tkn.y);
+        }else{
+            dc_utils.chat.send('Missing Token', `Failed to find token for ${this.actor.name}.`, 'Check the token exists on the current map.');
+        }
     }
 
     _on_equip_weapon(event) {
