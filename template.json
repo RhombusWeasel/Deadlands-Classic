@@ -75,7 +75,8 @@
                 "boons": [],
                 "send_target": "None",
                 "send_amount": 0,
-                "current_vehicle": "None"
+                "current_vehicle": "None",
+                "edit_mode": false
             }
         },
         "player": {

@@ -5,10 +5,10 @@
         {{#each data.data.traits as |trait|}}
         <div class="flexbox">
             <label class="label trait-label" for="data.traits.{{@key}}.level">{{trait.name}}</label>
-            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>
+            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/>
             <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/>
             <label style="font-size: large; font-weight: bold; padding-top: 2px;; float: right;" for="data.traits.{{@key}}.modifier">+</label>
-            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
+            <input style="display:inline-block; width: 12%; text-align: center;" class="input" type="number" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/>
             <td style="text-align:center;"><a><i class="fas fa-dice-d20 trait-roll" data-trait="{{@key}}" data-die="{{trait.die_type}}" data-mod="{{trait.modifier}}" title="Roll {{this.name}}"></i></a></td>
             <script>
                 function callback() {
@@ -29,9 +29,9 @@
                 </tr>
                 {{#each skills as |skill|}}
                 <tr>
-                    <td><input style="text-align:left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
+                    <td><input style="text-align:left;" class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
                     <td><input style="text-align:center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
-                    <td><input style="text-align:center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
+                    <td><input style="text-align:center;" class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
                     <td style="text-align:center;" class="skill-roll" data-trait="{{@../key}}" data-skill="{{@key}}" data-mod="{{this.modifier}}"><a><i class="fas fa-dice-d20" title="Roll {{this.name}}"></i></a></td>
                 </tr>
                 {{/each}}
