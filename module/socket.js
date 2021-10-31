@@ -707,7 +707,7 @@ let operations = {
             dc_utils.token.add(data.name, data.x, data.y);
         }
     },
-    remove_token: function(name) {
+    remove_token: function(data) {
         if (game.user.isGM) {
             dc_utils.token.remove(data.name);
         }
