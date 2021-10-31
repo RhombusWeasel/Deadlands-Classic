@@ -1580,7 +1580,7 @@ const dc_utils = {
         },
         weapon: {
             use_ammo: function(act, weapon_id) {
-                let item = act.items.get(weapon_id);
+                let item = game.items.get(weapon_id);
                 if (item) {
                     let shots = item.data.data.chamber;
                     if (shots < 1) {
