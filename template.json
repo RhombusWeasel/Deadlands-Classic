@@ -76,7 +76,7 @@
                 "send_target": "None",
                 "send_amount": 0,
                 "current_vehicle": "None",
-                "edit_mode": false
+                "show_editor": false
             }
         },
         "player": {

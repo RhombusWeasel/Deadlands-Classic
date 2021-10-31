@@ -83,7 +83,7 @@ export default class VehicleSheet extends ActorSheet {
             content: `
                 <div>
                     <h1 class="center">Move Items</h1>
-                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
+                    <input type="range" min="0" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider"/>
                 </div>
             `,
             buttons: {

@@ -113,6 +113,7 @@ export default class PlayerSheet extends ActorSheet {
 
     activateListeners(html) {
         // Buttons:
+        html.find(".edit-toggle").click(this._on_edit_toggle.bind(this));
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
@@ -149,6 +150,10 @@ export default class PlayerSheet extends ActorSheet {
         });
         traits[0].scrollTop = game.dc.trait_scroll;
         return super.activateListeners(html);
+    }
+
+    _on_edit_toggle(event) {
+        this.actor.update({data: {show_editor: !(this.actor.data.data.show_editor)}});
     }
 
     _on_skill_roll(event) {
@@ -253,7 +258,7 @@ export default class PlayerSheet extends ActorSheet {
             content: `
                 <div class="center">
                     <h1>Select Amount</h1>
-                    <input type="range" min="1" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider" oninput="this.nextElementSibling.value = this.value"/>
+                    <input type="range" min="0" max="${item.data.data.amount}" value="1" class="slider" name="amount-slider" oninput="this.nextElementSibling.value = this.value"/>
                     <output>1</output>
                 </div>
             `,
