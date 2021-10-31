@@ -701,6 +701,17 @@ let operations = {
             dc_utils.char.items.pass(sender, data.reciever, data.item_id, data.amount);
         }
     },
+    //TOKEN SPAWNING OPERATIONS
+    spawn_token: function(data) {
+        if (game.user.isGM) {
+            dc_utils.token.add(data.name, data.x, data.y);
+        }
+    },
+    remove_token: function(name) {
+        if (game.user.isGM) {
+            dc_utils.token.remove(data.name);
+        }
+    },
 }
 
 Hooks.on("ready", () => {
