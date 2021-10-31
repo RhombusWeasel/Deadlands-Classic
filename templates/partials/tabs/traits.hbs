@@ -7,10 +7,10 @@
             <table>
                 <tr class="skill-data" data-skill="{{@key}}">
             {{#if (eq ../data.data.show_editor true)}}
-                    <td class="perc40 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
-                    <td class="perc20 center"><input class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/></td>
-                    <td class="perc20 center"><input class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/></td>
-                    <td class="perc20 center"><input class="input" type="number" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/></td>
+                    <td class="perc70 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
+                    <td class="perc10 center"><input class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/></td>
+                    <td class="perc10 center"><input class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/></td>
+                    <td class="perc10 center"><input class="input" type="number" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/></td>
             {{else}}
                     <td class="perc50 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
                 {{#has_bounty trait.level 'trait'}}
@@ -30,9 +30,9 @@
                 {{#each skills as |skill|}}
                     <tr class="skill-data" data-skill="{{@key}}">
                      {{#if (eq ../../data.data.show_editor true)}}
-                        <td><input class="perc60 input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
-                        <td><input class="perc20 center input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
-                        <td><input class="perc20 center input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
+                        <td class="perc80"><input class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
+                        <td class="perc10"><input class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
+                        <td class="perc10"><input class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
                     {{else}}
                         <td class="perc70"><a class="skill-roll">{{this.name}}</a></td>
                         {{#has_bounty this.level 'skill'}}
