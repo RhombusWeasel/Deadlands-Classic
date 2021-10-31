@@ -1653,6 +1653,18 @@ const dc_utils = {
             }
         },
     },
+    token: {
+        add: function(name, x, y) {
+            let tk = game.actors.getName(name).data.token;
+            tk.x = x
+            tk.y = y
+            Token.create([tk]);
+        },
+        remove: function(name) {
+            let tkn = canvas.tokens.placeables.find(i => i.name == name);
+            canvas.tokens.deleteMany([tkn.id]);
+        },
+    },
     item: {
         add_modifier: function(item, data){
             item.update({data: {modifiers: data}});

@@ -132,8 +132,18 @@ export default class VehicleSheet extends ActorSheet {
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         let char = game.user.character;
-        dc_utils.vehicle.passenger.enter(this.actor, char, index);
-        game.user.character.update({data: {current_vehicle: this.name}});
+        let tkn = dc_utils.char.token.get_name(this.actor.name);
+        let tgt = dc_utils.char.token.get_name(char.name);
+        if (tkn && tgt) {
+            dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+            if (dist > 2) {
+                dc_utils.chat.send('Out of range!', `You're too far away from ${this.actor.name} to get in.`);
+                return false;
+            }
+            dc_utils.vehicle.passenger.enter(this.actor, char, index);
+            game.user.character.update({data: {current_vehicle: this.name}});
+            dc_utils.token.remove(char.name);
+        }
     }
 
     _on_exit_vehicle(event) {
