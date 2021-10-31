@@ -1658,7 +1658,7 @@ const dc_utils = {
             let tk = game.actors.getName(name).data.token;
             tk.x = x
             tk.y = y
-            Token.create([tk]);
+            Token.create(tk);
         },
         remove: function(name) {
             let tkn = canvas.tokens.placeables.find(i => i.name == name);
