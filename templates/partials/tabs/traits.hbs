@@ -8,9 +8,9 @@
                 <tr class="skill-data" data-skill="{{@key}}">
             {{#if (eq ../data.data.show_editor true)}}
                     <td class="perc40 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
-                    <td class="perc20 center"><input style="display:inline-block; width: 12%; text-align: center;" class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/></td>
-                    <td class="perc20 center"><input style="display:inline-block; width: 12%; text-align: center;" class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/></td>
-                    <td class="perc20 center"><input style="display:inline-block; width: 12%; text-align: center;" class="input" type="number" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/></td>
+                    <td class="perc20 center"><input class="input" type="number" name="data.traits.{{@key}}.level" value="{{trait.level}}"/></td>
+                    <td class="perc20 center"><input class="input" type="text" name="data.traits.{{@key}}.die_type" value="{{trait.die_type}}"/></td>
+                    <td class="perc20 center"><input class="input" type="number" name="data.traits.{{@key}}.modifier" value="{{trait.modifier}}"/></td>
             {{else}}
                     <td class="perc50 trait-label"><a class="skill-roll">{{trait.name}}</a></td>
                 {{#has_bounty trait.level 'trait'}}
@@ -29,7 +29,7 @@
                 <table>
                 {{#each skills as |skill|}}
                     <tr class="skill-data" data-skill="{{@key}}">
-                     {{#if (eq ../data.data.show_editor true)}}
+                     {{#if (eq ../../data.data.show_editor true)}}
                         <td><input class="perc60 input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
                         <td><input class="perc20 center input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
                         <td><input class="perc20 center input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
