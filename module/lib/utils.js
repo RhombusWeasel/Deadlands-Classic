@@ -1657,7 +1657,7 @@ const dc_utils = {
     },
     roll: {
         new_roll_packet: function(act, type, skl, wep, tgt) {
-            let item = act.items.get(wep);
+            let item = game.items.get(wep);
             let dist = 1
             if (!(item)) {
                 wep = 'unarmed'

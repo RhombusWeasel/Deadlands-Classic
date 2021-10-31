@@ -120,6 +120,7 @@ export default class VehicleSheet extends ActorSheet {
         let details = this.actor.data.data.hit_add;
         dc_utils.vehicle.locations.add_location(this.actor, details.name, details.min, details.max, details.armour, details.malfunctions);
     }
+
     _on_hit_location_remove(event) {
         event.preventDefault();
         let element = event.currentTarget;
@@ -132,12 +133,14 @@ export default class VehicleSheet extends ActorSheet {
         let index = element.closest(".item").dataset.itemid;
         let char = game.user.character;
         dc_utils.vehicle.passenger.enter(this.actor, char, index);
+        game.user.character.update({data: {current_vehicle: this.name}});
     }
 
     _on_exit_vehicle(event) {
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         dc_utils.vehicle.passenger.exit(this.actor, index);
+        game.user.character.update({data: {current_vehicle: 'None'}});
     }
 
     _on_equip_weapon(event) {
