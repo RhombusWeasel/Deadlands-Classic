@@ -156,7 +156,7 @@ export default class VehicleSheet extends ActorSheet {
         if (tkn) {
             dc_utils.vehicle.passenger.exit(this.actor, index);
             game.user.character.update({data: {current_vehicle: 'None'}});
-            dc_utils.socket.emit('remove_token', {name: char.name, x: tkn.x + 100, y: tkn.y});
+            dc_utils.socket.emit('spawn_token', {name: char.name, x: tkn.x + 100, y: tkn.y});
         }else{
             dc_utils.chat.send('Missing Token', `Failed to find token for ${this.actor.name}.`, 'Check the token exists on the current map.');
         }
