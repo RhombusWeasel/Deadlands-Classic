@@ -61,9 +61,8 @@ export default class GMSheet extends ActorSheet {
                 data.action_list = dc_utils.deck.sort(action_list);
             }
         }else{
-            for (let c = 0; c < data.action_deck.length; c++) {
-                const card = data.action_deck[c];
-                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 100);
+            if (this.actor.data.data.action_cards.length > 0) {
+                this.actor.update({data: {action_cards: []}});
             }
         }
         return data;
