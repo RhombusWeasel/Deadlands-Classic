@@ -483,7 +483,7 @@ let operations = {
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
-            let wep = game.items.get(data.weapon);
+            let wep = dc_utils.char.weapon.find(act, data.weapon);
             ca.weapon_name = wep.name
             if (data.type == 'ranged') {
                 //Check ammo

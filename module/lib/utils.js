@@ -1592,6 +1592,14 @@ const dc_utils = {
                 }
                 return false;
             },
+            find: function(act, id) {
+                let item = act.items.get(id);
+                if (item) return item;
+                if (act.current_vehicle != 'None') {
+                    let v = dc_utils.get_actor(act.current_vehicle);
+                    return v.items.get(id);
+                }
+            }
         },
         wind: {
             get: function(act) {
@@ -1657,7 +1665,7 @@ const dc_utils = {
     },
     roll: {
         new_roll_packet: function(act, type, skl, wep, tgt) {
-            let item = game.items.get(wep);
+            let item = dc_utils.char.weapon.find(act, wep);
             let dist = 1
             if (!(item)) {
                 wep = 'unarmed'
