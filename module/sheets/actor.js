@@ -249,7 +249,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
         let target = this.actor.data.data.send_target;
-        if (item.data.data.amount == 1) {
+        if (item.type == 'melee' || item.type == 'firearm' || item.data.data.amount == 1) {
             dc_utils.char.items.pass(this.actor, target, itemId, 1);
             return true;
         }
