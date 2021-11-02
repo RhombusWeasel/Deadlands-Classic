@@ -260,7 +260,7 @@ export default class GMSheet extends ActorSheet {
         if (game.dc.combat_active) {
             let data = this.getData();
             let next = data.action_list.pop();
-            console.log(next);
+            //console.log(next);
         }
     }
 }
