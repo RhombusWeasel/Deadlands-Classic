@@ -1,0 +1,262 @@
+<form>
+    <div>
+        <h1 class="center">
+            <div data-edit="name" contenteditable="">{{actor.name}}</div>
+        </h1>
+    </div>
+    <div>
+        <h2 class="center">
+            <div data-edit="data.type" contenteditable="">{{data.data.type}}</div>
+        </h2>
+        <table>
+            <tr>
+                <th class="center">Durability</th>
+                <th class="center">Passengers</th>
+                <th class="center">Pace</th>
+                <th class="center">Climb</th>
+                <th class="center">Turn</th>
+            </tr>
+            {{#isGM}}
+            <tr>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.durability.value" value="{{data.data.durability.value}}"/>/<input style="width: 45%;" type="number" name="data.durability.max" value="{{data.data.durability.max}}"/></td>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.passengers.value" value="{{data.data.passengers.value}}"/>/<input style="width: 45%;" type="number" name="data.passengers.max" value="{{data.data.passengers.max}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
+                <td class="perc12 center"><input style="width: 45%;" type="number" name="data.climb.value" value="{{data.data.climb.value}}"/>/<input style="width: 45%;" type="number" name="data.climb.max" value="{{data.data.climb.max}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.turn" value="{{data.data.turn}}"/></td>
+            </tr>
+            {{else}}
+            <tr>
+                <td class="perc12 center"><p>{{data.data.durability.value}}/{{data.data.durability.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.passengers.value}}/{{data.data.passengers.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.pace}}</p></td>
+                <td class="perc12 center"><p>{{data.data.climb.value}}/{{data.data.climb.max}}</p></td>
+                <td class="perc12 center"><p>{{data.data.turn}}</p></td>
+            </tr>
+            {{/isGM}}
+            <tr>
+                <th class="center">Travel</th>
+                <th class="center">Fuel</th>
+                <th class="center">Reliability</th>
+                <th class="center">Hit Modifier</th>
+                <th class="center">Speed</th>
+            </tr>
+            {{#isGM}}
+            <tr>
+                <td class="perc12 center"><input type="number" name="data.travel" value="{{data.data.travel}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.fuel" value="{{data.data.fuel}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.reliability" value="{{data.data.reliability}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.modifier" value="{{data.data.modifier}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.speed" value="{{data.data.speed}}"/></td>
+            </tr>
+            {{else}}
+            <tr>
+                <td class="perc12 center"><p>{{data.data.travel}}</p></td>
+                <td class="perc12 center"><p>{{data.data.fuel}}</p></td>
+                <td class="perc12 center"><p>{{data.data.reliability}}</p></td>
+                <td class="perc12 center"><p>{{data.data.modifier}}</p></td>
+                <td class="perc12 center"><p>{{data.data.speed}}</p></td>
+            </tr>
+            {{/isGM}}
+        </table>
+    </div>
+    <nav class="sheet-tabs tabs" data-group="vehicle">
+        <a class="item" data-tab="passengers">Passengers</a>
+        {{#isDriver this}}
+        <a class="item" data-tab="drivin">Drivin</a>
+        {{/isDriver}}
+        {{#isGunner this}}
+        <a class="item" data-tab="combat">Combat</a>
+        {{/isGunner}}
+        <a class="item" data-tab="repair">Repair</a>
+        <a class="item" data-tab="goods">Goods</a>
+        <a class="item" data-tab="notes">Notes</a>
+    </nav>
+    {{#isGM}}
+    <div class="center">
+    {{#if (eq data.data.show_editor true)}}
+        <a class="edit-toggle">Hide Editor</a>
+    {{else}}
+        <a class="edit-toggle">Show Editor</a>
+    {{/if}}
+    </div>
+    {{/isGM}}
+    <section class="sheet-body vehicle-scroller trait_scroller border">
+        <div class="tab passengers" data-group="vehicle" data-tab="passengers">
+            {{#isGM}}
+                {{#if (eq data.data.show_editor true)}}
+            <div class="sidebar">
+                <table>
+                    <tr>
+                        <th>Seat</th>
+                        <th>Driver</th>
+                        <th>Gunner</th>
+                    </tr>
+                    <tr>
+                        <td class="center"><input type="text" name="data.passenger_add.name" value="{{data.data.passenger_add.name}}"/></td>
+                        {{#if (eq data.data.passenger_add.driver true)}}
+                        <td class="center"><input type="checkbox" name="data.passenger_add.driver" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="data.passenger_add.driver"></td>
+                        {{/if}}
+                        {{#if (eq data.data.passenger_add.gunner true)}}
+                        <td class="center"><input type="checkbox" name="data.passenger_add.gunner" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="data.passenger_add.gunner"></td>
+                        {{/if}}
+                    </tr>
+                </table>
+                <div class="center"><a class="add-passenger">Add</a></div>
+            </div>
+                {{/if}}
+            {{/isGM}}
+            <div>
+                <table>
+                    <th>Seat</th>
+                    <th>Driver</th>
+                    <th>Gunner</th>
+                    <th>Occupant</th>
+                    {{#each data.data.passengers.onboard as |pass|}}
+                    <tr class="item" data-itemId="{{@index}}">
+                        <td><p>{{pass.name}}</p></td>
+                        {{#if (eq pass.driver true)}}
+                        <td class="center"><input type="checkbox" name="is-driver" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="is-driver"></td>
+                        {{/if}}
+                        {{#if (eq pass.gunner true)}}
+                        <td class="center"><input type="checkbox" name="is-gunner" checked></td>
+                        {{else}}
+                        <td class="center"><input type="checkbox" name="is-gunner"></td>
+                        {{/if}}
+                        {{#if (eq pass.character "Empty")}}
+                        <td class="center"><a class="enter-vehicle">Enter</a></td>
+                        {{else}}
+                        <td class="center"><a class="exit-vehicle">{{pass.character}}</a></td>
+                        {{/if}}
+                        {{#isGM}}
+                        <td class="center"><a class="fas fa-trash remove-passenger"></a></td>
+                        {{/isGM}}
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="tab drivin" data-group="vehicle" data-tab="drivin">
+            <div>
+                <h2 class="center">Throttle</h2>
+                <div class="center">
+                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" orient="vertical" name="data.throttle"/>
+                    <p>{{data.data.throttle}}</p>
+                </div>
+                <div class="center">
+                {{#ifCond throttle ">=" 0}}
+                    <a class="apply-throttle">Pedal to the Metal!</a>
+                {{else}}
+                    <a class="apply-throttle">Hit the Brakes!</a>
+                {{/ifCond}}
+                </div>
+            </div>
+        </div>
+        <div class="tab combat" data-group="vehicle" data-tab="combat">
+            <table>
+                <tr>
+                    <th>Gunner</th>
+                    <th>Weapon</th>
+                </tr>
+            {{#each weapons as |wep|}}
+                <tr>
+                    <td class="center">{{wep.gunner}}</td>
+                    <td class="item center" data-itemId="{{@index}}">
+                        <select class="vehicle-weapon-select">
+                            {{#if (eq wep.weapon 'Empty')}}
+                            <option value="Empty" selected>Empty</option>
+                            {{else}}
+                            <option value="Empty">Empty</option>
+                            {{/if}}
+                            {{#each ../mountable as |mount|}}
+                                {{#if (eq ../weapon mount.id)}}
+                            <option value="{{mount.id}}" selected>{{@index}}: {{mount.name}}</option>
+                                {{else}}
+                            <option value="{{mount.id}}">{{@index}}: {{mount.name}}</option>
+                                {{/if}}
+                            {{/each}}
+                        </select>
+                    </td>
+                </tr>
+            {{/each}}
+            </table>
+        </div>
+        <div class="tab repair" data-group="vehicle" data-tab="repair">
+            <div class="sidebar">
+                {{#isGM}}
+                    {{#if (eq data.data.show_editor true)}}
+                    <h2 class="center">Location</h2>
+                    <table>
+                        <tr>
+                            <th>Location</th>
+                            <th>Min</th>
+                            <th>Max</th>
+                            <th>Armour</th>
+                        </tr>
+                        <tr>
+                            <td class="center"><input type="text" name="data.hit_add.name" value="{{data.data.hit_add.name}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.min" value="{{data.data.hit_add.min}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.max" value="{{data.data.hit_add.max}}"/></td>
+                            <td class="center"><input type="number" name="data.hit_add.armour" value="{{data.data.hit_add.armour}}"/></td>
+                        </tr>
+                    </table>
+                    <h2 class="center">Malfunctions</h2>
+                    <table>
+                        <tr>
+                            <th class="center">Severity</th>
+                            <th class="center">Name</th>
+                            <th class="center">Rules</th>
+                        </tr>
+                        <tr class="center">
+                            <th>Minor</th>
+                            <td><input type="text" name="data.hit_add.malfunctions.minor.name" value="{{data.data.hit_add.malfunctions.minor.name}}"/></td>
+                            <td><input type="textarea" name="data.hit_add.malfunctions.minor.description" value="{{data.data.hit_add.malfunctions.minor.description}}"/></td>
+                        </tr>
+                        <tr class="center">
+                            <th>Major</th>
+                            <td><input type="text" name="data.hit_add.malfunctions.major.name" value="{{data.data.hit_add.malfunctions.major.name}}"/></td>
+                            <td><input type="textarea" name="data.hit_add.malfunctions.major.description" value="{{data.data.hit_add.malfunctions.major.description}}"/></td>
+                        </tr>
+                        <tr class="center">
+                            <th>Catastrophic</th>
+                            <td><input type="text" name="data.hit_add.malfunctions.catastrophic.name" value="{{data.data.hit_add.malfunctions.catastrophic.name}}"/></td>
+                            <td><input type="textarea" name="data.hit_add.malfunctions.catastrophic.description" value="{{data.data.hit_add.malfunctions.catastrophic.description}}"/></td>
+                        </tr>
+                    </table>
+                    <div class="center"><a class="add-hit-location">Add</a></div>
+                    {{/if}}
+                {{/isGM}}
+                <table>
+                    <tr>
+                        <th>Roll</th>
+                        <th>Location</th>
+                        <th>Armour</th>
+                    </tr>
+                    {{#each data.data.hit_locations as |loc|}}
+                    <tr class="item center" data-itemId="{{@index}}">
+                        <th>{{loc.min}}-{{loc.max}}</th>
+                        <td><p>{{loc.name}}</p></td>
+                        <td><p>{{loc.armour}}</p></td>
+                        {{#isGM}}
+                        <td class="center"><a class="fas fa-trash remove-hit-location"></a></td>
+                        {{/isGM}}
+                    </tr>
+                    {{/each}}
+                </table>
+            </div>
+        </div>
+        <div class="tab goods" data-group="vehicle" data-tab="goods">
+            <div class="sidebar">
+                {{> "systems/deadlands_classic/templates/partials/tabs/vehicle-goods.hbs"}}
+            </div>
+        </div>
+        <div class="tab notes" data-group="vehicle" data-tab="notes">
+            <textarea name="data.notes" id="notes" cols="30" rows="24">{{data.data.notes}}</textarea>
+        </div>
+    </section>
+</form>

@@ -2,6 +2,10 @@
     overflow-y:scroll;
     height:500px
 }
+.vehicle-scroller{
+    overflow-y:scroll;
+    height:400px
+}
 .typed{
     font-family: "Lucida Sans Typewriter";
     font-size: small;

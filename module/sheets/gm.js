@@ -25,7 +25,7 @@ export default class GMSheet extends ActorSheet {
             {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
             {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        data.action_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "action_deck"));
+        data.action_deck   = this.actor.data.data.action_cards;
         data.modifiers = this.actor.data.data.modifiers;
         data.chars = dc_utils.gm.get_player_owned_actors();
         data.tn = 5;
@@ -61,9 +61,8 @@ export default class GMSheet extends ActorSheet {
                 data.action_list = dc_utils.deck.sort(action_list);
             }
         }else{
-            for (let c = 0; c < data.action_deck.length; c++) {
-                const card = data.action_deck[c];
-                setTimeout(() => {this.actor.deleteOwnedItem(card._id)}, c * 100);
+            if (this.actor.data.data.action_cards.length > 0) {
+                this.actor.update({data: {action_cards: []}});
             }
         }
         return data;
@@ -244,29 +243,24 @@ export default class GMSheet extends ActorSheet {
     }
 
     _on_draw_card() {
-        let card = game.dc.action_deck.deck.pop();
-        let c = Math.random()
-        setTimeout(() => {this.actor.createOwnedItem(card)}, c * 100);
-        dc_utils.journal.save('action_deck', game.dc.action_deck);
+        dc_utils.combat.deal_cards(this.actor, 1);
     }
 
     _on_play_card(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `Playing ${item.name}`});
-        game.dc.action_deck.discard.push(item);
-        dc_utils.journal.save('action_deck', game.dc.action_deck);
-        setTimeout(() => {this.actor.deleteOwnedItem(itemId)}, 500);
-        return this.getData();
+        let index = parseInt(element.closest(".item").dataset.itemindex);
+        let card = this.actor.data.data.action_cards[index];
+        card.char = this.actor.name;
+        operations.discard_card(card);
+        dc_utils.combat.remove_card(this.actor, index);
     }
 
     _on_next_turn(event) {
         if (game.dc.combat_active) {
             let data = this.getData();
-            let next = data.action_deck.pop();
-            console.log(next);
+            let next = data.action_list.pop();
+            //console.log(next);
         }
     }
 }

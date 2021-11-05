@@ -1082,8 +1082,10 @@ const dc_utils = {
         if (char) {
             return char;
         }
-        char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
-        return char;
+        return canvas.tokens.placeables.find(i => i.name == name).document.actor;
+    },
+    get_token: function(name) {
+        return canvas.tokens.placeables.find(i => i.name == name);
     },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
@@ -1118,10 +1120,35 @@ const dc_utils = {
     },
     gm: {
         get_online_users: function() {
-            return game.users.entities.filter(function(i) {return i.active});
+            return game.users.contents.filter(function(i) {return i.active});
         },
         get_player_owned_actors: function() {
-            return game.actors.entities.filter(function(i) {return i.hasPlayerOwner});
+            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner});
+        },
+        get_online_actors: function(act) {
+            let users = dc_utils.gm.get_online_users();
+            let pcs   = dc_utils.gm.get_player_owned_actors();
+            let r_tab = [
+                //{
+                //    name: "Empty"
+                //}
+            ]
+            for (let i = 0; i < users.length; i++) {
+                if (!(users[i].isGM)) {
+                    for (let p = 0; p < pcs.length; p++) {
+                        let char = pcs[p];
+                        if ('permission' in char.data.data && users[i].id in char.data.data.permission) {
+                            r_tab.push(char);
+                        }
+                    }
+                }
+            }
+            return r_tab;
+        },
+    },
+    user: {
+        get_owned_actors: function() {
+            return game.actors.filter(i => i.isOwner == true);
         },
     },
     char: {
@@ -1290,7 +1317,6 @@ const dc_utils = {
                 let item = dc_utils.char.items.get_equipped(act, slot);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
-                        console.log('dc | dc_utils.char.item.unequip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.remove_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
@@ -1307,7 +1333,6 @@ const dc_utils = {
                 let item = act.items.get(id);
                 if (item?.data?.data?.modifiers) {
                     for (let mod of item.data.data.modifiers) {
-                        console.log('dc | dc_utils.char.item.equip |', mod);
                         if (mod.type == 'skill_mod') {
                             dc_utils.char.skill.add_modifier(act, mod.target, mod.modifier);
                         }else if (mod.type == 'armour_mod') {
@@ -1374,6 +1399,54 @@ const dc_utils = {
                         item.update({data: {total_cost: total}});
                     }
                 }
+            },
+            recieve: function(act, item, amount) {
+                let has_item = dc_utils.char.has(act, item.type, item.name);
+                if (has_item) {
+                    if (has_item.type == 'goods') {
+                        has_item.update({data: {amount: has_item.data.data.amount + amount}});
+                        return true;
+                    }
+                }
+                let i = {
+                    type: item.type,
+                    name: item.name,
+                    data: item.data.data
+                }
+                i.data.amount = amount;
+                act.createOwnedItem(i);
+            },
+            pass: function(act, reciever, item_id, amount) {
+                if (amount <= 0) return false;
+                let item = act.items.get(item_id);
+                let parseNum = parseInt;
+                if (item.data.data.is_float){
+                    parseNum = parseFloat
+                }
+                let total = parseNum(item.data.data.amount);
+                amount = parseNum(amount);
+                let rec = dc_utils.get_actor(reciever);
+                let dist = Math.floor(canvas.grid.measureDistance(dc_utils.get_token(act.name), dc_utils.get_token(reciever)));
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You're too far away from ${rec.name} to pass items.`);
+                    return false;
+                }
+                if (total >= amount) {
+                    dc_utils.char.items.recieve(rec, item, amount);
+                    if (total - amount <= 0) {
+                        if (item.data.data.equippable) {
+                            if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
+                                dc_utils.char.items.unequip(item.data.data.slot);
+                            }
+                        }
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        return true;
+                    }else{
+                        item.update({data: {amount: total - amount}});
+                        return true;
+                    }
+                }
+                return false;
             },
         },
         wounds: {
@@ -1457,12 +1530,10 @@ const dc_utils = {
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                console.log('dc | dc_utils.char.armour.add |', location, amt, cur);
                 setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                console.log('dc | dc_utils.char.armour.remove |', location, amt, cur);
                 setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
             },
         },
@@ -1475,7 +1546,6 @@ const dc_utils = {
                 let chips = dc_utils.char.chips.get(act, 'chip');
                 for (let item of chips.values()) {
                     if(item.name == label && item.type == 'chip') {
-                        console.log('DC | dc_utils.char.chips.spend |', item);
                         dc_utils.char.items.delete(act, item.id);
                         let reply = `
                             <h3 style="text-align:center">Fate</h3>
@@ -1514,7 +1584,7 @@ const dc_utils = {
         },
         weapon: {
             use_ammo: function(act, weapon_id) {
-                let item = act.items.get(weapon_id);
+                let item = dc_utils.char.weapon.find(act, weapon_id);
                 if (item) {
                     let shots = item.data.data.chamber;
                     if (shots < 1) {
@@ -1526,6 +1596,14 @@ const dc_utils = {
                 }
                 return false;
             },
+            find: function(act, id) {
+                let item = act.items.get(id);
+                if (item) return item;
+                if (act.data.data.current_vehicle != 'None') {
+                    let v = dc_utils.get_actor(act.data.data.current_vehicle);
+                    return v.items.get(id);
+                }
+            }
         },
         wind: {
             get: function(act) {
@@ -1579,21 +1657,31 @@ const dc_utils = {
             }
         },
     },
+    token: {
+        add: function(name, x, y) {
+            let tk = duplicate(game.actors.getName(name).data.token);
+            tk.x = x
+            tk.y = y
+            return canvas.scene.createEmbeddedDocuments("Token", [tk]);
+        },
+        remove: function(name) {
+            let tkn = canvas.tokens.placeables.find(i => i.name == name);
+            if (tkn) canvas.scene.deleteEmbeddedDocuments('Token', [tkn.id]);
+        },
+    },
     item: {
         add_modifier: function(item, data){
-            console.log('DC | dc_utils.item.add_modifier |', data, item);
             item.update({data: {modifiers: data}});
         },
         remove_modifier: function(item, index) {
             let mods = item.data.data.modifiers;
-            console.log('DC | dc_utils.item.remove_modifier |', index, item);
             mods.splice(index);
             item.update({data: {modifiers: mods}});
         },
     },
     roll: {
         new_roll_packet: function(act, type, skl, wep, tgt) {
-            let item = act.items.get(wep);
+            let item = dc_utils.char.weapon.find(act, wep);
             let dist = 1
             if (!(item)) {
                 wep = 'unarmed'
@@ -1603,7 +1691,6 @@ const dc_utils = {
                 target = dc_utils.get_actor(tgt);
             }
             if (!(target) && !(type == 'skill')) {
-                console.log('DC | dc_utils.roll.new_attack_packet', 'Target not found.', act, type, skl, wep);
                 return false;
             }
             if (target) {
@@ -1639,7 +1726,6 @@ const dc_utils = {
             let mods = game.actors.getName('Marshal').data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
-                    console.log(mod);
                     data.modifiers[key] = {
                         label: mod.name,
                         modifier: parseInt(mod.mod)
@@ -1649,10 +1735,9 @@ const dc_utils = {
             let boons = dc_utils.char.items.get(act, "boon");
             for (let i = 0; i < boons.length; i++) {
                 let boon = boons[i].data.data;
-                console.log(boon);
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
-                    if (mod.type == 'skill_mod') {
+                    if (mod.type == 'skill_mod' && boon.active) {
                         if (mod.target == skl) {
                             data.modifiers[`boon_${i}`] = {
                                 label: boons[i].name,
@@ -1662,7 +1747,6 @@ const dc_utils = {
                     }
                 }
             }
-            console.log(data.modifiers);
             if (skl == 'guts') {
                 data.modifiers.grit = {
                     label: 'Grit',
@@ -1738,7 +1822,6 @@ const dc_utils = {
                 r_data.success = false;
                 r_data.crit_fail = true;
             }
-            console.log('new_roll:', r_data);
             roll.toMessage({rollMode: 'gmroll'});
             return r_data;
         },
@@ -1789,21 +1872,18 @@ const dc_utils = {
                     return dc_utils.loc_lookup[tot];
                 }
                 for (let i = tot - range; i < tot + range; i++) {
-                    console.log(i, dc_utils.loc_lookup[i]);
                     if (dc_utils.loc_lookup[i] != undefined) {
                         if (!(found.includes(dc_utils.loc_lookup[i]))) {
                             found.push(dc_utils.loc_lookup[i]);
                         }
                     }
                 }
-                console.log('roll_damage: Location:', found, found.length - 1);
                 if (found.includes('noggin')) {
                     return 'noggin';
                 }else if (found.includes('gizzards')) {
                     return 'gizzards';
                 }
                 loc_key = found[found.length - 1];
-                console.log('roll_damage: Location:', loc_key);
             }else{
                 let locs = dc_utils.called_shots[key].locations
                 loc_key = locs[Math.floor(Math.random() * locs.length)]
@@ -1815,22 +1895,22 @@ const dc_utils = {
                 <div class="center typed">
                     <p style="text-align:center">${data.roller} rolled:</p>
                     <table style="table-layout: fixed;">
-                        <tr style="text-align:center">
+                        <tr class="center">
             `;
             for (let i = 0; i < data.roll.amt; i++) {
                 const res = data.roll.results[i];
                 if(res){
                     if (res + data.modifier >= data.tn) {
                         r_str += `
-                            <td style="color: green">${res}</td>
+                            <td class="center" style="color: green">${res}</td>
                         `;
                     }else if (res == 1) {
                         r_str += `
-                            <td style="color: red">${res}</td>
+                            <td class="center" style="color: red">${res}</td>
                         `;
                     }else {
                         r_str += `
-                            <td>${res}</td>
+                            <td class="center">${res}</td>
                         `;
                     }
                 }
@@ -1847,8 +1927,7 @@ const dc_utils = {
                     if (data.modifiers[key].modifier != 0) {
                         r_str += `
                             <tr class="center typed">
-                                <td>${data.modifiers[key].label}</td>
-                                <td>${data.modifiers[key].modifier}</td>
+                                <td class="center">${data.modifiers[key].label} [${data.modifiers[key].modifier}]</td>
                             </tr>
                         `;
                     }
@@ -2277,6 +2356,154 @@ const dc_utils = {
             game.dc.combat_actions[data.uuid] = data;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             return data;
+        },
+    },
+    vehicle: {
+        passenger: {
+            add_slot: function(act, name, driver, gunner) {
+                let onboard = act.data.data.passengers.onboard;
+                onboard.push({
+                    name: name,
+                    driver: driver,
+                    gunner: gunner,
+                    character: 'Empty'
+                });
+                act.update({data: {passengers: {onboard: onboard}}});
+                if (gunner) {
+                    dc_utils.vehicle.weapons.add_slot(act, onboard.length - 1);
+                }
+            },
+            remove_slot: function(act, index) {
+                let onboard = act.data.data.passengers.onboard;
+                onboard.splice(index, 1);
+                act.update({data: {passengers: {onboard: onboard}}});
+            },
+            enter: function(act, passenger, seat) {
+                let data = {
+                    passengers: { onboard: act.data.data.passengers.onboard },
+                    weapons: act.data.data.weapons
+                }
+                data.passengers.onboard[seat].character = passenger.name
+                if (data.passengers.onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
+                        if (gun.gunner_slot == seat) {
+                            data.weapons[i].gunner = passenger.name;
+                            break;
+                        }
+                    }
+                }
+                act.update({data: data});
+            },
+            exit: function(act, seat) {
+                let data = {
+                    passengers: {
+                        onboard: act.data.data.passengers.onboard
+                    },
+                    weapons: act.data.data.weapons
+                }
+                data.passengers.onboard[seat].character = 'Empty'
+                if (data.passengers.onboard[seat].gunner) {
+                    for (let i = 0; i < data.weapons.length; i++) {
+                        const gun = data.weapons[i];
+                        if (gun.gunner_slot == seat) {
+                            data.weapons[i].gunner = 'Empty';
+                            break;
+                        }
+                    }
+                }
+                act.update({data: data});
+            }
+        },
+        locations: {
+            add_location: function(act, name, min, max, armour, malfunctions) {
+                let locs = act.data.data.hit_locations;
+                locs.push({
+                    name,
+                    min,
+                    max,
+                    armour,
+                    malfunctions
+                });
+                act.update({
+                    data: {
+                        hit_locations: locs
+                    }
+                });
+            },
+            remove_location: function(act, index) {
+                let locs = act.data.data.hit_locations;
+                locs.splice(index, 1);
+                act.update({
+                    data: {
+                        hit_locations: locs
+                    }
+                });
+            },
+        },
+        weapons: {
+            add_slot: function(act, index) {
+                let weapons = act.data.data.weapons;
+                weapons.push({
+                    gunner: 'Empty',
+                    gunner_slot: index,
+                    weapon: 'Empty',
+                    weapon_name: 'Empty'
+                });
+                act.update({data: {weapons: weapons}});
+            },
+            remove_slot: function(act, index) {
+                let weapons = act.data.data.weapons;
+                weapons.splice(index, 1);
+                act.update({data: {weapons: weapons}});
+            },
+            set_gunner: function(act, name, seat) {
+                let weapons = act.data.data.weapons;
+                for (let i = 0; i < weapons.length; i++) {
+                    const gun = weapons[i];
+                    if (gun.gunner_slot == seat) {
+                        weapons[i].gunner = name;
+                        break;
+                    }
+                }
+                act.update({data: {weapons: weapons}});
+            },
+            get_mountable: function(act) {
+                return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
+                    .sort((a, b) => {return dc_utils.sort.compare(a, b, 'type')});
+            },
+            equip: function(act, slot, item_id, item_name) {
+                let weapons = act.data.data.weapons;
+                weapons[slot].weapon = item_id;
+                weapons[slot].weapon_name = item_name;
+                act.update({data: {weapons: weapons}});
+            },
+        },
+        cargo: {
+            get: function(act, reciever, item_id, amount) {
+                if (amount <= 0) return false;
+                let item = act.items.get(item_id);
+                let name = dc_utils.pluralize(amount, item.name, `${item.name}s`);
+                dc_utils.chat.send('Cargo', `${act.name} takes ${amount} ${name} from ${reciever}`);
+                let parseNum = parseInt;
+                if (item.data.data.is_float){
+                    parseNum = parseFloat
+                }
+                let total = parseNum(item.data.data.amount);
+                amount = parseNum(amount);
+                if (total >= amount) {
+                    let rec = dc_utils.get_actor(reciever);
+                    dc_utils.char.items.recieve(rec, item, amount);
+                    if (total - amount <= 0) {
+                        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
+                        return true;
+                    }else{
+                        item.update({data: {amount: total - amount}});
+                        return true;
+                    }
+                }
+                return false;
+            },
         },
     },
 };

@@ -4,6 +4,7 @@ import actor_sheet from "./sheets/actor.js"
 import generator_sheet from "./sheets/generator.js"
 import marshal_sheet from "./sheets/gm.js"
 import mook_sheet from "./sheets/mook.js"
+import vehicle_sheet from "./sheets/vehicle.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
@@ -21,6 +22,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
         "systems/deadlands_classic/templates/partials/tabs/science.hbs",
         "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/vehicle-goods.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
         "systems/deadlands_classic/templates/partials/generator-traits.hbs",
         "systems/deadlands_classic/templates/partials/generator-sidebar.hbs",
@@ -58,6 +60,7 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: true});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
+    Actors.registerSheet("deadlands_classic", vehicle_sheet, { makeDefault: false});
 
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
@@ -181,6 +184,35 @@ Hooks.once("init", function () {
         if (game.user.isGM) {
             return options.fn(this);
         }
+        return options.inverse(this);
+    });
+
+    Handlebars.registerHelper('isDriver', function (vehicle, options) {
+        let onboard = vehicle.actor.data.data.passengers.onboard;
+        if (game.user.isGM) return options.fn(this);
+        for (let i = 0; i < onboard.length; i++) {
+            const pos = onboard[i].driver;
+            if (pos) {
+                if (game.user.character.name == onboard[i].character) {
+                    return options.fn(this);
+                }
+                return options.inverse(this);
+            }
+        }
+    });
+
+    Handlebars.registerHelper('isGunner', function (vehicle, options) {
+        let onboard = vehicle.actor.data.data.passengers.onboard;
+        if (game.user.isGM) return options.fn(this);
+        for (let i = 0; i < onboard.length; i++) {
+            const pos = onboard[i].gunner;
+            if (pos) {
+                if (game.user.character.name == onboard[i].character) {
+                    return options.fn(this);
+                }
+                return options.inverse(this);
+            }
+        }
     });
 
     Handlebars.registerHelper('ifCond', function (v1, operator, v2, options) {
@@ -201,6 +233,8 @@ Hooks.once("init", function () {
                 return (v1 && v2) ? options.fn(this) : options.inverse(this);
             case '||':
                 return (v1 || v2) ? options.fn(this) : options.inverse(this);
+            case '!=':
+                return (v1 != v2) ? options.fn(this) : options.inverse(this);
             default:
                 return options.inverse(this);
         }
@@ -212,7 +246,6 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
-    console.log(document, createData, options, userId, act.data.data);
     if (act.data.data.random_name) {
         let eth = act.data.data.ethnicity;
         let rn = Math.random();
@@ -240,7 +273,6 @@ Hooks.on('dropActorSheetData', function(actor, sheet, data) {
             }
             let has = numParse(found_item[0].data.data.amount);
             let amt = numParse(item.data.data.amount);
-            console.log(has, amt);
             if (found_item.length > 0) {
                 found_item[0].update({data: {amount: has + amt}});
                 return false;

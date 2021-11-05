@@ -4,7 +4,8 @@
             "player",
             "npc",
             "mook",
-            "gm"
+            "gm",
+            "vehicle"
         ],
         "templates": {
             "core": {
@@ -71,7 +72,11 @@
                 "notes": "",
                 "nightmare": "",
                 "player_target": "none",
-                "boons": []
+                "boons": [],
+                "send_target": "None",
+                "send_amount": 0,
+                "current_vehicle": "None",
+                "show_editor": false
             }
         },
         "player": {
@@ -654,6 +659,54 @@
                 "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
             },
             "player_target": "all"
+        },
+        "vehicle": {
+            "type": "Steamwagon",
+            "show_editor": true,
+            "description": "",
+            "notes": "",
+            "durability": {
+                "min": 0,
+                "max": 10,
+                "value": 10
+            },
+            "passenger_add": {
+                "name": "",
+                "driver": false,
+                "gunner": false
+            },
+            "passengers": {
+                "value": 0,
+                "max": 2,
+                "driver": "None",
+                "onboard": []
+            },
+            "pace": 10,
+            "climb": {
+                "min": 0,
+                "max": 0,
+                "value": 0
+            },
+            "turn": 5,
+            "turnin": 0,
+            "throttle": 0,
+            "travel": 15,
+            "fuel": 0,
+            "reliability": 17,
+            "modifier": 2,
+            "hit_add": {
+                "name": "",
+                "min": 1,
+                "max": 20,
+                "armour": 0,
+                "malfunctions": {
+                    "minor": {"name": "", "description": ""},
+                    "major": {"name": "", "description": ""},
+                    "catastrophic": {"name": "", "description": ""}
+                }
+            },
+            "hit_locations": [],
+            "weapons": []
         }
     },
     "Item": {
@@ -690,6 +743,7 @@
                 "type_select": "skill_mod",
                 "target_select": "cognition",
                 "value_select": 2,
+                "vehicle_mountable": false,
                 "modifiers": []
             }
         },
@@ -809,6 +863,7 @@
         "boon": {
             "description": "",
             "script": "",
+            "active": true,
             "type_select": "skill_mod",
             "target_select": "cognition",
             "value_select": 2,
