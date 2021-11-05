@@ -1656,8 +1656,8 @@ const dc_utils = {
     token: {
         add: function(name, x, y) {
             let tk = duplicate(game.actors.getName(name).data.token);
-            tk.data.x = x
-            tk.data.y = y
+            tk.x = x
+            tk.y = y
             return canvas.scene.createEmbeddedDocuments("Token", [tk]);
         },
         remove: function(name) {
