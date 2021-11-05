@@ -1412,23 +1412,24 @@ const dc_utils = {
                     data: item.data.data
                 }
                 i.data.amount = amount;
-                console.log(i.data);
                 act.createOwnedItem(i);
             },
             pass: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
-                console.log(`${act.name} passing ${item.name} to ${reciever}`);
                 let parseNum = parseInt;
                 if (item.data.data.is_float){
                     parseNum = parseFloat
                 }
                 let total = parseNum(item.data.data.amount);
                 amount = parseNum(amount);
+                let rec = dc_utils.get_actor(reciever);
+                let dist = Math.floor(canvas.grid.measureDistance(act, rec));
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You're too far away from ${rec.name} to pass items.`);
+                }
                 if (total >= amount) {
-                    let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
-                    console.log(total, amount, total - amount);
                     if (total - amount <= 0) {
                         if (item.data.data.equippable) {
                             if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
@@ -2379,8 +2380,6 @@ const dc_utils = {
                     passengers: { onboard: act.data.data.passengers.onboard },
                     weapons: act.data.data.weapons
                 }
-                console.log('dc_utils.vehicle.passenger.enter', act, passenger, seat);
-                console.log('dc_utils.vehicle.passenger.enter', data);
                 data.passengers.onboard[seat].character = passenger.name
                 if (data.passengers.onboard[seat].gunner) {
                     for (let i = 0; i < data.weapons.length; i++) {
@@ -2391,7 +2390,6 @@ const dc_utils = {
                         }
                     }
                 }
-                console.log('dc_utils.vehicle.passenger.enter', data);
                 act.update({data: data});
             },
             exit: function(act, seat) {
@@ -2482,7 +2480,8 @@ const dc_utils = {
             get: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
                 let item = act.items.get(item_id);
-                console.log(`${act.name} takes ${item.name} from ${reciever}`);
+                let name = dc_utils.pluralize(amount, item.name, `${item.name}s`);
+                dc_utils.chat.send('Cargo', `${act.name} takes ${amount} ${name} from ${reciever}`);
                 let parseNum = parseInt;
                 if (item.data.data.is_float){
                     parseNum = parseFloat
@@ -2492,7 +2491,6 @@ const dc_utils = {
                 if (total >= amount) {
                     let rec = dc_utils.get_actor(reciever);
                     dc_utils.char.items.recieve(rec, item, amount);
-                    console.log(total, amount, total - amount);
                     if (total - amount <= 0) {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
