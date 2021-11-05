@@ -1082,10 +1082,10 @@ const dc_utils = {
         if (char) {
             return char;
         }
-        return dc_utils.get_token(name);
+        return canvas.tokens.placeables.find(i => i.name == name).document.actor;
     },
     get_token: function(name) {
-        return canvas.tokens.placeables.find(i => i.name == name).document.actor;
+        return canvas.tokens.placeables.find(i => i.name == name);
     },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
