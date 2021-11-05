@@ -1427,6 +1427,7 @@ const dc_utils = {
                 let dist = Math.floor(canvas.grid.measureDistance(act, rec));
                 if (dist > 2) {
                     dc_utils.chat.send('Out of range!', `You're too far away from ${rec.name} to pass items.`);
+                    return false;
                 }
                 if (total >= amount) {
                     dc_utils.char.items.recieve(rec, item, amount);
