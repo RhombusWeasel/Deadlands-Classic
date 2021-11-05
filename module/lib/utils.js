@@ -1662,7 +1662,7 @@ const dc_utils = {
         },
         remove: function(name) {
             let tkn = canvas.tokens.placeables.find(i => i.name == name);
-            if (tkn) canvas.tokens.deleteMany([tkn.id]);
+            if (tkn) canvas.scene.deleteEmbeddedDocuments('Token', [tkn.id]);
         },
     },
     item: {
