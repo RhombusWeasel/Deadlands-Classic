@@ -1082,8 +1082,10 @@ const dc_utils = {
         if (char) {
             return char;
         }
-        char = canvas.tokens.placeables.find(i => i.name == name).document.actor;
-        return char;
+        return dc_utils.get_token(name);
+    },
+    get_token: function(name) {
+        return canvas.tokens.placeables.find(i => i.name == name).document.actor;
     },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
@@ -1424,7 +1426,7 @@ const dc_utils = {
                 let total = parseNum(item.data.data.amount);
                 amount = parseNum(amount);
                 let rec = dc_utils.get_actor(reciever);
-                let dist = Math.floor(canvas.grid.measureDistance(act, rec));
+                let dist = Math.floor(canvas.grid.measureDistance(dc_utils.get_token(act.name), dc_utils.get_token(reciever)));
                 if (dist > 2) {
                     dc_utils.chat.send('Out of range!', `You're too far away from ${rec.name} to pass items.`);
                     return false;
