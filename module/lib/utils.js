@@ -1656,7 +1656,8 @@ const dc_utils = {
     token: {
         add: function(name, x, y) {
             let tk = game.actors.getName(name).data.token;
-            tk.update({x: x, y: y});
+            tk.x = x
+            tk.y = y
             Token.create(tk);
         },
         remove: function(name) {
