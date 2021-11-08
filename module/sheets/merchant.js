@@ -35,6 +35,7 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _on_item_sell(event) {
+        console.log(event);
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
