@@ -60,7 +60,7 @@
                 <tr class="item" data-index="{{@index}}">
                     <td class="perc10"><a class="item-sell-remove"><</a></td>
                     <td class="perc40">{{this.name}}</td>
-                    <td class="perc20"><input class="set-base-cost" type="text" value="{{item.data.cost}}"/></td>
+                    <td class="perc20"><input class="set-base-cost" id="cost-change-{{@index}}" type="text" value="{{item.data.cost}}"/></td>
                 </tr>
                 {{/each}}
             </table>
