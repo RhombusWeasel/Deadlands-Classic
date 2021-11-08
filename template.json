@@ -1084,6 +1084,7 @@
             "add_item_name": "None",
             "add_item_cost": 1,
             "customers": {},
+            "sale_list": [],
             "global_price_modifier": 1,
             "friendly_price_modifier": 1,
             "hostile_price_modifier": 1,

@@ -108,6 +108,9 @@ export default class PlayerSheet extends ActorSheet {
                 setTimeout(() => {card.delete()}, c * 100);
             }
         }
+        if (this.actor.type == 'merchant') {
+            data.sale_list = this.actor.data.data.sale_list;
+        }
         return data;
     }
 
