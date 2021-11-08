@@ -58,8 +58,42 @@ export default class MerchantSheet extends actor_sheet {
     }
 }
 
+class Merchant extends FormApplication{
+    constructor(shop, cust) {
+        super();
+        this.shop = shop;
+        this.cust = cust;
+    }
+    static get defaultOptions() {
+        return mergeObject(super.defaultOptions, {
+            classes: ['doc'],
+            popOut: true,
+            template: `systems/deadlands_classic/templates/sheets/poker/poker.html`,
+            id: 'poker-app',
+            title: 'Poker',
+            width: 800,
+            height: 600,
+        });
+    }
+  
+    getData() {
+        // Return data to the template
+        let data = super.getData();
+        data.shop = this.shop;
+        data.cust = this.cust;
+        return data;
+    }
+  
+    activateListeners(html) {
+        //html.find(".add-player").click(this._on_add_player.bind(this));
+        return super.activateListeners(html);
+    }
+}
+
 Hooks.on('controlToken', function(token, bool) {
     if (token.document.actor.type == 'merchant') {
-        console.log('FUCK YEAH!!!');
+        if (!(game.iser.isGM)) {
+            let merchant = new Merchant(token, game.user.character).render(true);
+        }
     }
 });
