@@ -57,3 +57,17 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {sale_list: sale_list}});
     }
 }
+
+Hooks.on('canvasReady', function(canvas) {
+    canvas.stage.on('mousedown', (event) => {
+        let mouse = dc_utils.ui.mouse.get_grid_position(event);
+        console.log('Merchant Click: ', mouse.x, mouse.y);
+        let merchants = canvas.tokens.placeables.find(i => i.type == 'merchant');
+        for (let i = 0; i < merchants.length; i++) {
+            const shop = merchants[i];
+            if (shop.x) {
+                
+            }
+        }
+    });
+});

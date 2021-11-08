@@ -2506,4 +2506,21 @@ const dc_utils = {
             },
         },
     },
+    ui: {
+        mouse: {
+            get_position: function(event) {
+                return {
+                    x: event.data.global.x,
+                    y: event.data.global.y
+                }
+            },
+            get_grid_position: function(event) {
+                let tr = canvas.tokens.worldTransform;
+                return {
+                    x: (event.data.global.x - tr.tx) / canvas.stage.scale.x,
+                    y: (event.data.global.y - tr.ty) / canvas.stage.scale.y
+                }
+            },
+        },
+    },
 };
