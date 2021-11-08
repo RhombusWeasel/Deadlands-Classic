@@ -30,7 +30,7 @@
             {{#if goods}}
             <h3>Goods</h3>
             <table>
-                {{#each firearms as |item|}}
+                {{#each goods as |item|}}
                 <tr class="item" data-index="{{@index}}">
                     <td class="perc40">{{this.name}} ({{this.data.amount}})</td>
                     <td class="perc20">{{item.data.cost}}</td>
