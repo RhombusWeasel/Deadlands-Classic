@@ -54,6 +54,7 @@ export default class MerchantSheet extends actor_sheet {
         let index = element.closest(".item").dataset.index;
         let sale_list = this.actor.data.data.sale_list;
         sale_list[index].data.cost = element.value;
+        console.log('set_base_cost: ', element.value, index, sale_list);
         this.actor.update({data: {sale_list: sale_list}});
     }
 }
