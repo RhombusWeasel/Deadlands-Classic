@@ -63,9 +63,8 @@ Hooks.on('canvasReady', function(canvas) {
         let mouse = dc_utils.ui.mouse.get_grid_position(event);
         console.log('Merchant Click: ', mouse.x, mouse.y);
         let merchants = canvas.tokens.placeables.find(i => i.type == 'merchant');
-        for (let i = 0; i < merchants.length; i++) {
-            const shop = merchants[i];
-            if (shop.x) {
+        if (merchants) {
+            for (let i = 0; i < merchants.length; i++) {
                 
             }
         }
