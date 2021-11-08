@@ -89,8 +89,8 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('if_has', function (type, val, obj, options) {
         console.log('#if_has', type, val, obj, options);
-        //let act = game.actors.get(options.data.root.id);
-        if (dc_utils.char.has(obj.actor, type, val)) {
+        let act = game.actors.get(options.data.root.id);
+        if (dc_utils.char.has(act, type, val)) {
             return options.fn(this);
         }
     });
