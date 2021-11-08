@@ -1,23 +1,50 @@
 <form class="typed">
     <div class="flexrow">
+        {{log this}}
         <div>
             <h2 class="center">{{name}}</h2>
+            {{#if melee_weapons}}
+            <h3>Melee</h3>
             <table>
-            {{#each sale_list as |item|}}
+                {{#each melee_weapons as |item|}}
                 <tr class="item" data-index="{{@index}}">
-                    <td class="perc10"><a class="item-sell-remove"><</a></td>
+                    <td class="perc40">{{this.name}})</td>
+                    <td class="perc20">{{item.data.cost}}</td>
+                    <td><a class="buy-item">></a></td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+            {{#if firearms}}
+            <h3>Firearms</h3>
+            <table>
+                {{#each firearms as |item|}}
+                <tr class="item" data-index="{{@index}}">
+                    <td class="perc40">{{this.name}}</td>
+                    <td class="perc20">{{item.data.cost}}</td>
+                    <td><a class="buy-item">></a></td>
+                </tr>
+                {{/each}}
+            </table>
+            {{/if}}
+            {{#if goods}}
+            <h3>Goods</h3>
+            <table>
+                {{#each firearms as |item|}}
+                <tr class="item" data-index="{{@index}}">
                     <td class="perc40">{{this.name}} ({{this.data.amount}})</td>
                     <td class="perc20">{{item.data.cost}}</td>
                     <td><a class="buy-item">></a></td>
                 </tr>
-            {{/each}}
+                {{/each}}
             </table>
+            {{/if}}
         </div>
         <div>
-
+            <h2>Trade</h2>
         </div>
         <div>
-            <h2>You</h2>
+            <h2 class="center">You</h2>
         </div>
     </div>
 </form>
