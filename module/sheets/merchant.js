@@ -92,7 +92,7 @@ class Merchant extends FormApplication{
 
 Hooks.on('controlToken', function(token, bool) {
     if (token.document.actor.type == 'merchant') {
-        if (!(game.iser.isGM)) {
+        if (!(game.user.isGM)) {
             let merchant = new Merchant(token, game.user.character).render(true);
         }
     }
