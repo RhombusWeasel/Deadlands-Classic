@@ -56,7 +56,7 @@
             {{!-- On Sale --}}
             <h2 class="center">Sold</h2>
             <table>
-                {{#each sell_list as |item|}}
+                {{#each sale_list as |item|}}
                 <td class="perc40">{{this.name}}</td>
                 <td><input type="number" name="data.sell_list[{{@index}}].data.cost" value="data.data.sell_list[{{@index}}].data.cost"/></td>
                 {{/each}}
