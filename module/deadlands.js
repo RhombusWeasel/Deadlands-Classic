@@ -243,6 +243,21 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('sum', function (v1, operator, v2, options) {
+        switch (operator) {
+            case '+':
+                return parseFloat(v1) + parseFloat(v2);
+            case '-':
+                return parseFloat(v1) - parseFloat(v2);
+            case '*':
+                return parseFloat(v1) * parseFloat(v2);
+            case '/':
+                return parseFloat(v1) / parseFloat(v2);
+            default:
+                return options.inverse(this);
+        }
+    });
+
     preload_handlebars_templates();
 });
 
