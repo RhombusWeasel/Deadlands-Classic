@@ -1294,7 +1294,6 @@ const dc_utils = {
         },
         items: {
             get: function(act, item_type, sort_key = 'name') {
-                console.log('char.items.get:', act, item_type);
                 return act.items.filter(function (item) {return item.type == item_type})
                                 .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
             },
