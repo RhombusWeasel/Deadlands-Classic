@@ -34,5 +34,6 @@ export default class MerchantSheet extends actor_sheet {
             type: item.type,
             data: item.data.data
         });
+        this.actor.update({data: {sell_list: sell_list}});
     }
 }
