@@ -64,6 +64,7 @@ export default class PlayerSheet extends ActorSheet {
     }
 
     getData() {
+        console.log('actor_sheet.getData', this);
         const data         = super.getData();
         data.config        = CONFIG.dc;
         data.id            = this.actor.id;
