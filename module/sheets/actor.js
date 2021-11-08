@@ -147,11 +147,13 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
 
-        var traits = document.getElementsByClassName("trait_scroller");
-        traits[0].addEventListener("scroll", () => {
-            game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
-        });
-        traits[0].scrollTop = game.dc.trait_scroll;
+        var traits = document.getElementsByClassName("trait_scroller")[0];
+        if (traits) {
+            traits.addEventListener("scroll", () => {
+                game.dc.trait_scroll = document.querySelector(".trait_scroller").scrollTop;
+            });
+            traits.scrollTop = game.dc.trait_scroll;
+        }
         return super.activateListeners(html);
     }
 
