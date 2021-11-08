@@ -2,10 +2,10 @@
     <div class="flexrow">
         <div>
             {{!-- Available --}}
-            <h2>Items</h2>
+            <h2 class="center">Inventory</h2>
             {{!-- Melee --}}
             {{#if melee_weapons}}
-            <h2>Melee Weapons</h2>
+            <h2 class="center">Melee Weapons</h2>
             <table>
                 {{#each melee_weapons as |wep|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -21,7 +21,7 @@
             {{/if}}
             {{!-- Guns --}}
             {{#if firearms}}
-            <h2>Firearms</h2>
+            <h2 class="center">Firearms</h2>
             <table>
                 {{#each firearms as |gun|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -37,7 +37,7 @@
             {{/if}}
             {{!-- Goods --}}
             {{#if goods}}
-            <h2>Goods</h2>
+            <h2 class="center">Goods</h2>
             <table>
             {{#each goods as |good|}}
             <tr class="item" data-itemId="{{this.id}}">
@@ -54,7 +54,13 @@
         </div>
         <div>
             {{!-- On Sale --}}
-            <h2>Sold</h2>
+            <h2 class="center">Sold</h2>
+            <table>
+                {{#each sell_list as |item|}}
+                <td class="perc40">{{this.name}}</td>
+                <td><input type="number" name="data.sell_list[{{@index}}].data.cost" value="data.data.sell_list[{{@index}}].data.cost"/></td>
+                {{/each}}
+            </table>
         </div>
     </div>
 </section>

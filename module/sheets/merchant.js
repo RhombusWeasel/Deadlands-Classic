@@ -18,9 +18,21 @@ export default class MerchantSheet extends actor_sheet {
 
     activateListeners(html) {
         // Buttons:
-
+        html.find(".item-sell").click(this._on_item_sell.bind(this));
         // Return Listeners
         return super.activateListeners(html);
     }
 
+    _on_item_sell(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        let sell_list = this.actor.data.data.sell_list;
+        sell_list.push({
+            name: item.name,
+            type: item.type,
+            data: item.data.data
+        });
+    }
 }
