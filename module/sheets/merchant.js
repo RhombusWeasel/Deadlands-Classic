@@ -21,7 +21,7 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".item-sell").click(this._on_item_sell.bind(this));
         html.find(".item-sell-remove").click(this._on_item_sell_remove.bind(this));
 
-        html.find(".set-base-cost").onchange(this._on_set_base_cost(this));
+        html.find(".set-base-cost").oninput(this._on_set_base_cost(this));
         // Return Listeners
         return super.activateListeners(html);
     }
