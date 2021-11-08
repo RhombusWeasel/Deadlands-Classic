@@ -58,7 +58,7 @@
             <table>
                 {{#each sale_list as |item|}}
                 <td class="perc40">{{this.name}}</td>
-                <td><input type="number" name="data.sale_list[{{@index}}].data.cost" value="data.data.sale_list[{{@index}}].data.cost"/></td>
+                <td><input type="text" name="data.sale_list[{{@index}}].data.cost" value="data.data.sale_list[{{@index}}].data.cost"/></td>
                 {{/each}}
             </table>
         </div>
