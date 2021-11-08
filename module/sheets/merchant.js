@@ -62,10 +62,10 @@ Hooks.on('canvasReady', function(canvas) {
     canvas.stage.on('mousedown', (event) => {
         let mouse = dc_utils.ui.mouse.get_grid_position(event);
         console.log('Merchant Click: ', mouse.x, mouse.y);
-        let merchants = canvas.tokens.placeables.find(i => i.type == 'merchant');
+        let merchants = canvas.tokens.placeables.find(i => i.actor.type == 'merchant');
         if (merchants) {
             for (let i = 0; i < merchants.length; i++) {
-                
+                console.log(merchant.name, merchant.x, merchant.y);
             }
         }
     });
