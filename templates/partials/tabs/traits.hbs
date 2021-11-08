@@ -27,7 +27,7 @@
             </table>
             <div>
                 <table>
-                {{#each skills as |skill|}}
+                {{#each trait.skills as |skill|}}
                     {{log skill}}
                     <tr class="skill-data" data-skill="{{@key}}">
                      {{#if (eq ../../data.data.show_editor true)}}
