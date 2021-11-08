@@ -1822,7 +1822,7 @@ const dc_utils = {
                 r_data.success = false;
                 r_data.crit_fail = true;
             }
-            roll.toMessage({rollMode: 'gmroll'});
+            //roll.toMessage({rollMode: 'gmroll'});
             return r_data;
         },
         evaluate: function(data) {
@@ -1864,7 +1864,7 @@ const dc_utils = {
             let loc_key
             if (key == 'any') {
                 let loc_roll = new Roll('1d20').roll();
-                loc_roll.toMessage({rollMode: 'gmroll'});
+                //loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2 || 0;
@@ -2225,13 +2225,13 @@ const dc_utils = {
         send: function(title) {
             let sheet = `
                 <h3 class="center typed">${title}</h3>
-            `
+            `;
             for (let i = 1; i < arguments.length; i++) {
                 sheet += `
                 <p class="center typed">${arguments[i]}</p>
-                `
+                `;
             }
-            ChatMessage.create({content: sheet})
+            ChatMessage.create({content: sheet});
         },
     },
     socket: {
