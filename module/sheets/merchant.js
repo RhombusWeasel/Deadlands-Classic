@@ -28,12 +28,12 @@ export default class MerchantSheet extends actor_sheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        let sell_list = this.actor.data.data.sell_list;
-        sell_list.push({
+        let sale_list = this.actor.data.data.sale_list;
+        sale_list.push({
             name: item.name,
             type: item.type,
             data: item.data.data
         });
-        this.actor.update({data: {sell_list: sell_list}});
+        this.actor.update({data: {sale_list: sale_list}});
     }
 }
