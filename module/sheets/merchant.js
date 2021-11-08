@@ -70,7 +70,7 @@ class Merchant extends FormApplication{
             popOut: true,
             template: `systems/deadlands_classic/templates/sheets/merchant.html`,
             id: `trader-${this.shop.name}`,
-            title: `Trade ${this.shop.name}`,
+            title: `Trade: ${this.shop.name}`,
             width: 600,
             height: 800,
         });
@@ -93,7 +93,8 @@ class Merchant extends FormApplication{
 Hooks.on('controlToken', function(token, bool) {
     if (token.document.actor.type == 'merchant') {
         if (!(game.user.isGM)) {
-            let merchant = new Merchant(token, game.user.character).render(true);
+            console.log('FUCK YEAH!!!');
+            new Merchant(token, game.user.character).render(true);
         }
     }
 });
