@@ -56,12 +56,16 @@
             {{!-- On Sale --}}
             <h2 class="center">Sold</h2>
             <table>
+                <tr>
+                    <th class="center"><</th>
+                    <th class="center">Item</th>
+                    <th class="center">Price ($x.xx)</th>
+                </tr>
                 {{#each sale_list as |item|}}
                 <tr class="item" data-index="{{@index}}">
                     <td class="perc10"><a class="item-sell-remove"><</a></td>
-                    <td class="perc40">{{this.name}}</td>
+                    <td class="perc40">{{this.name}} ({{this.data.amount}})</td>
                     <td class="perc20"><input class="set-base-cost" type="text" value="{{item.data.cost}}"/></td>
-                    <td class="perc10"><a title="Set the price."><i class="fas fa-dollar-sign"></i></a></td>
                 </tr>
                 {{/each}}
             </table>
