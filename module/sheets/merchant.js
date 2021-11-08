@@ -19,6 +19,8 @@ export default class MerchantSheet extends actor_sheet {
     activateListeners(html) {
         // Buttons:
         html.find(".item-sell").click(this._on_item_sell.bind(this));
+
+        html.find(".set-base-cost").change(this._on_set_base_cost(this));
         // Return Listeners
         return super.activateListeners(html);
     }
@@ -34,6 +36,15 @@ export default class MerchantSheet extends actor_sheet {
             type: item.type,
             data: item.data.data
         });
+        this.actor.update({data: {sale_list: sale_list}});
+    }
+
+    _on_set_base_cost(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let index = element.closest(".item").dataset.index;
+        let sale_list = this.actor.data.data.sale_list;
+        sale_list[index].data.cost = element.value;
         this.actor.update({data: {sale_list: sale_list}});
     }
 }
