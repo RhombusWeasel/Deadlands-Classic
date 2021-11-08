@@ -40,7 +40,7 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _on_set_base_cost(event) {
-        event.preventDefault();
+        //event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.index;
         let sale_list = this.actor.data.data.sale_list;
