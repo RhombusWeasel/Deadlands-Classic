@@ -1,18 +1,27 @@
 import actor_sheet from "./actor.js"
 export default class MerchantSheet extends actor_sheet {
     static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
-            classes: ["player-sheet", "doc"],
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "merchant" }],
-            width: 500,
-            height: 700
-        });
+        if (!(game.user.isGM)) {
+            return mergeObject(super.defaultOptions, {
+                template: `systems/deadlands_classic/templates/sheets/merchant.html`,
+                classes: ["player-sheet", "doc"],
+                width: 800,
+                height: 600
+            });
+        }else{
+            return mergeObject(super.defaultOptions, {
+                template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
+                classes: ["player-sheet", "doc"],
+                tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "merchant" }],
+                width: 500,
+                height: 700
+            });
+        }
     }
 
     getData() {
         const data         = super.getData();
-        data.sell_list     = this.actor.data.data.sell_list;
+        data.sale_list     = this.actor.data.data.sell_list;
         return data;
     }
 
@@ -57,44 +66,3 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {sale_list: sale_list}});
     }
 }
-
-class Merchant extends FormApplication{
-    constructor(name, shop, cust) {
-        super(name);
-        this.shop = shop;
-        this.cust = cust;
-    }
-    static get defaultOptions() {
-        return mergeObject(super.defaultOptions, {
-            classes: ['doc'],
-            popOut: true,
-            template: `systems/deadlands_classic/templates/sheets/merchant.html`,
-            id: `trader-${this.shop.name}`,
-            title: `Trade: ${this.shop.name}`,
-            width: 600,
-            height: 800,
-        });
-    }
-  
-    getData() {
-        // Return data to the template
-        let data = super.getData();
-        data.shop = this.shop;
-        data.cust = this.cust;
-        return data;
-    }
-  
-    activateListeners(html) {
-        //html.find(".add-player").click(this._on_add_player.bind(this));
-        return super.activateListeners(html);
-    }
-}
-
-Hooks.on('controlToken', function(token, bool) {
-    if (token.document.actor.type == 'merchant') {
-        if (!(game.user.isGM)) {
-            console.log('FUCK YEAH!!!');
-            new Merchant('Merchant', token.document.actor, game.user.character).render(true);
-        }
-    }
-});
