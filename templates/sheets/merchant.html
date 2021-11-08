@@ -3,7 +3,7 @@
         <div>
             <h2 class="center">{{this.actor.name}}</h2>
             {{#if melee_weapons}}
-            <h3>Melee</h3>
+            <h3 class="center">Melee</h3>
             <table>
                 {{#each melee_weapons as |item|}}
                 <tr class="item" data-index="{{@index}}">
@@ -15,7 +15,7 @@
             </table>
             {{/if}}
             {{#if firearms}}
-            <h3>Firearms</h3>
+            <h3 class="center">Firearms</h3>
             <table>
                 {{#each firearms as |item|}}
                 <tr class="item" data-index="{{@index}}">
@@ -27,7 +27,7 @@
             </table>
             {{/if}}
             {{#if goods}}
-            <h3>Goods</h3>
+            <h3 class="center">Goods</h3>
             <table>
                 {{#each goods as |item|}}
                 <tr class="item" data-index="{{@index}}">
