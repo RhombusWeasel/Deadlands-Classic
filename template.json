@@ -1085,6 +1085,7 @@
             "add_item_cost": 1,
             "customers": {},
             "sale_list": [],
+            "buy_modifier": 0.5,
             "global_price_modifier": 1,
             "friendly_price_modifier": 1,
             "hostile_price_modifier": 1,

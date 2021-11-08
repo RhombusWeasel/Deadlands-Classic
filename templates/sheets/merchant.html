@@ -6,10 +6,10 @@
             <h3 class="center">Melee</h3>
             <table>
                 {{#each melee_weapons as |item|}}
-                <tr class="item" data-index="{{@index}}">
-                    <td class="perc40">{{this.name}})</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
-                    <td><a class="buy-item">></a></td>
+                <tr class="item" data-id="{{this.id}}">
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="center perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 buy-item">></a></td>
                 </tr>
                 {{/each}}
             </table>
@@ -18,10 +18,10 @@
             <h3 class="center">Firearms</h3>
             <table>
                 {{#each firearms as |item|}}
-                <tr class="item" data-index="{{@index}}">
-                    <td class="perc40">{{this.name}}</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
-                    <td><a class="buy-item">></a></td>
+                <tr class="item" data-id="{{this.id}}">
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="center perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 buy-item">></a></td>
                 </tr>
                 {{/each}}
             </table>
@@ -30,10 +30,10 @@
             <h3 class="center">Goods</h3>
             <table>
                 {{#each goods as |item|}}
-                <tr class="item" data-index="{{@index}}">
-                    <td class="perc40">{{item.name}} ({{item.data.data.amount}})</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
-                    <td><a class="buy-item">></a></td>
+                <tr class="item" data-id="{{this.id}}">
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="center perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 buy-item">></a></td>
                 </tr>
                 {{/each}}
             </table>
@@ -49,9 +49,9 @@
             <table>
                 {{#each cust_melee as |item|}}
                 <tr class="item" data-id="{{this.id}}">
-                    <td><a class="sell-item"><</a></td>
-                    <td class="perc40">{{this.name}})</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 sell-item"><</a></td>
+                    <td class="center perc70">{{this.name}})</td>
+                    <td class="right perc20">{{item.data.data.cost * }}</td>
                 </tr>
                 {{/each}}
             </table>
@@ -61,9 +61,9 @@
             <table>
                 {{#each cust_guns as |item|}}
                 <tr class="item" data-id="{{this.id}}">
-                    <td><a class="sell-item"><</a></td>
-                    <td class="perc40">{{this.name}}</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 sell-item"><</a></td>
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="right perc20">{{item.data.data.cost}}</td>
                 </tr>
                 {{/each}}
             </table>
@@ -73,9 +73,9 @@
             <table>
                 {{#each cust_goods as |item|}}
                 <tr class="item" data-id="{{this.id}}">
-                    <td><a class="sell-item"><</a></td>
-                    <td class="perc40">{{item.name}} ({{item.data.data.amount}})</td>
-                    <td class="perc20">{{item.data.data.cost}}</td>
+                    <td><a class="center perc10 sell-item"><</a></td>
+                    <td class="center perc40">{{item.name}} ({{item.data.data.amount}})</td>
+                    <td class="right perc20">{{item.data.data.cost}}</td>
                 </tr>
                 {{/each}}
             </table>
