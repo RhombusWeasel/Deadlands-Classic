@@ -29,8 +29,8 @@
                 </tr>
                 {{#each skills as |skill|}}
                 <tr>
-                    <td><input style="text-align:left;" class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
-                    <td><input style="text-align:center;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
+                    <td><input style="text-align:left;" class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{this.name}}"></td>
+                    <td><input style="text-align:center;" class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.level" value="{{this.level}}"></td>
                     <td><input style="text-align:center;" class="input" type="number" name="data.traits.{{@../key}}.skills.{{@key}}.modifier" value="{{this.modifier}}"></td>
                     <td style="text-align:center;" class="skill-roll" data-trait="{{@../key}}" data-skill="{{@key}}" data-mod="{{this.modifier}}"><a><i class="fas fa-dice-d20" title="Roll {{this.name}}"></i></a></td>
                 </tr>
