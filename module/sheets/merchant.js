@@ -4,7 +4,7 @@ export default class MerchantSheet extends actor_sheet {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
             classes: ["player-sheet", "doc"],
-            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }],
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "merchant" }],
             width: 500,
             height: 700
         });
@@ -12,8 +12,15 @@ export default class MerchantSheet extends actor_sheet {
 
     getData() {
         const data         = super.getData();
-        console.log('Merchant Player Data: ', data);
+        data.sell_list     = this.actor.data.data.sell_list;
         return data;
+    }
+
+    activateListeners(html) {
+        // Buttons:
+
+        // Return Listeners
+        return super.activateListeners(html);
     }
 
 }

@@ -28,7 +28,6 @@
             <div>
                 <table>
                 {{#each trait.skills as |skill|}}
-                    {{log skill}}
                     <tr class="skill-data" data-skill="{{@key}}">
                      {{#if (eq ../../data.data.show_editor true)}}
                         <td class="perc80"><input class="input" type="text" name="data.traits.{{@../key}}.skills.{{@key}}.name" value="{{skill.name}}"></td>
