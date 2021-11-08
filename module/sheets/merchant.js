@@ -21,7 +21,7 @@ export default class MerchantSheet extends actor_sheet {
 
     getData() {
         const data         = super.getData();
-        data.sale_list     = this.actor.data.data.sell_list;
+        data.sale_list     = this.actor.data.data.sale_list;
         return data;
     }
 
