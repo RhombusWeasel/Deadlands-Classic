@@ -1,8 +1,7 @@
 <form class="typed">
     <div class="flexrow">
-        {{log this}}
         <div>
-            <h2 class="center">{{name}}</h2>
+            <h2 class="center">{{this.actor.name}}</h2>
             {{#if melee_weapons}}
             <h3>Melee</h3>
             <table>
@@ -41,7 +40,7 @@
             {{/if}}
         </div>
         <div>
-            <h2>Trade</h2>
+            <h2 class="center">Trade</h2>
         </div>
         <div>
             <h2 class="center">You</h2>

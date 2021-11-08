@@ -22,6 +22,17 @@ export default class MerchantSheet extends actor_sheet {
     getData() {
         const data         = super.getData();
         data.sale_list     = this.actor.data.data.sale_list;
+        if (!(game.user.isGM)) {
+            data.customers = this.actor.data.data.customers;
+            if (!(Object.keys(data.customers).includes(game.user.character.name))) {
+                data.customers[game.user.character.name] = {
+                    opinion: 0,
+                    current_trade: []
+                }
+                this.actor.update({data: {customers: data.customers}});
+            }
+            data.current_trade = data.customers[game.user.character.name];
+        }
         return data;
     }
 
