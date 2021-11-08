@@ -1,4 +1,5 @@
-export default class MerchantSheet extends PlayerSheet {
+import actor_sheet from "./actor.js"
+export default class MerchantSheet extends actor_sheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
