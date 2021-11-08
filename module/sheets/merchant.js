@@ -13,6 +13,7 @@ export default class MerchantSheet extends actor_sheet {
     getData() {
         const data         = super.getData();
         console.log('Merchant Player Data: ', data);
+        return data;
     }
 
 }
