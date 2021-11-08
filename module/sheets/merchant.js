@@ -68,11 +68,11 @@ class Merchant extends FormApplication{
         return mergeObject(super.defaultOptions, {
             classes: ['doc'],
             popOut: true,
-            template: `systems/deadlands_classic/templates/sheets/poker/poker.html`,
-            id: 'poker-app',
-            title: 'Poker',
-            width: 800,
-            height: 600,
+            template: `systems/deadlands_classic/templates/sheets/merchant.html`,
+            id: `trader-${this.shop.name}`,
+            title: `Trade ${this.shop.name}`,
+            width: 600,
+            height: 800,
         });
     }
   
