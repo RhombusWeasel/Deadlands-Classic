@@ -59,8 +59,8 @@ export default class MerchantSheet extends actor_sheet {
 }
 
 class Merchant extends FormApplication{
-    constructor(shop, cust) {
-        super();
+    constructor(name, shop, cust) {
+        super(name);
         this.shop = shop;
         this.cust = cust;
     }
@@ -94,7 +94,7 @@ Hooks.on('controlToken', function(token, bool) {
     if (token.document.actor.type == 'merchant') {
         if (!(game.user.isGM)) {
             console.log('FUCK YEAH!!!');
-            new Merchant(token.document.actor, game.user.character).render(true);
+            new Merchant('Merchant', token.document.actor, game.user.character).render(true);
         }
     }
 });
