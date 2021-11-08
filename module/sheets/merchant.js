@@ -94,7 +94,7 @@ Hooks.on('controlToken', function(token, bool) {
     if (token.document.actor.type == 'merchant') {
         if (!(game.user.isGM)) {
             console.log('FUCK YEAH!!!');
-            new Merchant(token, game.user.character).render(true);
+            new Merchant(token.document.actor, game.user.character).render(true);
         }
     }
 });
