@@ -113,7 +113,7 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {customers: trade}});
     }
 
-    _on_buy_item(event) {
+    _on_sell_item(event) {
         // Player clicks sell button so we add this to the merchants trade BUY list
         event.preventDefault();
         let element = event.currentTarget;
