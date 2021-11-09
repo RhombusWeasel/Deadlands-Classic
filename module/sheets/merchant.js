@@ -53,7 +53,9 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".item-sell-remove").click(this._on_item_sell_remove.bind(this));
         html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
         html.find(".buy-item").click(this._on_buy_item.bind(this));
+        html.find(".remove-buy-item").click(this._on_remove_buy_item.bind(this));
         html.find(".sell-item").click(this._on_sell_item.bind(this));
+        html.find(".remove-sell-item").click(this._on_remove_sell_item.bind(this));
         // Return Listeners
         return super.activateListeners(html);
     }
@@ -106,6 +108,15 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {customers: trade}});
     }
 
+    _on_remove_buy_item(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let index   = element.closest(".item").dataset.index;
+        let trade   = this.actor.data.customers;
+        trade[game.user.character.id].current.trade.buy.splice(index, 1);
+        this.actor.update({data: {customers: trade}});
+    }
+
     _on_sell_item(event) {
         // Player clicks sell button so we add this to the merchants trade SELL list
         event.preventDefault();
@@ -119,6 +130,15 @@ export default class MerchantSheet extends actor_sheet {
             data: item.data.data
         });
         console.log('Sell Item: ', trade);
+        this.actor.update({data: {customers: trade}});
+    }
+
+    _on_remove_sell_item(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let index   = element.closest(".item").dataset.index;
+        let trade   = this.actor.data.customers;
+        trade[game.user.character.id].current.trade.sell.splice(index, 1);
         this.actor.update({data: {customers: trade}});
     }
 
