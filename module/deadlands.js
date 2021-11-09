@@ -243,17 +243,17 @@ Hooks.once("init", function () {
         }
     });
 
-    Handlebars.registerHelper('sum', function (v1, operator, v2, options) {
-        switch (operator) {
-            case '+':
-                return parseFloat(v1) + parseFloat(v2);
-            case '-':
-                return parseFloat(v1) - parseFloat(v2);
-            case '*':
-                return parseFloat(v1) * parseFloat(v2);
-            case '/':
-                return parseFloat(v1) / parseFloat(v2);
-        }
+    Handlebars.registerHelper("sum", function(lvalue, operator, rvalue, options) {
+        lvalue = parseFloat(lvalue);
+        rvalue = parseFloat(rvalue);
+            
+        return {
+            "+": lvalue + rvalue,
+            "-": lvalue - rvalue,
+            "*": lvalue * rvalue,
+            "/": lvalue / rvalue,
+            "%": lvalue % rvalue
+        }[operator];
     });
 
     preload_handlebars_templates();
