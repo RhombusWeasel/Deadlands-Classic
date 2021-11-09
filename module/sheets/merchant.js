@@ -35,8 +35,10 @@ export default class MerchantSheet extends actor_sheet {
             data.current_trade = data.customers[game.user.character.name];
             let cust_melee     = dc_utils.char.items.get(game.user.character, 'melee');
             data.cust_melee    = cust_melee.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
-            data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
-            data.cust_goods    = dc_utils.char.items.get(game.user.character, 'goods');
+            let cust_guns      = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
+            data.cust_guns     = cust_guns.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
+            let cust_goods     = dc_utils.char.items.get(game.user.character, 'goods');
+            data.cust_goods    = cust_goods.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
         }
         return data;
     }
