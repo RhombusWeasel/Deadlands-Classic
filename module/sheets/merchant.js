@@ -29,8 +29,8 @@ export default class MerchantSheet extends actor_sheet {
                 data.customers[game.user.character.name] = {
                     opinion: 0,
                     current_trade: {
-                        buy: [],
-                        sell: []
+                        Buy: [],
+                        Sell: []
                     }
                 }
                 this.actor.update({data: {customers: data.customers}});
