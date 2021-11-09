@@ -48,14 +48,15 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     activateListeners(html) {
-        // Buttons:
+        // Clicks:
         html.find(".item-sell").click(this._on_item_sell.bind(this));
         html.find(".item-sell-remove").click(this._on_item_sell_remove.bind(this));
-        html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
         html.find(".buy-item").click(this._on_buy_item.bind(this));
         html.find(".remove-buy-item").click(this._on_remove_buy_item.bind(this));
         html.find(".sell-item").click(this._on_sell_item.bind(this));
         html.find(".remove-sell-item").click(this._on_remove_sell_item.bind(this));
+        // Changes:
+        html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
         // Return Listeners
         return super.activateListeners(html);
     }
@@ -99,11 +100,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.id].current.trade.buy.push({
-            name: item.name,
-            type: item.type,
-            data: item.data.data
-        });
+        trade[game.user.character.id].current.trade.buy.push(item);
         console.log('Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
@@ -114,6 +111,7 @@ export default class MerchantSheet extends actor_sheet {
         let index   = element.closest(".item").dataset.index;
         let trade   = this.actor.data.customers;
         trade[game.user.character.id].current.trade.buy.splice(index, 1);
+        console.log('Remove Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
 
@@ -139,6 +137,7 @@ export default class MerchantSheet extends actor_sheet {
         let index   = element.closest(".item").dataset.index;
         let trade   = this.actor.data.customers;
         trade[game.user.character.id].current.trade.sell.splice(index, 1);
+        console.log('Remove Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
 
