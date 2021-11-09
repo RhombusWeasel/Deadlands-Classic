@@ -33,7 +33,8 @@ export default class MerchantSheet extends actor_sheet {
                 this.actor.update({data: {customers: data.customers}});
             }
             data.current_trade = data.customers[game.user.character.name];
-            data.cust_melee    = dc_utils.char.items.get(game.user.character, 'melee');
+            let cust_melee     = dc_utils.char.items.get(game.user.character, 'melee');
+            data.cust_melee    = cust_melee.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
             data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
             data.cust_goods    = dc_utils.char.items.get(game.user.character, 'goods');
         }
