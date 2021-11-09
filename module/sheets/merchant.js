@@ -40,7 +40,7 @@ export default class MerchantSheet extends actor_sheet {
             let cust_goods     = dc_utils.char.items.get(game.user.character, 'goods');
             data.cust_goods    = cust_goods.filter(pl_item => data.sale_list.some(
                 buy_itm => pl_item.name == buy_itm.name && (
-                buy_itm.data.boxed_multiple && pl_item.data.data.amount > buy_itm.data.box_amount
+                buy_itm.data.boxed_multiple && pl_item.data.data.amount >= buy_itm.data.box_amount
             )));
         }
         return data;
