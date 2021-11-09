@@ -51,7 +51,7 @@
                 <tr class="item" data-id="{{this.id}}">
                     <td><a class="center perc10 sell-item"><</a></td>
                     <td class="center perc70">{{this.name}})</td>
-                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}{{/sum}}</td>
+                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}</td>
                 </tr>
                 {{/each}}
             </table>
@@ -63,7 +63,7 @@
                 <tr class="item" data-id="{{this.id}}">
                     <td><a class="center perc10 sell-item"><</a></td>
                     <td class="center perc70">{{this.name}}</td>
-                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}{{/sum}}</td>
+                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}</td>
                 </tr>
                 {{/each}}
             </table>
@@ -75,7 +75,7 @@
                 <tr class="item" data-id="{{this.id}}">
                     <td><a class="center perc10 sell-item"><</a></td>
                     <td class="center perc40">{{item.name}} ({{item.data.data.amount}})</td>
-                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}{{/sum}}</td>
+                    <td class="right perc20">{{#sum item.data.data.cost '*' ../data.data.buy_modifier}}</td>
                 </tr>
                 {{/each}}
             </table>

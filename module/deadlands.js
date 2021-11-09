@@ -253,8 +253,6 @@ Hooks.once("init", function () {
                 return parseFloat(v1) * parseFloat(v2);
             case '/':
                 return parseFloat(v1) / parseFloat(v2);
-            default:
-                return options.inverse(this);
         }
     });
 
