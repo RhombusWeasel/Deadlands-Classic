@@ -144,11 +144,12 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _add_customer(act) {
-        this.actor.data.data.customers[act.id] = {
+        let customers = this.actor.data.data.customers
+        customers[act.id] = {
             opinion: 0,
             current: this._new_trade(),
         }
-        this.actor.update(this.actor.data);
+        this.actor.update({data: {customers: customers}});
     }
 
     _reset_trade(act) {
