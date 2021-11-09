@@ -122,36 +122,40 @@ export default class MerchantSheet extends actor_sheet {
 
     _check_existing_customer(act) {
         let p_name = act.id;
-        data.customers = this.actor.data.data.customers;
-        let exists = Object.keys(data.customers).includes(p_name);
+        let customers = this.actor.data.data.customers;
+        let exists = Object.keys(customers).includes(p_name);
         console.log(exists);
         if (!(exists)) {
-            data.customers[p_name] = {
+            customers[p_name] = {
                 opinion: 0,
-                current_trade: {
-                    Buy: [],
-                    Sell: []
-                }
+                current: this._new_trade()
             }
             console.log(`${this.actor.name} created customer data for ${act.name}`);
-            this.actor.update({data: {customers: data.customers}});
+            this.actor.update({data: {customers: customers}});
         }
     }
 
     _add_customer(act) {
-        this.actor.customers[act.id] = {
+        this.actor.data.data.customers[act.id] = {
             opinion: 0,
-            current: {
-                trade: {
-                    Buy: [],
-                    Sell: [],
-                }
-            }
+            current: this._new_trade(),
         }
         this.actor.update(this.actor.data);
     }
 
-    _reset_trade(act) {
+    _new_trade(act) {
+        return {
+            trade: {
+                Buy: [],
+                Sell: [],
+            }
+        }
+    }
 
+    _reset_trade(act) {
+        let p_name = act.id;
+        let customers = this.actor.data.data.customers;
+        customers[p_name].current = this._new_trade();
+        this.actor.update({data: {customers: customers}});
     }
 }
