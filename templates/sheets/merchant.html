@@ -41,6 +41,7 @@
         </div>
         <div>
             <h2 class="center">Trade</h2>
+            {{#if current_trade.Sell}}
             <h3 class="center">Sell:</h3>
             <table>
                 {{#each current_trade.Sell as |item|}}
@@ -51,6 +52,8 @@
                 </tr>
                 {{/each}}
             </table>
+            {{/if}}
+            {{#if current_trade.Buy}}
             <h3 class="center">Buy:</h3>
             <table>
                 {{#each current_trade.Buy as |item|}}
@@ -61,6 +64,7 @@
                 </tr>
                 {{/each}}
             </table>
+            {{/if}}
         </div>
         <div>
             <h2 class="center">You</h2>
