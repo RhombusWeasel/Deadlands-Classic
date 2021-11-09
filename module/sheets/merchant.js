@@ -97,7 +97,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.id].current_trade.Buy.push({
+        trade[game.user.character.id].current.trade.buy.push({
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -113,7 +113,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.id].current_trade.Sell.push({
+        trade[game.user.character.id].current.trade.sell.push({
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -135,10 +135,10 @@ export default class MerchantSheet extends actor_sheet {
 
     _new_trade() {
         return {
+            open: Math.floor(Date.now() / 1000),
             trade: {
-                Open: Math.floor(Date.now() / 1000),
-                Buy: [],
-                Sell: [],
+                buy: [],
+                sell: [],
             }
         }
     }
