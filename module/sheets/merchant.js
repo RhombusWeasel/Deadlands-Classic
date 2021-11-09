@@ -27,7 +27,7 @@ export default class MerchantSheet extends actor_sheet {
             let p_name = game.user.character.id;
             data.customers = this.actor.data.data.customers;
             this._check_existing_customer(game.user.character);
-            data.current_trade = data.customers[p_name].current_trade;
+            data.current_trade = data.customers[p_name].current;
             // Get the players items
             data.cust_melee    = dc_utils.char.items.get(game.user.character, 'melee');
             data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');

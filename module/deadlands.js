@@ -244,10 +244,8 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper("sum", function(lvalue, operator, rvalue, options) {
-        console.log('sum: ', lvalue, rvalue, operator)
         lvalue = parseFloat(lvalue.slice(1, lvalue.length));
         rvalue = parseFloat(rvalue);
-            
         return {
             "+": `$${(lvalue + rvalue).toFixed(2)}`,
             "-": `$${(lvalue - rvalue).toFixed(2)}`,
