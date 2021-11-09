@@ -26,17 +26,7 @@ export default class MerchantSheet extends actor_sheet {
         if (!(game.user.isGM)) {
             let p_name = game.user.character.id;
             data.customers = this.actor.data.data.customers;
-            if (!(Object.keys(data.customers).includes(p_name))) {
-                data.customers[p_name] = {
-                    opinion: 0,
-                    current_trade: {
-                        Buy: [],
-                        Sell: []
-                    }
-                }
-                console.log(`${this.actor.name} created customer data for ${p_name}`);
-                this.actor.update({data: {customers: data.customers}});
-            }
+            this._check_existing_customer(game.user.character);
             data.current_trade = data.customers[p_name].current_trade;
             // Get the players items
             data.cust_melee    = dc_utils.char.items.get(game.user.character, 'melee');
@@ -50,9 +40,9 @@ export default class MerchantSheet extends actor_sheet {
                 buy_itm.data.boxed_multiple && pl_item.data.data.amount >= buy_itm.data.box_amount
             )));
             // Filter for items in the current trade
-            data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
-            data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
-            data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
+            //data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
+            //data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
+            //data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
         }
         return data;
     }
@@ -107,7 +97,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].current_trade.Buy.push({
+        trade[game.user.character.id].current_trade.Buy.push({
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -122,11 +112,46 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].current_trade.Sell.push({
+        trade[game.user.character.id].current_trade.Sell.push({
             name: item.name,
             type: item.type,
             data: item.data.data
         });
         this.actor.update({data: {customers: trade}});
+    }
+
+    _check_existing_customer(act) {
+        let p_name = act.id;
+        data.customers = this.actor.data.data.customers;
+        let exists = Object.keys(data.customers).includes(p_name);
+        console.log(exists);
+        if (!(exists)) {
+            data.customers[p_name] = {
+                opinion: 0,
+                current_trade: {
+                    Buy: [],
+                    Sell: []
+                }
+            }
+            console.log(`${this.actor.name} created customer data for ${act.name}`);
+            this.actor.update({data: {customers: data.customers}});
+        }
+    }
+
+    _add_customer(act) {
+        this.actor.customers[act.id] = {
+            opinion: 0,
+            current: {
+                trade: {
+                    Buy: [],
+                    Sell: [],
+                }
+            }
+        }
+        this.actor.update(this.actor.data);
+    }
+
+    _reset_trade(act) {
+
     }
 }
