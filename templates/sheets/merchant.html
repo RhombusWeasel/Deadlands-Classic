@@ -41,6 +41,26 @@
         </div>
         <div>
             <h2 class="center">Trade</h2>
+            <h3>Sell</h3>
+            <table>
+                {{each current_trade.buy as |item|}}
+                <tr class="item" data-id="{{this.id}}">
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="center perc20">{{sum item.data.data.cost '*' ../data.data.buy_modifier}}</td>
+                    <td><a class="center perc10 buy-item">></a></td>
+                </tr>
+                {{/each}}
+            </table>
+            <h3>Buy</h3>
+            <table>
+                {{each current_trade.buy as |item|}}
+                <tr class="item" data-id="{{this.id}}">
+                    <td class="center perc70">{{this.name}}</td>
+                    <td class="center perc20">{{item.data.cost}}</td>
+                    <td><a class="center perc10 buy-item">></a></td>
+                </tr>
+                {{/each}}
+            </table>
         </div>
         <div>
             <h2 class="center">You</h2>
