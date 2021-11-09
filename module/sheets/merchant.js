@@ -122,11 +122,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = game.user.character.items.get(itemId);
-        trade[game.user.character.id].current.trade.sell.push({
-            name: item.name,
-            type: item.type,
-            data: item.data.data
-        });
+        trade[game.user.character.id].current.trade.sell.push(item);
         console.log('Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
