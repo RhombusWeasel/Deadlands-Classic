@@ -102,6 +102,7 @@ export default class MerchantSheet extends actor_sheet {
             type: item.type,
             data: item.data.data
         });
+        console.log('Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
 
@@ -117,6 +118,7 @@ export default class MerchantSheet extends actor_sheet {
             type: item.type,
             data: item.data.data
         });
+        console.log('Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
 
@@ -126,12 +128,18 @@ export default class MerchantSheet extends actor_sheet {
         let exists = Object.keys(customers).includes(p_name);
         console.log(exists);
         if (!(exists)) {
-            customers[p_name] = {
-                opinion: 0,
-                current: this._new_trade()
-            }
+            this._add_customer(act);
             console.log(`${this.actor.name} created customer data for ${act.name}`);
-            this.actor.update({data: {customers: customers}});
+        }
+    }
+
+    _new_trade() {
+        return {
+            trade: {
+                Open: Math.floor(Date.now() / 1000),
+                Buy: [],
+                Sell: [],
+            }
         }
     }
 
@@ -141,15 +149,6 @@ export default class MerchantSheet extends actor_sheet {
             current: this._new_trade(),
         }
         this.actor.update(this.actor.data);
-    }
-
-    _new_trade(act) {
-        return {
-            trade: {
-                Buy: [],
-                Sell: [],
-            }
-        }
     }
 
     _reset_trade(act) {
