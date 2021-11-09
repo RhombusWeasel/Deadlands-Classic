@@ -24,15 +24,17 @@ export default class MerchantSheet extends actor_sheet {
         data.sale_list     = this.actor.data.data.sale_list;
         data.buy_modifier  = this.actor.data.data.buy_modifier;
         if (!(game.user.isGM)) {
+            let p_name = game.users.character.name
             data.customers = this.actor.data.data.customers;
-            if (!(Object.keys(data.customers).includes(game.user.character.name))) {
-                data.customers[game.user.character.name] = {
+            if (!(Object.keys(data.customers).includes(p_name))) {
+                data.customers[p_name] = {
                     opinion: 0,
                     current_trade: {
                         Buy: [],
                         Sell: []
                     }
                 }
+                console.log(`${this.actor.name} created customer data for ${p_name}`);
                 this.actor.update({data: {customers: data.customers}});
             }
             data.current_trade = data.customers[game.user.character.name].current_trade;
@@ -99,13 +101,13 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _on_buy_item(event) {
-        // Player clicks buy button so we add this to the merchants trade SELL list
+        // Player clicks buy button so we add this to the merchants trade BUY list
         event.preventDefault();
         let element = event.currentTarget;
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].sell.push({
+        trade[game.user.character.name].buy.push({
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -114,13 +116,13 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _on_sell_item(event) {
-        // Player clicks sell button so we add this to the merchants trade BUY list
+        // Player clicks sell button so we add this to the merchants trade SELL list
         event.preventDefault();
         let element = event.currentTarget;
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].buy.push({
+        trade[game.user.character.name].sell.push({
             name: item.name,
             type: item.type,
             data: item.data.data
