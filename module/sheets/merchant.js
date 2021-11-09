@@ -24,7 +24,7 @@ export default class MerchantSheet extends actor_sheet {
         data.sale_list     = this.actor.data.data.sale_list;
         data.buy_modifier  = this.actor.data.data.buy_modifier;
         if (!(game.user.isGM)) {
-            let p_name = game.user.character.name;
+            let p_name = game.user.character.id;
             data.customers = this.actor.data.data.customers;
             if (!(Object.keys(data.customers).includes(p_name))) {
                 data.customers[p_name] = {
@@ -37,7 +37,7 @@ export default class MerchantSheet extends actor_sheet {
                 console.log(`${this.actor.name} created customer data for ${p_name}`);
                 this.actor.update({data: {customers: data.customers}});
             }
-            data.current_trade = data.customers[game.user.character.name].current_trade;
+            data.current_trade = data.customers[p_name].current_trade;
             // Get the players items
             data.cust_melee    = dc_utils.char.items.get(game.user.character, 'melee');
             data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
@@ -50,9 +50,9 @@ export default class MerchantSheet extends actor_sheet {
                 buy_itm.data.boxed_multiple && pl_item.data.data.amount >= buy_itm.data.box_amount
             )));
             // Filter for items in the current trade
-            data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
-            data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
-            data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
+            data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
+            data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
+            data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.Sell.some(buy_itm => pl_item.id == buy_itm.id));
         }
         return data;
     }
@@ -107,7 +107,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].buy.push({
+        trade[game.user.character.name].current_trade.Buy.push({
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -122,7 +122,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers;
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.name].sell.push({
+        trade[game.user.character.name].current_trade.Sell.push({
             name: item.name,
             type: item.type,
             data: item.data.data
