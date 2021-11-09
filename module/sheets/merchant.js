@@ -109,7 +109,7 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index   = element.closest(".item").dataset.index;
-        let trade   = this.actor.data.customers;
+        let trade   = this.actor.data.data.customers;
         trade[game.user.character.id].current.trade.buy.splice(index, 1);
         console.log('Remove Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
@@ -135,7 +135,7 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index   = element.closest(".item").dataset.index;
-        let trade   = this.actor.data.customers;
+        let trade   = this.actor.data.data.customers;
         trade[game.user.character.id].current.trade.sell.splice(index, 1);
         console.log('Remove Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
