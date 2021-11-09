@@ -42,7 +42,7 @@
         <div>
             <h2 class="center">Trade</h2>
             <!-- Remember in the trade section the item objects are {name: "", type: "", data: {}} -->
-            {{#if current_trade.Sell}}
+            {{#if current_trade.sell}}
             <h3 class="center">Sell:</h3>
             <table>
                 {{#each current_trade.Sell as |item|}}
@@ -53,7 +53,7 @@
                 {{/each}}
             </table>
             {{/if}}
-            {{#if current_trade.Buy}}
+            {{#if current_trade.buy}}
             <h3 class="center">Buy:</h3>
             <table>
                 {{#each current_trade.Buy as |item|}}
