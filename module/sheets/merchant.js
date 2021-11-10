@@ -180,6 +180,7 @@ export default class MerchantSheet extends actor_sheet {
     }
 
     _calculate_trade(trade) {
+        let t = 0;
         for (let i = 0; i < trade.current.trade.sell.length; i++) {
             const item = trade.current.trade.sell[i];
             let price  = parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length));
