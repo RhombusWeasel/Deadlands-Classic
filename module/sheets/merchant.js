@@ -103,7 +103,7 @@ export default class MerchantSheet extends actor_sheet {
         trade.current.trade.buy.push(item);
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Buy Item: ', trade);
-        this.actor.update({data: {customers: trade}});
+        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
 
     _on_remove_buy_item(event) {
@@ -114,7 +114,7 @@ export default class MerchantSheet extends actor_sheet {
         trade.current.trade.buy.splice(index, 1);
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Remove Buy Item: ', trade);
-        this.actor.update({data: {customers: trade}});
+        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
 
     _on_sell_item(event) {
@@ -127,7 +127,7 @@ export default class MerchantSheet extends actor_sheet {
         trade.current.trade.sell.push(item);
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Sell Item: ', trade);
-        this.actor.update({data: {customers: trade}});
+        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
 
     _on_remove_sell_item(event) {
@@ -138,7 +138,7 @@ export default class MerchantSheet extends actor_sheet {
         trade.current.trade.sell.splice(index, 1);
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Remove Sell Item: ', trade);
-        this.actor.update({data: {customers: trade}});
+        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
 
     _check_existing_customer(act) {
