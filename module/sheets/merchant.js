@@ -35,10 +35,7 @@ export default class MerchantSheet extends actor_sheet {
             // Filter for items the merchant buys
             data.cust_melee    = data.cust_melee.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
             data.cust_guns     = data.cust_guns.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
-            data.cust_goods    = data.cust_goods.filter(pl_item => data.sale_list.some(
-                buy_itm => pl_item.name == buy_itm.name && (
-                buy_itm.data.boxed_multiple && pl_item.data.data.amount >= buy_itm.data.box_amount
-            )));
+            data.cust_goods    = data.cust_goods.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
             // Filter for items in the current trade
             data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_guns    = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
@@ -102,10 +99,12 @@ export default class MerchantSheet extends actor_sheet {
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = this.actor.items.get(itemId);
         trade.current.trade.buy.push({
-              id: item.id,
-            name: item.name,
-            type: item.type,
-            data: item.data.data
+                id: item.id,
+              name: item.name,
+              type: item.type,
+            amount: item.data.data.amount,
+             total: item.data.data.cost,
+              data: item.data.data
         });
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Buy Item: ', trade);
@@ -130,11 +129,14 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = game.user.character.items.get(itemId);
+        let amount  = this._confirm_amount(game.user.character, item, this.actor.name);
         trade.current.trade.sell.push({
-              id: item.id,
-            name: item.name,
-            type: item.type,
-            data: item.data.data
+                id: item.id,
+              name: item.name,
+              type: item.type,
+            amount: amount,
+             total: item.data.data.cost,
+              data: item.data.data
         });
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Sell Item: ', trade);
@@ -188,6 +190,31 @@ export default class MerchantSheet extends actor_sheet {
         let customers = this.actor.data.data.customers;
         customers[p_name].current = this._new_trade();
         this.actor.update({data: {customers: customers}});
+    }
+
+    confirm_amount(act, item, target) {
+        if (item.type == 'melee' || item.type == 'firearm' || item.data.data.amount == 1) {
+            return 1;
+        }
+        let dialog = new Dialog({
+            title: `Confirm Amount`,
+            content: `
+                <div class="center">
+                    <h1>Select Amount</h1>
+                    <input type="range" min="0" max="${item.data.data.amount}" value="0" class="slider" name="amount-slider" oninput="this.nextElementSibling.value = this.value"/>
+                    <output>0</output>
+                </div>
+            `,
+            buttons: {
+                send: {
+                    label: `Sell ${item.name} to ${target}`,
+                    callback: (html) => {
+                        return html.find('[name="amount-slider"]')[0].value;
+                    }
+                }
+            }
+        });
+        dialog.render(true)
     }
 
     _calculate_trade(trade) {
