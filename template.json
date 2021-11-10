@@ -1130,7 +1130,7 @@
                 "modifiers": [],
                 "cost": "$0.00",
                 "boxed_multiple": false,
-                "box_amount": 50,
+                "box_amount": 1,
                 "total_cost": 0
             }
         },
