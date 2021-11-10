@@ -191,7 +191,7 @@ export default class MerchantSheet extends actor_sheet {
                  total: item.data.data.cost,
                   data: item.data.data
             });
-            trade.current.trade.total = `$${this._calculate_trade(trade).toFixed(2)}`;
+            trade.current.trade.total = this._calculate_trade(trade);
             console.log('Sell Item: ', trade);
             this.actor.update({data: {customers: {[act.id]: trade}}});
             return true;
@@ -218,7 +218,7 @@ export default class MerchantSheet extends actor_sheet {
                              total: item.data.data.cost,
                               data: item.data.data
                         });
-                        trade.current.trade.total = `$${this._calculate_trade(trade).toFixed(2)}`;
+                        trade.current.trade.total = this._calculate_trade(trade);
                         console.log('Sell Item: ', trade);
                         this.actor.update({data: {customers: {[act.id]: trade}}});
                         return true;
