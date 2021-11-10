@@ -43,8 +43,6 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
             data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
             data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
-
-            data.total        = this._calculate_trade(game.user.character);
         }
         return data;
     }
@@ -105,6 +103,7 @@ export default class MerchantSheet extends actor_sheet {
         trade[game.user.character.id].current.trade.buy.push(item);
         console.log('Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
+        this._calculate_trade(game.user.character);
     }
 
     _on_remove_buy_item(event) {
@@ -115,6 +114,7 @@ export default class MerchantSheet extends actor_sheet {
         trade[game.user.character.id].current.trade.buy.splice(index, 1);
         console.log('Remove Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
+        this._calculate_trade(game.user.character);
     }
 
     _on_sell_item(event) {
@@ -127,6 +127,7 @@ export default class MerchantSheet extends actor_sheet {
         trade[game.user.character.id].current.trade.sell.push(item);
         console.log('Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
+        this._calculate_trade(game.user.character);
     }
 
     _on_remove_sell_item(event) {
@@ -137,6 +138,7 @@ export default class MerchantSheet extends actor_sheet {
         trade[game.user.character.id].current.trade.sell.splice(index, 1);
         console.log('Remove Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
+        this._calculate_trade(game.user.character);
     }
 
     _check_existing_customer(act) {
