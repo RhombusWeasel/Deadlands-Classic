@@ -43,6 +43,8 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
             data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
             data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
+
+            data.total        = this._calculate_trade(game.user.character);
         }
         return data;
     }
@@ -154,6 +156,7 @@ export default class MerchantSheet extends actor_sheet {
             trade: {
                 buy: [],
                 sell: [],
+                total: 0
             }
         }
     }
@@ -172,5 +175,20 @@ export default class MerchantSheet extends actor_sheet {
         let customers = this.actor.data.data.customers;
         customers[p_name].current = this._new_trade();
         this.actor.update({data: {customers: customers}});
+    }
+
+    _calculate_trade(act) {
+        let p_name = act.id;
+        let customers = this.actor.data.data.customers;
+        for (let i = 0; i < customers[p_name].sell.length; i++) {
+            const item = customers[p_name].sell[i];
+            customers[p_name].total -= item.data.data.cost * this.actor.data.data.buy_modifier;
+        }
+        for (let i = 0; i < customers[p_name].buy.length; i++) {
+            const item = customers[p_name].sell[i];
+            customers[p_name].total += item.data.data.cost;
+        }
+        this.actor.update({data: {customers: customers}});
+        return customers[p_name].total;
     }
 }

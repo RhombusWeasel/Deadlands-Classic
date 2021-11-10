@@ -109,6 +109,10 @@
         </div>
     </div>
     <div class="center">
-        <p> < $0.00 > </p>
+        {{#ifCond current_trade.total '>' 0}}
+        <p> << ${{current_trade.total}} </p>
+        {{else}}
+        <p> ${{current_trade.total}} >> </p>
+        {{/ifCond}}
     </div>
 </form>
