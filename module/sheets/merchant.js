@@ -191,7 +191,7 @@ export default class MerchantSheet extends actor_sheet {
                  total: item.data.data.cost,
                   data: item.data.data
             });
-            trade.current.trade.total = this._calculate_trade(trade);
+            trade.current.trade.total = `$${this._calculate_trade(trade).toFixed(2)}`;
             console.log('Sell Item: ', trade);
             this.actor.update({data: {customers: {[act.id]: trade}}});
             return true;
@@ -218,7 +218,7 @@ export default class MerchantSheet extends actor_sheet {
                              total: item.data.data.cost,
                               data: item.data.data
                         });
-                        trade.current.trade.total = this._calculate_trade(trade);
+                        trade.current.trade.total = `$${this._calculate_trade(trade).toFixed(2)}`;
                         console.log('Sell Item: ', trade);
                         this.actor.update({data: {customers: {[act.id]: trade}}});
                         return true;
@@ -234,13 +234,13 @@ export default class MerchantSheet extends actor_sheet {
         for (let i = 0; i < trade.current.trade.sell.length; i++) {
             const item = trade.current.trade.sell[i];
             console.log('Sell', item);
-            let price  = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
+            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length) / item.data.box_amount) * item.amount;
             t -= (price * this.actor.data.data.buy_modifier);
         }
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
             console.log('Buy', item);
-            let price  = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
+            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length) / item.data.box_amount) * item.amount;
             t += price;
         }
         return t;
