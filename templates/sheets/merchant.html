@@ -113,9 +113,9 @@
     </div>
     <div class="center">
         {{#ifCond current_trade.total '>=' 0}}
-        <p> << ${{current_trade.total}} </p>
+        <p> << {{current_trade.total}} </p>
         {{else}}
-        <p> ${{current_trade.total}} >> </p>
+        <p> {{current_trade.total}} >> </p>
         {{/ifCond}}
         <div class="flexrow">
             <button class="center perc20 cancel-trade">Cancel</button>
