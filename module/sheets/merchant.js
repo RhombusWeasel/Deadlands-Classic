@@ -180,12 +180,12 @@ export default class MerchantSheet extends actor_sheet {
     _calculate_trade(act) {
         let p_name = act.id;
         let customers = this.actor.data.data.customers;
-        for (let i = 0; i < customers[p_name].sell.length; i++) {
-            const item = customers[p_name].sell[i];
+        for (let i = 0; i < customers[p_name].current.trade.sell.length; i++) {
+            const item = customers[p_name].current.trade.sell[i];
             customers[p_name].total -= item.data.data.cost * this.actor.data.data.buy_modifier;
         }
-        for (let i = 0; i < customers[p_name].buy.length; i++) {
-            const item = customers[p_name].sell[i];
+        for (let i = 0; i < customers[p_name].current.trade.buy.length; i++) {
+            const item = customers[p_name].current.trade.sell[i];
             customers[p_name].total += item.data.data.cost;
         }
         this.actor.update({data: {customers: customers}});
