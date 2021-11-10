@@ -187,13 +187,13 @@ export default class MerchantSheet extends actor_sheet {
                     id: item.id,
                   name: item.name,
                   type: item.type,
-                amount: amount,
+                amount: 1,
                  total: item.data.data.cost,
                   data: item.data.data
             });
             trade.current.trade.total = this._calculate_trade(trade);
             console.log('Sell Item: ', trade);
-            this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
+            this.actor.update({data: {customers: {[act.id]: trade}}});
             return true;
         }
         let dialog = new Dialog({
@@ -220,7 +220,7 @@ export default class MerchantSheet extends actor_sheet {
                         });
                         trade.current.trade.total = this._calculate_trade(trade);
                         console.log('Sell Item: ', trade);
-                        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
+                        this.actor.update({data: {customers: {[act.id]: trade}}});
                         return true;
                     }
                 }
