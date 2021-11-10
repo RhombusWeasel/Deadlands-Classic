@@ -243,6 +243,6 @@ export default class MerchantSheet extends actor_sheet {
             let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length) / item.data.box_amount) * item.amount;
             t += price;
         }
-        return t;
+        return `$${t.toFixed(2)}`;
     }
 }
