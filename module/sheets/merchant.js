@@ -68,6 +68,7 @@ export default class MerchantSheet extends actor_sheet {
         let item = this.actor.items.get(itemId);
         let sale_list = this.actor.data.data.sale_list;
         sale_list.push({
+             _id: item._id,
             name: item.name,
             type: item.type,
             data: item.data.data
@@ -100,7 +101,12 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = this.actor.items.get(itemId);
-        trade.current.trade.buy.push(item);
+        trade.current.trade.buy.push({
+             _id: item._id,
+            name: item.name,
+            type: item.type,
+            data: item.data.data
+        });
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Buy Item: ', trade);
         this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
@@ -124,7 +130,11 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = game.user.character.items.get(itemId);
-        trade.current.trade.sell.push(item);
+        trade.current.trade.sell.push({
+            name: item.name,
+            type: item.type,
+            data: item.data.data
+        });
         trade.current.trade.total = this._calculate_trade(trade);
         console.log('Sell Item: ', trade);
         this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
@@ -190,7 +200,7 @@ export default class MerchantSheet extends actor_sheet {
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
             console.log('Buy', item);
-            let price  = parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length));
+            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length));
             t += price;
         }
         return t;
