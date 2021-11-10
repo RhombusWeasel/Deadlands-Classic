@@ -41,7 +41,7 @@ export default class MerchantSheet extends actor_sheet {
             )));
             // Filter for items in the current trade
             data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
-            data.cust_guns    = data.cust_guns.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
+            data.cust_guns    = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
             data.cust_goods   = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item._id == buy_itm._id));
         }
         return data;
