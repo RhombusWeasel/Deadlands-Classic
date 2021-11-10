@@ -129,18 +129,7 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = game.user.character.items.get(itemId);
-        let amount  = this._confirm_amount(game.user.character, item, this.actor.name);
-        trade.current.trade.sell.push({
-                id: item.id,
-              name: item.name,
-              type: item.type,
-            amount: amount,
-             total: item.data.data.cost,
-              data: item.data.data
-        });
-        trade.current.trade.total = this._calculate_trade(trade);
-        console.log('Sell Item: ', trade);
-        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
+        this._confirm_amount(trade, game.user.character, item, this.actor.name);
     }
 
     _on_remove_sell_item(event) {
@@ -192,9 +181,20 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {customers: customers}});
     }
 
-    _confirm_amount(act, item, target) {
+    _confirm_amount(trade, act, item, target) {
         if (item.type == 'melee' || item.type == 'firearm' || item.data.data.amount == 1) {
-            return 1;
+            trade.current.trade.sell.push({
+                    id: item.id,
+                  name: item.name,
+                  type: item.type,
+                amount: amount,
+                 total: item.data.data.cost,
+                  data: item.data.data
+            });
+            trade.current.trade.total = this._calculate_trade(trade);
+            console.log('Sell Item: ', trade);
+            this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
+            return true;
         }
         let dialog = new Dialog({
             title: `Confirm Amount`,
@@ -209,7 +209,19 @@ export default class MerchantSheet extends actor_sheet {
                 send: {
                     label: `Sell ${item.name} to ${target}`,
                     callback: (html) => {
-                        return html.find('[name="amount-slider"]')[0].value;
+                        let amount = html.find('[name="amount-slider"]')[0].value;
+                        trade.current.trade.sell.push({
+                                id: item.id,
+                              name: item.name,
+                              type: item.type,
+                            amount: amount,
+                             total: item.data.data.cost,
+                              data: item.data.data
+                        });
+                        trade.current.trade.total = this._calculate_trade(trade);
+                        console.log('Sell Item: ', trade);
+                        this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
+                        return true;
                     }
                 }
             }
