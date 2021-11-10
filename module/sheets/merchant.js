@@ -190,7 +190,7 @@ export default class MerchantSheet extends actor_sheet {
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
             console.log('Buy', item);
-            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length));
+            let price  = parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length));
             t += price;
         }
         return t;
