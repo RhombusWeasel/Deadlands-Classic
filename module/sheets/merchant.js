@@ -98,10 +98,10 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId  = element.closest(".item").dataset.id;
-        let trade   = this.actor.data.data.customers;
+        let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = this.actor.items.get(itemId);
-        trade[game.user.character.id].current.trade.buy.push(item);
-        trade[game.user.character.id].current.trade.total = this._calculate_trade(trade);
+        trade.current.trade.buy.push(item);
+        trade.current.trade.total = this._calculate_trade(trade);
         console.log('Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
@@ -110,9 +110,9 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index   = element.closest(".item").dataset.index;
-        let trade   = this.actor.data.data.customers;
-        trade[game.user.character.id].current.trade.buy.splice(index, 1);
-        trade[game.user.character.id].current.trade.total = this._calculate_trade(trade);
+        let trade   = this.actor.data.data.customers[game.user.character.id];
+        trade.current.trade.buy.splice(index, 1);
+        trade.current.trade.total = this._calculate_trade(trade);
         console.log('Remove Buy Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
@@ -122,10 +122,10 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId  = element.closest(".item").dataset.id;
-        let trade   = this.actor.data.data.customers;
+        let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = game.user.character.items.get(itemId);
-        trade[game.user.character.id].current.trade.sell.push(item);
-        trade[game.user.character.id].current.trade.total = this._calculate_trade(trade);
+        trade.current.trade.sell.push(item);
+        trade.current.trade.total = this._calculate_trade(trade);
         console.log('Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
@@ -134,9 +134,9 @@ export default class MerchantSheet extends actor_sheet {
         event.preventDefault();
         let element = event.currentTarget;
         let index   = element.closest(".item").dataset.index;
-        let trade   = this.actor.data.data.customers;
-        trade[game.user.character.id].current.trade.sell.splice(index, 1);
-        trade[game.user.character.id].current.trade.total = this._calculate_trade(trade);
+        let trade   = this.actor.data.data.customers[game.user.character.id];
+        trade.current.trade.sell.splice(index, 1);
+        trade.current.trade.total = this._calculate_trade(trade);
         console.log('Remove Sell Item: ', trade);
         this.actor.update({data: {customers: trade}});
     }
