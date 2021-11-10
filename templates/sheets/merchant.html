@@ -46,9 +46,9 @@
             <table>
                 {{#each current_trade.sell as |item|}}
                 <tr class="item" data-index="{{@index}}">
-                    <td class="center perc60">{{this.name}}</td>
+                    <td class="center perc50">{{this.name}}</td>
                     <td class="right perc20">{{sum (sum (sum item.data.cost '/' item.data.box_amount) '*' item.amount) '*' ../data.data.buy_modifier}}</td>
-                    <td class="right perc20">[{{sum item.amount}}]</td>
+                    <td class="right perc20">[item.amount]</td>
                     <td class="center perc10 remove-sell-item"><a>></a></td>
                 </tr>
                 {{/each}}
