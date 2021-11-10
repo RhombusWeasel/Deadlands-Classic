@@ -182,12 +182,12 @@ export default class MerchantSheet extends actor_sheet {
     _calculate_trade(trade) {
         for (let i = 0; i < trade.current.trade.sell.length; i++) {
             const item = trade.current.trade.sell[i];
-            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length));
+            let price  = parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length));
             t -= (price * this.actor.data.data.buy_modifier);
         }
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
-            let price  = parseFloat(item.data.cost.slice(1, item.data.cost.length));
+            let price  = parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length));
             t += price;
         }
         return t;
