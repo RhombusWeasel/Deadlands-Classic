@@ -192,7 +192,7 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {customers: customers}});
     }
 
-    confirm_amount(act, item, target) {
+    _confirm_amount(act, item, target) {
         if (item.type == 'melee' || item.type == 'firearm' || item.data.data.amount == 1) {
             return 1;
         }
