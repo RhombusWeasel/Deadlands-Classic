@@ -49,7 +49,7 @@
                     <td class="center perc10"></td>
                     <td class="right perc10">[{{item.amount}}]</td>
                     <td class="center perc60">{{this.name}}</td>
-                    <td class="right perc10">{{sum (sum (sum item.data.cost '/' item.data.box_amount) '*' item.amount) '*' ../data.data.buy_modifier}}</td>
+                    <td class="right perc10">{{sum (sum (sum item.data.cost '/' item.data.box_amount) '*' ../data.data.buy_modifier) '*' item.amount}}</td>
                     <td class="center perc10 remove-sell-item"><a>></a></td>
                 </tr>
                 {{/each}}
