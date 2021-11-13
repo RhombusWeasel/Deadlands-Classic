@@ -28,6 +28,7 @@
                 {{/isGM}}
             </div>
             <div>
+                <h2 style="text-align: center;">Core</h2>
                 <table style="table-layout: fixed;">
                     {{#if (eq data.data.show_editor true)}}
                     <tr>
@@ -81,6 +82,20 @@
                     </tr>
                     {{/if}}
                 </table>
+                {{#if gen_deck}}
+                <h2 style="text-align: center;">The Hand You Wuz Dealt</h2>
+                <table>
+                    {{#each gen_deck as |card|}}
+                    <tr class="item" data-itemId="{{this._id}}">
+                        <td class="combat-hand-name">{{this.name}}</td>
+                        <td class="combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
+                        <td class="combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                    </tr>
+                    {{/each}}
+                </table>
+                {{else}}
+                <a style="text-align: center;" class="draw-gen-cards">Draw from the deck of fate?</a>
+                {{/if}}
             </div>
         </div>
     </div>
