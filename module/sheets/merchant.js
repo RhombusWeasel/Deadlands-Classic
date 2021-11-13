@@ -197,7 +197,7 @@ export default class MerchantSheet extends actor_sheet {
             total = total.slice(1, total.length);
             for (let b = 0; b < trade.current.trade.buy.length; b++) {
                 const item = trade.current.trade.buy[b];
-                dc_utils.char.items.add(game.user.character, item);
+                this.add(game.user.character, item);
             }
             for (let s = 0; s < trade.current.trade.sell.length; s++) {
                 const item = trade.current.trade.sell[s];
@@ -276,6 +276,25 @@ export default class MerchantSheet extends actor_sheet {
             }
         }
         return `$${t.toFixed(2)}`;
+    }
+
+    add(act, item) {
+        if (dc_utils.stackable.includes(item.type)) {
+            let found_item = act.items.filter(function (i) {return i.name == item.name});
+            if (found_item.length > 0) {
+                let numParse = parseInt;
+                if (found_item[0].data.data.is_float) {
+                    numParse = parseFloat;
+                }
+                let has = numParse(found_item[0].data.data.amount);
+                let amt = numParse(item.data.amount);
+                if (found_item.length > 0) {
+                    dc_utils.char.items.update(found_item[0], {amount: has + amt});
+                    return;
+                }
+            }
+        }
+        setTimeout(() => {act.createOwnedItem(item)}, Math.random() * 1000);
     }
 
     remove(act, item, amt) {
