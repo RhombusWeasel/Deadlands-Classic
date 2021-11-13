@@ -62,7 +62,11 @@
                 <tr>
                     <th class="perc12 center">{{localize "dc.player.core.wound_modifier"}}</th>
                     {{!-- Add editor conditional for this text input! --}}
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="perc12 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"/></td>
+                    {{else}}
+                    <td class="perc12 center">{{data.data.wound_modifier}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th class="perc12 center">Bleeding</th>
@@ -74,7 +78,11 @@
                 </tr>
                 <tr>
                     <th>Wound Soak</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td><input type="text" name="data.wound_soak" value="{{data.data.wound_soak}}"></td>
+                    {{else}}
+                    <td>{{data.data.wound_soak}}</td>
+                    {{/if}}
                 </tr>
             </table>
             <table>
@@ -85,43 +93,83 @@
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.noggin"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.noggin" value="{{data.data.wounds.noggin}}"/></td>
                     <td class="center"><input type="number" name="data.armour.noggin" value="{{data.data.armour.noggin}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.noggin}}</td>
+                    <td>{{data.data.armour.noggin}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.guts"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.guts" value="{{data.data.wounds.guts}}"/></td>
                     <td class="center"><input type="number" name="data.armour.guts" value="{{data.data.armour.guts}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.guts}}</td>
+                    <td>{{data.data.armour.guts}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.arm_left"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.arm_left" value="{{data.data.wounds.arm_left}}"/></td>
                     <td class="center"><input type="number" name="data.armour.arm_left" value="{{data.data.armour.arm_left}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.arm_left}}</td>
+                    <td>{{data.data.armour.arm_left}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.arm_right"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.arm_right" value="{{data.data.wounds.arm_right}}"/></td>
                     <td class="center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.arm_right}}</td>
+                    <td>{{data.data.armour.arm_right}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.lower_guts"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
                     <td class="center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.lower_guts}}</td>
+                    <td>{{data.data.armour.lower_guts}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.gizzards"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
                     <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.gizzards}}</td>
+                    <td>{{data.data.armour.gizzards}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.leg_left"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.leg_left" value="{{data.data.wounds.leg_left}}"/></td>
                     <td class="center"><input type="number" name="data.armour.leg_left" value="{{data.data.armour.leg_left}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.leg_left}}</td>
+                    <td>{{data.data.armour.leg_left}}</td>
+                    {{/if}}
                 </tr>
                 <tr>
                     <th>{{localize "dc.player.core.wounds.leg_right"}}</th>
+                    {{#if (eq ../data.data.show_editor true)}}
                     <td class="center"><input type="number" name="data.wounds.leg_right" value="{{data.data.wounds.leg_right}}"/></td>
                     <td class="center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
+                    {{else}}
+                    <td>{{data.data.wounds.leg_right}}</td>
+                    <td>{{data.data.armour.leg_right}}</td>
+                    {{/if}}
                 </tr>
             </table>
         </div>
