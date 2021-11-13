@@ -1,32 +1,64 @@
 <section>
     <div class="core typed">
-        <div class="flexbox">
-            <table style="table-layout: fixed;">
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
-                    <td class="perc12 center"><input style="width: 45%;" type="number" name="data.wind.value" value="{{data.data.wind.value}}"/>/<input style="width: 45%;" type="number" name="data.wind.max" value="{{data.data.wind.max}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
-                    <td class="perc12 center"><input style="width: 45%" type="number" name="data.bounty.value" value="{{data.data.bounty.value}}"/>/<input style="width: 45%" type="number" name="data.bounty.max" value="{{data.data.bounty.max}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.cash" value="{{data.data.cash}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.size" value="{{data.data.size}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.grit" value="{{data.data.grit}}"/></td>
-                </tr>
-            </table>
+        <div class="flexrow">
+            <div>
+                <img class="portrait" src="{{actor.img}}" data-edit="img"/>
+            </div>
+            <div>
+                <table style="table-layout: fixed;">
+                    {{#if (eq data.data.show_editor true)}}
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
+                        <td class="perc12 center"><input style="width: 45%;" type="number" name="data.wind.value" value="{{data.data.wind.value}}"/>/<input style="width: 45%;" type="number" name="data.wind.max" value="{{data.data.wind.max}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
+                        <td class="perc12 center"><input style="width: 45%" type="number" name="data.bounty.value" value="{{data.data.bounty.value}}"/>/<input style="width: 45%" type="number" name="data.bounty.max" value="{{data.data.bounty.max}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.cash" value="{{data.data.cash}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.size" value="{{data.data.size}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.grit" value="{{data.data.grit}}"/></td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
+                        <td class="perc12 center">{{data.data.wind.value}}/{{data.data.wind.max}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
+                        <td class="perc12 center">{{data.data.bounty.value}}/{{data.data.bounty.max}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
+                        <td class="perc12 center">{{data.data.cash}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
+                        <td class="perc12 center">{{data.data.pace}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
+                        <td class="perc12 center">{{data.data.size}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
+                        <td class="perc12 center">{{data.data.grit}}</td>
+                    </tr>
+                    {{/if}}
+                </table>
+            </div>
         </div>
     </div>
 </section>
