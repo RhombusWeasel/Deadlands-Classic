@@ -207,7 +207,7 @@ export default class MerchantSheet extends actor_sheet {
             this.actor.update({data: {customers: customers}});
             game.user.character.update({data: {cash: p_cash - t_cash}});
         }
-        this.render(true);
+        setTimeout(() => {this.render(true)}, 1100);
     }
 
     _confirm_amount(trade, act, item, target) {
