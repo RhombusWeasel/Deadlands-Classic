@@ -193,48 +193,19 @@ export default class MerchantSheet extends actor_sheet {
         let total     = this._calculate_trade(trade);
         let p_cash    = game.user.character.data.data.cash;
         let t_cash    = total.slice(1, total.length)
-        if (p_cash <= t_cash) {
-            let receipt   = `
-                <h3 class="center">Bought</h3>
-                <table>
-            `
+        if (p_cash > t_cash) {
             total = total.slice(1, total.length);
             for (let b = 0; b < trade.current.trade.buy.length; b++) {
                 const item = trade.current.trade.buy[b];
                 dc_utils.char.items.add(game.user.character, item);
-                receipt += `
-                    <tr>
-                        <td class="perc20">[${item.amount}]</td>
-                        <td class="perc60">${item.name}</td>
-                        <td class="right perc20">${item.data.cost}</td>
-                    </tr>
-                `
             }
-            receipt += `
-                </table>
-                <h3 class="center">Sold</h3>
-                <table>
-            `
             for (let s = 0; s < trade.current.trade.sell.length; s++) {
                 const item = trade.current.trade.sell[s];
                 this.remove(game.user.character, item, item.amount);
-                receipt += `
-                    <tr>
-                        <td class="perc20">[${item.amount}]</td>
-                        <td class="perc60">${item.name}</td>
-                        <td class="right perc20">$${(((item.data.cost / item.data.box_amount) * item.amount) * this.actor.data.data.buy_modifier).toFixed(2)}</td>
-                    </tr>
-                `
             }
-            receipt += `
-                </table>
-                <h3 class="center">${trade.current.trade.total}</h3>
-            `
-            //dc_utils.chat.send('Receipt', receipt);
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
-            
-            game.user.character.update({data: {cash: p_cash + t_cash}});
+            game.user.character.update({data: {cash: p_cash - t_cash}});
         }
         this.render(true);
     }
@@ -293,15 +264,15 @@ export default class MerchantSheet extends actor_sheet {
             const item = trade.current.trade.sell[i];
             console.log('Sell', item);
             let price  = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
-            t += (price * this.actor.data.data.buy_modifier);
+            t -= (price * this.actor.data.data.buy_modifier);
         }
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
             console.log('Buy', item);
             if (item.data.boxed_multiple) {
-                t -= (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
+                t += (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
             }else{
-                t -= parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
+                t += parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
             }
         }
         return `$${t.toFixed(2)}`;
