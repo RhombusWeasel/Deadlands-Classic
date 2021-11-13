@@ -23,8 +23,10 @@ export default class MerchantSheet extends actor_sheet {
         const data         = super.getData();
         data.sale_list     = this.actor.data.data.sale_list;
         data.buy_modifier  = this.actor.data.data.buy_modifier;
+        data.cash          = this.actor.data.data.cash;
         if (!(game.user.isGM)) {
             let p_name = game.user.character.id;
+            data.player_cash   = game.user.character.data.data.cash;
             data.customers = this.actor.data.data.customers;
             this._check_existing_customer(game.user.character);
             data.current_trade = data.customers[p_name].current.trade;
@@ -52,6 +54,8 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".remove-buy-item").click(this._on_remove_buy_item.bind(this));
         html.find(".sell-item").click(this._on_sell_item.bind(this));
         html.find(".remove-sell-item").click(this._on_remove_sell_item.bind(this));
+        html.find(".cancel-trade").click(this._reset_trade.bind(this));
+        html.find(".confirm-trade").click(this._process_trade.bind(this));
         // Changes:
         html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
         // Return Listeners
@@ -174,9 +178,27 @@ export default class MerchantSheet extends actor_sheet {
         this.actor.update({data: {customers: customers}});
     }
 
-    _reset_trade(act) {
-        let p_name = act.id;
+    _reset_trade(event) {
+        let p_name    = game.user.character.id;
         let customers = this.actor.data.data.customers;
+        customers[p_name].current = this._new_trade();
+        this.actor.update({data: {customers: customers}});
+    }
+
+    _process_trade(event) {
+        let p_name    = game.user.character.id;
+        let customers = this.actor.data.data.customers;
+        let trade     = customers[p_name].current.trade;
+        let total     = this._calculate_trade(trade)
+        total = total.slice(1, total.length);
+        for (let b = 0; b < trade.buy.length; b++) {
+            const item = trade.buy[b];
+            dc_utils.char.items.add(game.user.character, item);
+        }
+        for (let s = 0; s < trade.sell.length; s++) {
+            const item = trade.sell[s];
+            dc_utils.char.items.remove(game.user.character, item, item.amount);
+        }
         customers[p_name].current = this._new_trade();
         this.actor.update({data: {customers: customers}});
     }
