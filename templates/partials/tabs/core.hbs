@@ -2,8 +2,30 @@
     <div class="core typed">
         <div class="flexrow">
             <div>
-                <input class="center typed-large" type="text" name="name" value="{{actor.name}}" data-edit="name"/>
-                <img class="center portrait" src="{{actor.img}}" data-edit="img"/>
+                <img class="center" name="img" src="{{actor.img}}" data-edit="img"/>
+                <input class="typed-large" type="text" name="name" value="{{actor.name}}" data-edit="name"/>
+                {{#isGM}}
+                <h1 class="center">Random Names</h1>
+                <div class="flexrow">
+                {{#if (eq data.data.random_name true)}}
+                    <input type="checkbox" name="data.random_name" checked>
+                {{else}}
+                    <input type="checkbox" name="data.random_name">
+                {{/if}}
+                    <select name="data.ethnicity" id="ethnicity-select">
+                    {{#if (eq data.data.ethnicity "american")}}
+                        <option value="american" selected>American/European</option>
+                    {{else}}
+                        <option value="american">American/European</option>
+                    {{/if}}
+                    {{#if (eq data.data.ethnicity "native_american")}}
+                        <option value="native_american" selected>Native American</option>
+                    {{else}}
+                        <option value="native_american">Native American</option>
+                    {{/if}}
+                    </select>
+                </div>
+                {{/isGM}}
             </div>
             <div>
                 <table style="table-layout: fixed;">
