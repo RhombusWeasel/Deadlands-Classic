@@ -284,8 +284,9 @@ export default class MerchantSheet extends actor_sheet {
             }
         }
         if (dc_utils.stackable.includes(item.type)) {
-            if (item.data.data.amount > amt) {
-                dc_utils.char.items.update(item, {amount: item.data.data.amount - amt});
+            if (item.amount > amt) {
+                let i = act.items.get(item.id);
+                dc_utils.char.items.update(i, {amount: item.data.amount - amt});
                 return;
             }
         }
