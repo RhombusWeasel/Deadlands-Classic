@@ -230,7 +230,7 @@ export default class MerchantSheet extends actor_sheet {
                 </table>
                 <h3 class="center">${trade.current.trade.total}</h3>
             `
-            dc_utils.chat.send('Receipt', receipt);
+            //dc_utils.chat.send('Receipt', receipt);
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
             
