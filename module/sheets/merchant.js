@@ -195,7 +195,6 @@ export default class MerchantSheet extends actor_sheet {
         let t_cash    = total.slice(1, total.length)
         if (p_cash <= t_cash) {
             let receipt   = `
-            <form>
                 <h3 class="center">Bought</h3>
                 <table>
             `
@@ -230,7 +229,6 @@ export default class MerchantSheet extends actor_sheet {
             receipt += `
                 </table>
                 <h3 class="center">${trade.current.trade.total}</h3>
-            </form>
             `
             dc_utils.chat.send('Receipt', receipt);
             customers[p_name].current = this._new_trade();
