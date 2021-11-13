@@ -201,7 +201,7 @@ export default class MerchantSheet extends actor_sheet {
             }
             for (let s = 0; s < trade.current.trade.sell.length; s++) {
                 const item = trade.current.trade.sell[s];
-                dc_utils.char.items.remove(game.user.character, item, item.amount);
+                this.remove(game.user.character, item, item.amount);
             }
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
@@ -275,5 +275,20 @@ export default class MerchantSheet extends actor_sheet {
             }
         }
         return `$${t.toFixed(2)}`;
+    }
+
+    remove(act, item, amt) {
+        if (item.data.equippable) {
+            if (dc_utils.char.items.is_equipped(act, item.data.slot, item.id)) {
+                dc_utils.char.items.unequip(act, item.data.slot);
+            }
+        }
+        if (dc_utils.stackable.includes(item.type)) {
+            if (item.data.data.amount > amt) {
+                dc_utils.char.items.update(item, {amount: item.data.data.amount - amt});
+                return;
+            }
+        }
+        setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item.id])}, Math.random() * 1000);
     }
 }
