@@ -1,6 +1,9 @@
 .center{
     text-align: center;
 }
+.portrait {
+    width: 100%;
+}
 .right{
     text-align: right;
 }
