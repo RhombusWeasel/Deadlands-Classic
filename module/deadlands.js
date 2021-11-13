@@ -244,7 +244,11 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper("sum", function(lvalue, operator, rvalue, options) {
-        lvalue = parseFloat(lvalue.slice(1, lvalue.length));
+        if (typeof(lvalue) == 'string') {
+            lvalue = parseFloat(lvalue.slice(1, lvalue.length));
+        }else {
+            lvalue = parseFloat(lvalue);
+        }
         rvalue = parseFloat(rvalue);
         return {
             "+": `$${(lvalue + rvalue).toFixed(2)}`,
