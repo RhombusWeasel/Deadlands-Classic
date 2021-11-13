@@ -10,6 +10,10 @@
     font-family: "Lucida Sans Typewriter";
     font-size: smaller;
 }
+.typed-large{
+    font-family: "Lucida Sans Typewriter";
+    font-size: small;
+}
 .center{
     text-align: center;
 }
