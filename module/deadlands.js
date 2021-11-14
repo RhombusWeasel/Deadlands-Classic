@@ -14,6 +14,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
