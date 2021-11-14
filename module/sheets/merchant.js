@@ -6,7 +6,7 @@ export default class MerchantSheet extends actor_sheet {
                 template: `systems/deadlands_classic/templates/sheets/merchant.html`,
                 classes: ["player-sheet", "doc"],
                 width: 800,
-                height: 600
+                height: 500
             });
         }else{
             return mergeObject(super.defaultOptions, {
