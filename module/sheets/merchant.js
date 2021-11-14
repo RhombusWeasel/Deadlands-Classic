@@ -224,7 +224,7 @@ export default class MerchantSheet extends actor_sheet {
             }
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
-            game.user.character.update({data: {cash: p_cash - t_cash}});
+            game.user.character.update({data: {cash: parseFloat((p_cash - t_cash).toFixed(2))}});
         }
         setTimeout(() => {this.render(true)}, 1100);
     }
