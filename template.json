@@ -1131,7 +1131,10 @@
                 "cost": "$0.00",
                 "boxed_multiple": false,
                 "box_amount": 1,
-                "total_cost": 0
+                "total_cost": 0,
+                "will_sell": true,
+                "will_buy": true,
+                "limit_stock": false
             }
         },
         "firearm": {

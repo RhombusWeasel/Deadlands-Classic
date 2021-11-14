@@ -1,73 +1,72 @@
 <section>
-    <div class="flexrow">
-        <div>
-            {{!-- Available --}}
-            <h2 class="center">Sold:</h2>
-            {{!-- Melee --}}
-            {{#if melee_weapons}}
-            <h2 class="center">Melee Weapons</h2>
-            <table>
-                {{#each melee_weapons as |wep|}}
-            <tr class="item" data-itemId="{{this.id}}">
+    <div>
+        {{!-- Available --}}
+        <h2 class="center">Sold:</h2>
+        {{!-- Melee --}}
+        {{#if melee_weapons}}
+        <h2 class="center">Melee Weapons</h2>
+        <table>
+            {{#each melee_weapons as |wep|}}
+                {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" wep}}
+            {{!-- <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc20 right">1</td>
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
+                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+            </tr> --}}
+            {{/each}}
+        </table>
+        {{/if}}
+        {{!-- Guns --}}
+        {{#if firearms}}
+        <h2 class="center">Firearms</h2>
+        <table>
+            {{#each firearms as |gun|}}
+                {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" gun}}
+        {{!--     <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">1</td>
                 <td class="perc40">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
                 <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
                 <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </tr>
-                {{/each}}
-            </table>
-            {{/if}}
-            {{!-- Guns --}}
-            {{#if firearms}}
-            <h2 class="center">Firearms</h2>
-            <table>
-                {{#each firearms as |gun|}}
-            <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc20 right">1</td>
-                <td class="perc40">{{this.name}}</td>
-                <td class="perc10 right">{{this.data.data.cost}}</td>
-                <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </tr>
-                {{/each}}
-            </table>
-            {{/if}}
-            {{!-- Goods --}}
-            {{#if goods}}
-            <h2 class="center">Goods</h2>
-            <table>
-            {{#each goods as |good|}}
-            <tr class="item" data-itemId="{{this.id}}">
+            </tr> --}}
+            {{/each}}
+        </table>
+        {{/if}}
+        {{!-- Goods --}}
+        {{#if goods}}
+        <h2 class="center">Goods</h2>
+        <table>
+        {{#each goods as |good|}}
+            {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" good}}
+        {{!--     <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">{{this.data.data.amount}}</td>
                 <td class="perc40">{{this.name}}</td>
                 <td class="perc10 right">{{this.data.data.cost}}</td>
                 <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-            </tr>
-            {{/each}}
-            </table>
-            {{/if}}
-        </div>
-        <div>
-            {{!-- On Sale --}}
-            <h2 class="center">Bought</h2>
-            <table>
-                <tr>
-                    <th class="center"><</th>
-                    <th class="center">Item</th>
-                    <th class="center">Price ($x.xx)</th>
-                </tr>
-                {{#each sale_list as |item|}}
-                <tr class="item" data-index="{{@index}}">
-                    <td class="perc10"><a class="item-sell-remove"><</a></td>
-                    <td class="perc40">{{this.name}} ({{this.data.amount}})</td>
-                    <td class="perc20"><input class="set-base-cost" type="text" value="{{item.data.cost}}"/></td>
-                </tr>
-                {{/each}}
-            </table>
-        </div>
+            </tr> --}}
+        {{/each}}
+        </table>
+        {{/if}}
+        {{!-- Components --}}
+        {{#if components}}
+        <h2 class="center">Components</h2>
+        <table>
+        {{#each components as |component|}}
+            {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" component}}
+        {{!--     <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc20 right">{{this.data.data.amount}}</td>
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 right">{{this.data.data.cost}}</td>
+                <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
+            </tr> --}}
+        {{/each}}
+        </table>
+        {{/if}}
     </div>
 </section>
