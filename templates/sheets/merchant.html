@@ -1,6 +1,6 @@
 <form class="typed">
     <div class="flexrow">
-        <div class="border">
+        <div class="border scroller">
             <h2 class="center">{{this.actor.name}}</h2>
             {{#if melee_weapons}}
             <h3 class="center">Melee</h3>
@@ -39,7 +39,7 @@
             </table>
             {{/if}}
         </div>
-        <div class="border">
+        <div class="border scroller">
             <h2 class="center">Trade</h2>
             {{#if current_trade.sell}}
             <h3 class="center">Sell:</h3>
@@ -70,7 +70,7 @@
             </table>
             {{/if}}
         </div>
-        <div class="border">
+        <div class="border scroller">
             <h2 class="center">You (${{player_cash}})</h2>
             {{#if cust_melee}}
             <h3 class="center">Melee</h3>
