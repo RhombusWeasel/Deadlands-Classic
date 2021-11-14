@@ -48,8 +48,11 @@ export default class MerchantSheet extends actor_sheet {
 
     activateListeners(html) {
         // Clicks:
-        html.find(".item-sell").click(this._on_item_sell.bind(this));
-        html.find(".item-sell-remove").click(this._on_item_sell_remove.bind(this));
+        // GM Sheet:
+        html.find(".buy-toggle").click(this._on_toggle_buy.bind(this));
+        html.find(".sell-toggle").click(this._on_toggle_sell.bind(this));
+        html.find(".limit-toggle").click(this._on_toggle_limit.bind(this));
+        // Player Sheet:
         html.find(".buy-item").click(this._on_buy_item.bind(this));
         html.find(".remove-buy-item").click(this._on_remove_buy_item.bind(this));
         html.find(".sell-item").click(this._on_sell_item.bind(this));
@@ -58,26 +61,8 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".confirm-trade").click(this._process_trade.bind(this));
         // Changes:
         html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
-        html.find(".buy-toggle").click(this._on_toggle_buy.bind(this));
-        html.find(".sell-toggle").click(this._on_toggle_sell.bind(this));
-        html.find(".limit-toggle").click(this._on_toggle_limit.bind(this));
         // Return Listeners
         return super.activateListeners(html);
-    }
-
-    _on_item_sell(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.items.get(itemId);
-        let sale_list = this.actor.data.data.sale_list;
-        sale_list.push({
-             _id: item._id,
-            name: item.name,
-            type: item.type,
-            data: item.data.data
-        });
-        this.actor.update({data: {sale_list: sale_list}});
     }
 
     _on_toggle_buy(event) {

@@ -20,6 +20,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
         "systems/deadlands_classic/templates/partials/tabs/favor.hbs",
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/gm.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
         "systems/deadlands_classic/templates/partials/tabs/science.hbs",
