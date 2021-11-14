@@ -146,6 +146,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".equip-select").change(this._on_item_equip.bind(this));
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
+        html.find(".type-select").change(this._on_type_select.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller")[0];
         if (traits) {
@@ -709,5 +710,13 @@ export default class PlayerSheet extends ActorSheet {
             `,
             whisper: ChatMessage.getWhisperRecipients('GM')
         });
+    }
+
+    _on_type_select(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let value = element.value;
+        let char = dc_utils.get_actor(this.actor.name);
+        char.update({type: value});
     }
 }
