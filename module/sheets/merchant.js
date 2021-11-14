@@ -357,7 +357,7 @@ export default class MerchantSheet extends actor_sheet {
         `;
         for (let i = 0; i < trade.current.trade.sell.length; i++) {
             const item = trade.current.trade.buy[i];
-            let total  = parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount
+            let total  = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount
             log += `
                 <tr>
                     <td class="center">[${item.amount}]</td>
