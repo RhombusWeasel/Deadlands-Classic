@@ -1,10 +1,17 @@
 <section>
     <div>
-        {{!-- Available --}}
-        <h2 class="center">Sold:</h2>
         {{!-- Melee --}}
         {{#if melee_weapons}}
-        <h2 class="center">Melee Weapons</h2>
+        <table>
+            <td class="perc10 center"><i class="fas fa-info-circle"></i></td>
+            <th class="perc10 center">Amount</th>
+            <th class="perc20 center">Item</th>
+            <th class="perc10 center">Buy</th>
+            <th class="perc10 center">Sell</th>
+            <th class="perc10 center">Cost</th>
+            <td class="perc10 center"><i class="fas fa-trash" title="Remove {{this.name}}"></i></td>
+        </table>
+        <h3 class="center">Melee Weapons</h2>
         <table>
             {{#each melee_weapons as |wep|}}
                 {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" wep}}
@@ -21,7 +28,7 @@
         {{/if}}
         {{!-- Guns --}}
         {{#if firearms}}
-        <h2 class="center">Firearms</h2>
+        <h3 class="center">Firearms</h2>
         <table>
             {{#each firearms as |gun|}}
                 {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" gun}}
@@ -38,7 +45,7 @@
         {{/if}}
         {{!-- Goods --}}
         {{#if goods}}
-        <h2 class="center">Goods</h2>
+        <h3 class="center">Goods</h2>
         <table>
         {{#each goods as |good|}}
             {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" good}}
@@ -54,7 +61,7 @@
         {{/if}}
         {{!-- Components --}}
         {{#if components}}
-        <h2 class="center">Components</h2>
+        <h3 class="center">Components</h2>
         <table>
         {{#each components as |component|}}
             {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" component}}
