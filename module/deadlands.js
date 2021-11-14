@@ -60,8 +60,8 @@ Hooks.once("init", function () {
     Items.registerSheet("deadlands_classic", item_sheet, { makeDefault: true});
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: false});
-    Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", vehicle_sheet, { makeDefault: false});

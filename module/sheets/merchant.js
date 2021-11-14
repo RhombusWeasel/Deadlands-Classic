@@ -224,6 +224,7 @@ export default class MerchantSheet extends actor_sheet {
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
             game.user.character.update({data: {cash: p_cash - t_cash}});
+            this.generate_receipt(trade);
         }
         setTimeout(() => {this.render(true)}, 1100);
     }
@@ -329,5 +330,46 @@ export default class MerchantSheet extends actor_sheet {
             }
         }
         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item.id])}, Math.random() * 1000);
+    }
+
+    generate_receipt(trade) {
+        let log = `
+        <div class="typed">
+            <h2 class="center">Receipt</h2>
+            <h3 class="center">${game.user.character.name}</h3>
+            <h3 class="center">Bought</h3>
+            <table>
+        `;
+        for (let i = 0; i < trade.current.trade.buy.length; i++) {
+            const item = trade.current.trade.buy[i];
+            log += `
+                <tr>
+                    <td class="center">[${item.amount}]</td>
+                    <td class="center">${item.name}</td>
+                    <td class="right">${item.data.cost}</td>
+                </tr>
+            `;
+        }
+        log += `
+            </table>
+            <h3 class="center">Bought</h3>
+            <table>
+        `;
+        for (let i = 0; i < trade.current.trade.sell.length; i++) {
+            const item = trade.current.trade.buy[i];
+            let total  = parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount
+            log += `
+                <tr>
+                    <td class="center">[${item.amount}]</td>
+                    <td class="center">${item.name}</td>
+                    <td class="right">$${total.toFixed(2)}</td>
+                </tr>
+            `;
+        }
+        log += `
+            </table>
+        </div>
+        `;
+        ChatMessage.create({content: log});
     }
 }

@@ -52,7 +52,7 @@
                 "wound_modifier": 0,
                 "wound_soak": 0,
                 "grit": 0,
-                "cash": 0,
+                "cash": 250,
                 "bounty": {
                     "min": 0,
                     "max": 0,
