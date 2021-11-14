@@ -341,7 +341,7 @@ export default class MerchantSheet extends actor_sheet {
         if (trade.current.trade.buy.length > 0) {
             log += `
                 <h3 class="center">Bought</h3>
-                </table>
+                <table>
             `;
             for (let i = 0; i < trade.current.trade.buy.length; i++) {
                 const item = trade.current.trade.buy[i];
