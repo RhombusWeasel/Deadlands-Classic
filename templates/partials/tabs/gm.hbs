@@ -6,12 +6,12 @@
                 <td class="perc50 center">Character Type</td>
                 <td>
                     <select class="item center typed-large" name="type" id="type-select">
-                        {{#if (eq type "player")}}
+                        {{#if (eq this.data.type "player")}}
                         <option value="player" selected>Player</option>
                         {{else}}
                         <option value="player">Player</option>
                         {{/if}}
-                        {{#if (eq type "merchant")}}
+                        {{#if (eq this.data.type "merchant")}}
                         <option value="merchant" selected>Merchant</option>
                         {{else}}
                         <option value="merchant">Merchant</option>
