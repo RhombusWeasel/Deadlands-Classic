@@ -364,7 +364,7 @@ export default class MerchantSheet extends actor_sheet {
             `;
             for (let i = 0; i < trade.current.trade.sell.length; i++) {
                 const item = trade.current.trade.sell[i];
-                let total  = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount
+                let total  = ((parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount) * this.actor.data.data.buy_modifier;
                 log += `
                     <tr>
                         <td class="center">[${item.amount}]</td>
@@ -378,7 +378,7 @@ export default class MerchantSheet extends actor_sheet {
             `;
         }
         log += `
-            <h3 class="center">$${trade.current.trade.total}</h3>
+            <h3 class="center">${trade.current.trade.total}</h3>
         </div>
         `;
         ChatMessage.create({content: log});
