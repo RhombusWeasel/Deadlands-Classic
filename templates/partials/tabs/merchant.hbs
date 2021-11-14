@@ -6,6 +6,7 @@
             <th class="perc20 center">Item</th>
             <th class="perc10 center">Buy</th>
             <th class="perc10 center">Sell</th>
+            <th class="perc10 center">Limit</th>
             <th class="perc10 center">Cost</th>
             <td class="perc10 center"><i class="fas fa-trash" title="Remove {{this.name}}"></i></td>
         </table>
@@ -15,14 +16,6 @@
         <table>
             {{#each melee_weapons as |wep|}}
                 {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" wep}}
-            {{!-- <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc20 right">1</td>
-                <td class="perc40">{{this.name}}</td>
-                <td class="perc10 right">{{this.data.data.cost}}</td>
-                <td class="perc10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </tr> --}}
             {{/each}}
         </table>
         {{/if}}
@@ -32,14 +25,6 @@
         <table>
             {{#each firearms as |gun|}}
                 {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" gun}}
-        {{!--     <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc20 right">1</td>
-                <td class="perc40">{{this.name}}</td>
-                <td class="perc10 right">{{this.data.data.cost}}</td>
-                <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </tr> --}}
             {{/each}}
         </table>
         {{/if}}
@@ -49,13 +34,6 @@
         <table>
         {{#each goods as |good|}}
             {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" good}}
-        {{!--     <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc20 right">{{this.data.data.amount}}</td>
-                <td class="perc40">{{this.name}}</td>
-                <td class="perc10 right">{{this.data.data.cost}}</td>
-                <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-            </tr> --}}
         {{/each}}
         </table>
         {{/if}}
@@ -65,13 +43,6 @@
         <table>
         {{#each components as |component|}}
             {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" component}}
-        {{!--     <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc20 right">{{this.data.data.amount}}</td>
-                <td class="perc40">{{this.name}}</td>
-                <td class="perc10 right">{{this.data.data.cost}}</td>
-                <td class="perc 10 center"><a class="item-sell"><i title="Offer {{this.name}} for sale">></i></a></td>
-            </tr> --}}
         {{/each}}
         </table>
         {{/if}}
