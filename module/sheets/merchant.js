@@ -35,9 +35,9 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
             data.cust_goods    = dc_utils.char.items.get(game.user.character, 'goods');
             // Filter for items the merchant buys
-            data.cust_melee    = data.cust_melee.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
-            data.cust_guns     = data.cust_guns.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
-            data.cust_goods    = data.cust_goods.filter(pl_item => data.sale_list.some(buy_itm => pl_item.name == buy_itm.name));
+            data.cust_melee    = data.cust_melee.filter(pl_item => data.melee_weapons.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
+            data.cust_guns     = data.cust_guns.filter(pl_item => data.firearms.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
+            data.cust_goods    = data.cust_goods.filter(pl_item => data.goods.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             // Filter for items in the current trade
             data.cust_melee   = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_guns    = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
@@ -58,6 +58,9 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".confirm-trade").click(this._process_trade.bind(this));
         // Changes:
         html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
+        html.find(".buy-toggle").change(this._on_toggle_buy.bind(this));
+        html.find(".sell-toggle").change(this._on_toggle_sell.bind(this));
+        html.find(".limit-toggle").change(this._on_toggle_limit.bind(this));
         // Return Listeners
         return super.activateListeners(html);
     }
@@ -75,6 +78,30 @@ export default class MerchantSheet extends actor_sheet {
             data: item.data.data
         });
         this.actor.update({data: {sale_list: sale_list}});
+    }
+
+    _on_toggle_buy(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        item.update({data: {will_buy: !item.data.data.will_buy}});
+    }
+
+    _on_toggle_sell(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        item.update({data: {will_sell: !item.data.data.will_sell}});
+    }
+
+    _on_toggle_limit(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        item.update({data: {limit_stock: !item.data.data.limit_stock}});
     }
 
     _on_item_sell_remove(event) {

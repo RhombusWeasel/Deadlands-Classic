@@ -4,19 +4,19 @@
         <td class="perc10 right">[{{this.data.data.amount}}]</td>
         <td class="perc20">{{this.name}}</td>
         {{#if data.data.will_buy}}
-        <td class="center"><input type="checkbox" name="data.will_buy" checked/></td>
+        <td class="center"><input class="buy-toggle" type="checkbox" name="data.will_buy" checked/></td>
         {{else}}
-        <td class="center"><input type="checkbox" name="data.will_buy"/></td>
+        <td class="center"><input class="buy-toggle" type="checkbox" name="data.will_buy"/></td>
         {{/if}}
         {{#if data.data.will_sell}}
-        <td class="center"><input type="checkbox" name="data.will_sell" checked/></td>
+        <td class="center"><input class="sell-toggle" type="checkbox" name="data.will_sell" checked/></td>
         {{else}}
-        <td class="center"><input type="checkbox" name="data.will_sell"/></td>
+        <td class="center"><input class="sell-toggle" type="checkbox" name="data.will_sell"/></td>
         {{/if}}
         {{#if data.data.limit_stock}}
-        <td class="center"><input type="checkbox" name="data.limit_stock" checked/></td>
+        <td class="center"><input class="limit-toggle" type="checkbox" name="data.limit_stock" checked/></td>
         {{else}}
-        <td class="center"><input type="checkbox" name="data.limit_stock"/></td>
+        <td class="center"><input class="limit-toggle" type="checkbox" name="data.limit_stock"/></td>
         {{/if}}
         <td class="perc10 right">{{this.data.data.cost}}</td>
         <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
