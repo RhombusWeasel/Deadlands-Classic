@@ -58,9 +58,9 @@ export default class MerchantSheet extends actor_sheet {
         html.find(".confirm-trade").click(this._process_trade.bind(this));
         // Changes:
         html.find(".set-base-cost").change(this._on_set_base_cost.bind(this));
-        html.find(".buy-toggle").change(this._on_toggle_buy.bind(this));
-        html.find(".sell-toggle").change(this._on_toggle_sell.bind(this));
-        html.find(".limit-toggle").change(this._on_toggle_limit.bind(this));
+        html.find(".buy-toggle").click(this._on_toggle_buy.bind(this));
+        html.find(".sell-toggle").click(this._on_toggle_sell.bind(this));
+        html.find(".limit-toggle").click(this._on_toggle_limit.bind(this));
         // Return Listeners
         return super.activateListeners(html);
     }
