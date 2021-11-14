@@ -2,6 +2,7 @@ import actor_sheet from "./actor.js"
 export default class MerchantSheet extends actor_sheet {
     static get defaultOptions() {
         if (!(game.user.isGM)) {
+            console.log('merchant.js: User is NOT GM, launching Merchant Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/merchant.html`,
                 classes: ["player-sheet", "doc"],
@@ -9,6 +10,7 @@ export default class MerchantSheet extends actor_sheet {
                 height: 500
             });
         }else{
+            console.log('merchant.js: User is GM, launching Player Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
                 classes: ["player-sheet", "doc"],
