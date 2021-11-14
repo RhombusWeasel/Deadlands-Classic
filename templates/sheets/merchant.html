@@ -112,7 +112,7 @@
         </div>
     </div>
     <div class="center">
-        {{#ifCond (sum current_trade.total '*' 1) '>=' 0}}
+        {{#if (gt (sum current_trade.total '*' 1) 0}}
         <p> << {{current_trade.total}} </p>
         {{else}}
         <p> {{current_trade.total}} >> </p>
