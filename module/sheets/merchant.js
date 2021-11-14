@@ -7,7 +7,7 @@ export default class MerchantSheet extends actor_sheet {
                 template: `systems/deadlands_classic/templates/sheets/merchant.html`,
                 classes: ["player-sheet", "doc"],
                 width: 800,
-                height: 500
+                height: 600
             });
         }else{
             console.log('merchant.js: User is GM, launching Player Sheet')
