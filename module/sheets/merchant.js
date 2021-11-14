@@ -30,10 +30,6 @@ export default class MerchantSheet extends actor_sheet {
             data.customers     = this.actor.data.data.customers;
             this._check_existing_customer(game.user.character);
             data.current_trade = data.customers[p_name].current.trade;
-            // Remove items we don't sell
-            data.melee_weapons = data.melee_weapons.filter(i => i.data.data.will_sell == true);
-            data.firearms      = data.firearms.filter(i => i.data.data.will_sell == true);
-            data.goods         = data.goods.filter(i => i.data.data.will_sell == true);
             // Get the players items
             data.cust_melee    = dc_utils.char.items.get(game.user.character, 'melee');
             data.cust_guns     = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
@@ -46,6 +42,10 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_melee    = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_guns     = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_goods    = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
+            // Remove items we don't sell
+            data.melee_weapons = data.melee_weapons.filter(i => i.data.data.will_sell == true);
+            data.firearms      = data.firearms.filter(i => i.data.data.will_sell == true);
+            data.goods         = data.goods.filter(i => i.data.data.will_sell == true);
         }
         return data;
     }
