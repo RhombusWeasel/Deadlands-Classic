@@ -10,41 +10,43 @@
             <th class="perc10 center">Cost</th>
             <td class="perc10 center"><i class="fas fa-trash" title="Remove {{this.name}}"></i></td>
         </table>
-        {{!-- Melee --}}
-        {{#if melee_weapons}}
-        <h3 class="center">Melee Weapons</h2>
-        <table>
-            {{#each melee_weapons as |wep|}}
-                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" wep}}
+        <div class="scroller">
+            {{!-- Melee --}}
+            {{#if melee_weapons}}
+            <h3 class="center">Melee Weapons</h2>
+            <table>
+                {{#each melee_weapons as |wep|}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" wep}}
+                {{/each}}
+            </table>
+            {{/if}}
+            {{!-- Guns --}}
+            {{#if firearms}}
+            <h3 class="center">Firearms</h2>
+            <table>
+                {{#each firearms as |gun|}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" gun}}
+                {{/each}}
+            </table>
+            {{/if}}
+            {{!-- Goods --}}
+            {{#if goods}}
+            <h3 class="center">Goods</h2>
+            <table>
+            {{#each goods as |good|}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" good}}
             {{/each}}
-        </table>
-        {{/if}}
-        {{!-- Guns --}}
-        {{#if firearms}}
-        <h3 class="center">Firearms</h2>
-        <table>
-            {{#each firearms as |gun|}}
-                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" gun}}
+            </table>
+            {{/if}}
+            {{!-- Components --}}
+            {{#if components}}
+            <h3 class="center">Components</h2>
+            <table>
+            {{#each components as |component|}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" component}}
             {{/each}}
-        </table>
-        {{/if}}
-        {{!-- Goods --}}
-        {{#if goods}}
-        <h3 class="center">Goods</h2>
-        <table>
-        {{#each goods as |good|}}
-            {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" good}}
-        {{/each}}
-        </table>
-        {{/if}}
-        {{!-- Components --}}
-        {{#if components}}
-        <h3 class="center">Components</h2>
-        <table>
-        {{#each components as |component|}}
-            {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" component}}
-        {{/each}}
-        </table>
-        {{/if}}
+            </table>
+            {{/if}}
+        </div>
     </div>
 </section>
