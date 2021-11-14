@@ -24,6 +24,9 @@ export default class MerchantSheet extends actor_sheet {
         data.sale_list     = this.actor.data.data.sale_list;
         data.buy_modifier  = this.actor.data.data.buy_modifier;
         data.cash          = this.actor.data.data.cash;
+        data.melee_weapons = data.melee_weapons.filter(i => i.data.data.will_sell == true);
+        data.firearms      = data.firearms.filter(i => i.data.data.will_sell == true);
+        data.goods         = data.goods.filter(i => i.data.data.will_sell == true);
         if (!(game.user.isGM)) {
             let p_name = game.user.character.id;
             data.player_cash   = game.user.character.data.data.cash;
