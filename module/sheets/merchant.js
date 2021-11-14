@@ -210,8 +210,9 @@ export default class MerchantSheet extends actor_sheet {
         let trade     = customers[p_name];
         let total     = this._calculate_trade(trade);
         let p_cash    = game.user.character.data.data.cash;
-        let t_cash    = total.slice(1, total.length)
+        let t_cash    = total.slice(1, total.length);
         if (p_cash > t_cash) {
+            this.generate_receipt(trade);
             total = total.slice(1, total.length);
             for (let b = 0; b < trade.current.trade.buy.length; b++) {
                 const item = trade.current.trade.buy[b];
@@ -224,7 +225,6 @@ export default class MerchantSheet extends actor_sheet {
             customers[p_name].current = this._new_trade();
             this.actor.update({data: {customers: customers}});
             game.user.character.update({data: {cash: p_cash - t_cash}});
-            this.generate_receipt(trade);
         }
         setTimeout(() => {this.render(true)}, 1100);
     }
@@ -352,7 +352,7 @@ export default class MerchantSheet extends actor_sheet {
         }
         log += `
             </table>
-            <h3 class="center">Bought</h3>
+            <h3 class="center">Sold</h3>
             <table>
         `;
         for (let i = 0; i < trade.current.trade.sell.length; i++) {
@@ -368,6 +368,7 @@ export default class MerchantSheet extends actor_sheet {
         }
         log += `
             </table>
+            <h3 class="center">$${trade.current.trade.total}</h3>
         </div>
         `;
         ChatMessage.create({content: log});
