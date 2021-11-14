@@ -7,7 +7,7 @@
         <h2 class="center">Melee Weapons</h2>
         <table>
             {{#each melee_weapons as |wep|}}
-                {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" wep}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" wep}}
             {{!-- <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">1</td>
@@ -24,7 +24,7 @@
         <h2 class="center">Firearms</h2>
         <table>
             {{#each firearms as |gun|}}
-                {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" gun}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" gun}}
         {{!--     <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">1</td>
@@ -41,7 +41,7 @@
         <h2 class="center">Goods</h2>
         <table>
         {{#each goods as |good|}}
-            {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" good}}
+            {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" good}}
         {{!--     <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">{{this.data.data.amount}}</td>
@@ -57,7 +57,7 @@
         <h2 class="center">Components</h2>
         <table>
         {{#each components as |component|}}
-            {{> "systems/deadlands_classic/templates/reuseable/merchant_item.hbs" component}}
+            {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" component}}
         {{!--     <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
                 <td class="perc20 right">{{this.data.data.amount}}</td>
