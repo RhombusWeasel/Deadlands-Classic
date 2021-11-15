@@ -25,7 +25,7 @@
                 <td><a class="name-toggle"><i class="fas fa-check"></i></a></td>
             </tr>
             <tr>
-                <th class="center">Name List</th>
+                <th class="perc50 center">Name List</th>
                 <td class="center">
                     <select name="data.ethnicity" id="ethnicity-select">
                     {{#if (eq data.data.ethnicity "american")}}
@@ -42,8 +42,8 @@
                 </td>
             </tr>
             <tr>
-                <th>Allow Male</th>
-                <td class="perc10 center">
+                <th class="perc50 center">Allow Male Names</th>
+                <td class="center">
                     {{#if (eq data.data.male_names true)}}
                         <a class="male-toggle"><i class="fas fa-check"></i></a>
                     {{else}}
@@ -52,7 +52,8 @@
                 </td>
             </tr>
             <tr>
-                <th>Allow Female</th>
+                <th class="perc50 center">Allow Female Names</th>
+                <td class="center">
                     {{#if (eq data.data.female_names true)}}
                         <a class="female-toggle"><i class="fas fa-check"></i></a>
                     {{else}}

@@ -144,6 +144,9 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
+        html.find(".name-toggle").click(this._on_name_toggle.bind(this));
+        html.find(".male-toggle").click(this._on_male_toggle.bind(this));
+        html.find(".female-toggle").click(this._on_female_toggle.bind(this));
         // Selector Boxes:
         html.find(".equip-select").change(this._on_item_equip.bind(this));
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
@@ -770,5 +773,21 @@ export default class PlayerSheet extends ActorSheet {
         let value = element.value;
         let char = dc_utils.get_actor(this.actor.name);
         char.update({type: value});
+    }
+
+    // GM Tab:
+    _on_name_toggle(event) {
+        event.preventDefault();
+        item.update({data: {random_name: !this.actor.data.data.random_name}});
+    }
+
+    _on_male_toggle(event) {
+        event.preventDefault();
+        item.update({data: {male_names: !this.actor.data.data.male_names}});
+    }
+
+    _on_female_toggle(event) {
+        event.preventDefault();
+        item.update({data: {female_names: !this.actor.data.data.female_names}});
     }
 }

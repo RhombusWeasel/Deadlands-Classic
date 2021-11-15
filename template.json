@@ -13,6 +13,8 @@
                 "generated": false,
                 "random_name": false,
                 "ethnicity": "american",
+                "male_names": true,
+                "female_names": true,
                 "size": 6,
                 "pace": 4,
                 "wind": {
