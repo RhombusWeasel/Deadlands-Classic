@@ -28,6 +28,7 @@ export default class MerchantSheet extends actor_sheet {
         data.cash          = this.actor.data.data.cash;
         if (!(game.user.isGM)) {
             let p_name = game.user.character.id;
+            data.buy_modifier    = this.actor.data.data.buy_modifier;
             data.player_cash     = game.user.character.data.data.cash;
             data.customers       = this.actor.data.data.customers;
             this._check_existing_customer(game.user.character);
