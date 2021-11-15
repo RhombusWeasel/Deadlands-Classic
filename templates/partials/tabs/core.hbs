@@ -65,9 +65,11 @@
                 <table>
                     {{#each gen_deck as |card|}}
                     <tr class="item" data-itemId="{{this._id}}">
-                        <td class="combat-hand-name">{{this.name}}</td>
-                        <td class="combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
-                        <td class="combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                        <td class="center combat-hand-name">{{this.name}}</td>
+                        <td class="center combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
+                        {{#isGM}}
+                        <td class="center combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                        {{/isGM}}
                     </tr>
                     {{/each}}
                 </table>
