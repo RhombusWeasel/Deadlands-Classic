@@ -79,7 +79,7 @@
                 <h3 class="center">Melee</h3>
                 <table>
                     {{#each cust_melee as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item}}
+                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
                     {{/each}}
                 </table>
                 {{/if}}
@@ -87,7 +87,7 @@
                 <h3 class="center">Firearms</h3>
                 <table>
                     {{#each cust_guns as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item}}
+                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
                     {{/each}}
                 </table>
                 {{/if}}
@@ -95,7 +95,7 @@
                 <h3 class="center">Goods</h3>
                 <table>
                     {{#each cust_goods as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item}}
+                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
                     {{/each}}
                 </table>
                 {{/if}}
@@ -103,7 +103,7 @@
                 <h3 class="center">Components</h3>
                 <table>
                     {{#each cust_components as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item}}
+                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
                     {{/each}}
                 </table>
                 {{/if}}
