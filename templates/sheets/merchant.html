@@ -95,8 +95,6 @@
         </div>
     </div>
     <div class="center">
-        {{log current_trade}}
-        {{log (sum current_trade.total '*' 1)}}
         {{#if (gt (sum current_trade.total '*' 1) 0)}}
         <p> << {{current_trade.total}} </p>
         {{else}}
