@@ -1,0 +1,24 @@
+<section>
+    <tr class="typed item" data-itemId="{{this.id}}">
+        <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+        <td class="perc10 right">[{{this.data.data.amount}}]</td>
+        <td class="perc20">{{this.name}}</td>
+        {{#if data.data.will_buy}}
+        <td class="perc10 center"><a class="buy-toggle"><i class="fas fa-check"></i></a></td>
+        {{else}}
+        <td class="perc10 center"><a class="buy-toggle"><i class="fas fa-times"></i></a></td>
+        {{/if}}
+        {{#if data.data.will_sell}}
+        <td class="perc10 center"><a class="sell-toggle"><i class="fas fa-check"></i></a></td>
+        {{else}}
+        <td class="perc10 center"><a class="sell-toggle"><i class="fas fa-times"></i></a></td>
+        {{/if}}
+        {{#if data.data.limit_stock}}
+        <td class="perc10 center"><a class="limit-toggle"><i class="fas fa-check"></i></a></td>
+        {{else}}
+        <td class="perc10 center"><a class="limit-toggle"><i class="fas fa-times"></i></a></td>
+        {{/if}}
+        <td class="perc10 right">{{this.data.data.cost}}</td>
+        <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+    </tr>
+</section>

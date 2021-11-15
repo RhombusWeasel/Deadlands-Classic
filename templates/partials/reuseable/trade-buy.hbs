@@ -1,0 +1,12 @@
+<section>
+    <table>
+        {{#each list as |item|}}
+        <tr class="item" data-id="{{item.id}}">
+            <td class="center perc10"><a class="sell-item"><</a></td>
+            <td class="center perc60">{{item.name}}</td>
+            <td class="right perc10">[{{item.data.data.amount}}]</td>
+            <td class="right perc20">{{sum (sum (sum item.data.data.cost '/' item.data.data.box_amount) '*' item.data.data.amount) '*' ../buy_modifier}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</section>

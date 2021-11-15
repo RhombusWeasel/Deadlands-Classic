@@ -1054,6 +1054,7 @@ const dc_utils = {
     loc_lookup: ['leg_left','leg_right','leg_left','leg_right','lower_guts','lower_guts','lower_guts','lower_guts','lower_guts','gizzards','arm_left','arm_right','arm_left','arm_right','guts','guts','guts','guts','guts','noggin'],
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
+    stackable: ['goods', 'components'],
 
     // Helper Functions:
 
@@ -1293,6 +1294,41 @@ const dc_utils = {
             },
         },
         items: {
+            add: function(act, item) {
+                if (dc_utils.stackable.includes(item.type)) {
+                    let found_item = act.items.filter(function (i) {return i.name == item.name});
+                    if (found_item.length > 0) {
+                        let numParse = parseInt;
+                        if (found_item[0].data.data.is_float) {
+                            numParse = parseFloat;
+                        }
+                        let has = numParse(found_item[0].data.data.amount);
+                        let amt = numParse(item.data.data.amount);
+                        if (found_item.length > 0) {
+                            dc_utils.char.items.update(found_item[0], {amount: has + amt});
+                            return;
+                        }
+                    }
+                }
+                setTimeout(() => {act.createOwnedItem(item)}, Math.random() * 1000);
+            },
+            remove: function(act, item, amt) {
+                if (item.data.data.equippable) {
+                    if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
+                        dc_utils.char.items.unequip(act, item.data.data.slot);
+                    }
+                }
+                if (dc_utils.stackable.includes(item.type)) {
+                    if (item.data.data.amount > amt) {
+                        dc_utils.char.items.update(item, {amount: item.data.data.amount - amt});
+                        return;
+                    }
+                }
+                setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item.id])}, Math.random() * 1000);
+            },
+            update: function(item, data) {
+                setTimeout(() => {item.update({data: data})}, Math.random() * 1000);
+            },
             get: function(act, item_type, sort_key = 'name') {
                 return act.items.filter(function (item) {return item.type == item_type})
                                 .sort((a, b) => {return dc_utils.sort.compare(a, b, sort_key)});
@@ -1352,7 +1388,7 @@ const dc_utils = {
             },
             delete: function(act, id) {
                 let item = act.items.get(id);
-                if (item?.data?.data?.amount >= 2) {
+                if (item?.data?.data?.amount > 1) {
                     return item.update({data: {amount: item.data.data.amount - 1}});
                 }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
@@ -1436,7 +1472,7 @@ const dc_utils = {
                     if (total - amount <= 0) {
                         if (item.data.data.equippable) {
                             if (dc_utils.char.items.is_equipped(act, item.data.data.slot, item.id)) {
-                                dc_utils.char.items.unequip(item.data.data.slot);
+                                dc_utils.char.items.unequip(act, item.data.data.slot);
                             }
                         }
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
@@ -1822,7 +1858,7 @@ const dc_utils = {
                 r_data.success = false;
                 r_data.crit_fail = true;
             }
-            roll.toMessage({rollMode: 'gmroll'});
+            //roll.toMessage({rollMode: 'gmroll'});
             return r_data;
         },
         evaluate: function(data) {
@@ -1864,7 +1900,7 @@ const dc_utils = {
             let loc_key
             if (key == 'any') {
                 let loc_roll = new Roll('1d20').roll();
-                loc_roll.toMessage({rollMode: 'gmroll'});
+                //loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];
                 let range = raises * 2 || 0;
@@ -2225,13 +2261,13 @@ const dc_utils = {
         send: function(title) {
             let sheet = `
                 <h3 class="center typed">${title}</h3>
-            `
+            `;
             for (let i = 1; i < arguments.length; i++) {
                 sheet += `
                 <p class="center typed">${arguments[i]}</p>
-                `
+                `;
             }
-            ChatMessage.create({content: sheet})
+            ChatMessage.create({content: sheet});
         },
     },
     socket: {
@@ -2503,6 +2539,23 @@ const dc_utils = {
                     }
                 }
                 return false;
+            },
+        },
+    },
+    ui: {
+        mouse: {
+            get_position: function(event) {
+                return {
+                    x: event.data.global.x,
+                    y: event.data.global.y
+                }
+            },
+            get_grid_position: function(event) {
+                let tr = canvas.tokens.worldTransform;
+                return {
+                    x: (event.data.global.x - tr.tx) / canvas.stage.scale.x,
+                    y: (event.data.global.y - tr.ty) / canvas.stage.scale.y
+                }
             },
         },
     },

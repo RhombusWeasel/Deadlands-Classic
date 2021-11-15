@@ -2,11 +2,19 @@
     overflow-y:scroll;
     height:500px
 }
+.merchant-scroller{
+    overflow-y:scroll;
+    height:400px
+}
 .vehicle-scroller{
     overflow-y:scroll;
     height:400px
 }
 .typed{
+    font-family: "Lucida Sans Typewriter";
+    font-size: smaller;
+}
+.typed-large{
     font-family: "Lucida Sans Typewriter";
     font-size: small;
 }

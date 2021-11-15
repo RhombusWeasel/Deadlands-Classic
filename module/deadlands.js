@@ -5,6 +5,7 @@ import generator_sheet from "./sheets/generator.js"
 import marshal_sheet from "./sheets/gm.js"
 import mook_sheet from "./sheets/mook.js"
 import vehicle_sheet from "./sheets/vehicle.js"
+import merchant_sheet from "./sheets/merchant.js"
 
 async function preload_handlebars_templates() {
     const template_paths = [
@@ -13,14 +14,19 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/equip_opts.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
         "systems/deadlands_classic/templates/partials/tabs/favor.hbs",
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/gm.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
         "systems/deadlands_classic/templates/partials/tabs/science.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/merchant.hbs",
         "systems/deadlands_classic/templates/partials/tabs/traits.hbs",
         "systems/deadlands_classic/templates/partials/tabs/vehicle-goods.hbs",
         "systems/deadlands_classic/templates/partials/generator-core.hbs",
@@ -56,11 +62,12 @@ Hooks.once("init", function () {
     Items.registerSheet("deadlands_classic", item_sheet, { makeDefault: true});
 
     Actors.unregisterSheet("core", ActorSheet);
-    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: false});
-    Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", actor_sheet, { makeDefault: true});
+    Actors.registerSheet("deadlands_classic", generator_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", marshal_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", mook_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", vehicle_sheet, { makeDefault: false});
+    Actors.registerSheet("deadlands_classic", merchant_sheet, { makeDefault: false});
 
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
@@ -240,6 +247,22 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper("sum", function(lvalue, operator, rvalue, options) {
+        if (typeof(lvalue) == 'string') {
+            lvalue = parseFloat(lvalue.slice(1, lvalue.length));
+        }else {
+            lvalue = parseFloat(lvalue);
+        }
+        rvalue = parseFloat(rvalue);
+        return {
+            "+": `$${(lvalue + rvalue).toFixed(2)}`,
+            "-": `$${(lvalue - rvalue).toFixed(2)}`,
+            "*": `$${(lvalue * rvalue).toFixed(2)}`,
+            "/": `$${(lvalue / rvalue).toFixed(2)}`,
+            "%": `$${(lvalue % rvalue).toFixed(2)}`,
+        }[operator];
+    });
+
     preload_handlebars_templates();
 });
 
@@ -248,10 +271,16 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let name
     if (act.data.data.random_name) {
         let eth = act.data.data.ethnicity;
-        let rn = Math.random();
-        name = dc_utils.char.random_name(eth, 'male');
-        if (rn > 0.5) {
+        if (act.data.data.male_names && act.data.data.female_names) {
+            let rn = Math.random();
+            name = dc_utils.char.random_name(eth, 'male');
+            if (rn > 0.5) {
+                name = dc_utils.char.random_name(eth, 'female');
+            }
+        }else if(act.data.data.female_names) {
             name = dc_utils.char.random_name(eth, 'female');
+        }else{
+            name = dc_utils.char.random_name(eth, 'male');
         }
         document.data.update({name: name});
         // This is stupid and wrong, don't be like me.

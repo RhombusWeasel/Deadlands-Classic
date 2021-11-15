@@ -1,32 +1,84 @@
 <section>
     <div class="core typed">
-        <div class="flexbox">
-            <table style="table-layout: fixed;">
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
-                    <td class="perc12 center"><input style="width: 45%;" type="number" name="data.wind.value" value="{{data.data.wind.value}}"/>/<input style="width: 45%;" type="number" name="data.wind.max" value="{{data.data.wind.max}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
-                    <td class="perc12 center"><input style="width: 45%" type="number" name="data.bounty.value" value="{{data.data.bounty.value}}"/>/<input style="width: 45%" type="number" name="data.bounty.max" value="{{data.data.bounty.max}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.cash" value="{{data.data.cash}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.size" value="{{data.data.size}}"/></td>
-                </tr>
-                <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
-                    <td class="perc12 center"><input type="number" name="data.grit" value="{{data.data.grit}}"/></td>
-                </tr>
-            </table>
+        <div class="flexrow">
+            <div>
+                <img class="center" name="img" src="{{actor.img}}" data-edit="img"/>
+                <input class="typed-large" type="text" name="name" value="{{actor.name}}" data-edit="name"/>
+            </div>
+            <div>
+                <h2 style="text-align: center;">Core</h2>
+                <table style="table-layout: fixed;">
+                    {{#if (eq data.data.show_editor true)}}
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
+                        <td class="perc12 center"><input style="width: 45%;" type="number" name="data.wind.value" value="{{data.data.wind.value}}"/>/<input style="width: 45%;" type="number" name="data.wind.max" value="{{data.data.wind.max}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
+                        <td class="perc12 center"><input style="width: 45%" type="number" name="data.bounty.value" value="{{data.data.bounty.value}}"/>/<input style="width: 45%" type="number" name="data.bounty.max" value="{{data.data.bounty.max}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
+                        <td class="perc12 center">$<input type="number" name="data.cash" value="{{data.data.cash}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.pace" value="{{data.data.pace}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.size" value="{{data.data.size}}"/></td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
+                        <td class="perc12 center"><input type="number" name="data.grit" value="{{data.data.grit}}"/></td>
+                    </tr>
+                    {{else}}
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.wind"}}</th>
+                        <td class="perc12 center">{{data.data.wind.value}}/{{data.data.wind.max}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.bounty"}}</th>
+                        <td class="perc12 center">{{data.data.bounty.value}}/{{data.data.bounty.max}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.money"}}</th>
+                        <td class="perc12 center">${{data.data.cash}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.pace"}}</th>
+                        <td class="perc12 center">{{data.data.pace}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.size"}}</th>
+                        <td class="perc12 center">{{data.data.size}}</td>
+                    </tr>
+                    <tr>
+                        <th class="perc12 center">{{localize "dc.player.core.grit"}}</th>
+                        <td class="perc12 center">{{data.data.grit}}</td>
+                    </tr>
+                    {{/if}}
+                </table>
+                <h2 class="center">The Hand You Wuz Dealt</h2>
+                {{#if gen_deck}}
+                <table>
+                    {{#each gen_deck as |card|}}
+                    <tr class="item" data-itemId="{{this._id}}">
+                        <td class="center combat-hand-name">{{this.name}}</td>
+                        <td class="center combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
+                        {{#isGM}}
+                        <td class="center combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
+                        {{/isGM}}
+                    </tr>
+                    {{/each}}
+                </table>
+                {{else}}
+                <div class="center">
+                    <a class="draw-gen-cards">Draw from the deck of fate?</a>
+                </div>
+                {{/if}}
+            </div>
         </div>
     </div>
 </section>

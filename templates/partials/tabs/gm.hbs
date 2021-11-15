@@ -1,0 +1,69 @@
+<section class="typed">
+    <div>
+        {{log this}}
+        <table>
+            <tr>
+                <th class="perc50 center">Character Type</th>
+                <td class="center">
+                    <select class="item typed" name="type" id="type-select">
+                        {{#if (eq this.data.type "player")}}
+                        <option value="player" selected>Player</option>
+                        {{else}}
+                        <option value="player">Player</option>
+                        {{/if}}
+                        {{#if (eq this.data.type "merchant")}}
+                        <option value="merchant" selected>Merchant</option>
+                        {{else}}
+                        <option value="merchant">Merchant</option>
+                        {{/if}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="perc50 center">Random Names</th>
+            {{#if (eq data.data.random_name true)}}
+                <td class="center"><a class="name-toggle"><i class="fas fa-check"></i></a></td>
+            </tr>
+            <tr>
+                <th class="perc50 center">Name List</th>
+                <td class="center">
+                    <select name="data.ethnicity" id="ethnicity-select">
+                    {{#if (eq data.data.ethnicity "american")}}
+                        <option value="american" selected>American/European</option>
+                    {{else}}
+                        <option value="american">American/European</option>
+                    {{/if}}
+                    {{#if (eq data.data.ethnicity "native_american")}}
+                        <option value="native_american" selected>Native American</option>
+                    {{else}}
+                        <option value="native_american">Native American</option>
+                    {{/if}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th class="perc50 center">Allow Male Names</th>
+                <td class="center">
+                    {{#if (eq data.data.male_names true)}}
+                        <a class="male-toggle"><i class="fas fa-check"></i></a>
+                    {{else}}
+                        <a class="male-toggle"><i class="fas fa-times"></i></a>
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <th class="perc50 center">Allow Female Names</th>
+                <td class="center">
+                    {{#if (eq data.data.female_names true)}}
+                        <a class="female-toggle"><i class="fas fa-check"></i></a>
+                    {{else}}
+                        <a class="female-toggle"><i class="fas fa-times"></i></a>
+                    {{/if}}
+                </td>
+            {{else}}
+                <td class="center"><a class="name-toggle"><i class="fas fa-times"></i></a></td>
+            {{/if}}
+            </tr>
+        </table>
+    </div>
+</section>
