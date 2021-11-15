@@ -3,7 +3,7 @@
         {{log this}}
         <table>
             <tr>
-                <td class="perc50 center">Character Type</td>
+                <th class="perc50 center">Character Type</th>
                 <td>
                     <select class="item center typed-large" name="type" id="type-select">
                         {{#if (eq this.data.type "player")}}
@@ -19,55 +19,50 @@
                     </select>
                 </td>
             </tr>
+            <tr>
+                <th>Random Names</th>
+            {{#if (eq data.data.random_name true)}}
+                <td><a class="name-toggle"><i class="fas fa-check"></i></a></td>
+            </tr>
+            <tr>
+                <th class="center">Name List</th>
+                <td class="center">
+                    <select name="data.ethnicity" id="ethnicity-select">
+                    {{#if (eq data.data.ethnicity "american")}}
+                        <option value="american" selected>American/European</option>
+                    {{else}}
+                        <option value="american">American/European</option>
+                    {{/if}}
+                    {{#if (eq data.data.ethnicity "native_american")}}
+                        <option value="native_american" selected>Native American</option>
+                    {{else}}
+                        <option value="native_american">Native American</option>
+                    {{/if}}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>Allow Male</th>
+                <td class="perc10 center">
+                    {{#if (eq data.data.male_names true)}}
+                        <a class="male-toggle"><i class="fas fa-check"></i></a>
+                    {{else}}
+                        <a class="male-toggle"><i class="fas fa-times"></i></a>
+                    {{/if}}
+                </td>
+            </tr>
+            <tr>
+                <th>Allow Female</th>
+                    {{#if (eq data.data.female_names true)}}
+                        <a class="female-toggle"><i class="fas fa-check"></i></a>
+                    {{else}}
+                        <a class="female-toggle"><i class="fas fa-times"></i></a>
+                    {{/if}}
+                </td>
+            {{else}}
+                <td><a class="name-toggle"><i class="fas fa-times"></i></a></td>
+            {{/if}}
+            </tr>
         </table>
-        <h1 class="center">Random Names</h1>
-        <div class="flexrow">
-            <table>
-                <tr>
-                    <td>Random Names</td>
-                {{#if (eq data.data.random_name true)}}
-                    <td><input type="checkbox" name="data.random_name" checked></td>
-                </tr>
-                <tr>
-                    <td class="center">Name List</td>
-                    <td class="center">
-                        <select name="data.ethnicity" id="ethnicity-select">
-                        {{#if (eq data.data.ethnicity "american")}}
-                            <option value="american" selected>American/European</option>
-                        {{else}}
-                            <option value="american">American/European</option>
-                        {{/if}}
-                        {{#if (eq data.data.ethnicity "native_american")}}
-                            <option value="native_american" selected>Native American</option>
-                        {{else}}
-                            <option value="native_american">Native American</option>
-                        {{/if}}
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="center">Allow Male</td>
-                    <td class="perc10 center">
-                        {{#if (eq data.data.male_names true)}}
-                            <a class="male-toggle"><i class="fas fa-check"></i></a>
-                        {{else}}
-                            <a class="male-toggle"><i class="fas fa-times"></i></a>
-                        {{/if}}
-                    </td>
-                </tr>
-                <tr>
-                    <td>Allow Female</td>
-                        {{#if (eq data.data.female_names true)}}
-                            <a class="female-toggle"><i class="fas fa-check"></i></a>
-                        {{else}}
-                            <a class="female-toggle"><i class="fas fa-times"></i></a>
-                        {{/if}}
-                    </td>
-                {{else}}
-                    <td><input type="checkbox" name="data.random_name"></td>
-                {{/if}}
-                </tr>
-            </table>
-        </div>
     </div>
 </section>
