@@ -270,8 +270,8 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
     if (act.data.data.random_name) {
+        let eth = act.data.data.ethnicity;
         if (act.data.data.male_names && act.data.data.female_names) {
-            let eth = act.data.data.ethnicity;
             let rn = Math.random();
             name = dc_utils.char.random_name(eth, 'male');
             if (rn > 0.5) {
