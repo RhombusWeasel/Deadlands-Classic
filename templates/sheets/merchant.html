@@ -77,19 +77,19 @@
             <div class="scroller">
                 {{#if cust_melee}}
                     <h3 class="center">Melee</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier list=cust_melee}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_melee}}
                 {{/if}}
                 {{#if cust_guns}}
                     <h3 class="center">Firearms</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier list=cust_guns}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_guns}}
                 {{/if}}
                 {{#if cust_goods}}
                     <h3 class="center">Goods</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier list=cust_goods}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_goods}}
                 {{/if}}
                 {{#if cust_components}}
                     <h3 class="center">Components</h3>
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier list=cust_components}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_components}}
                 {{/if}}
             </div>
         </div>
