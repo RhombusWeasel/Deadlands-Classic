@@ -5,7 +5,7 @@
             <tr>
                 <th class="perc50 center">Character Type</th>
                 <td>
-                    <select class="item center typed-large" name="type" id="type-select">
+                    <select class="item center typed" name="type" id="type-select">
                         {{#if (eq this.data.type "player")}}
                         <option value="player" selected>Player</option>
                         {{else}}
@@ -20,9 +20,9 @@
                 </td>
             </tr>
             <tr>
-                <th>Random Names</th>
+                <th class="perc50 center">Random Names</th>
             {{#if (eq data.data.random_name true)}}
-                <td><a class="name-toggle"><i class="fas fa-check"></i></a></td>
+                <td class="center"><a class="name-toggle"><i class="fas fa-check"></i></a></td>
             </tr>
             <tr>
                 <th class="perc50 center">Name List</th>
