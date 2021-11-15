@@ -2,6 +2,10 @@
     overflow-y:scroll;
     height:500px
 }
+.merchant-scroller{
+    overflow-y:scroll;
+    height:400px
+}
 .vehicle-scroller{
     overflow-y:scroll;
     height:400px
