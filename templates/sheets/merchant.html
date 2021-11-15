@@ -44,10 +44,9 @@
                 <table>
                     {{#each components as |item|}}
                     <tr class="item" data-id="{{item.id}}">
-                        <td class="center perc10"><a class="sell-item"><</a></td>
-                        <td class="center perc60">{{item.name}}</td>
-                        <td class="right perc10">[{{item.data.data.amount}}]</td>
-                        <td class="right perc20">{{sum (sum (sum item.data.data.cost '/' item.data.data.box_amount) '*' item.data.data.amount) '*' ../data.data.buy_modifier}}</td>
+                        <td class="center perc70">{{this.name}}</td>
+                        <td class="center perc20">{{item.data.data.cost}}</td>
+                        <td class="center perc10 buy-item"><a>></a></td>
                     </tr>
                     {{/each}}
                 </table>
