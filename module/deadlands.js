@@ -269,7 +269,7 @@ Hooks.once("init", function () {
 Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
-    if (act.data.data.random_name) {
+    if (act.data.data.random_name == true) {
         let eth = act.data.data.ethnicity;
         if (act.data.data.male_names && act.data.data.female_names) {
             let rn = Math.random();
