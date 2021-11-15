@@ -778,16 +778,16 @@ export default class PlayerSheet extends ActorSheet {
     // GM Tab:
     _on_name_toggle(event) {
         event.preventDefault();
-        item.update({data: {random_name: !this.actor.data.data.random_name}});
+        this.actor.update({data: {random_name: !this.actor.data.data.random_name}});
     }
 
     _on_male_toggle(event) {
         event.preventDefault();
-        item.update({data: {male_names: !this.actor.data.data.male_names}});
+        this.actor.update({data: {male_names: !this.actor.data.data.male_names}});
     }
 
     _on_female_toggle(event) {
         event.preventDefault();
-        item.update({data: {female_names: !this.actor.data.data.female_names}});
+        this.actor.update({data: {female_names: !this.actor.data.data.female_names}});
     }
 }
