@@ -68,6 +68,7 @@ export default class PlayerSheet extends ActorSheet {
         data.config        = CONFIG.dc;
         data.id            = this.actor.id;
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
+        data.gen_deck      = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "gen_deck"}));
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.equippable    = dc_utils.char.items.get_equippable(this.actor);
         data.hand_slots    = dc_utils.hand_slots;
@@ -117,6 +118,7 @@ export default class PlayerSheet extends ActorSheet {
     activateListeners(html) {
         // Buttons:
         html.find(".edit-toggle").click(this._on_edit_toggle.bind(this));
+        html.find(".draw-gen-cards").click(this._on_draw_gen_cards.bind(this));
         html.find(".die-buff").click(this._on_die_buff.bind(this));
         html.find(".skill-roll").click(this._on_skill_roll.bind(this));
         html.find(".skill-buff").click(this._on_skill_buff.bind(this));
@@ -160,6 +162,56 @@ export default class PlayerSheet extends ActorSheet {
 
     _on_edit_toggle(event) {
         this.actor.update({data: {show_editor: !(this.actor.data.data.show_editor)}});
+    }
+
+    _on_draw_gen_cards(event) {
+        let g_deck = dc_utils.deck.new('gen_deck');
+        let die_types = {
+            Jo: 'd12',
+            A: 'd12',
+            K: 'd10',
+            Q: 'd10',
+            J: 'd8',
+            "10": 'd8',
+            "9": 'd8',
+            "8": 'd8',
+            "7": 'd6',
+            "6": 'd6',
+            "5": 'd6',
+            "4": 'd6',
+            "3": 'd6',
+            "2": 'd4'
+        };
+        let suit_types = {
+            '\u2660': 4,
+            '\u2661': 3,
+            '\u2662': 2,
+            '\u2663': 1
+        };
+        for (let d = 0; d < 12; d++) {
+            let card = g_deck.pop();
+            let value = dc_utils.deck.get_card_value(card);
+            let suit = card.name.slice(-1);
+            card.die_type = die_types[value];
+            if (value == 'Jo') {
+                let s_card = g_deck.pop();
+                if (dc_utils.deck.get_card_value(s_card) == 'Jo') {
+                    s_card = g_deck.pop()
+                }
+                card.level = suit_types[s_card.name.slice(-1)];
+            }else{
+                card.level = suit_types[suit];
+            }
+            let item = {
+                name: card.name,
+                type: card.type,
+                data: {
+                    level: card.level,
+                    die_type: card.die_type
+                }
+            };
+            setTimeout(() => {this.actor.createOwnedItem(item)}, d * 500);
+        }
     }
 
     _on_skill_roll(event) {
