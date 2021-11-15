@@ -270,11 +270,17 @@ Hooks.on('preCreateToken', function (document, createData, options, userId) {
     let act = game.actors.getName(document.name);
     let name
     if (act.data.data.random_name) {
-        let eth = act.data.data.ethnicity;
-        let rn = Math.random();
-        name = dc_utils.char.random_name(eth, 'male');
-        if (rn > 0.5) {
+        if (act.data.data.male_names && act.data.data.female_names) {
+            let eth = act.data.data.ethnicity;
+            let rn = Math.random();
+            name = dc_utils.char.random_name(eth, 'male');
+            if (rn > 0.5) {
+                name = dc_utils.char.random_name(eth, 'female');
+            }
+        }else if(act.data.data.female_names) {
             name = dc_utils.char.random_name(eth, 'female');
+        }else{
+            name = dc_utils.char.random_name(eth, 'male');
         }
         document.data.update({name: name});
         // This is stupid and wrong, don't be like me.
