@@ -76,36 +76,20 @@
             <h3 class="center">${{player_cash}}</h3>
             <div class="scroller">
                 {{#if cust_melee}}
-                <h3 class="center">Melee</h3>
-                <table>
-                    {{#each cust_melee as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
-                    {{/each}}
-                </table>
+                    <h3 class="center">Melee</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs" list=cust_melee buy_modifier=data.data.buy_modifier}}
                 {{/if}}
                 {{#if cust_guns}}
-                <h3 class="center">Firearms</h3>
-                <table>
-                    {{#each cust_guns as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
-                    {{/each}}
-                </table>
+                    <h3 class="center">Firearms</h3>
+                {{> "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs" list=cust_guns buy_modifier=data.data.buy_modifier}}
                 {{/if}}
                 {{#if cust_goods}}
-                <h3 class="center">Goods</h3>
-                <table>
-                    {{#each cust_goods as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
-                    {{/each}}
-                </table>
+                    <h3 class="center">Goods</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs" list=cust_goods buy_modifier=data.data.buy_modifier}}
                 {{/if}}
                 {{#if cust_components}}
-                <h3 class="center">Components</h3>
-                <table>
-                    {{#each cust_components as |item|}}
-                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" item buy_modifier=../data.data.buy_modifier}}
-                    {{/each}}
-                </table>
+                    <h3 class="center">Components</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs" list=cust_components buy_modifier=data.data.buy_modifier}}
                 {{/if}}
             </div>
         </div>
