@@ -15,26 +15,29 @@
                     {{/each}}
                 </select>
             </td>
-            {{#each items as |item|}}
-                {{#if (eq item.data.data.slot ../slot)}}
-                    {{#if_equipped ../label item.id}}
-                        {{#if (eq item.type 'firearm')}}
+            {{#if (eq id 'Nuthin')}}
+            <td class="center"><a class="attack" title="Do your talkin' with yer fists." data-itemid="Nuthin" data-slot="{{../label}}">Attack</a></td>
+            {{else}}
+                {{#each items as |item|}}
+                    {{#if (eq item.data.data.slot ../slot)}}
+                        {{#if_equipped ../label item.id}}
+                            {{#if (eq item.type 'firearm')}}
             <td class="center">{{this.data.data.chamber}}/{{this.data.data.max}}</td>
-                        {{/if}}
+                            {{/if}}
         </tr>
         <tr class="center" style="table-layout: fixed;">
-                        {{#if (eq item.type 'melee')}}
+                            {{#if (eq item.type 'melee')}}
             <td class="center"><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
-                        {{/if}}
-                        {{#if (eq item.type 'firearm')}}
+                            {{/if}}
+                            {{#if (eq item.type 'firearm')}}
             <td class="center"><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
             <td class="center"><a class="gun-reload" title="Reload {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Reload</a></td>
-                        {{/if}}
-                    {{else}}
-            <td class="center"><a class="attack" title="Attack with {{this.name}}" data-itemid="{{../id}}" data-slot="{{../label}}">Attack</a></td>
-                    {{/if_equipped}}
-                {{/if}}
-            {{/each}}
+                            {{/if}}
+                        {{else}}
+                        {{/if_equipped}}
+                    {{/if}}
+                {{/each}}
+            {{/if}}
         </tr>
     </table>
 </section>
