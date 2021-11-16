@@ -576,10 +576,10 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId  = element.dataset.itemid;
         let item = this.actor.items.get(itemId);
+        let data
         if (itemId == 'Nuthin') {
             data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
         }else{
-            let data
             if (item.type == 'melee') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
             }else if (item.type == 'firearm') {
