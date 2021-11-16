@@ -1389,9 +1389,9 @@ const dc_utils = {
                 if (item?.data?.data?.emits_light) {
                     dc_utils.socket.emit('toggle_light', {
                         name: act.name,
-                        brightLight: item.data.data.bright_light,
-                        dimLight: item.data.data.dim_light,
-                        lightAngle: item.data.data.light_angle
+                        bright_light: item.data.data.bright_light,
+                        dim_light: item.data.data.dim_light,
+                        light_angle: item.data.data.light_angle
                     });
                 }
                 return act.update({data: {data: {equipped: {[slot]: id}}}});
