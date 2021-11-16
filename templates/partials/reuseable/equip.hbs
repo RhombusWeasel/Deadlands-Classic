@@ -16,7 +16,12 @@
                 </select>
             </td>
             {{#if (eq id 'Nuthin')}}
+                {{#if (eq label 'dominant')}}
             <td class="center"><a class="attack" title="Do your talkin' with yer fists." data-itemid="Nuthin" data-slot="{{../label}}">Attack</a></td>
+                {{/if}}
+                {{#if (eq label 'off')}}
+            <td class="center"><a class="attack" title="Do your talkin' with yer fists." data-itemid="Nuthin" data-slot="{{../label}}">Attack</a></td>
+                {{/if}}
             {{else}}
                 {{#each items as |item|}}
                     {{#if (eq item.data.data.slot ../slot)}}
