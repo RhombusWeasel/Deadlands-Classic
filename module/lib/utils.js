@@ -1363,8 +1363,8 @@ const dc_utils = {
                     }
                 }
                 if (item?.data?.data?.emits_light) {
-                    let tkn = dc_utils.get_token(act.name);
-                    tkn.update({
+                    dc_utils.socket.emit('toggle_light', {
+                        name: act.name,
                         brightLight: 0,
                         dimLight: 0,
                         lightAngle: 360
@@ -1387,8 +1387,8 @@ const dc_utils = {
                     }
                 }
                 if (item?.data?.data?.emits_light) {
-                    let tkn = dc_utils.get_token(act.name);
-                    tkn.update({
+                    dc_utils.socket.emit('toggle_light', {
+                        name: act.name,
                         brightLight: item.data.data.bright_light,
                         dimLight: item.data.data.dim_light,
                         lightAngle: item.data.data.light_angle

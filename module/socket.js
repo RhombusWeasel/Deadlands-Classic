@@ -212,6 +212,17 @@ function battle_report(data) {
 }
 
 let operations = {
+    //LIGHT OPERATIONS
+    toggle_light: function(data) {
+        if (game.user.isGM) {
+            let tkn = dc_utils.get_token(data.name);
+            tkn.update({
+                brightLight: data.bright_light,
+                dimLight: data.dim_light,
+                lightAngle: data.light_angle
+            });
+        }
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
