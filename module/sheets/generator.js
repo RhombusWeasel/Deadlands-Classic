@@ -120,9 +120,6 @@ export default class GeneratorSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        ChatMessage.create({ content: `
-            Discarding ${item.type} ${item.name}
-        `});
         return this.actor.deleteOwnedItem(itemId);
     }
 }

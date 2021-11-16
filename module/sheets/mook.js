@@ -173,9 +173,6 @@ export default class NPCSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        ChatMessage.create({ content: `
-            Discarding ${item.type} ${item.name}
-        `});
         dc_utils.char.items.delete(this.actor, itemId);
     }
 
