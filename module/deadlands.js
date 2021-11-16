@@ -120,7 +120,7 @@ Hooks.once("init", function () {
     Handlebars.registerHelper('is_one_handed', function(options) {
         let act = dc_utils.get_actor(options.data.root.actor.name);
         let item = act.items.get(act.data.data.equipped.dominant);
-        if (item?.data?.data?.multi_slot == false) {
+        if (act.data.data.equipped.dominant == 'Nuthin' || item?.data?.data?.multi_slot == false) {
             return options.fn(this);
         }
         return options.inverse(this);
