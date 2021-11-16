@@ -1362,6 +1362,14 @@ const dc_utils = {
                         }
                     }
                 }
+                if (item?.data?.data?.emits_light) {
+                    let tkn = dc_utils.get_token(act.name);
+                    tkn.update({
+                        brightLight: 0,
+                        dimLight: 0,
+                        lightAngle: 360
+                    });
+                }
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
@@ -1377,6 +1385,14 @@ const dc_utils = {
                             
                         }
                     }
+                }
+                if (item?.data?.data?.emits_light) {
+                    let tkn = dc_utils.get_token(act.name);
+                    tkn.update({
+                        brightLight: item.data.data.bright_light,
+                        dimLight: item.data.data.dim_light,
+                        lightAngle: item.data.data.light_angle
+                    });
                 }
                 return act.update({data: {data: {equipped: {[slot]: id}}}});
             },

@@ -1136,7 +1136,11 @@
                 "total_cost": 0,
                 "will_sell": true,
                 "will_buy": true,
-                "limit_stock": false
+                "limit_stock": false,
+                "emits_light": false,
+                "bright_light": 0,
+                "dim_light": 0,
+                "light_angle": 360
             }
         },
         "firearm": {

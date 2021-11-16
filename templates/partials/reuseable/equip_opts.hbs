@@ -38,7 +38,27 @@
         {{/if}}
     {{/if}}
     </tr>
-        {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
+    <tr>
+        <th>Emits Light</th>
+    {{#if (eq data.data.emits_light)}}
+        <td><input type="checkbox" name="data.emits_light" checked/></td>
+    </tr>
+    <tr>
+        <th>Dim Radius</th>
+        <td><input type="number" name="data.dim_radius" value="{{data.data.dim_radius}}"></td>
+    </tr>
+    <tr>
+        <th>Bright Radius</th>
+        <td><input type="number" name="data.bright_radius" value="{{data.data.bright_radius}}"></td>
+    </tr>
+    <tr>
+        <th>Light Angle</th>
+        <td><input type="number" name="data.light_angle" value="{{data.data.light_angle}}"></td>
+    {{else}}
+        <td><input type="checkbox" name="data.emits_light"/></td>
+    {{/if}}
+    </tr>
+    {{> "systems/deadlands_classic/templates/partials/reuseable/equip_mods.hbs" this}}
 {{else}}
     <tr>
         <th>{{localize "dc.items.goods.equippable"}}</th>
