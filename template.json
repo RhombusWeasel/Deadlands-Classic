@@ -1227,7 +1227,8 @@
         },
         "gen_deck": {
             "die_type":"d4",
-            "level":1
+            "level":1,
+            "trait": "unassigned"
         },
         "goods": {
             "templates": [

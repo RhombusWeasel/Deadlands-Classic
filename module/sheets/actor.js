@@ -152,6 +152,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
         html.find(".type-select").change(this._on_type_select.bind(this));
+        html.find(".set-trait-value").change(this._on_set_trait_value.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller")[0];
         if (traits) {
@@ -214,6 +215,18 @@ export default class PlayerSheet extends ActorSheet {
                 }
             };
             setTimeout(() => {this.actor.createOwnedItem(item)}, d * 500);
+        }
+    }
+
+    _on_set_trait_value(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        if (element.value == 'unassigned') {
+            this.actor.update({data: {traits: {[item.data.data.trait]: {level: 1, die_type: "d4"}}}});
+        }else{
+            this.actor.update({data: {traits: {[element.value]: {level: item.level, die_type: item.die_type}}}});
         }
     }
 
