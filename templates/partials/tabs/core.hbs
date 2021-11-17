@@ -75,7 +75,7 @@
                                 <option value="unassigned">Unassigned</option>
                                 {{/if}}
                             {{#each ../data.data.traits as |trait|}}
-                                {{log @key}}
+                                {{log @key ../data.data.trait}}
                                 {{#if (eq ../data.data.trait @key)}}
                                 <option value="{{@key}}" selected>{{trait.name}}</option>
                                 {{else}}
