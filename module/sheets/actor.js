@@ -223,7 +223,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        console.log('set_trait_value', event, itemid, item, element.value);
+        console.log('set_trait_value', event, itemId, item, element.value);
         if (element.value == 'unassigned') {
             this.actor.update({data: {traits: {[item.data.data.trait]: {level: 1, die_type: "d4"}}}});
         }else{
