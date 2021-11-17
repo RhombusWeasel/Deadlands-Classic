@@ -227,7 +227,7 @@ export default class PlayerSheet extends ActorSheet {
         if (element.value == 'unassigned') {
             this.actor.update({data: {traits: {[item.data.data.trait]: {level: 1, die_type: "d4"}}}});
         }else{
-            this.actor.update({data: {traits: {[element.value]: {level: item.level, die_type: item.die_type}}}});
+            this.actor.update({data: {traits: {[element.value]: {level: item.data.data.level, die_type: item.data.data.die_type}}}});
         }
         item.update({data: {trait: element.value}});
     }
