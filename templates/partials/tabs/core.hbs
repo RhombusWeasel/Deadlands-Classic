@@ -65,13 +65,15 @@
                 <table>
                     {{#each gen_deck as |card|}}
                     <tr class="item" data-itemId="{{this._id}}">
-                        <td class="center combat-hand-name">{{this.name}}</td>
-                        <td class="center combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
-                        <select class="center set-trait-value">
-                        {{#each ../data.data.traits as |trait|}}
-                            <option value="{{@key}}">{{trait.name}}</option>
-                        {{/each}}
-                        </select>
+                        <td class="perc40 center combat-hand-name">{{this.name}}</td>
+                        <td class="perc10 center combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
+                        <td class="perc50 center">
+                            <select class="set-trait-value">
+                            {{#each ../data.data.traits as |trait|}}
+                                <option value="{{@key}}">{{trait.name}}</option>
+                            {{/each}}
+                            </select>
+                        </td>
                         {{#isGM}}
                         <td class="center combat-hand-btn" style="text-align: center;"><a class="item-delete"><i class="fas fa-trash" title="Discard {{this.name}}"></i></a></td>
                         {{/isGM}}
