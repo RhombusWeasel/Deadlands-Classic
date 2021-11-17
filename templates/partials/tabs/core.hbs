@@ -75,7 +75,7 @@
                                 <option value="unassigned">Unassigned</option>
                                 {{/if}}
                             {{#each ../data.data.traits as |trait|}}
-                                {{#if (eq ../card.trait @key)}}
+                                {{#if (eq ../trait @key)}}
                                 <option value="{{@key}}" selected>{{trait.name}}</option>
                                 {{else}}
                                 <option value="{{@key}}">{{trait.name}}</option>
