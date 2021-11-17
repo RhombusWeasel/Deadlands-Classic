@@ -69,7 +69,7 @@
                         <td class="perc10 center combat-hand-btn">{{this.data.level}}{{this.data.die_type}}</td>
                         <td class="perc50 center">
                             <select class="set-trait-value">
-                                {{#if (eq card.trait "unassigned")}}
+                                {{#if (eq card.data.data.trait "unassigned")}}
                                 <option value="unassigned" selected>Unassigned</option>
                                 {{else}}
                                 <option value="unassigned">Unassigned</option>
