@@ -228,6 +228,7 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             this.actor.update({data: {traits: {[element.value]: {level: item.level, die_type: item.die_type}}}});
         }
+        item.update({data: {trait: element.value}});
     }
 
     _on_skill_roll(event) {
