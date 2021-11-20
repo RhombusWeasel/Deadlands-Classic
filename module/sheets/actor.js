@@ -152,6 +152,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".joker-value-select").change(this._on_joker_value.bind(this));
         html.find(".joker-suit-select").change(this._on_joker_suit.bind(this));
         html.find(".type-select").change(this._on_type_select.bind(this));
+        html.find(".set-trait-value").change(this._on_set_trait_value.bind(this));
 
         var traits = document.getElementsByClassName("trait_scroller")[0];
         if (traits) {
@@ -215,6 +216,20 @@ export default class PlayerSheet extends ActorSheet {
             };
             setTimeout(() => {this.actor.createOwnedItem(item)}, d * 500);
         }
+    }
+
+    _on_set_trait_value(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.items.get(itemId);
+        console.log('set_trait_value', event, itemId, item, element.value);
+        if (element.value == 'unassigned') {
+            this.actor.update({data: {traits: {[item.data.data.trait]: {level: 1, die_type: "d4"}}}});
+        }else{
+            this.actor.update({data: {traits: {[element.value]: {level: item.data.data.level, die_type: item.data.data.die_type}}}});
+        }
+        item.update({data: {trait: element.value}});
     }
 
     _on_skill_roll(event) {
@@ -369,9 +384,6 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
         dc_utils.chat.send('Discard', `${this.actor.name} discards ${item.name}`);
-        ChatMessage.create({ content: `
-            Discarding ${item.type} ${item.name}
-        `});
         dc_utils.char.items.delete(this.actor, itemId);
     }
 
@@ -576,20 +588,20 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId  = element.dataset.itemid;
         let item = this.actor.items.get(itemId);
+        let data
         if (itemId == 'Nuthin') {
-            return
+            data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
         }else{
-            let data
             if (item.type == 'melee') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
             }else if (item.type == 'firearm') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
             }
-            if (!(game.user.isGM)) {
-                dc_utils.socket.emit("register_attack", data);
-            }else{
-                operations.register_attack(data);
-            }
+        }
+        if (!(game.user.isGM)) {
+            dc_utils.socket.emit("register_attack", data);
+        }else{
+            operations.register_attack(data);
         }
     }
 

@@ -62,9 +62,6 @@ export default class VehicleSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
         dc_utils.chat.send('Discard', `${this.actor.name} discards ${item.name}`);
-        ChatMessage.create({ content: `
-            Discarding ${item.type} ${item.name}
-        `});
         dc_utils.char.items.delete(this.actor, itemId);
     }
 

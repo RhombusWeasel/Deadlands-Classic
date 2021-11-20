@@ -1136,7 +1136,11 @@
                 "total_cost": 0,
                 "will_sell": true,
                 "will_buy": true,
-                "limit_stock": false
+                "limit_stock": false,
+                "emits_light": false,
+                "bright_light": 0,
+                "dim_light": 0,
+                "light_angle": 360
             }
         },
         "firearm": {
@@ -1223,7 +1227,8 @@
         },
         "gen_deck": {
             "die_type":"d4",
-            "level":1
+            "level":1,
+            "trait": "unassigned"
         },
         "goods": {
             "templates": [
@@ -1260,6 +1265,10 @@
             "target_select": "cognition",
             "value_select": 2,
             "modifiers": []
+        },
+        "book": {
+            "pages": [],
+            "current_page": 0
         }
     }
 }

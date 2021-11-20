@@ -1362,6 +1362,14 @@ const dc_utils = {
                         }
                     }
                 }
+                if (item?.data?.data?.emits_light) {
+                    dc_utils.socket.emit('toggle_light', {
+                        name: act.name,
+                        bright_light: 0,
+                        dim_light: 0,
+                        light_angle: 360
+                    });
+                }
                 return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
@@ -1377,6 +1385,14 @@ const dc_utils = {
                             
                         }
                     }
+                }
+                if (item?.data?.data?.emits_light) {
+                    dc_utils.socket.emit('toggle_light', {
+                        name: act.name,
+                        bright_light: item.data.data.bright_light,
+                        dim_light: item.data.data.dim_light,
+                        light_angle: item.data.data.light_angle
+                    });
                 }
                 return act.update({data: {data: {equipped: {[slot]: id}}}});
             },

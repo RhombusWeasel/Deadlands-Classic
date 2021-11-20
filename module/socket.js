@@ -212,6 +212,17 @@ function battle_report(data) {
 }
 
 let operations = {
+    //LIGHT OPERATIONS
+    toggle_light: function(data) {
+        if (game.user.isGM) {
+            let tkn = dc_utils.get_token(data.name);
+            tkn.update({
+                brightLight: data.bright_light,
+                dimLight: data.dim_light,
+                lightAngle: data.light_angle
+            });
+        }
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
@@ -456,7 +467,7 @@ let operations = {
             let atk_roll       = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon, ca.target);
             if (!(atk_roll)) {
                 for (let i = 0; i < 5; i++) {
-                    atk_roll = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon);
+                    atk_roll = dc_utils.roll.new_roll_packet(act, ca.type, ca.skill, ca.weapon, ca.target);
                     if (atk_roll) {
                         break;
                     }
@@ -477,14 +488,18 @@ let operations = {
             ca.hit_roll = data.roll.total;
             for (const [key, mod] of Object.entries(data)){
                 if (!(ca[key])) {
-                    ca[key] = mod
+                    ca[key] = mod;
                 }
             }
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
             let wep = dc_utils.char.weapon.find(act, data.weapon);
-            ca.weapon_name = wep.name
+            if (wep) {
+                ca.weapon_name = wep.name;
+            }else{
+                ca.weapon_name = 'fist';
+            }
             if (data.type == 'ranged') {
                 //Check ammo
                 if (!(dc_utils.char.weapon.use_ammo(act, ca.weapon))) {
@@ -502,7 +517,7 @@ let operations = {
                 if (ca.type == 'ranged') {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `It was a critical failure!`, `what happens to your gun... [[1d6]]`);
                 }else{
-                    return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `It was a critical failure!`, `You probably dropped your ${wep.name}.`);
+                    return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `It was a critical failure!`, `You probably hurt your hand.`);
                 }
             }
             // Check hit
