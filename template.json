@@ -1265,6 +1265,10 @@
             "target_select": "cognition",
             "value_select": 2,
             "modifiers": []
+        },
+        "book": {
+            "pages": [],
+            "current_page": 0
         }
     }
 }
