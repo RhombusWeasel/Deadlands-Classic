@@ -1,67 +1,15 @@
 <form class="{{cssClass}} typed" autocomplete="off">
     {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
-    <div class="flexbox">
-        <div class="perc50">
-            <h2 class="center gm-collapsible">Roll Modifiers [{{tn}}]</h2>
-            {{#if modifiers}}
-            <div class="gm-content">
-                <table>
-                {{#each modifiers as |mod|}}
-                    <tr class="modifiers" data-mod="{{@key}}">
-                        <td class="perc80">{{mod.name}}</td>
-                        <td class="perc10 center">{{mod.mod}}</td>
-                    {{#if (eq mod.active true)}}
-                        <td><input type="checkbox" name="data.modifiers.{{@key}}.active" checked/></td>
-                    {{else}}
-                        <td><input type="checkbox" name="data.modifiers.{{@key}}.active"/></td>
-                    {{/if}}
-                    </tr>
-                {{/each}}
-                    <tr>
-                        <td class="perc90 center">Total</td>
-                        <td class="perc10 center">{{tn}}</td>
-                    </tr>
-                </table>
-            </div>
-            {{/if}}
+    <nav class="sheet-tabs tabs" data-group="gm">
+        <a class="item" data-tab="notes">Notes</a>
+        <a class="item" data-tab="combat">Combat</a>
+    </nav>
+    <section class="sheet-body scroller trait_scroller border">
+        <div class="tab notes" data-group="gm" data-tab="notes">
+            <textarea name="data.notes" id="notes" cols="30" rows="30">{{data.data.notes}}</textarea>
         </div>
-        <div class="perc50">
-            <a><p class="start-combat center">Start Combat</p></a>
-            <a><p class="new-round center">New Round</p></a>
-            <a><p class="end-combat center">End Combat</p></a>
-            <a><p class="next-turn center">Next Turn</p></a>
-            <a><p class="draw-card center">Draw Action Card</p></a>
-            <a><p class="refresh center">Refresh</p></a>
-            <div class="gm-content">
-            </div>
-            <div class="flexrow">
-                <div>
-                    <h2 class="center">Combat Hand</h2>
-                    {{#if action_deck}}
-                    <table>
-                        {{#each action_deck as |card|}}
-                        <tr class="item" data-itemId="{{this.id}}" data-itemindex="{{@index}}">
-                            <td class="perc90">{{this.name}}</td>
-                            <td class="perc10 center"><a class="play-card"><i class="fas fa-hand-paper" title="Play this Card"></i></a></td>
-                        </tr>
-                        {{/each}}
-                    </table>
-                    {{/if}}
-                </div>
-                {{#if action_list}}
-                <div>
-                    <h2 class="center">Action Queue</h2>
-                    <table>
-                    {{#each action_list as |card|}}
-                        <tr class="item" data-itemId="{{card._id}}">
-                            <td class="center">{{card.name}}</td>
-                            <td class="center">{{card.player}}</a></td>
-                        </tr>
-                    {{/each}}
-                    </table>
-                </div>
-                {{/if}}
-            </div>
+        <div class="tab combat" data-group="gm" data-tab="combat">
+            {{> "systems/deadlands_classic/templates/partials/tabs/gm-combat.hbs"}}
         </div>
-    </div>
+    </section>
 </form>
