@@ -1027,7 +1027,9 @@
                 "fannin": {"name": "Fannin", "mod": -2, "active":false},
                 "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
             },
-            "player_target": "all"
+            "player_target": "all",
+            "action_cards": [],
+            "timestamp": 0
         },
         "vehicle": {
             "type": "Steamwagon",
