@@ -61,7 +61,6 @@
             <table style="table-layout: fixed;">
                 <tr>
                     <th class="perc12 center">{{localize "dc.player.core.wound_modifier"}}</th>
-                    {{!-- Add editor conditional for this text input! --}}
                     {{#if (eq data.data.show_editor true)}}
                     <td class="perc12 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"/></td>
                     {{else}}
@@ -71,9 +70,9 @@
                 <tr>
                     <th class="perc12 center">Bleeding</th>
                     {{#if data.data.is_bleeding}}
-                    <td class="center"><input type="checkbox" name="data.is_bleeding" checked/></td>
+                    <td class="perc10 center"><a class="bleeding-toggle"><i class="fas fa-check"></i></a></td>
                     {{else}}
-                    <td class="center"><input type="checkbox" name="data.is_bleeding"/></td>
+                    <td class="perc10 center"><a class="bleeding-toggle"><i class="fas fa-times"></i></a></td>
                     {{/if}}
                 </tr>
                 <tr>
