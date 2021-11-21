@@ -1011,6 +1011,9 @@
             }
         },
         "gm": {
+            "templates": [
+                "core"
+            ],
             "combat_active": false,
             "modifiers": {
                 "foolproof": {"name": "Foolproof", "mod": 2, "active":false},
