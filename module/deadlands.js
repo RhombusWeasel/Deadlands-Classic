@@ -42,19 +42,6 @@ async function preload_handlebars_templates() {
     return loadTemplates(template_paths)
 }
 
-function get_token_count(t) {
-    let count = 0;
-    let tokens = canvas.tokens.placeables;
-    if (tokens) {
-        tokens.forEach(tkn => {
-            if (tkn.name.search(t.name) != -1) {
-                count += 1;
-            }
-        });
-    }
-    return count;
-}
-
 Hooks.once("init", function () {
     console.log("DC | Initializing Deadlands Classic.");
 
