@@ -1,6 +1,6 @@
 <section>
     <div class="flexrow border">
-        <select class=" perc50 center typed" name="data.add_posse_name">
+        <select class=" perc50 center typed add-posse-select">
             {{#each chars as |char|}}
                 {{#if (eq char.id ../data.id)}}
             <option value="{{char.id}}" selected>{{char.name}}</option>
@@ -11,10 +11,16 @@
             <option value=""></option>
         </select>
         <div>
-            <a class="add-posse-member">Add</a>
+            <a class="center add-to-posse">Add</a>
         </div>
     </div>
     <div>
-
+        <table>
+        {{#each posse as |player|}}
+            <td class="perc20 center">{{player.name}}</td>
+            <td class="perc10 right">{{player.data.data.cash}}</td>
+            <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+        {{/each}}
+        </table>
     </div>
 </section>

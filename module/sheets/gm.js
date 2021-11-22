@@ -29,6 +29,10 @@ export default class GMSheet extends ActorSheet {
         data.action_deck   = this.actor.data.data.action_cards;
         data.modifiers = this.actor.data.data.modifiers;
         data.chars = dc_utils.gm.get_player_owned_actors();
+        data.posse = [];
+        for (let i = 0; i < this.actor.data.data.posse.length; i++) {
+            data.posse.push(game.actors.get(this.actor.data.data.posse[i]));
+        }
         data.tn = 5;
         for (const [key, mod] of Object.entries(data.modifiers)){
             if (mod.active) {
@@ -80,6 +84,9 @@ export default class GMSheet extends ActorSheet {
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
+
+        // Selections
+        html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
         if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
@@ -263,5 +270,19 @@ export default class GMSheet extends ActorSheet {
             let next = data.action_list.pop();
             //console.log(next);
         }
+    }
+
+    _on_add_posse_select(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let id = element.value;
+        this.actor.update({data: {add_posse_name: id}});
+    }
+
+    _on_add_posse(event) {
+        event.preventDefault();
+        let posse = this.actor.data.data.posse;
+        posse.push(this.actor.data.data.add_posse_name);
+        this.actor.update({data: {posse: posse}});
     }
 }
