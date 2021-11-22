@@ -145,6 +145,8 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
         html.find(".bleeding-toggle").click(this._on_bleed_toggle.bind(this));
+        html.find(".running-toggle").click(this._on_run_toggle.bind(this));
+        html.find(".mounted-toggle").click(this._on_mount_toggle.bind(this));
         html.find(".name-toggle").click(this._on_name_toggle.bind(this));
         html.find(".male-toggle").click(this._on_male_toggle.bind(this));
         html.find(".female-toggle").click(this._on_female_toggle.bind(this));
@@ -722,6 +724,16 @@ export default class PlayerSheet extends ActorSheet {
     _on_bleed_toggle(event) {
         event.preventDefault();
         this.actor.update({data: {is_bleeding: !this.actor.data.data.is_bleeding}});
+    }
+
+    _on_run_toggle(event) {
+        event.preventDefault();
+        this.actor.update({data: {is_running: !this.actor.data.data.is_running}});
+    }
+
+    _on_mount_toggle(event) {
+        event.preventDefault();
+        this.actor.update({data: {is_mounted: !this.actor.data.data.is_mounted}});
     }
 
     _on_new_blueprint(event) {

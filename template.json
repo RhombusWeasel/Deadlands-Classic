@@ -66,6 +66,8 @@
                 "off_hand_modifier": -6,
                 "called_shot": "any",
                 "is_bleeding": false,
+                "is_running": false,
+                "is_mounted": false,
                 "perks": {
                     "level_headed": false
                 },

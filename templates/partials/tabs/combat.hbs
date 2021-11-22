@@ -76,6 +76,22 @@
                     {{/if}}
                 </tr>
                 <tr>
+                    <th class="perc12 center">Running</th>
+                    {{#if data.data.is_running}}
+                    <td class="perc10 center"><a class="running-toggle"><i class="fas fa-check"></i></a></td>
+                    {{else}}
+                    <td class="perc10 center"><a class="running-toggle"><i class="fas fa-times"></i></a></td>
+                    {{/if}}
+                </tr>
+                <tr>
+                    <th class="perc12 center">Mounted</th>
+                    {{#if data.data.is_mounted}}
+                    <td class="perc10 center"><a class="mounted-toggle"><i class="fas fa-check"></i></a></td>
+                    {{else}}
+                    <td class="perc10 center"><a class="mounted-toggle"><i class="fas fa-times"></i></a></td>
+                    {{/if}}
+                </tr>
+                <tr>
                     <th>Wound Soak</th>
                     {{#if (eq data.data.show_editor true)}}
                     <td><input type="text" name="data.wound_soak" value="{{data.data.wound_soak}}"></td>
