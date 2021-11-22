@@ -1,7 +1,7 @@
 <section>
     <div class="flexrow border">
         <select class=" perc50 center typed" name="data.add_posse_name">
-            {{#each data.chars as |char|}}
+            {{#each chars as |char|}}
                 {{#if (eq char.id ../data.id)}}
             <option value="{{char.id}}" selected>{{char.name}}</option>
                 {{else}}
@@ -15,6 +15,6 @@
         </div>
     </div>
     <div>
-        
+
     </div>
 </section>
