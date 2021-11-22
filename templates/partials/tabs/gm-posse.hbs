@@ -1,3 +1,20 @@
 <section>
-    
+    <div class="flexrow border">
+        <select class=" perc50 center typed" name="data.add_posse_name">
+            {{#each data.chars as |char|}}
+                {{#if (eq char.id ../data.id)}}
+            <option value="{{char.id}}" selected>{{char.name}}</option>
+                {{else}}
+            <option value="{{char.id}}">{{char.name}}</option>
+                {{/if}}
+            {{/each}}
+            <option value=""></option>
+        </select>
+        <div>
+            <a class="add-posse-member">Add</a>
+        </div>
+    </div>
+    <div>
+        
+    </div>
 </section>
