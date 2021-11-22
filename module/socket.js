@@ -510,7 +510,7 @@ let operations = {
             }
             // Check if dodged
             if (ca.dodge_roll != 'none') {
-                if (ca.dodge_roll >= ca.attack_roll) {
+                if (ca.dodge_roll >= ca.hit_roll) {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
