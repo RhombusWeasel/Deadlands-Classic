@@ -16,10 +16,25 @@
     </div>
     <div>
         <table>
+            <tr class="center">
+                <th>Name</th>
+                <th>Cash</th>
+                <th>Bleeding</th>
+                <th>Wind</th>
+            </tr>
         {{#each posse as |player|}}
-            <td class="perc20 center">{{player.name}}</td>
-            <td class="perc10 right">{{player.data.data.cash}}</td>
-            <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+            <tr>
+                <td class="perc20 center">{{player.name}}</td>
+                <td class="perc10 right">${{player.data.data.cash}}</td>
+                {{#if (eq player.data.data.is_bleeding)}}
+                <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
+                {{/if}}
+
+                {{!-- Put wind at the end. --}}
+                <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+            </tr>
         {{/each}}
         </table>
     </div>
