@@ -84,6 +84,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
+        html.find(".add-to-posse").click(this._on_add_posse.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
