@@ -596,7 +596,11 @@ export default class PlayerSheet extends ActorSheet {
             if (item.type == 'melee') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
             }else if (item.type == 'firearm') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                }
+                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
             }
         }
         if (!(game.user.isGM)) {
