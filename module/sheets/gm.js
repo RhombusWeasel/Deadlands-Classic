@@ -74,7 +74,7 @@ export default class GMSheet extends ActorSheet {
         data.time = {
             weekday: dc_utils.dow[date.getDay()],
             month:   dc_utils.months[date.getMonth()],
-            day:     `${date.getDate() + 1}${dc_utils.day_suffix[date.getDate() + 1]}`,
+            day:     `${date.getDate()}${dc_utils.day_suffix[date.getDate()]}`,
             year:    `${date.getFullYear()}`
         }
         return data;
