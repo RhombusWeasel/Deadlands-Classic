@@ -104,6 +104,9 @@ export default class GMSheet extends ActorSheet {
         html.find(".next-turn").click(this._on_next_turn.bind(this));
         html.find(".add-to-posse").click(this._on_add_posse.bind(this));
         html.find(".open-sheet").click(this._on_open_sheet.bind(this));
+        html.find(".toggle-bleeding").click(this._on_toggle_bleeding.bind(this));
+        html.find(".toggle-running").click(this._on_toggle_running.bind(this));
+        html.find(".toggle-mounted").click(this._on_toggle_mounted.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -330,5 +333,29 @@ export default class GMSheet extends ActorSheet {
         }else{
             act.sheet.close();
         }
+    }
+
+    _on_toggle_bleeding(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_bleeding: !act.data.data.is_bleeding}});
+    }
+
+    _on_toggle_running(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_running: !act.data.data.is_running}});
+    }
+
+    _on_toggle_mounted(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_mounted: !act.data.data.is_mounted}});
     }
 }
