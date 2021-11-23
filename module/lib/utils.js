@@ -1849,7 +1849,7 @@ const dc_utils = {
             if (item) {
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
-                    if (target.data.data.is_running) {
+                    if (target?.data?.data?.is_running) {
                         data.modifiers.moving_target = {label: 'Moving Target', modifier: -4};
                     }
                     if (act.data.data.is_running) {
