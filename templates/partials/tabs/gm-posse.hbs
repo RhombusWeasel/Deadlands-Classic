@@ -28,17 +28,17 @@
             <tr class="posse" data-name="{{player.name}}">
                 <td class="perc10 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
-                {{#if (eq player.data.data.is_bleeding)}}
+                {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
                 <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
                 {{/if}}
-                {{#if (eq player.data.data.is_running)}}
+                {{#if (eq player.data.data.is_running true)}}
                 <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
                 <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
                 {{/if}}
-                {{#if (eq player.data.data.is_mounted)}}
+                {{#if (eq player.data.data.is_mounted true)}}
                 <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
                 <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
