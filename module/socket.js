@@ -579,7 +579,6 @@ let operations = {
             }else{
                 operations.enemy_damage(data);
             }
-            dc_utils.gm.update_sheet();
         }
     },
     //NEW COMBAT OPERATIONS
@@ -704,6 +703,7 @@ let operations = {
                 }
             }
         }
+        dc_utils.gm.update_sheet();
     },
     soak: function(data) {
         if (game.user.isGM) {
