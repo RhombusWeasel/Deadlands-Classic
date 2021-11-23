@@ -1602,9 +1602,9 @@ const dc_utils = {
                     wm = amt;
                 }
                 if (is_wounded) {
-                    return act.update({data: {wound_modifier: wm}});
+                    return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, 1000);
                 }else{
-                    return act.update({data: {wound_modifier: 0}});
+                    return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, 1000);
                 }
             },
             set_bleeding: function(act, bool) {
