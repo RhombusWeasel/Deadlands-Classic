@@ -73,6 +73,9 @@
 .perc10 {
     width: 10%
 }
+.perc5 {
+    width: 5%
+}
 .flexbox {
     display: flex;
     flex-direction: row;
