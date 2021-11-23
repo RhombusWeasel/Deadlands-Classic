@@ -78,7 +78,7 @@ export default class GMSheet extends ActorSheet {
             year:    `${date.getFullYear()}`,
             hour:    `${date.getHours()}`,
             minute:  `${date.getMinutes()}`,
-            moon:    dc_utils.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())
+            moon:    dc_utils.moon_phase[dc_utils.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())]
         };
         return data;
     }

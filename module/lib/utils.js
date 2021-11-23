@@ -1081,7 +1081,7 @@ const dc_utils = {
         jd -= b; //subtract integer part to leave fractional part of original jd
         b = Math.round(jd * 8); //scale fraction from 0-8 and round
         b %= 8;
-        return b;
+        return Math.abs(b);
     },
     /** UUID
     * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
