@@ -1175,7 +1175,18 @@ const dc_utils = {
             if (game.user.isGM) {
                 game.user.character.sheet.render(false);
             }
-        }
+        },
+        update_time: function(act, period, mult) {
+            let val = {
+                year: 31449600000,
+                month: 2419200000,
+                day:     86400000,
+                hour:     3600000,
+                minute:     60000
+            }
+            let new_val = act.data.data.timestamp + (val[period] * mult)
+            act.update({data: {timestamp: new_val}})
+        },
     },
     user: {
         get_owned_actors: function() {

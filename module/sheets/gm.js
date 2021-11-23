@@ -84,6 +84,8 @@ export default class GMSheet extends ActorSheet {
     }
 
     activateListeners(html) {
+        html.find(".time-up").click(this._on_time_up.bind(this));
+        html.find(".time-down").click(this._on_time_down.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
@@ -131,6 +133,20 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         this.getData();
         this.render();
+    }
+
+    _on_time_up(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let period = element.closest(".time").dataset.period;
+        dc_utils.gm.update_time(this.actor, period, 1);
+    }
+
+    _on_time_down(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let period = element.closest(".time").dataset.period;
+        dc_utils.gm.update_time(this.actor, period, -1);
     }
 
     _on_draw_fate(event) {
