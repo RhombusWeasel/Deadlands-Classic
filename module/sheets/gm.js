@@ -70,6 +70,13 @@ export default class GMSheet extends ActorSheet {
                 this.actor.update({data: {action_cards: []}});
             }
         }
+        let date = new Date(this.actor.data.data.timestamp);
+        data.time = {
+            weekday: dc_utils.dow[date.getDay()],
+            month:   dc_utils.months[date.getMonth()],
+            day:     `${date.getDate() + 1}${dc_utils.day_suffix[date.getDate() + 1]}`,
+            year:    `${date.getFullYear()}`
+        }
         return data;
     }
 
