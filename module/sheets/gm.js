@@ -71,7 +71,7 @@ export default class GMSheet extends ActorSheet {
             }
         }
         data.enemies = [];
-        let enemies = canvas.tokens.placeables.find(i => i.data.disposition == -1);
+        let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1);
         for (let i = 0; i < enemies.length; i++) {
             const tkn = dc_utils.get_actor(enemies[i].name);
             data.enemies.push(tkn);
