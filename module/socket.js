@@ -772,6 +772,7 @@ Hooks.on("ready", () => {
         if (data.operation in operations) {
             console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);
+            dc_utils.gm.update_sheet();
             return false;
         }
     });

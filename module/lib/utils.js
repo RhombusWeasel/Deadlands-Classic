@@ -1146,6 +1146,11 @@ const dc_utils = {
             }
             return r_tab;
         },
+        update_sheet: function() {
+            if (game.user.isGM) {
+                game.user.character.sheet.render(false);
+            }
+        }
     },
     user: {
         get_owned_actors: function() {
