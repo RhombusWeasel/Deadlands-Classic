@@ -70,7 +70,12 @@ export default class GMSheet extends ActorSheet {
                 this.actor.update({data: {action_cards: []}});
             }
         }
-        data.enemies = canvas.tokens.placeables.find(i => i.data.disposition == -1 && i.name != '');
+        data.enemies = [];
+        let enemies = canvas.tokens.placeables.find(i => i.data.disposition == -1);
+        for (let i = 0; i < enemies.length; i++) {
+            const tkn = dc_utils.get_actor(enemies[i].name);
+            data.enemies.push(tkn);
+        }
         let date = new Date(this.actor.data.data.timestamp);
         data.time = {
             weekday: dc_utils.dow[date.getDay()],
