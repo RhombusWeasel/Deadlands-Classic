@@ -579,6 +579,7 @@ let operations = {
             }else{
                 operations.enemy_damage(data);
             }
+            dc_utils.gm.update_sheet();
         }
     },
     //NEW COMBAT OPERATIONS
