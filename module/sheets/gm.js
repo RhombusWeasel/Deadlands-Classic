@@ -76,8 +76,8 @@ export default class GMSheet extends ActorSheet {
             month:   dc_utils.months[date.getMonth()],
             day:     `${date.getDate()}${dc_utils.day_suffix[date.getDate()]}`,
             year:    `${date.getFullYear()}`,
-            hour:    `${date.getHours()}`,
-            minute:  `${date.getMinutes()}`,
+            hour:    dc_utils.pad(`${date.getHours()}`, 2),
+            minute:  dc_utils.pad(`${date.getMinutes()}`, 2),
             moon:    dc_utils.moon_phases[dc_utils.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())]
         };
         return data;

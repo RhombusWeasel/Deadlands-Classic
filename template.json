@@ -53,6 +53,8 @@
                 },
                 "wound_modifier": 0,
                 "wound_soak": 0,
+                "next_heal": 0,
+                "healing_factor": 432000000,
                 "grit": 0,
                 "cash": 250,
                 "bounty": {

@@ -1123,6 +1123,10 @@ const dc_utils = {
         if (amt == 1) return `${amt} ${a}`;
         return `${amt} ${b}`
     },
+    pad: function(str, size) {
+        while (str.length < (size || 2)) {str = "0" + str;}
+        return str;
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -1182,7 +1186,7 @@ const dc_utils = {
                 month: 2419200000,
                 day:     86400000,
                 hour:     3600000,
-                minute:     60000
+                minute:     60000 * 5
             }
             let new_val = act.data.data.timestamp + (val[period] * mult)
             act.update({data: {timestamp: new_val}})
@@ -1602,9 +1606,9 @@ const dc_utils = {
                     wm = amt;
                 }
                 if (is_wounded) {
-                    return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, 1000);
+                    return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
                 }else{
-                    return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, 1000);
+                    return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, Math.random() * 1000);
                 }
             },
             set_bleeding: function(act, bool) {
