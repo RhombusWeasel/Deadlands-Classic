@@ -1561,7 +1561,7 @@ const dc_utils = {
                     return setTimeout(() => {
                         act.update({data: {wounds: {[loc]: tot}}});
                         dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
-                        dc_utils.char.wounds.calculate_wound_modifier(act);
+                        dc_utils.char.wounds.calculate_wound_modifier(act, amt);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
                     }, Math.random() * 500);
                 }else{
@@ -1582,7 +1582,7 @@ const dc_utils = {
                     }, Math.random() * 500);
                 }
             },
-            calculate_wound_modifier: function(act) {
+            calculate_wound_modifier: function(act, amt) {
                 let wm = act.data.data.wound_modifier
                 let is_wounded = false
                 for (const loc in act.data.data.wounds) {
@@ -1597,6 +1597,9 @@ const dc_utils = {
                             }
                         }
                     }
+                }
+                if (wm * -1 < amt) {
+                    wm = amt;
                 }
                 if (is_wounded) {
                     return act.update({data: {wound_modifier: wm}});
