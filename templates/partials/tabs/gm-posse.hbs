@@ -22,28 +22,29 @@
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
                 <th><i class="fas fa-running" title="Running"></i></th>
                 <th><i class="fas fa-horse" title="Mounted"></i></th>
+                <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
                 <th>Wind</th>
             </tr>
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}">
-                <td class="perc10 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
+                <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
-                <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.is_running true)}}
-                <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.is_mounted true)}}
-                <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc10 center"><a><i class="fas fa-times"></i></a></td>
+                <td class="perc5 center"><a><i class="fas fa-times"></i></a></td>
                 {{/if}}
-                {{!-- Put wind at the end. --}}
+                <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
         {{/each}}
