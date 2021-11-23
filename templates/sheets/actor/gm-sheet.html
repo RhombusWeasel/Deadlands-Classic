@@ -1,11 +1,11 @@
 <form class="{{cssClass}} typed" autocomplete="off">
     <table>
         <tr>
-            <th class="center"></th>
-            <th class="center time time-up" data-period="month"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="center time time-up" data-period="day"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="center time time-up" data-period="year"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="center">
+            <th class="perc15 center"></th>
+            <th class="perc15 center time time-up" data-period="month"><a><i class="fas fa-angle-up"></i></a></th>
+            <th class="perc15 center time time-up" data-period="day"><a><i class="fas fa-angle-up"></i></a></th>
+            <th class="perc15 center time time-up" data-period="year"><a><i class="fas fa-angle-up"></i></a></th>
+            <th class="perc15 center">
                 <a class="time time-up" data-period="hour">
                     <i class="fas fa-angle-up"></i>
                 </a>
@@ -14,22 +14,22 @@
                     <i class="fas fa-angle-up"></i>
                 </a>
             </th>
-            <th class="center">Moon</th>
+            <th class="perc15 center">Moon</th>
         </tr>
         <tr>
-            <td class="center">{{time.weekday}}</td>
-            <td class="center">{{time.month}}</td>
-            <td class="center">{{time.day}}</td>
-            <td class="center">{{time.year}}</td>
-            <td class="center">{{time.hour}}:{{time.minute}}</td>
-            <td class="center">{{time.moon}}</td>
+            <td class="perc15 center">{{time.weekday}}</td>
+            <td class="perc15 center">{{time.month}}</td>
+            <td class="perc15 center">{{time.day}}</td>
+            <td class="perc15 center">{{time.year}}</td>
+            <td class="perc15 center">{{time.hour}}:{{time.minute}}</td>
+            <td class="perc15 center">{{time.moon}}</td>
         </tr>
         <tr>
-            <th class="center"></th>
-            <th class="center time time-down" data-period="month"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="center time time-down" data-period="day"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="center time time-down" data-period="year"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="center">
+            <th class="perc15 center"></th>
+            <th class="perc15 center time time-down" data-period="month"><a><i class="fas fa-angle-down"></i></a></th>
+            <th class="perc15 center time time-down" data-period="day"><a><i class="fas fa-angle-down"></i></a></th>
+            <th class="perc15 center time time-down" data-period="year"><a><i class="fas fa-angle-down"></i></a></th>
+            <th class="perc15 center">
                 <a class="time time-down" data-period="hour">
                     <i class="fas fa-angle-down"></i>
                 </a>
@@ -38,7 +38,7 @@
                     <i class="fas fa-angle-down"></i>
                 </a>
             </th>
-            <th class="center"></th>
+            <th class="perc15 center"></th>
         </tr>
     </table>
     {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
