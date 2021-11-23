@@ -1058,9 +1058,31 @@ const dc_utils = {
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     day_suffix: ['', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st'],
     dow:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
 
     // Helper Functions:
-
+    /* GET_MOON_PHASE
+    * Gets the moon phase for a given date.
+    * Plagerised from https://gist.github.com/endel/dfe6bb2fbe679781948c
+    * All credit to Endel Drayder https://github.com/endel
+    */
+    get_moon_phase: function(year, month, day) {
+        var c = e = jd = b = 0;
+        if (month < 3) {
+            year--;
+            month += 12;
+        }
+        ++month;
+        c = 365.25 * year;
+        e = 30.6 * month;
+        jd = c + e + day - 694039.09; //jd is total days elapsed
+        jd /= 29.5305882; //divide by the moon cycle
+        b = parseInt(jd); //int(jd) -> b, take integer part of jd
+        jd -= b; //subtract integer part to leave fractional part of original jd
+        b = Math.round(jd * 8); //scale fraction from 0-8 and round
+        b %= 8;
+        return b;
+    },
     /** UUID
     * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
     */
