@@ -1560,7 +1560,7 @@ const dc_utils = {
                     }
                     return setTimeout(() => {
                         act.update({data: {wounds: {[loc]: tot}}});
-                        dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
+                        dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                         dc_utils.char.wounds.calculate_wound_modifier(act);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
                     }, Math.random() * 500);
@@ -1849,6 +1849,15 @@ const dc_utils = {
             if (item) {
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
+                    if (target.data.data.is_running) {
+                        data.modifiers.moving_target = {label: 'Moving Target', modifier: -4};
+                    }
+                    if (act.data.data.is_running) {
+                        data.modifiers.running = {label: 'Running', modifier: -4};
+                    }
+                    if (act.data.data.is_mounted) {
+                        data.modifiers.mounted = {label: 'Mounted', modifier: -2};
+                    }
                 }
                 if (act.data.data.equipped.off == item.id) {
                     if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
