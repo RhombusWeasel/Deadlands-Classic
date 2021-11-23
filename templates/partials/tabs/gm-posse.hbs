@@ -19,14 +19,14 @@
             <tr class="center">
                 <th>Name</th>
                 <th>Cash</th>
-                <th>Bleeding</th>
-                <th>Running</th>
-                <th>Mounted</th>
+                <th><i class="fas fa-tint" title="Bleeding"></i></th>
+                <th><i class="fas fa-running" title="Running"></i></th>
+                <th><i class="fas fa-horse" title="Mounted"></i></th>
                 <th>Wind</th>
             </tr>
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}">
-                <td class="perc20 center open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
+                <td class="perc10 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding)}}
                 <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>
