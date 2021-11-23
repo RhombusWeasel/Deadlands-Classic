@@ -1268,7 +1268,7 @@ const dc_utils = {
                         }
                     }
                 }
-                throw 'DC | ERROR: skill not found.';
+                throw `DC | ERROR: skill ${skill_name} not found.`;
             },
             set_level: function(act, skill_name, lvl) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
