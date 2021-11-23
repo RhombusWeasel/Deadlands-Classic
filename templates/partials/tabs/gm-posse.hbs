@@ -23,8 +23,8 @@
                 <th>Wind</th>
             </tr>
         {{#each posse as |player|}}
-            <tr>
-                <td class="perc20 center">{{player.name}}</td>
+            <tr class="posse" data-name="{{player.name}}">
+                <td class="perc20 center open-sheet">{{player.name}}</td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding)}}
                 <td class="perc10 center"><a><i class="fas fa-check"></i></a></td>

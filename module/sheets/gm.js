@@ -85,6 +85,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
         html.find(".add-to-posse").click(this._on_add_posse.bind(this));
+        html.find(".open-sheet").click(this._on_open_sheet.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -285,5 +286,17 @@ export default class GMSheet extends ActorSheet {
         let posse = this.actor.data.data.posse;
         posse.push(this.actor.data.data.add_posse_name);
         this.actor.update({data: {posse: posse}});
+    }
+
+    _on_open_sheet(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        if (!(act.sheet.rendered)) {
+            act.sheet.render(true);
+        }else{
+            act.sheet.close();
+        }
     }
 }
