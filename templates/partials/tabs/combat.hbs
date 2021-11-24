@@ -82,7 +82,11 @@
                     {{else}}
                     <td class="perc5 center"><a class="mounted-toggle"><i class="fas fa-times"></i></a></td>
                     {{/if}}
+                    {{#if (eq data.data.show_editor true)}}
+                    <td class="perc5 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"></td>
+                    {{else}}
                     <td class="perc5 center">{{data.data.wound_modifier}}</td>
+                    {{/if}}
                     <td class="perc10 center">{{data.data.wind.value}}/{{data.data.wind.max}}</td>
                 </tr>
                 <tr>
@@ -116,7 +120,7 @@
                                 <td class="center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{#wound_timer data.data.heals.noggin}}</td>
+                            <td class="center">{{wound_timer data.data.heals.noggin}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
