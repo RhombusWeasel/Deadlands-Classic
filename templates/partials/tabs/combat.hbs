@@ -104,154 +104,154 @@
                     <th><i class="fas fa-plus" title="Healing"></i></th>
                 </tr>
                 <tr class="location" data-location="noggin">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.noggin"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.noggin"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.noggin" value="{{data.data.wounds.noggin}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.noggin" value="{{data.data.armour.noggin}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.noggin" value="{{data.data.wounds.noggin}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.noggin" value="{{data.data.armour.noggin}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.noggin}}</td>
-                    <td class="center">{{data.data.armour.noggin}}</td>
+                    <td class="perc5 center">{{data.data.wounds.noggin}}</td>
+                    <td class="perc5 center">{{data.data.armour.noggin}}</td>
                         {{#if (eq data.data.heals.noggin 0)}}
                             {{#ifCond data.data.wounds.noggin '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.noggin}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.noggin}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="guts">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.guts"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.guts"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.guts" value="{{data.data.wounds.guts}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.guts" value="{{data.data.armour.guts}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.guts" value="{{data.data.wounds.guts}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.guts" value="{{data.data.armour.guts}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.guts}}</td>
-                    <td class="center">{{data.data.armour.guts}}</td>
+                    <td class="perc5 center">{{data.data.wounds.guts}}</td>
+                    <td class="perc5 center">{{data.data.armour.guts}}</td>
                         {{#if (eq data.data.heals.guts 0)}}
                             {{#ifCond data.data.wounds.guts '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.guts}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.guts}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="arm_left">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.arm_left"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.arm_left"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.arm_left" value="{{data.data.wounds.arm_left}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.arm_left" value="{{data.data.armour.arm_left}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.arm_left" value="{{data.data.wounds.arm_left}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.arm_left" value="{{data.data.armour.arm_left}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.arm_left}}</td>
-                    <td class="center">{{data.data.armour.arm_left}}</td>
+                    <td class="perc5 center">{{data.data.wounds.arm_left}}</td>
+                    <td class="perc5 center">{{data.data.armour.arm_left}}</td>
                         {{#if (eq data.data.heals.arm_left 0)}}
                             {{#ifCond data.data.wounds.arm_left '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.arm_left}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.arm_left}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="arm_right">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.arm_right"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.arm_right"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.arm_right" value="{{data.data.wounds.arm_right}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.arm_right" value="{{data.data.wounds.arm_right}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.arm_right}}</td>
-                    <td class="center">{{data.data.armour.arm_right}}</td>
+                    <td class="perc5 center">{{data.data.wounds.arm_right}}</td>
+                    <td class="perc5 center">{{data.data.armour.arm_right}}</td>
                         {{#if (eq data.data.heals.arm_right 0)}}
                             {{#ifCond data.data.wounds.arm_right '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.arm_right}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.arm_right}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="lower_guts">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.lower_guts"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.lower_guts"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.lower_guts}}</td>
-                    <td class="center">{{data.data.armour.lower_guts}}</td>
+                    <td class="perc5 center">{{data.data.wounds.lower_guts}}</td>
+                    <td class="perc5 center">{{data.data.armour.lower_guts}}</td>
                         {{#if (eq data.data.heals.lower_guts 0)}}
                             {{#ifCond data.data.wounds.lower_guts '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.lower_guts}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.lower_guts}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="gizzards">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.gizzards"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.gizzards"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.gizzards}}</td>
-                    <td class="center">{{data.data.armour.gizzards}}</td>
+                    <td class="perc5 center">{{data.data.wounds.gizzards}}</td>
+                    <td class="perc5 center">{{data.data.armour.gizzards}}</td>
                         {{#if (eq data.data.heals.gizzards 0)}}
                             {{#ifCond data.data.wounds.gizzards '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.gizzards}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.gizzards}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="leg_left">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.leg_left"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.leg_left"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.leg_left" value="{{data.data.wounds.leg_left}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.leg_left" value="{{data.data.armour.leg_left}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.leg_left" value="{{data.data.wounds.leg_left}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.leg_left" value="{{data.data.armour.leg_left}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.leg_left}}</td>
-                    <td class="center">{{data.data.armour.leg_left}}</td>
+                    <td class="perc5 center">{{data.data.wounds.leg_left}}</td>
+                    <td class="perc5 center">{{data.data.armour.leg_left}}</td>
                         {{#if (eq data.data.heals.leg_left 0)}}
                             {{#ifCond data.data.wounds.leg_left '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.leg_left}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.leg_left}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
                 <tr class="location" data-location="leg_right">
-                    <th class="perc20 center">{{localize "dc.player.core.wounds.leg_right"}}</th>
+                    <th class="perc45 center">{{localize "dc.player.core.wounds.leg_right"}}</th>
                     {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.leg_right" value="{{data.data.wounds.leg_right}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.wounds.leg_right" value="{{data.data.wounds.leg_right}}"/></td>
+                    <td class="perc5 center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
                     {{else}}
-                    <td class="center">{{data.data.wounds.leg_right}}</td>
-                    <td class="center">{{data.data.armour.leg_right}}</td>
+                    <td class="perc5 center">{{data.data.wounds.leg_right}}</td>
+                    <td class="perc5 center">{{data.data.armour.leg_right}}</td>
                         {{#if (eq data.data.heals.leg_right 0)}}
                             {{#ifCond data.data.wounds.leg_right '>' 0}}
-                                <td class="center"><i class="fas fa-plus" title="Healing"></i></td>
+                                <td class="perc45 center"><i class="fas fa-plus" title="Healing"></i></td>
                             {{else}}
-                                <td class="center">-</td>
+                                <td class="perc45 center">-</td>
                             {{/ifCond}}
                         {{else}}
-                            <td class="center">{{wound_timer data.data.heals.leg_right}}</td>
+                            <td class="perc45 center">{{wound_timer data.data.heals.leg_right}}</td>
                         {{/if}}
                     {{/if}}
                 </tr>
