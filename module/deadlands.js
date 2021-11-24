@@ -176,6 +176,10 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('wound_timer', function (val, options) {
+        return `${((((val / 1000)/ 60)/ 60)/ 24)} days`
+    });
+
     Handlebars.registerHelper('isGM', function (options) {
         if (game.user.isGM) {
             return options.fn(this);
