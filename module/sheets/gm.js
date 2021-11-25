@@ -17,7 +17,7 @@ export default class GMSheet extends ActorSheet {
     }
 
     getData() {
-        if (game.user.isGM) {
+        if (game.user.isGM && this.actor.type == 'gm') {
             const data = super.getData();
             data.config = CONFIG.dc;
             let fate_chips = dc_utils.char.items.get(this.actor, "chip");
