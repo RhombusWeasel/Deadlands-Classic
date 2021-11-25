@@ -76,16 +76,7 @@ export default class GMSheet extends ActorSheet {
             const tkn = dc_utils.get_actor(enemies[i].name);
             data.enemies.push(tkn);
         }
-        let date = new Date(this.actor.data.data.timestamp);
-        data.time = {
-            weekday: dc_utils.dow[date.getDay()],
-            month:   dc_utils.months[date.getMonth()],
-            day:     `${date.getDate()}${dc_utils.day_suffix[date.getDate()]}`,
-            year:    `${date.getFullYear()}`,
-            hour:    dc_utils.pad(`${date.getHours()}`, 2),
-            minute:  dc_utils.pad(`${date.getMinutes()}`, 2),
-            moon:    dc_utils.moon_phases[dc_utils.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())]
-        };
+        data.time = dc_utils.time.get_date();
         return data;
     }
 

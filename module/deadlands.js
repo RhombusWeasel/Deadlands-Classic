@@ -66,18 +66,29 @@ Hooks.once("init", function () {
         type: Boolean,       // Number, Boolean, String,  
         default: false,
         onChange: value => {
-          console.log('Combat Active: ', value)
+          console.log('Combat Active: ', value);
         }
     });
 
-    game.settings.register('deadlands_classic', 'updated_unskilled_checked', {
-        name: 'Combat Active',
+    game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
+        name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
         scope: 'world',
-        config: true,
+        config: false,
         type: Boolean,  
         default: false,
         onChange: value => {
-          console.log('Updated unskilled checks: ', value)
+          console.log('Updated unskilled checks: ', value);
+        }
+    });
+
+    game.settings.register('deadlands_classic', 'uinxtime', {
+        name: 'Unix time for the campaign.',
+        scope: 'world',
+        config: false,
+        type: Boolean,  
+        default: -299790720000,
+        onChange: value => {
+          console.log('Unix time updated: ', value);
         }
     });
 

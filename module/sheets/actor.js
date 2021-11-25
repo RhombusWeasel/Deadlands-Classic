@@ -67,6 +67,7 @@ export default class PlayerSheet extends ActorSheet {
         const data         = super.getData();
         data.config        = CONFIG.dc;
         data.id            = this.actor.id;
+        data.time          = dc_utils.time.get_date();
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.gen_deck      = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "gen_deck"}));
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
@@ -101,7 +102,7 @@ export default class PlayerSheet extends ActorSheet {
             {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
             {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
+        let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"});
         if (data.combat_active) {
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {

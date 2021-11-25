@@ -1061,28 +1061,6 @@ const dc_utils = {
     moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
 
     // Helper Functions:
-    /* GET_MOON_PHASE
-    * Gets the moon phase for a given date.
-    * Plagerised from https://gist.github.com/endel/dfe6bb2fbe679781948c
-    * All credit to Endel Drayder https://github.com/endel
-    */
-    get_moon_phase: function(year, month, day) {
-        var c = e = jd = b = 0;
-        if (month < 3) {
-            year--;
-            month += 12;
-        }
-        ++month;
-        c = 365.25 * year;
-        e = 30.6 * month;
-        jd = c + e + day - 694039.09; //jd is total days elapsed
-        jd /= 29.5305882; //divide by the moon cycle
-        b = parseInt(jd); //int(jd) -> b, take integer part of jd
-        jd -= b; //subtract integer part to leave fractional part of original jd
-        b = Math.round(jd * 8); //scale fraction from 0-8 and round
-        b %= 8;
-        return Math.abs(b);
-    },
     /** UUID
     * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
     */
@@ -1189,7 +1167,8 @@ const dc_utils = {
                 minute:     60000 * 5
             }
             let new_val = act.data.data.timestamp + (val[period] * mult)
-            act.update({data: {timestamp: new_val}})
+            act.update({data: {timestamp: new_val}});
+            game.settings.set('deadlands_classic','unixtime', new_val);
         },
     },
     user: {
@@ -2630,6 +2609,43 @@ const dc_utils = {
                     y: (event.data.global.y - tr.ty) / canvas.stage.scale.y
                 }
             },
+        },
+    },
+    time: {
+        get_date: function() {
+            let ut = game.settings.get('deadlands_classic', 'unixtime');
+            let date = new Date(this.actor.data.data.timestamp);
+            return {
+                weekday: dc_utils.dow[date.getDay()],
+                month:   dc_utils.months[date.getMonth()],
+                day:     `${date.getDate()}${dc_utils.day_suffix[date.getDate()]}`,
+                year:    `${date.getFullYear()}`,
+                hour:    dc_utils.pad(`${date.getHours()}`, 2),
+                minute:  dc_utils.pad(`${date.getMinutes()}`, 2),
+                moon:    dc_utils.moon_phases[dc_utils.time.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())]
+            };
+        },
+        /* GET_MOON_PHASE
+        * Gets the moon phase for a given date.
+        * Plagerised from https://gist.github.com/endel/dfe6bb2fbe679781948c
+        * All credit to Endel Drayder https://github.com/endel
+        */
+        get_moon_phase: function(year, month, day) {
+            var c = e = jd = b = 0;
+            if (month < 3) {
+                year--;
+                month += 12;
+            }
+            ++month;
+            c = 365.25 * year;
+            e = 30.6 * month;
+            jd = c + e + day - 694039.09; //jd is total days elapsed
+            jd /= 29.5305882; //divide by the moon cycle
+            b = parseInt(jd); //int(jd) -> b, take integer part of jd
+            jd -= b; //subtract integer part to leave fractional part of original jd
+            b = Math.round(jd * 8); //scale fraction from 0-8 and round
+            b %= 8;
+            return Math.abs(b);
         },
     },
 };
