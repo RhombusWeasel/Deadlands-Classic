@@ -81,7 +81,7 @@ Hooks.once("init", function () {
         }
     });
 
-    await game.settings.register('deadlands_classic', 'uinxtime', {
+    game.settings.register('deadlands_classic', 'uinxtime', {
         name: 'Unix time for the campaign.',
         scope: 'world',
         config: true,
