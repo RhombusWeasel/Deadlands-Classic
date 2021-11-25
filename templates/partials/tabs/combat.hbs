@@ -104,7 +104,7 @@
                     <th><i class="fas fa-plus" title="Healing"></i></th>
                 </tr>
                 {{#each data.data.wounds as |loc|}}
-                    {{> "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs" this location=@key label=(location_name @key) wound_val=data.data.wounds[@key] armour_val=data.data.armour[@key] heal_val=data.data.heals[@key]}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs" this location=@key label=(location_name @key) wound_val=(location_data 'wounds' @key) armour_val=(location_data 'armour' @key) heal_val=(location_data 'heals' @key)}}
                 {{}}
                 <tr class="location" data-location="noggin">
                     <th class="perc45 center">{{localize "dc.player.core.wounds.noggin"}}</th>

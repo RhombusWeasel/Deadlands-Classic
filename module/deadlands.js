@@ -185,6 +185,11 @@ Hooks.once("init", function () {
         return dc_utils.locations[dc_utils.loc_lookup.indexOf(val)]
     });
 
+    Handlebars.registerHelper('location_data', function (tab, loc, options) {
+        let act = dc_utils.get_actor(options.data.root.actor.name);
+        return act.data.data[tab][val];
+    });
+
     Handlebars.registerHelper('isGM', function (options) {
         if (game.user.isGM) {
             return options.fn(this);
