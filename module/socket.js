@@ -223,6 +223,10 @@ let operations = {
             });
         }
     },
+    //MISC OPERATIONS
+    force_update: function(data) {
+        game.user.character.sheet.render(false);
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');

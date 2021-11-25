@@ -1169,6 +1169,7 @@ const dc_utils = {
             let new_val = act.data.data.timestamp + (val[period] * mult)
             act.update({data: {timestamp: new_val}});
             game.settings.set('deadlands_classic','unixtime', new_val);
+            dc_utils.gm.update_sheet();
         },
     },
     user: {
