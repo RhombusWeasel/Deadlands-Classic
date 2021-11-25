@@ -59,40 +59,38 @@ Hooks.once("init", function () {
     Actors.registerSheet("deadlands_classic", vehicle_sheet, { makeDefault: false});
     Actors.registerSheet("deadlands_classic", merchant_sheet, { makeDefault: false});
 
-    if (game.user.isGM) {
-        game.settings.register('deadlands_classic', 'combat_active', {
-            name: 'Combat Active',
-            scope: 'world',     // "world" = sync to db, "client" = local storage 
-            config: true,       // false if you dont want it to show in module config
-            type: Boolean,       // Number, Boolean, String,  
-            default: false,
-            onChange: value => {
-            console.log('Combat Active: ', value);
-            }
-        });
+    game.settings.register('deadlands_classic', 'combat_active', {
+        name: 'Combat Active',
+        scope: 'world',     // "world" = sync to db, "client" = local storage 
+        config: true,       // false if you dont want it to show in module config
+        type: Boolean,       // Number, Boolean, String,  
+        default: false,
+        onChange: value => {
+        console.log('Combat Active: ', value);
+        }
+    });
 
-        game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
-            name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
-            scope: 'world',
-            config: true,
-            type: Boolean,  
-            default: false,
-            onChange: value => {
-            console.log('Updated unskilled checks: ', value);
-            }
-        });
+    game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
+        name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
+        scope: 'world',
+        config: true,
+        type: Boolean,  
+        default: false,
+        onChange: value => {
+        console.log('Updated unskilled checks: ', value);
+        }
+    });
 
-        game.settings.register('deadlands_classic', 'unixtime', {
-            name: 'Unix time for the campaign.',
-            scope: 'world',
-            config: true,
-            type: Number,
-            default: -299790720000,
-            onChange: value => {
-            console.log('Unix time updated: ', value);
-            }
-        });
-    }
+    game.settings.register('deadlands_classic', 'unixtime', {
+        name: 'Unix time for the campaign.',
+        scope: 'world',
+        config: true,
+        type: Number,
+        default: -299790720000,
+        onChange: value => {
+        console.log('Unix time updated: ', value);
+        }
+    });
 
     Handlebars.registerHelper('if_has', function (type, val, options) {
         let act = game.actors.get(options.data.root.id);
