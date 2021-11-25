@@ -2614,7 +2614,7 @@ const dc_utils = {
     time: {
         get_date: function() {
             let ut = game.settings.get('deadlands_classic', 'unixtime');
-            let date = new Date(this.actor.data.data.timestamp);
+            let date = new Date(ut);
             return {
                 weekday: dc_utils.dow[date.getDay()],
                 month:   dc_utils.months[date.getMonth()],
