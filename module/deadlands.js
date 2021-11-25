@@ -85,7 +85,7 @@ Hooks.once("init", function () {
         name: 'Unix time for the campaign.',
         scope: 'world',
         config: false,
-        type: Boolean,  
+        type: Number,
         default: -299790720000,
         onChange: value => {
           console.log('Unix time updated: ', value);
