@@ -1057,7 +1057,7 @@ const dc_utils = {
     stackable: ['goods', 'components'],
     months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     day_suffix: ['', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st'],
-    dow:['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+    dow:['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
 
     // Helper Functions:
