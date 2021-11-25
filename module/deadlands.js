@@ -187,7 +187,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('location_data', function (tab, loc, options) {
         let act = dc_utils.get_actor(options.data.root.actor.name);
-        return act.data.data[tab][val];
+        return act.data.data[tab][loc];
     });
 
     Handlebars.registerHelper('isGM', function (options) {
