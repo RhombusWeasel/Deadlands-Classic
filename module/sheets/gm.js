@@ -106,7 +106,7 @@ export default class GMSheet extends ActorSheet {
         if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
-        let colls = document.getElementsByClassName("gm-collapsible");
+        /* let colls = document.getElementsByClassName("gm-collapsible");
         for (let i = 0; i < colls.length; i++) {
             if (!(game.dc.gm_collapse[i])) {
                 game.dc.gm_collapse[i] = false
@@ -127,7 +127,7 @@ export default class GMSheet extends ActorSheet {
             } else {
                 colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
             }
-        }
+        } */
         return super.activateListeners(html);
     }
 
