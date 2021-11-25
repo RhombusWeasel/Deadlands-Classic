@@ -66,7 +66,7 @@ Hooks.once("init", function () {
         type: Boolean,       // Number, Boolean, String,  
         default: false,
         onChange: value => {
-        console.log('Combat Active: ', value);
+            console.log('Combat Active: ', value);
         }
     });
 
@@ -77,7 +77,7 @@ Hooks.once("init", function () {
         type: Boolean,  
         default: false,
         onChange: value => {
-        console.log('Updated unskilled checks: ', value);
+            console.log('Updated unskilled checks: ', value);
         }
     });
 
@@ -88,7 +88,7 @@ Hooks.once("init", function () {
         type: Number,
         default: -299790720000,
         onChange: value => {
-        console.log('Unix time updated: ', value);
+            console.log('Unix time updated: ', value);
         }
     });
 
