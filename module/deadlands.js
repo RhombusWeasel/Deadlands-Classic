@@ -187,6 +187,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('location_data', function (tab, loc, options) {
         let act = dc_utils.get_actor(options.data.root.actor.name);
+        console.log('location_data: ', act.data.data[tab][loc], act);
         return act.data.data[tab][loc];
     });
 
