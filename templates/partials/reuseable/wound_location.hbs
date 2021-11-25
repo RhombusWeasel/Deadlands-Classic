@@ -1,7 +1,7 @@
 <section>
     <tr class="location" data-location="{{location}}">
         <th class="perc40 center">{{label}}</th>
-        {{#if (eq data.data.show_editor true)}}
+        {{#if (eq this.data.data.show_editor true)}}
         <td class="perc10 center"><input type="number" name="data.wounds.{{location}}" value="{{wound_val}}"/></td>
         <td class="perc10 center"><input type="number" name="data.armour.{{location}}" value="{{armour_val}}"/></td>
         <td class="perc10 center"><input type="number" name="data.heals.{{location}}" value="{{heal_val}}"/></td>
