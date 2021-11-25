@@ -1155,7 +1155,10 @@ const dc_utils = {
         },
         update_sheet: function() {
             if (game.user.isGM) {
-                setTimeout(() => {game.user.character.sheet.render(false)}, 1000);
+                setTimeout(() => {
+                    game.user.character.sheet.render(false)
+                    dc_utils.socket.emit('force_update', {});
+                }, 1000);
             }
         },
         update_time: function(act, period, mult) {
