@@ -1158,7 +1158,7 @@ const dc_utils = {
                 setTimeout(() => {
                     game.user.character.sheet.render(false)
                     dc_utils.socket.emit('force_update', {});
-                }, 1000);
+                }, 500);
             }
         },
         update_time: function(act, period, mult) {
