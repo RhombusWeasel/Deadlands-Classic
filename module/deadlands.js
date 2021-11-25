@@ -62,7 +62,7 @@ Hooks.once("init", function () {
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
         scope: 'world',     // "world" = sync to db, "client" = local storage 
-        config: false,       // false if you dont want it to show in module config
+        config: true,       // false if you dont want it to show in module config
         type: Boolean,       // Number, Boolean, String,  
         default: false,
         onChange: value => {
@@ -73,7 +73,7 @@ Hooks.once("init", function () {
     game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
         name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
         scope: 'world',
-        config: false,
+        config: true,
         type: Boolean,  
         default: false,
         onChange: value => {
@@ -81,10 +81,10 @@ Hooks.once("init", function () {
         }
     });
 
-    game.settings.register('deadlands_classic', 'uinxtime', {
+    await game.settings.register('deadlands_classic', 'uinxtime', {
         name: 'Unix time for the campaign.',
         scope: 'world',
-        config: false,
+        config: true,
         type: Number,
         default: -299790720000,
         onChange: value => {
