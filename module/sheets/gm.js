@@ -17,67 +17,69 @@ export default class GMSheet extends ActorSheet {
     }
 
     getData() {
-        const data = super.getData();
-        data.config = CONFIG.dc;
-        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
-        data.fate_chips = [
-            {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
-            {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
-            {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
-            {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
-        ];
-        data.action_deck   = this.actor.data.data.action_cards;
-        data.modifiers = this.actor.data.data.modifiers;
-        data.chars = dc_utils.gm.get_player_owned_actors();
-        data.posse = [];
-        for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
-            data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
-        }
-        data.tn = 5;
-        for (const [key, mod] of Object.entries(data.modifiers)){
-            if (mod.active) {
-                data.tn -= mod.mod;
+        if (game.user.isGM) {
+            const data = super.getData();
+            data.config = CONFIG.dc;
+            let fate_chips = dc_utils.char.items.get(this.actor, "chip");
+            data.fate_chips = [
+                {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
+                {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
+                {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
+                {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
+            ];
+            data.action_deck   = this.actor.data.data.action_cards;
+            data.modifiers = this.actor.data.data.modifiers;
+            data.chars = dc_utils.gm.get_player_owned_actors();
+            data.posse = [];
+            for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
+                data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
             }
-        }
-        data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        if (data.combat_active) {
-            let action_list = [];
-            let users = dc_utils.gm.get_online_users();
-            let pcs = dc_utils.gm.get_player_owned_actors();
-            for (let i = 0; i < users.length; i++) {
-                if (!(users[i].isGM)) {
-                    for (let p = 0; p < pcs.length; p++) {
-                        let char = pcs[p];
-                        let ad_cards = char.data.data.action_cards;
-                        for (let c = 0; c < ad_cards.length; c++) {
-                            const card = ad_cards[c];
-                            let card_data = {'name': card.name, 'player': char.name};
-                            action_list.push(card_data);
+            data.tn = 5;
+            for (const [key, mod] of Object.entries(data.modifiers)){
+                if (mod.active) {
+                    data.tn -= mod.mod;
+                }
+            }
+            data.combat_active = game.settings.get('deadlands_classic','combat_active');
+            if (data.combat_active) {
+                let action_list = [];
+                let users = dc_utils.gm.get_online_users();
+                let pcs = dc_utils.gm.get_player_owned_actors();
+                for (let i = 0; i < users.length; i++) {
+                    if (!(users[i].isGM)) {
+                        for (let p = 0; p < pcs.length; p++) {
+                            let char = pcs[p];
+                            let ad_cards = char.data.data.action_cards;
+                            for (let c = 0; c < ad_cards.length; c++) {
+                                const card = ad_cards[c];
+                                let card_data = {'name': card.name, 'player': char.name};
+                                action_list.push(card_data);
+                            }
                         }
                     }
                 }
+                for (let c = 0; c < data.action_deck.length; c++) {
+                    const card = data.action_deck[c];
+                    let card_data = {'name': card.name, 'player': 'GM'};
+                    action_list.push(card_data);
+                }
+                if (action_list.length > 0) {
+                    data.action_list = dc_utils.deck.sort(action_list);
+                }
+            }else{
+                if (this.actor.data.data.action_cards.length > 0) {
+                    this.actor.update({data: {action_cards: []}});
+                }
             }
-            for (let c = 0; c < data.action_deck.length; c++) {
-                const card = data.action_deck[c];
-                let card_data = {'name': card.name, 'player': 'GM'};
-                action_list.push(card_data);
+            data.enemies = [];
+            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1);
+            for (let i = 0; i < enemies.length; i++) {
+                const tkn = dc_utils.get_actor(enemies[i].name);
+                data.enemies.push(tkn);
             }
-            if (action_list.length > 0) {
-                data.action_list = dc_utils.deck.sort(action_list);
-            }
-        }else{
-            if (this.actor.data.data.action_cards.length > 0) {
-                this.actor.update({data: {action_cards: []}});
-            }
+            data.time = dc_utils.time.get_date();
+            return data;
         }
-        data.enemies = [];
-        let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1);
-        for (let i = 0; i < enemies.length; i++) {
-            const tkn = dc_utils.get_actor(enemies[i].name);
-            data.enemies.push(tkn);
-        }
-        data.time = dc_utils.time.get_date();
-        return data;
     }
 
     activateListeners(html) {
