@@ -17,6 +17,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
@@ -178,6 +179,10 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('wound_timer', function (val, options) {
         return `${((((val / 1000)/ 60)/ 60)/ 24)} days`
+    });
+
+    Handlebars.registerHelper('location_name', function (val, options) {
+        return dc_utils.locations[dc_utils.loc_lookup.indexOf(val)]
     });
 
     Handlebars.registerHelper('isGM', function (options) {
