@@ -1048,7 +1048,8 @@
             "action_cards": [],
             "timestamp": -2997907200000,
             "add_posse_name": "",
-            "posse": []
+            "posse": [],
+            "posse_chips": {}
         },
         "vehicle": {
             "type": "Steamwagon",
