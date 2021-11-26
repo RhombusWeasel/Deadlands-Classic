@@ -103,10 +103,10 @@ export default class GMSheet extends ActorSheet {
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
-        if (!(game.dc.gm_collapse)) {
+        /* if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
-        /* let colls = document.getElementsByClassName("gm-collapsible");
+        let colls = document.getElementsByClassName("gm-collapsible");
         for (let i = 0; i < colls.length; i++) {
             if (!(game.dc.gm_collapse[i])) {
                 game.dc.gm_collapse[i] = false
