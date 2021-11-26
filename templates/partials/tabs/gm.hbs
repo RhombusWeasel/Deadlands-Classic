@@ -10,6 +10,11 @@
                         {{else}}
                         <option value="player">Player</option>
                         {{/if}}
+                        {{#if (eq this.data.type "gm")}}
+                        <option value="gm" selected>Marshal</option>
+                        {{else}}
+                        <option value="gm">Marshal</option>
+                        {{/if}}
                         {{#if (eq this.data.type "merchant")}}
                         <option value="merchant" selected>Merchant</option>
                         {{else}}
