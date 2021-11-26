@@ -88,6 +88,7 @@
                 <th><i class="fas fa-hand-point-right" title="Attack with dominant hand"></i></th>
                 <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
+                <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
             </tr>
             {{#each enemies as |player|}}
@@ -119,6 +120,11 @@
                 <td class="perc5 center"><a class="fire-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
+                {{#if (eq player.data.data.is_moved true)}}
+                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
+                {{/if}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
             {{/each}}

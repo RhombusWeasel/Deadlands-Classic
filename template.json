@@ -80,6 +80,7 @@
                 "is_bleeding": false,
                 "is_running": false,
                 "is_mounted": false,
+                "is_moved":false,
                 "perks": {
                     "level_headed": false
                 },

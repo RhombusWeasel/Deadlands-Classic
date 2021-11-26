@@ -82,7 +82,7 @@ export default class GMSheet extends ActorSheet {
                 }
             }
             data.enemies = [];
-            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1);
+            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.data.data.wind.value > 0);
             for (let i = 0; i < enemies.length; i++) {
                 const tkn = dc_utils.get_actor(enemies[i].name);
                 data.enemies.push(tkn);
@@ -110,6 +110,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".toggle-bleeding").click(this._on_toggle_bleeding.bind(this));
         html.find(".toggle-running").click(this._on_toggle_running.bind(this));
         html.find(".toggle-mounted").click(this._on_toggle_mounted.bind(this));
+        html.find(".toggle-gm-moved").click(this._on_toggle_moved.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -362,6 +363,15 @@ export default class GMSheet extends ActorSheet {
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
         act.update({data: {is_mounted: !act.data.data.is_mounted}});
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_moved(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_moved: !act.data.data.is_moved}});
         dc_utils.gm.update_sheet();
     }
 }
