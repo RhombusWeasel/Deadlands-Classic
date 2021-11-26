@@ -24,6 +24,30 @@
                 <th><i class="fas fa-running" title="Running"></i></th>
                 <th><i class="fas fa-horse" title="Mounted"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
+                <td>
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x white"></i>
+                        <i class="fas fa-atom fa-stack-1x"></i>
+                    </span>
+                </td>
+                <td>
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x red"></i>
+                        <i class="fas fa-atom fa-stack-1x"></i>
+                    </span>
+                </td>
+                <td>
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x blue"></i>
+                        <i class="fas fa-atom fa-stack-1x"></i>
+                    </span>
+                </td>
+                <td>
+                    <span class="fa-stack fa-2x">
+                        <i class="fas fa-circle fa-stack-2x legendary"></i>
+                        <i class="fas fa-atom fa-stack-1x"></i>
+                    </span>
+                </td>
                 <th>Wind</th>
             </tr>
         {{#each posse as |player|}}
@@ -46,6 +70,10 @@
                 <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
+                <td class="perc5 center">W</td>
+                <td class="perc5 center">R</td>
+                <td class="perc5 center">B</td>
+                <td class="perc5 center">L</td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
         {{/each}}
