@@ -71,10 +71,10 @@
                 <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
-                <td class="perc5 center">{{../data.posse_chips[../@index].White}}</td>
-                <td class="perc5 center">{{../data.posse_chips[../@index].Red}}</td>
-                <td class="perc5 center">{{../data.posse_chips[../@index].Blue}}</td>
-                <td class="perc5 center">{{../data.posse_chips[../@index].Legendary}}</td>
+                <td class="perc5 center">{{../posse_chips[@index].White}}</td>
+                <td class="perc5 center">{{../posse_chips[@index].Red}}</td>
+                <td class="perc5 center">{{../posse_chips[@index].Blue}}</td>
+                <td class="perc5 center">{{../posse_chips[@index].Legendary}}</td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
         {{/each}}

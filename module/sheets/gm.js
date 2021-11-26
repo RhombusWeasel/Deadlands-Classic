@@ -37,12 +37,12 @@ export default class GMSheet extends ActorSheet {
             data.posse_chips  = [];
             for (let i = 0; i < data.posse.length; i++) {
                 const hero = data.posse[i];
-                data.posse_chips.push({
-                    White: hero.items.filter(i => i.type == 'fate_chip' && i.name == 'White').length,
-                    Red: hero.items.filter(i => i.type == 'fate_chip' && i.name == 'Red').length,
-                    Blue: hero.items.filter(i => i.type == 'fate_chip' && i.name == 'Blue').length,
-                    Legendary: hero.items.filter(i => i.type == 'fate_chip' && i.name == 'Legendary').length,
-                });
+                data.posse[i].chips = {
+                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'fate_chip'}).length,
+                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'fate_chip'}).length,
+                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'fate_chip'}).length,
+                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'fate_chip'}).length,
+                }
             }
             data.tn = 5;
             for (const [key, mod] of Object.entries(data.modifiers)){
