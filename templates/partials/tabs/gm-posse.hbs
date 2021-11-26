@@ -70,10 +70,9 @@
                 <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
-                <td class="perc5 center">W</td>
-                <td class="perc5 center">R</td>
-                <td class="perc5 center">B</td>
-                <td class="perc5 center">L</td>
+                {{#each ../posse_chips[player.id] as |chip|}}
+                <td class="perc5 center">{{chip}}</td>
+                {{/each}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
         {{/each}}
