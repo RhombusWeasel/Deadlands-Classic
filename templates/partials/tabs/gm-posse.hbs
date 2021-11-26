@@ -74,8 +74,6 @@
                 {{#each player.chips as |chip|}}
                 <td class="perc5 center">{{chip}}</td>
                 {{/each}}
-                <td class="perc5 center">{{lookup ../posse_chips[@index].Blue}}</td>
-                <td class="perc5 center">{{lookup ../posse_chips[@index].Legendary}}</td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
         {{/each}}
