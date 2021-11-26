@@ -38,10 +38,10 @@ export default class GMSheet extends ActorSheet {
             for (let i = 0; i < data.posse.length; i++) {
                 const hero = data.posse[i];
                 data.posse[i].chips = {
-                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'fate_chip'}).length,
-                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'fate_chip'}).length,
-                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'fate_chip'}).length,
-                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'fate_chip'}).length,
+                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
+                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
+                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
+                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
                 }
             }
             data.tn = 5;
