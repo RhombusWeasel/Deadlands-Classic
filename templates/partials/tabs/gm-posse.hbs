@@ -90,9 +90,10 @@
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
                 <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
+                <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
             {{#each enemies as |player|}}
-            <tr class="posse" data-name="{{player.name}}">
+            <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
@@ -126,6 +127,7 @@
                 <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+                <td class="perc5 center"><a class="remove-posse"><i class="fas fa-trash" title="Remove {{player.name}} from the posse list."></i></a></td>
             </tr>
             {{/each}}
         </table>

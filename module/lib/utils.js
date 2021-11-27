@@ -1806,7 +1806,7 @@ const dc_utils = {
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
             };
-            let mods = game.actors.getName('Marshal').data.data.modifiers;
+            let mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     data.modifiers[key] = {

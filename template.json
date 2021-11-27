@@ -94,7 +94,8 @@
                 "send_target": "None",
                 "send_amount": 0,
                 "current_vehicle": "None",
-                "show_editor": false
+                "show_editor": false,
+                "marshal": "Marshal"
             },
             "attributes": {
                 "traits": {
