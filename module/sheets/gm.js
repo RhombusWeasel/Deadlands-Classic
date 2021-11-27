@@ -397,7 +397,7 @@ export default class GMSheet extends ActorSheet {
     _on_attack_dominant(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let act  = dc_utils.get_actor(element.dataset.name);
+        let act  = dc_utils.get_actor(element.closest(".posse").element.dataset.name);
         let item = dc_utils.get_equipped(act, 'dominant');
         let data
         if (itemId == 'Nuthin') {
@@ -420,7 +420,7 @@ export default class GMSheet extends ActorSheet {
     _on_attack_off(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let act  = dc_utils.get_actor(element.dataset.name);
+        let act  = dc_utils.get_actor(element.closest(".posse").element.dataset.name);
         let item = dc_utils.get_equipped(act, 'off');
         let data
         if (item == 'Nuthin') {
