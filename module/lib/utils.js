@@ -1807,6 +1807,9 @@ const dc_utils = {
                 }
             };
             let mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
+            if (game.user.isGM) {
+                mods = game.user.character.data.data.modifiers;
+            }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     data.modifiers[key] = {
