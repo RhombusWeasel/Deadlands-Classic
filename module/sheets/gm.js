@@ -400,7 +400,7 @@ export default class GMSheet extends ActorSheet {
         let act  = dc_utils.get_actor(element.closest(".posse").dataset.name);
         let item = dc_utils.char.items.get_equipped(act, 'dominant');
         let data
-        if (itemId == 'Nuthin') {
+        if (item == 'Nuthin') {
             data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
         }else{
             if (item.type == 'melee') {
