@@ -53,7 +53,7 @@
             </tr>
         {{log posse_chips}}
         {{#each posse as |player|}}
-            <tr class="posse" data-name="{{player.name}}">
+            <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
@@ -94,7 +94,7 @@
                 <th>Wind</th>
             </tr>
             {{#each enemies as |player|}}
-            <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
+            <tr class="posse" data-name="{{player.name}}">
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
@@ -114,12 +114,12 @@
                 {{#if (eq player.data.data.equipped.dominant 'Nuthin')}}
                 <td class="perc5 center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="fire-dominant"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="perc5 center"><a class="attack-dominant"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.equipped.off 'Nuthin')}}
                 <td class="perc5 center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="fire-off"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="perc5 center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
                 {{#if (eq player.data.data.is_moved true)}}

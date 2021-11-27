@@ -118,6 +118,8 @@ export default class GMSheet extends ActorSheet {
         html.find(".toggle-mounted").click(this._on_toggle_mounted.bind(this));
         html.find(".toggle-gm-moved").click(this._on_toggle_moved.bind(this));
         html.find(".remove-posse").click(this._on_remove_posse.bind(this));
+        html.find(".attack-dominant").click(this._on_attack_dominant.bind(this));
+        html.find(".attack-off").click(this._on_attack_off.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -390,5 +392,51 @@ export default class GMSheet extends ActorSheet {
         let act = dc_utils.get_actor(name);
         act.update({data: {is_moved: !act.data.data.is_moved}});
         dc_utils.gm.update_sheet();
+    }
+
+    _on_attack_dominant(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let act  = dc_utils.get_actor(element.dataset.name);
+        let item = dc_utils.get_equipped(act, 'dominant');
+        let data
+        if (itemId == 'Nuthin') {
+            data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
+        }else{
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                }else{
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
+                }
+            }
+        }
+        operations.register_attack(data);
+    }
+
+    _on_attack_off(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let act  = dc_utils.get_actor(element.dataset.name);
+        let item = dc_utils.get_equipped(act, 'off');
+        let data
+        if (itemId == 'Nuthin') {
+            data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
+        }else{
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+            }else if (item.type == 'firearm') {
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                }else{
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
+                }
+            }
+        }
+        operations.register_attack(data);
     }
 }
