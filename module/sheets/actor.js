@@ -143,6 +143,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
+        html.find(".heal-roll").click(this._on_heal_roll.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
         html.find(".bleeding-toggle").click(this._on_bleed_toggle.bind(this));
@@ -824,5 +825,16 @@ export default class PlayerSheet extends ActorSheet {
     _on_female_toggle(event) {
         event.preventDefault();
         this.actor.update({data: {female_names: !this.actor.data.data.female_names}});
+    }
+
+    _on_heal_roll(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let loc  = element.closest('.location').dataset.location;
+        if (dc_utils.hit_locations[loc]) {
+            dc_utils.char.wounds.heal_roll(this.actor, loc);
+        }else{
+            throw `ERROR actor.js [_on_heal_roll()] ${loc} undefined.`
+        }
     }
 }

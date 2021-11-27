@@ -49,10 +49,11 @@
                     </span>
                 </td>
                 <th>Wind</th>
+                <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
         {{log posse_chips}}
         {{#each posse as |player|}}
-            <tr class="posse" data-name="{{player.name}}">
+            <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
@@ -75,6 +76,7 @@
                 <td class="perc5 center">{{chip}}</td>
                 {{/each}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+                <td class="perc5 center"><a class="remove-posse"><i class="fas fa-trash" title="Remove {{player.name}} from the posse list."></i></a></td>
             </tr>
         {{/each}}
         </table>
@@ -112,12 +114,63 @@
                 {{#if (eq player.data.data.equipped.dominant 'Nuthin')}}
                 <td class="perc5 center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="fire-dominant"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="perc5 center"><a class="attack-dominant"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.equipped.off 'Nuthin')}}
                 <td class="perc5 center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="fire-off"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="perc5 center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
+                {{/if}}
+                <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
+                {{#if (eq player.data.data.is_moved true)}}
+                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
+                {{/if}}
+                <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+            </tr>
+            {{/each}}
+        </table>
+        <h2 class="center">Neutral</h2>
+        <table>
+            <tr class="center">
+                <th>Name</th>
+                <th><i class="fas fa-tint" title="Bleeding"></i></th>
+                <th><i class="fas fa-running" title="Running"></i></th>
+                <th><i class="fas fa-horse" title="Mounted"></i></th>
+                <th><i class="fas fa-hand-point-right" title="Attack with dominant hand"></i></th>
+                <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
+                <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
+                <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
+                <th>Wind</th>
+            </tr>
+            {{#each neutral as |player|}}
+            <tr class="posse" data-name="{{player.name}}">
+                <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
+                {{#if (eq player.data.data.is_bleeding true)}}
+                <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-times"></i></a></td>
+                {{/if}}
+                {{#if (eq player.data.data.is_running true)}}
+                <td class="perc5 center"><a class="toggle-running"><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc5 center"><a class="toggle-running"><i class="fas fa-times"></i></a></td>
+                {{/if}}
+                {{#if (eq player.data.data.is_mounted true)}}
+                <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-check"></i></a></td>
+                {{else}}
+                <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
+                {{/if}}
+                {{#if (eq player.data.data.equipped.dominant 'Nuthin')}}
+                <td class="perc5 center"></td>
+                {{else}}
+                <td class="perc5 center"><a class="attack-dominant"><i class="fas fa-crosshairs"></i></a></td>
+                {{/if}}
+                {{#if (eq player.data.data.equipped.off 'Nuthin')}}
+                <td class="perc5 center"></td>
+                {{else}}
+                <td class="perc5 center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
                 {{#if (eq player.data.data.is_moved true)}}

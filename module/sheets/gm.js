@@ -87,6 +87,12 @@ export default class GMSheet extends ActorSheet {
                 const tkn = dc_utils.get_actor(enemies[i].name);
                 data.enemies.push(tkn);
             }
+            data.neutral = [];
+            let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
+            for (let i = 0; i < neutral.length; i++) {
+                const tkn = dc_utils.get_actor(neutral[i].name);
+                data.neutral.push(tkn);
+            }
             data.time = dc_utils.time.get_date();
             return data;
         }
@@ -111,6 +117,9 @@ export default class GMSheet extends ActorSheet {
         html.find(".toggle-running").click(this._on_toggle_running.bind(this));
         html.find(".toggle-mounted").click(this._on_toggle_mounted.bind(this));
         html.find(".toggle-gm-moved").click(this._on_toggle_moved.bind(this));
+        html.find(".remove-posse").click(this._on_remove_posse.bind(this));
+        html.find(".attack-dominant").click(this._on_attack_dominant.bind(this));
+        html.find(".attack-off").click(this._on_attack_off.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -219,8 +228,8 @@ export default class GMSheet extends ActorSheet {
         let chip_type = element.closest(".fate-data").dataset.chip;
         let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         let responses = [
-            `I think you might've pissed 'im off`,
-            `Let's hope he doesn't have it in fer ya.`,
+            `I think you might've pissed 'em off`,
+            `Let's hope he doesn't have it in for ya.`,
             `I don't like it when he gets like this...`,
         ];
         for (let chip of fate_chips) {
@@ -316,14 +325,24 @@ export default class GMSheet extends ActorSheet {
     _on_add_posse_select(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let id = element.value;
-        this.actor.update({data: {add_posse_name: id}});
+        this.actor.update({data: {add_posse_name: element.value}});
     }
 
     _on_add_posse(event) {
         event.preventDefault();
         let posse = this.actor.data.data.posse;
         posse.push(this.actor.data.data.add_posse_name);
+        let char = game.actors.get(this.actor.data.data.add_posse_name);
+        char.update({data: {marshal: this.actor.name}});
+        this.actor.update({data: {posse: posse}});
+    }
+
+    _on_remove_posse(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let posse = this.actor.data.data.posse;
+        let index = element.closest(".posse").dataset.index;
+        posse.splice(index, 1);
         this.actor.update({data: {posse: posse}});
     }
 
@@ -373,5 +392,51 @@ export default class GMSheet extends ActorSheet {
         let act = dc_utils.get_actor(name);
         act.update({data: {is_moved: !act.data.data.is_moved}});
         dc_utils.gm.update_sheet();
+    }
+
+    _on_attack_dominant(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let act  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        let item = dc_utils.char.items.get_equipped(act, 'dominant');
+        let data
+        if (item == 'Nuthin') {
+            data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
+        }else{
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', item.id);
+            }else if (item.type == 'firearm') {
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `shootin_${item.data.data.gun_type}`, item.id);
+                }else{
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `${item.data.data.gun_type}`, item.id);
+                }
+            }
+        }
+        operations.register_attack(data);
+    }
+
+    _on_attack_off(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let act  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        let item = dc_utils.char.items.get_equipped(act, 'off');
+        let data
+        if (item == 'Nuthin') {
+            data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
+        }else{
+            if (item.type == 'melee') {
+                data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', item.id);
+            }else if (item.type == 'firearm') {
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `shootin_${item.data.data.gun_type}`, item.id);
+                }else{
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `${item.data.data.gun_type}`, item.id);
+                }
+            }
+        }
+        operations.register_attack(data);
     }
 }

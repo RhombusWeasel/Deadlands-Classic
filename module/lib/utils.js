@@ -1546,10 +1546,20 @@ const dc_utils = {
                         act.update({data: {wound_soak: 0}});
                     }
                     return setTimeout(() => {
-                        act.update({data: {wounds: {[loc]: tot}}});
+                        let data = {
+                            wounds: {
+                                [loc]: tot
+                            },
+                        }
                         dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                         dc_utils.char.wounds.calculate_wound_modifier(act, amt);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
+                        if (act.data.data.heals[loc] == 0) {
+                            let timestamp = game.settings.get('deadlands_classic', 'unixtime');
+                            let next_heal = timestamp + act.data.data.healing_factor
+                            data.heals = {[loc]: next_heal}
+                        }
+                        act.update({data});
                     }, Math.random() * 500);
                 }else{
                     dc_utils.chat.send('Wound', `${act.name} was lucky they just winged 'em.`);
@@ -1564,7 +1574,16 @@ const dc_utils = {
                     let wind_roll = new Roll(`${amt}d6`).roll();
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
-                        act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
+                        let total = parseInt(act.data.data.wind.value) - wind_roll._total;
+                        act.update({data: {wind: {value: total}}});
+                        if (total <= 0) {
+                            let tkn = dc_utils.get_token(act.name);
+                            if (tkn) {
+                                tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                                tkn.toggleEffect('icons/svg/skull.svg', {active: true});
+                                tkn.toggleEffect('icons/svg/blood.svg', {active: false});
+                            }
+                        }
                         dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
                     }, Math.random() * 500);
                 }
@@ -1586,7 +1605,7 @@ const dc_utils = {
                     }
                 }
                 if (wm * -1 < amt) {
-                    wm = amt;
+                    wm = -amt;
                 }
                 if (is_wounded) {
                     return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
@@ -1598,13 +1617,26 @@ const dc_utils = {
                 act.update({data: {is_bleeding: bool}});
             },
             heal_roll: function(act, loc) {
-                let tn = 3 + (act.data.data.wounds[loc] * 2);
-                let data = dc_utils.new_roll_packet(act, 'skill', 'vigor', 'none');
+                let wounds = act.data.data.wounds[loc]
+                let tn = 3 + (wounds * 2);
+                let data = dc_utils.roll.new_roll_packet(act, 'skill', 'vigor', 'none');
                 data.tn = tn;
                 data.roll = dc_utils.roll.new(data);
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);
+                    if (wounds - 1 > 0) {
+                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
+                    }else{
+                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
+                        return;
+                    }
+                }else{
+                    dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
                 }
+                let timestamp = game.settings.get('deadlands_classic', 'unixtime');
+                let next_heal = timestamp + act.data.data.healing_factor;
+                dc_utils.char.wounds.calculate_wound_modifier(act, wounds - 1);
+                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 500);
             },
         },
         armour: {
@@ -1779,7 +1811,17 @@ const dc_utils = {
             if (target) {
                 let tkn = dc_utils.char.token.get_name(act.name);
                 let tgt = dc_utils.char.token.get_name(target.name);
-                dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+                if(tkn) {
+                    console.log('new_roll_packet: Attacker: ', tkn);
+                    if (tgt) {
+                        console.log('new_roll_packet: Target: ', tgt);
+                        dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+                    }else{
+                        throw `ERROR Target token for ${target.name} not found`
+                    }
+                }else{
+                    throw `ERROR Attacker token for ${act.name} not found`
+                }
                 if (type == 'melee' && dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
                     return false;
@@ -1806,7 +1848,12 @@ const dc_utils = {
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
             };
-            let mods = game.actors.getName('Marshal').data.data.modifiers;
+            let mods = [];
+            if (game.user.isGM) {
+                mods = game.user.character.data.data.modifiers;
+            }else{
+                mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
+            }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     data.modifiers[key] = {
