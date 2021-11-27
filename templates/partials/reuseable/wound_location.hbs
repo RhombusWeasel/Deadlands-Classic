@@ -8,10 +8,14 @@
         {{else}}
         <td class="perc10 center">{{wound_val}}</td>
         <td class="perc10 center">{{armour_val}}</td>
-            {{#if (eq (wound_timer heal_val) '0 days')}}
-                <td class="perc40 center"><i class="fas fa-plus" title="Healing"></i></td>
+            {{#ifCond wound_val '>' 0}}
+                {{#if (eq (wound_timer heal_val) '0 days')}}
+                    <td class="perc40 center"><i class="fas fa-plus" title="Healing"></i></td>
+                {{else}}
+                    <td class="perc40 center">{{wound_timer heal_val}}</td>
+                {{/ifCond}}
             {{else}}
-                <td class="perc40 center">{{wound_timer heal_val}}</td>
+                <td class="perc40 center">-</td>
             {{/if}}
         {{/if}}
     </tr>
