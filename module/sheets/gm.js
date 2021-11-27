@@ -401,16 +401,16 @@ export default class GMSheet extends ActorSheet {
         let item = dc_utils.get_equipped(act, 'dominant');
         let data
         if (itemId == 'Nuthin') {
-            data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
+            data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
         }else{
             if (item.type == 'melee') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+                data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', item.id);
             }else if (item.type == 'firearm') {
                 let old = ['pistol', 'rifle', 'shotgun', 'automatic']
                 if (old.includes(item.data.data.gun_type)) {
-                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `shootin_${item.data.data.gun_type}`, item.id);
                 }else{
-                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `${item.data.data.gun_type}`, item.id);
                 }
             }
         }
@@ -423,17 +423,17 @@ export default class GMSheet extends ActorSheet {
         let act  = dc_utils.get_actor(element.dataset.name);
         let item = dc_utils.get_equipped(act, 'off');
         let data
-        if (itemId == 'Nuthin') {
-            data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
+        if (item == 'Nuthin') {
+            data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
         }else{
             if (item.type == 'melee') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+                data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', item.id);
             }else if (item.type == 'firearm') {
                 let old = ['pistol', 'rifle', 'shotgun', 'automatic']
                 if (old.includes(item.data.data.gun_type)) {
-                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `shootin_${item.data.data.gun_type}`, item.id);
                 }else{
-                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
+                    data = dc_utils.roll.new_roll_packet(act, 'ranged', `${item.data.data.gun_type}`, item.id);
                 }
             }
         }
