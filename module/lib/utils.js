@@ -1586,7 +1586,7 @@ const dc_utils = {
                     }
                 }
                 if (wm * -1 < amt) {
-                    wm = amt;
+                    wm = -amt;
                 }
                 if (is_wounded) {
                     return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
