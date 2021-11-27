@@ -223,6 +223,10 @@ let operations = {
             });
         }
     },
+    //MISC OPERATIONS
+    force_update: function(data) {
+        game.user.character.sheet.render(false);
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
@@ -484,13 +488,15 @@ let operations = {
     },
     check_hit: function(data) {
         if (game.user.isGM) {
-            let ca         = game.dc.combat_actions[data.combat_id];
+            let ca      = game.dc.combat_actions[data.combat_id];
             ca.hit_roll = data.roll.total;
+            console.log('check_hit', data, ca);
             for (const [key, mod] of Object.entries(data)){
                 if (!(ca[key])) {
                     ca[key] = mod;
                 }
             }
+            console.log('check_hit', data, ca);
             game.dc.combat_actions[data.combat_id] = ca;
             dc_utils.journal.save('combat_actions', game.dc.combat_actions);
             let act = dc_utils.get_actor(ca.attacker);
@@ -508,7 +514,7 @@ let operations = {
             }
             // Check if dodged
             if (ca.dodge_roll != 'none') {
-                if (ca.dodge_roll > ca.attack_roll) {
+                if (ca.dodge_roll >= ca.hit_roll) {
                     return dc_utils.chat.send('Attack', `${ca.attacker} tried to hit ${ca.target}`, `${ca.target} saw it coming and managed to dodge.`);
                 }
             }
@@ -701,6 +707,7 @@ let operations = {
                 }
             }
         }
+        dc_utils.gm.update_sheet();
     },
     soak: function(data) {
         if (game.user.isGM) {
@@ -770,6 +777,7 @@ Hooks.on("ready", () => {
         if (data.operation in operations) {
             console.log('RECIEVE:', data.operation, data.data);
             operations[data.operation](data.data);
+            dc_utils.gm.update_sheet();
             return false;
         }
     });

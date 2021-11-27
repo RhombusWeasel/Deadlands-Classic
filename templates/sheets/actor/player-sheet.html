@@ -4,7 +4,11 @@
             <h1 class="center">
                 <div data-edit="name" contenteditable="">{{actor.name}}</div>
             </h1>
-            <a class="center"><p class="refresh">Refresh</p></a>
+            <div class="flexrow">
+                <p>{{time.weekday}} {{time.month}} {{time.day}} {{time.year}}</p>
+                <a class="center"><p class="refresh">Refresh</p></a>
+                <p class="right">Moon: {{time.moon}}</p>
+            </div>
             {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
             {{#if action_deck}}
             {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=action_deck}}

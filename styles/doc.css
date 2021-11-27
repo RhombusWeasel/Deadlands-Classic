@@ -67,11 +67,17 @@
 .perc20 {
     width: 20%
 }
+.perc15 {
+    width: 15%
+}
 .perc12 {
     width: 12%
 }
 .perc10 {
     width: 10%
+}
+.perc5 {
+    width: 5%
 }
 .flexbox {
     display: flex;

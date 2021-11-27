@@ -1,0 +1,22 @@
+<section>
+    <tr class="location" data-location="{{location}}">
+        <th class="perc40 center">{{label}}</th>
+        {{#if (eq show_editor true)}}
+        <td class="perc10 center"><input type="number" name="data.wounds.{{location}}" value="{{wound_val}}"/></td>
+        <td class="perc10 center"><input type="number" name="data.armour.{{location}}" value="{{armour_val}}"/></td>
+        <td class="perc10 center"><input type="number" name="data.heals.{{location}}" value="{{heal_val}}"/></td>
+        {{else}}
+        <td class="perc10 center">{{wound_val}}</td>
+        <td class="perc10 center">{{armour_val}}</td>
+            {{#if (eq heal_val 0)}}
+                {{#ifCond wound_val '>' 0}}
+                    <td class="perc40 center"><i class="fas fa-plus" title="Healing"></i></td>
+                {{else}}
+                    <td class="perc40 center">-</td>
+                {{/ifCond}}
+            {{else}}
+                <td class="perc40 center">{{wound_timer heal_val}}</td>
+            {{/if}}
+        {{/if}}
+    </tr>
+</section>

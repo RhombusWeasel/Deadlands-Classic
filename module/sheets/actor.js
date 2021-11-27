@@ -67,6 +67,7 @@ export default class PlayerSheet extends ActorSheet {
         const data         = super.getData();
         data.config        = CONFIG.dc;
         data.id            = this.actor.id;
+        data.time          = dc_utils.time.get_date();
         data.combat_active = game.settings.get('deadlands_classic','combat_active');
         data.gen_deck      = dc_utils.deck.sort(data.items.filter(function (item) {return item.type == "gen_deck"}));
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
@@ -101,7 +102,7 @@ export default class PlayerSheet extends ActorSheet {
             {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
             {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
         ];
-        let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"})
+        let lh = data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"});
         if (data.combat_active) {
         }else{
             for (let c = 0; c < data.action_deck.length; c++) {
@@ -144,6 +145,9 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".wild-joker-hex").click(this._on_joker_wild_hex.bind(this));
+        html.find(".bleeding-toggle").click(this._on_bleed_toggle.bind(this));
+        html.find(".running-toggle").click(this._on_run_toggle.bind(this));
+        html.find(".mounted-toggle").click(this._on_mount_toggle.bind(this));
         html.find(".name-toggle").click(this._on_name_toggle.bind(this));
         html.find(".male-toggle").click(this._on_male_toggle.bind(this));
         html.find(".female-toggle").click(this._on_female_toggle.bind(this));
@@ -595,7 +599,12 @@ export default class PlayerSheet extends ActorSheet {
             if (item.type == 'melee') {
                 data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
             }else if (item.type == 'firearm') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                let old = ['pistol', 'rifle', 'shotgun', 'automatic']
+                if (old.includes(item.data.data.gun_type)) {
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `shootin_${item.data.data.gun_type}`, itemId);
+                }else{
+                    data = dc_utils.roll.new_roll_packet(this.actor, 'ranged', `${item.data.data.gun_type}`, itemId);
+                }
             }
         }
         if (!(game.user.isGM)) {
@@ -711,6 +720,21 @@ export default class PlayerSheet extends ActorSheet {
             `,
             whisper: ChatMessage.getWhisperRecipients('GM')
         });
+    }
+
+    _on_bleed_toggle(event) {
+        event.preventDefault();
+        this.actor.update({data: {is_bleeding: !this.actor.data.data.is_bleeding}});
+    }
+
+    _on_run_toggle(event) {
+        event.preventDefault();
+        this.actor.update({data: {is_running: !this.actor.data.data.is_running}});
+    }
+
+    _on_mount_toggle(event) {
+        event.preventDefault();
+        this.actor.update({data: {is_mounted: !this.actor.data.data.is_mounted}});
     }
 
     _on_new_blueprint(event) {

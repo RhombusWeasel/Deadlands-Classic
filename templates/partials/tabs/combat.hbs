@@ -1,7 +1,7 @@
 <section class="form typed">
     <a class="center"><p class="roll-quickness">Roll Quickness!</p></a>
     <div class="border">
-        <h2 class="center">Targeting</h2>
+        {{!-- <h2 class="center">Targeting</h2> --}}
         <div class="flexrow">
             {{#each targets as |target|}}
                 {{#if (eq @key ../data.data.called_shot)}}
@@ -58,119 +58,54 @@
     <div class="flexrow">
         <div class="border">
             <h2 class="center">Wounds:</h2>
-            <table style="table-layout: fixed;">
+            <table>
                 <tr>
-                    <th class="perc12 center">{{localize "dc.player.core.wound_modifier"}}</th>
-                    {{!-- Add editor conditional for this text input! --}}
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="perc12 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"/></td>
-                    {{else}}
-                    <td class="perc12 center">{{data.data.wound_modifier}}</td>
-                    {{/if}}
+                    <th><i class="fas fa-tint" title="Bleeding"></i></th>
+                    <th><i class="fas fa-running" title="Running"></i></th>
+                    <th><i class="fas fa-horse" title="Mounted"></i></th>
+                    <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
+                    <th>Soak</th>
+                    <th>Wind</th>
                 </tr>
                 <tr>
-                    <th class="perc12 center">Bleeding</th>
-                    {{#if data.data.is_bleeding}}
-                    <td class="center"><input type="checkbox" name="data.is_bleeding" checked/></td>
+                    {{#if (eq data.data.is_bleeding true)}}
+                    <td class="perc5 center"><a class="bleeding-toggle"><i class="fas fa-check"></i></a></td>
                     {{else}}
-                    <td class="center"><input type="checkbox" name="data.is_bleeding"/></td>
+                    <td class="perc5 center"><a class="bleeding-toggle"><i class="fas fa-times"></i></a></td>
                     {{/if}}
-                </tr>
-                <tr>
-                    <th>Wound Soak</th>
+                    {{#if (eq data.data.is_running true)}}
+                    <td class="perc5 center"><a class="running-toggle"><i class="fas fa-check"></i></a></td>
+                    {{else}}
+                    <td class="perc5 center"><a class="running-toggle"><i class="fas fa-times"></i></a></td>
+                    {{/if}}
+                    {{#if (eq data.data.is_mounted true)}}
+                    <td class="perc5 center"><a class="mounted-toggle"><i class="fas fa-check"></i></a></td>
+                    {{else}}
+                    <td class="perc5 center"><a class="mounted-toggle"><i class="fas fa-times"></i></a></td>
+                    {{/if}}
                     {{#if (eq data.data.show_editor true)}}
-                    <td><input type="text" name="data.wound_soak" value="{{data.data.wound_soak}}"></td>
+                    <td class="perc5 center"><input type="number" name="data.wound_modifier" value="{{data.data.wound_modifier}}"></td>
                     {{else}}
-                    <td class="center">{{data.data.wound_soak}}</td>
+                    <td class="perc5 center">{{data.data.wound_modifier}}</td>
                     {{/if}}
+                    {{#if (eq data.data.show_editor true)}}
+                    <td class="perc5 center"><input type="text" name="data.wound_soak" value="{{data.data.wound_soak}}"></td>
+                    {{else}}
+                    <td class="perc5 center">{{data.data.wound_soak}}</td>
+                    {{/if}}
+                    <td class="perc10 center">{{data.data.wind.value}}/{{data.data.wind.max}}</td>
                 </tr>
             </table>
             <table>
                 <tr>
                     <th></th>
-                    <th>Wounds</th>
-                    <th>Armour</th>
+                    <th><i class="fas fa-user-injured" title="Wounds"></i></th>
+                    <th><i class="fas fa-shield-alt" title="Armor"></i></th>
+                    <th><i class="fas fa-plus" title="Healing"></i></th>
                 </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.noggin"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.noggin" value="{{data.data.wounds.noggin}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.noggin" value="{{data.data.armour.noggin}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.noggin}}</td>
-                    <td class="center">{{data.data.armour.noggin}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.guts"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.guts" value="{{data.data.wounds.guts}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.guts" value="{{data.data.armour.guts}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.guts}}</td>
-                    <td class="center">{{data.data.armour.guts}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.arm_left"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.arm_left" value="{{data.data.wounds.arm_left}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.arm_left" value="{{data.data.armour.arm_left}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.arm_left}}</td>
-                    <td class="center">{{data.data.armour.arm_left}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.arm_right"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.arm_right" value="{{data.data.wounds.arm_right}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.arm_right" value="{{data.data.armour.arm_right}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.arm_right}}</td>
-                    <td class="center">{{data.data.armour.arm_right}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.lower_guts"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.lower_guts" value="{{data.data.wounds.lower_guts}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.lower_guts" value="{{data.data.armour.lower_guts}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.lower_guts}}</td>
-                    <td class="center">{{data.data.armour.lower_guts}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.gizzards"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.gizzards" value="{{data.data.wounds.gizzards}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.gizzards" value="{{data.data.armour.gizzards}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.gizzards}}</td>
-                    <td class="center">{{data.data.armour.gizzards}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.leg_left"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.leg_left" value="{{data.data.wounds.leg_left}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.leg_left" value="{{data.data.armour.leg_left}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.leg_left}}</td>
-                    <td class="center">{{data.data.armour.leg_left}}</td>
-                    {{/if}}
-                </tr>
-                <tr>
-                    <th>{{localize "dc.player.core.wounds.leg_right"}}</th>
-                    {{#if (eq data.data.show_editor true)}}
-                    <td class="center"><input type="number" name="data.wounds.leg_right" value="{{data.data.wounds.leg_right}}"/></td>
-                    <td class="center"><input type="number" name="data.armour.leg_right" value="{{data.data.armour.leg_right}}"/></td>
-                    {{else}}
-                    <td class="center">{{data.data.wounds.leg_right}}</td>
-                    <td class="center">{{data.data.armour.leg_right}}</td>
-                    {{/if}}
-                </tr>
+                {{#each data.data.wounds as |loc|}}
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs" this location=@key label=(location_name @key) show_editor=../data.data.show_editor wound_val=(location_data 'wounds' @key) armour_val=(location_data 'armour' @key) heal_val=(location_data 'heals' @key)}}
+                {{/each}}
             </table>
         </div>
         <div class="border">

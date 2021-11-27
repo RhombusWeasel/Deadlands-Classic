@@ -17,12 +17,15 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
         "systems/deadlands_classic/templates/partials/tabs/favor.hbs",
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
         "systems/deadlands_classic/templates/partials/tabs/gm.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/gm-combat.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/gm-posse.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
         "systems/deadlands_classic/templates/partials/tabs/science.hbs",
@@ -38,19 +41,6 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/sheets/poker/partials/gm-poker-opts.hbs"
     ]
     return loadTemplates(template_paths)
-}
-
-function get_token_count(t) {
-    let count = 0;
-    let tokens = canvas.tokens.placeables;
-    if (tokens) {
-        tokens.forEach(tkn => {
-            if (tkn.name.search(t.name) != -1) {
-                count += 1;
-            }
-        });
-    }
-    return count;
 }
 
 Hooks.once("init", function () {
@@ -72,22 +62,33 @@ Hooks.once("init", function () {
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
         scope: 'world',     // "world" = sync to db, "client" = local storage 
-        config: false,       // false if you dont want it to show in module config
+        config: true,       // false if you dont want it to show in module config
         type: Boolean,       // Number, Boolean, String,  
         default: false,
         onChange: value => {
-          console.log('Combat Active: ', value)
+            console.log('Combat Active: ', value);
         }
     });
 
-    game.settings.register('deadlands_classic', 'updated_unskilled_checked', {
-        name: 'Combat Active',
+    game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
+        name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
         scope: 'world',
         config: true,
         type: Boolean,  
         default: false,
         onChange: value => {
-          console.log('Updated unskilled checks: ', value)
+            console.log('Updated unskilled checks: ', value);
+        }
+    });
+
+    game.settings.register('deadlands_classic', 'unixtime', {
+        name: 'Unix time for the campaign.',
+        scope: 'world',
+        config: true,
+        type: Number,
+        default: -299790720000,
+        onChange: value => {
+            console.log('Unix time updated: ', value);
         }
     });
 
@@ -185,6 +186,19 @@ Hooks.once("init", function () {
             }
             return options.inverse(this);
         }
+    });
+
+    Handlebars.registerHelper('wound_timer', function (val, options) {
+        return `${((((val / 1000)/ 60)/ 60)/ 24)} days`
+    });
+
+    Handlebars.registerHelper('location_name', function (val, options) {
+        return dc_utils.locations[dc_utils.loc_lookup.indexOf(val)]
+    });
+
+    Handlebars.registerHelper('location_data', function (tab, loc, options) {
+        let act = dc_utils.get_actor(options.data.root.actor.name);
+        return act.data.data[tab][loc];
     });
 
     Handlebars.registerHelper('isGM', function (options) {

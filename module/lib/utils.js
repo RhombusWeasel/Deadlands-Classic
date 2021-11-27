@@ -1055,9 +1055,12 @@ const dc_utils = {
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
     stackable: ['goods', 'components'],
+    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    day_suffix: ['', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st'],
+    dow:['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+    moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
 
     // Helper Functions:
-
     /** UUID
     * Pass any number of integers, returns a uuid with char blocks equal to each int '-' seperated
     */
@@ -1097,6 +1100,10 @@ const dc_utils = {
     pluralize: function(amt, a, b) {
         if (amt == 1) return `${amt} ${a}`;
         return `${amt} ${b}`
+    },
+    pad: function(str, size) {
+        while (str.length < (size || 2)) {str = "0" + str;}
+        return str;
     },
     sort: {
         compare: function(object1, object2, key) {
@@ -1145,6 +1152,27 @@ const dc_utils = {
                 }
             }
             return r_tab;
+        },
+        update_sheet: function() {
+            if (game.user.isGM) {
+                setTimeout(() => {
+                    game.user.character.sheet.render(false)
+                    dc_utils.socket.emit('force_update', {});
+                }, 500);
+            }
+        },
+        update_time: function(act, period, mult) {
+            let val = {
+                year: 31449600000,
+                month: 2419200000,
+                day:     86400000,
+                hour:     3600000,
+                minute:     60000 * 5
+            }
+            let new_val = act.data.data.timestamp + (val[period] * mult)
+            act.update({data: {timestamp: new_val}});
+            game.settings.set('deadlands_classic','unixtime', new_val);
+            dc_utils.gm.update_sheet();
         },
     },
     user: {
@@ -1227,7 +1255,7 @@ const dc_utils = {
                         }
                     }
                 }
-                throw 'DC | ERROR: skill not found.';
+                throw `DC | ERROR: skill ${skill_name} not found.`;
             },
             set_level: function(act, skill_name, lvl) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
@@ -1519,8 +1547,8 @@ const dc_utils = {
                     }
                     return setTimeout(() => {
                         act.update({data: {wounds: {[loc]: tot}}});
-                        dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(tot, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
-                        dc_utils.char.wounds.calculate_wound_modifier(act);
+                        dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
+                        dc_utils.char.wounds.calculate_wound_modifier(act, amt);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
                     }, Math.random() * 500);
                 }else{
@@ -1541,7 +1569,7 @@ const dc_utils = {
                     }, Math.random() * 500);
                 }
             },
-            calculate_wound_modifier: function(act) {
+            calculate_wound_modifier: function(act, amt) {
                 let wm = act.data.data.wound_modifier
                 let is_wounded = false
                 for (const loc in act.data.data.wounds) {
@@ -1557,10 +1585,13 @@ const dc_utils = {
                         }
                     }
                 }
+                if (wm * -1 < amt) {
+                    wm = amt;
+                }
                 if (is_wounded) {
-                    return act.update({data: {wound_modifier: wm}});
+                    return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
                 }else{
-                    return act.update({data: {wound_modifier: 0}});
+                    return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, Math.random() * 1000);
                 }
             },
             set_bleeding: function(act, bool) {
@@ -1808,6 +1839,15 @@ const dc_utils = {
             if (item) {
                 if (data.type == 'ranged') {
                     data.modifiers.range = {label: 'Range', modifier: -(Math.max(Math.floor(dist / parseInt(item.data.data.range)), 0))};
+                    if (target?.data?.data?.is_running) {
+                        data.modifiers.moving_target = {label: 'Moving Target', modifier: -4};
+                    }
+                    if (act.data.data.is_running) {
+                        data.modifiers.running = {label: 'Running', modifier: -4};
+                    }
+                    if (act.data.data.is_mounted) {
+                        data.modifiers.mounted = {label: 'Mounted', modifier: -2};
+                    }
                 }
                 if (act.data.data.equipped.off == item.id) {
                     if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
@@ -2573,6 +2613,43 @@ const dc_utils = {
                     y: (event.data.global.y - tr.ty) / canvas.stage.scale.y
                 }
             },
+        },
+    },
+    time: {
+        get_date: function() {
+            let ut = game.settings.get('deadlands_classic', 'unixtime');
+            let date = new Date(ut);
+            return {
+                weekday: dc_utils.dow[date.getDay()],
+                month:   dc_utils.months[date.getMonth()],
+                day:     `${date.getDate()}${dc_utils.day_suffix[date.getDate()]}`,
+                year:    `${date.getFullYear()}`,
+                hour:    dc_utils.pad(`${date.getHours()}`, 2),
+                minute:  dc_utils.pad(`${date.getMinutes()}`, 2),
+                moon:    dc_utils.moon_phases[dc_utils.time.get_moon_phase(date.getFullYear(), date.getMonth() + 1, date.getDate())]
+            };
+        },
+        /* GET_MOON_PHASE
+        * Gets the moon phase for a given date.
+        * Plagerised from https://gist.github.com/endel/dfe6bb2fbe679781948c
+        * All credit to Endel Drayder https://github.com/endel
+        */
+        get_moon_phase: function(year, month, day) {
+            var c = e = jd = b = 0;
+            if (month < 3) {
+                year--;
+                month += 12;
+            }
+            ++month;
+            c = 365.25 * year;
+            e = 30.6 * month;
+            jd = c + e + day - 694039.09; //jd is total days elapsed
+            jd /= 29.5305882; //divide by the moon cycle
+            b = parseInt(jd); //int(jd) -> b, take integer part of jd
+            jd -= b; //subtract integer part to leave fractional part of original jd
+            b = Math.round(jd * 8); //scale fraction from 0-8 and round
+            b %= 8;
+            return Math.abs(b);
         },
     },
 };

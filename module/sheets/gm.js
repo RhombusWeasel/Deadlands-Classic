@@ -9,6 +9,7 @@ export default class GMSheet extends ActorSheet {
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/gm-sheet.html`,
+            tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }],
             classes: ["doc"],
             width: 500,
             height: 700
@@ -16,59 +17,84 @@ export default class GMSheet extends ActorSheet {
     }
 
     getData() {
-        const data = super.getData();
-        data.config = CONFIG.dc;
-        let fate_chips = dc_utils.char.items.get(this.actor, "chip");
-        data.fate_chips = [
-            {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
-            {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
-            {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
-            {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
-        ];
-        data.action_deck   = this.actor.data.data.action_cards;
-        data.modifiers = this.actor.data.data.modifiers;
-        data.chars = dc_utils.gm.get_player_owned_actors();
-        data.tn = 5;
-        for (const [key, mod] of Object.entries(data.modifiers)){
-            if (mod.active) {
-                data.tn -= mod.mod;
+        if (game.user.isGM && this.actor.data.type == 'gm') {
+            const data = super.getData();
+            data.config = CONFIG.dc;
+            let fate_chips = dc_utils.char.items.get(this.actor, "chip");
+            data.fate_chips = [
+                {name: "White", bounty: "1", amount: fate_chips.filter(function(i){return i.name == 'White'}).length},
+                {name: "Red", bounty: "2", amount: fate_chips.filter(function(i){return i.name == 'Red'}).length},
+                {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
+                {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
+            ];
+            data.action_deck   = this.actor.data.data.action_cards;
+            data.modifiers = this.actor.data.data.modifiers;
+            data.chars = dc_utils.gm.get_player_owned_actors();
+            data.posse = [];
+            for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
+                data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
             }
-        }
-        data.combat_active = game.settings.get('deadlands_classic','combat_active');
-        if (data.combat_active) {
-            let action_list = [];
-            let users = dc_utils.gm.get_online_users();
-            let pcs = dc_utils.gm.get_player_owned_actors();
-            for (let i = 0; i < users.length; i++) {
-                if (!(users[i].isGM)) {
-                    for (let p = 0; p < pcs.length; p++) {
-                        let char = pcs[p];
-                        let ad_cards = char.data.data.action_cards;
-                        for (let c = 0; c < ad_cards.length; c++) {
-                            const card = ad_cards[c];
-                            let card_data = {'name': card.name, 'player': char.name};
-                            action_list.push(card_data);
+            data.posse_chips  = [];
+            for (let i = 0; i < data.posse.length; i++) {
+                const hero = data.posse[i];
+                data.posse[i].chips = {
+                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
+                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
+                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
+                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
+                }
+            }
+            data.tn = 5;
+            for (const [key, mod] of Object.entries(data.modifiers)){
+                if (mod.active) {
+                    data.tn -= mod.mod;
+                }
+            }
+            data.combat_active = game.settings.get('deadlands_classic','combat_active');
+            if (data.combat_active) {
+                let action_list = [];
+                let users = dc_utils.gm.get_online_users();
+                let pcs = dc_utils.gm.get_player_owned_actors();
+                for (let i = 0; i < users.length; i++) {
+                    if (!(users[i].isGM)) {
+                        for (let p = 0; p < pcs.length; p++) {
+                            let char = pcs[p];
+                            let ad_cards = char.data.data.action_cards;
+                            for (let c = 0; c < ad_cards.length; c++) {
+                                const card = ad_cards[c];
+                                let card_data = {'name': card.name, 'player': char.name};
+                                action_list.push(card_data);
+                            }
                         }
                     }
                 }
+                for (let c = 0; c < data.action_deck.length; c++) {
+                    const card = data.action_deck[c];
+                    let card_data = {'name': card.name, 'player': 'GM'};
+                    action_list.push(card_data);
+                }
+                if (action_list.length > 0) {
+                    data.action_list = dc_utils.deck.sort(action_list);
+                }
+            }else{
+                if (this.actor.data.data.action_cards.length > 0) {
+                    this.actor.update({data: {action_cards: []}});
+                }
             }
-            for (let c = 0; c < data.action_deck.length; c++) {
-                const card = data.action_deck[c];
-                let card_data = {'name': card.name, 'player': 'GM'};
-                action_list.push(card_data);
+            data.enemies = [];
+            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
+            for (let i = 0; i < enemies.length; i++) {
+                const tkn = dc_utils.get_actor(enemies[i].name);
+                data.enemies.push(tkn);
             }
-            if (action_list.length > 0) {
-                data.action_list = dc_utils.deck.sort(action_list);
-            }
-        }else{
-            if (this.actor.data.data.action_cards.length > 0) {
-                this.actor.update({data: {action_cards: []}});
-            }
+            data.time = dc_utils.time.get_date();
+            return data;
         }
-        return data;
     }
 
     activateListeners(html) {
+        html.find(".time-up").click(this._on_time_up.bind(this));
+        html.find(".time-down").click(this._on_time_down.bind(this));
         html.find(".draw-fate").click(this._on_draw_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".item-delete").click(this._on_item_delete.bind(this));
@@ -79,7 +105,16 @@ export default class GMSheet extends ActorSheet {
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
-        if (!(game.dc.gm_collapse)) {
+        html.find(".add-to-posse").click(this._on_add_posse.bind(this));
+        html.find(".open-sheet").click(this._on_open_sheet.bind(this));
+        html.find(".toggle-bleeding").click(this._on_toggle_bleeding.bind(this));
+        html.find(".toggle-running").click(this._on_toggle_running.bind(this));
+        html.find(".toggle-mounted").click(this._on_toggle_mounted.bind(this));
+        html.find(".toggle-gm-moved").click(this._on_toggle_moved.bind(this));
+
+        // Selections
+        html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
+        /* if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
         let colls = document.getElementsByClassName("gm-collapsible");
@@ -103,7 +138,7 @@ export default class GMSheet extends ActorSheet {
             } else {
                 colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
             }
-        }
+        } */
         return super.activateListeners(html);
     }
 
@@ -111,6 +146,20 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         this.getData();
         this.render();
+    }
+
+    _on_time_up(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let period = element.closest(".time").dataset.period;
+        dc_utils.gm.update_time(this.actor, period, 1);
+    }
+
+    _on_time_down(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let period = element.closest(".time").dataset.period;
+        dc_utils.gm.update_time(this.actor, period, -1);
     }
 
     _on_draw_fate(event) {
@@ -262,5 +311,67 @@ export default class GMSheet extends ActorSheet {
             let next = data.action_list.pop();
             //console.log(next);
         }
+    }
+
+    _on_add_posse_select(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let id = element.value;
+        this.actor.update({data: {add_posse_name: id}});
+    }
+
+    _on_add_posse(event) {
+        event.preventDefault();
+        let posse = this.actor.data.data.posse;
+        posse.push(this.actor.data.data.add_posse_name);
+        this.actor.update({data: {posse: posse}});
+    }
+
+    _on_open_sheet(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        if (!(act.sheet.rendered)) {
+            act.sheet.render(true);
+        }else{
+            act.sheet.close();
+        }
+    }
+
+    _on_toggle_bleeding(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_bleeding: !act.data.data.is_bleeding}});
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_running(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_running: !act.data.data.is_running}});
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_mounted(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_mounted: !act.data.data.is_mounted}});
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_moved(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let name = element.closest(".posse").dataset.name;
+        let act = dc_utils.get_actor(name);
+        act.update({data: {is_moved: !act.data.data.is_moved}});
+        dc_utils.gm.update_sheet();
     }
 }
