@@ -49,6 +49,7 @@
                     </span>
                 </td>
                 <th>Wind</th>
+                <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
         {{log posse_chips}}
         {{#each posse as |player|}}
@@ -75,6 +76,7 @@
                 <td class="perc5 center">{{chip}}</td>
                 {{/each}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
+                <td class="perc5 center"><a class="remove-posse"><i class="fas fa-trash" title="Remove {{player.name}} from the posse list."></i></a></td>
             </tr>
         {{/each}}
         </table>
@@ -90,7 +92,6 @@
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
                 <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
-                <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
             {{#each enemies as |player|}}
             <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
@@ -127,7 +128,6 @@
                 <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
-                <td class="perc5 center"><a class="remove-posse"><i class="fas fa-trash" title="Remove {{player.name}} from the posse list."></i></a></td>
             </tr>
             {{/each}}
         </table>
