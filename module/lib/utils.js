@@ -1806,9 +1806,11 @@ const dc_utils = {
                     wound: {label: 'Wounds', modifier: act.data.data.wound_modifier},
                 }
             };
-            let mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
+            let mods = [];
             if (game.user.isGM) {
                 mods = game.user.character.data.data.modifiers;
+            }else{
+                mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
             }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
