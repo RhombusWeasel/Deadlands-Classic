@@ -398,7 +398,7 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let act  = dc_utils.get_actor(element.closest(".posse").dataset.name);
-        let item = dc_utils.get_equipped(act, 'dominant');
+        let item = dc_utils.char.items.get_equipped(act, 'dominant');
         let data
         if (itemId == 'Nuthin') {
             data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
@@ -421,7 +421,7 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let act  = dc_utils.get_actor(element.closest(".posse").dataset.name);
-        let item = dc_utils.get_equipped(act, 'off');
+        let item = dc_utils.char.items.get_equipped(act, 'off');
         let data
         if (item == 'Nuthin') {
             data = dc_utils.roll.new_roll_packet(act, 'melee', 'fightin', 'Nuthin');
