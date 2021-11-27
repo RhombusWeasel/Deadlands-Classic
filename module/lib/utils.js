@@ -1546,10 +1546,20 @@ const dc_utils = {
                         act.update({data: {wound_soak: 0}});
                     }
                     return setTimeout(() => {
-                        act.update({data: {wounds: {[loc]: tot}}});
+                        let data = {
+                            wounds: {
+                                [loc]: tot
+                            },
+                        }
                         dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                         dc_utils.char.wounds.calculate_wound_modifier(act, amt);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
+                        if (act.data.data.heals[loc] == 0) {
+                            let timestamp = game.settings.get('deadlands_classic', 'unixtime');
+                            let next_heal = timestamp + act.data.data.healing_factor
+                            data.heals = {[loc]: next_heal}
+                        }
+                        act.update({data});
                     }, Math.random() * 500);
                 }else{
                     dc_utils.chat.send('Wound', `${act.name} was lucky they just winged 'em.`);
