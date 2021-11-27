@@ -89,7 +89,7 @@ export default class GMSheet extends ActorSheet {
             }
             data.neutral = [];
             let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0);
-            for (let i = 0; i < nuetral.length; i++) {
+            for (let i = 0; i < neutral.length; i++) {
                 const tkn = dc_utils.get_actor(neutral[i].name);
                 data.neutral.push(tkn);
             }
