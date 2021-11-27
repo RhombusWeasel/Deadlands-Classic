@@ -693,11 +693,6 @@ let operations = {
                 tkn.toggleEffect('icons/svg/blood.svg', {active: true});
                 dc_utils.char.wounds.set_bleeding(char, true);
             }
-            if (char.data.data.wind.value <= 0) {
-                tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
-                tkn.toggleEffect('icons/svg/skull.svg', {active: true});
-                tkn.toggleEffect('icons/svg/blood.svg', {active: false});
-            }
             let critical = ['noggin', 'guts', 'lower_guts', 'gizzards']
             if (char.hasPlayerOwner && data.location in critical) {
                 if (tot >= 5) {

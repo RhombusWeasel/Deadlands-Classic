@@ -1564,7 +1564,16 @@ const dc_utils = {
                     let wind_roll = new Roll(`${amt}d6`).roll();
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
-                        act.update({data: {wind: {value: parseInt(act.data.data.wind.value) - wind_roll._total}}});
+                        let total = parseInt(act.data.data.wind.value) - wind_roll._total;
+                        act.update({data: {wind: {value: total}}});
+                        if (total <= 0) {
+                            let tkn = dc_utils.get_token(act.name);
+                            if (tkn) {
+                                tkn.toggleEffect('icons/svg/skull.svg', {active: true, overlay: true});
+                                tkn.toggleEffect('icons/svg/skull.svg', {active: true});
+                                tkn.toggleEffect('icons/svg/blood.svg', {active: false});
+                            }
+                        }
                         dc_utils.chat.send('Wind', `${act.name} takes ${wind_roll._total} wind.`);
                     }, Math.random() * 500);
                 }
