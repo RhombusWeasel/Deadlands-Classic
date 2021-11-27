@@ -1798,7 +1798,15 @@ const dc_utils = {
             if (target) {
                 let tkn = dc_utils.char.token.get_name(act.name);
                 let tgt = dc_utils.char.token.get_name(target.name);
-                dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+                if(tkn) {
+                    if (tgt) {
+                        dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
+                    }else{
+                        throw `ERROR Target token for ${target.name} not found`
+                    }
+                }else{
+                    throw `ERROR Attacker token for ${act.name} not found`
+                }
                 if (type == 'melee' && dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
                     return false;
