@@ -167,7 +167,7 @@ export default class GMSheet extends ActorSheet {
                 const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                 for (let chk = 0; chk < list.length; chk++) {
                     const act = list[chk];
-                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0] : "2\u2663";
+                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : "2\u2663";
                     if (chk_card == `${cur_card}${cur_suit}`) {
                         r_list.push(list.splice(chk, 1)[0]);
                         break;
