@@ -1105,6 +1105,9 @@ const dc_utils = {
         while (str.length < (size || 2)) {str = "0" + str;}
         return str;
     },
+    stagger: function(func) {
+        setTimeout(func, Math.random * 1000);
+    },
     sort: {
         compare: function(object1, object2, key) {
             let obj1
@@ -2477,7 +2480,7 @@ const dc_utils = {
         remove_card: function(act, index) {
             let hand = act.data.data.action_cards;
             hand.splice(index, 1);
-            act.update({data: {action_cards: hand}});
+            setTimeout(() => {act.update({data: {action_cards: hand}})}, Math.random * 1000);
         },
         get_cards: function(act) {
 
