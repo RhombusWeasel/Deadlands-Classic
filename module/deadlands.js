@@ -216,7 +216,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('check_combat', function (options) {
         let ca = game.settings.get('deadlands_classic', 'combat_active')
-        if (ca) {
+        if (ca == true) {
             return options.fn(this);
         }
         return options.inverse(this);
