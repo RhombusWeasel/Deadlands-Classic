@@ -466,7 +466,22 @@ export default class GMSheet extends ActorSheet {
             const tkn = dc_utils.get_actor(enemies[i].name);
             let t = setTimeout(() => {
                 dc_utils.combat.deal_cards(tkn, 1);
-            }, Math.random() * 500);
+                dc_utils.gm.update_sheet();
+            }, Math.random() * 2000);
         }
+    }
+
+    _on_play_card(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        let card = tkn.data.data.action_cards[0];
+        card.char = tkn.name;
+        if (game.user.isGM){
+            operations.discard_card(card);
+        }else{
+            dc_utils.socket.emit('discard_card', card);
+        }
+        dc_utils.combat.remove_card(tkn, index);
     }
 }
