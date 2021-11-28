@@ -79,43 +79,12 @@ export default class GMSheet extends ActorSheet {
                     let cards = act.data.data.action_cards;
                     for (let c = 0; c < cards.length; c++) {
                         const card = cards[c];
-                        let card_data = {'name': card.name, 'player': act.name};
-                        action_list.push(card_data);
-                    }
-                }
-                /* let users = dc_utils.gm.get_online_users();
-                let pcs = dc_utils.gm.get_player_owned_actors();
-                for (let i = 0; i < users.length; i++) {
-                    if (!(users[i].isGM)) {
-                        for (let p = 0; p < pcs.length; p++) {
-                            let char = pcs[p];
-                            let ad_cards = char.data.data.action_cards;
-                            for (let c = 0; c < ad_cards.length; c++) {
-                                const card = ad_cards[c];
-                                let card_data = {'name': card.name, 'player': char.name};
-                                action_list.push(card_data);
-                            }
+                        if (card.name != act.data.data.sleeved_card) {
+                            let card_data = {'name': card.name, 'player': act.name};
+                            action_list.push(card_data);
                         }
                     }
                 }
-                for (let e = 0; e < data.enemies.length; e++) {
-                    let act = data.enemies[e];
-                    let cards = act.data.data.action_cards;
-                    for (let c = 0; c < cards.length; c++) {
-                        const card = cards[c];
-                        let card_data = {'name': card.name, 'player': act.name};
-                        action_list.push(card_data);
-                    }
-                }
-                for (let e = 0; e < data.neutral.length; e++) {
-                    let act = data.neutral[e];
-                    let cards = act.data.data.action_cards;
-                    for (let c = 0; c < cards.length; c++) {
-                        const card = cards[c];
-                        let card_data = {'name': card.name, 'player': act.name};
-                        action_list.push(card_data);
-                    }
-                } */
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
                 }
