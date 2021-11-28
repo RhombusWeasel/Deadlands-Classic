@@ -209,6 +209,14 @@ Hooks.once("init", function () {
         return options.inverse(this);
     });
 
+    Handlebars.registerHelper('combat_active', function (options) {
+        let ca = game.settings.get('deadlands_classic', 'combat_active');
+        if (ca) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+
     Handlebars.registerHelper('isDriver', function (vehicle, options) {
         let onboard = vehicle.actor.data.data.passengers.onboard;
         if (game.user.isGM) return options.fn(this);
