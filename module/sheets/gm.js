@@ -66,7 +66,7 @@ export default class GMSheet extends ActorSheet {
             }
             data.combat_active = game.settings.get('deadlands_classic','combat_active');
             if (data.combat_active) {
-                /* let action_list = [];
+                let action_list = [];
                 let users = dc_utils.gm.get_online_users();
                 let pcs = dc_utils.gm.get_player_owned_actors();
                 for (let i = 0; i < users.length; i++) {
@@ -82,15 +82,25 @@ export default class GMSheet extends ActorSheet {
                         }
                     }
                 }
-                for (let c = 0; c < data.action_deck.length; c++) {
-                    const card = data.action_deck[c];
-                    let card_data = {'name': card.name, 'player': 'GM'};
-                    action_list.push(card_data);
+                for (let e = 0; e < data.enemies.length; e++) {
+                    let cards = data.enemies[e].data.data.action_cards;
+                    for (let c = 0; c < cards.length; c++) {
+                        const card = data.action_deck[c];
+                        let card_data = {'name': card.name, 'player': data.enemies[e].name};
+                        action_list.push(card_data);
+                    }
+                }
+                for (let n = 0; n < data.neutral.length; n++) {
+                    let cards = data.neutral[n].data.data.action_cards;
+                    for (let c = 0; c < cards.length; c++) {
+                        const card = data.action_deck[c];
+                        let card_data = {'name': card.name, 'player': data.neutral[n].name};
+                        action_list.push(card_data);
+                    }
                 }
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
-                } */
-                data.action_list = this.sort_all_cards([].concat(data.posse).concat(data.enemies).concat(data.neutral));
+                }
             }else{
                 if (this.actor.data.data.action_cards.length > 0) {
                     this.actor.update({data: {action_cards: []}});
@@ -387,7 +397,7 @@ export default class GMSheet extends ActorSheet {
             data: {}
         });
         game.settings.set('deadlands_classic', 'combat_active', false);
-        return this.render();
+        dc_utils.gm.update_sheet();
     }
 
     _on_draw_card() {
@@ -408,7 +418,6 @@ export default class GMSheet extends ActorSheet {
         if (game.dc.combat_active) {
             let data = this.getData();
             let next = data.action_list.pop();
-            //console.log(next);
         }
     }
 
