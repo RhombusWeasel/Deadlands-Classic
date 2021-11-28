@@ -170,21 +170,19 @@ export default class GMSheet extends ActorSheet {
                 for (let chk = 0; chk < list.length; chk++) {
                     const act = list[chk];
                     const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : "-\u2663";
-                    if (chk_card == `${cur_card}${cur_suit}`) {
-                        if (cur_card == 'Joker') {
-                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
-                                r_list.push(list.splice(chk, 1)[0]);
-                                rj_found = true;
-                                break;
-                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
-                                r_list.push(list.splice(chk, 1)[0]);
-                                bj_found = true;
-                                break;
-                            }
-                        }else if(chk_card == `${cur_card}${cur_suit}`){
+                    if (cur_card == 'Joker') {
+                        if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
                             r_list.push(list.splice(chk, 1)[0]);
+                            rj_found = true;
+                            break;
+                        }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
+                            r_list.push(list.splice(chk, 1)[0]);
+                            bj_found = true;
                             break;
                         }
+                    }else if(chk_card == `${cur_card}${cur_suit}`){
+                        r_list.push(list.splice(chk, 1)[0]);
+                        break;
                     }
                 }
             }
