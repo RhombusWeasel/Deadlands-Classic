@@ -1,3 +1,4 @@
+import { setTimeout } from "timers/promises";
 import { dc } from "../config.js";
 function get_random_int(min, max) {
     min = Math.ceil(min);
@@ -123,6 +124,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".attack-off").click(this._on_attack_off.bind(this));
         html.find(".target-player").click(this._on_target_player.bind(this));
         html.find(".select-token").click(this._on_select_token.bind(this));
+        html.find(".draw-enemy-cards").click(this._on_draw_cards.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -455,5 +457,17 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
         tkn.control({releaseOthers: true});
+    }
+
+    _on_draw_cards(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
+        for (let i = 0; i < enemies.length; i++) {
+            const tkn = dc_utils.get_actor(enemies[i].name);
+            setTimeout(() => {
+                dc_utils.combat.deal_cards(tkn, 1);
+            }, Math.random() * 500);
+        }
     }
 }
