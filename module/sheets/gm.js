@@ -175,21 +175,22 @@ export default class GMSheet extends ActorSheet {
                     const chk_list = act.data.data.action_cards;
                     let found = false;
                     for (let cd = 0; cd < chk_list.length; cd++) {
-                        const chk_card = act.data.data.action_cards[cd] ? act.data.data.action_cards[cd].name : "-\u2663";
+                        const chk_card = act.data.data.action_cards[cd] ? act.data.data.action_cards[cd].name : {name: "--"};
+                        let card_data = {'name': card.name, 'player': char.name};
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
-                                r_list.push(list.splice(chk, 1)[0]);
+                                r_list.push(card_data);
                                 rj_found = true;
                                 found = true;
                                 break;
                             }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
-                                r_list.push(list.splice(chk, 1)[0]);
+                                r_list.push(card_data);
                                 bj_found = true;
                                 found = true;
                                 break;
                             }
                         }else if(chk_card == `${cur_card}${cur_suit}`){
-                            r_list.push(list.splice(chk, 1)[0]);
+                            r_list.push(card_data);
                             found = true;
                             break;
                         }
