@@ -98,11 +98,7 @@
                 <th><i class="fas fa-hand-point-right" title="Attack with dominant hand"></i></th>
                 <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
-                {{#ifCond combat_active '==' true}}
-                <th><i class="fas clock" title="Wound modifier"></i></th>
-                {{else}}
-                <th></th>
-                {{/ifCond}}
+                <th><i class="fas clock" title="Initiative card"></i></th>
                 <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
             </tr>
@@ -136,6 +132,15 @@
                 <td class="center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="center">{{player.data.data.wound_modifier}}</td>
+                {{#if (eq ../combat_active true)}}
+                    {{#ifCond player.data.data.action_cards.length '>=' 1}}
+                <td class="center">{{player.data.data.action_cards[0]}}</td>
+                    {{else}}
+                <td class="center">-</td>
+                    {{/ifCond}}
+                {{else}}
+                <td></td>
+                {{/if}}
                 {{#if (eq player.data.data.is_moved true)}}
                 <td class="center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
                 {{else}}
