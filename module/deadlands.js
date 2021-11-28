@@ -214,6 +214,13 @@ Hooks.once("init", function () {
         return act.data.data.action_cards[0] ? act.data.data.action_cards[0] : '-';
     });
 
+    Handlebars.registerHelper('check_combat', function (options) {
+        if (game.settings.get('deadlands_classic', 'combat_active') == true) {
+            return options.fn(this);
+        }
+        return options.inverse(this);
+    });
+
     Handlebars.registerHelper('isDriver', function (vehicle, options) {
         let onboard = vehicle.actor.data.data.passengers.onboard;
         if (game.user.isGM) return options.fn(this);

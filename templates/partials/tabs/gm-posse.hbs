@@ -52,7 +52,6 @@
                 <th>Wind</th>
                 <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
-        {{log posse_chips}}
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
                 <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
@@ -84,9 +83,9 @@
         </table>
         <div class="flexrow">
             <h2 class="center">Hostile</h2>
-            {{#ifCond combat_active '==' true}}
-                <h2 class="center"><a class="draw-enemy-cards">Draw Cards</a></h2>
-            {{/ifCond}}
+        {{#check_combat}}
+            <h2 class="center"><a class="draw-enemy-cards">Draw Cards</a></h2>
+        {{/check_combat}}
         </div>
         <table>
             <tr class="center">
@@ -98,7 +97,7 @@
                 <th><i class="fas fa-hand-point-right" title="Attack with dominant hand"></i></th>
                 <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
-                <th><i class="fas clock" title="Initiative card"></i></th>
+                <th><i class="fas fa-clock" title="Initiative card"></i></th>
                 <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
             </tr>
