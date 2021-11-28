@@ -133,8 +133,8 @@
                 {{/if}}
                 <td class="center">{{player.data.data.wound_modifier}}</td>
                 {{#combat_active}}
-                    {{#ifCond player.data.data.action_cards.length '>=' 1}}
-                <td class="center">{{player.data.data.action_cards[0]}}</td>
+                    {{#ifCond ../player.data.data.action_cards.length '>=' 1}}
+                <td class="center">{{../player.data.data.action_cards[0]}}</td>
                     {{else}}
                 <td class="center">-</td>
                     {{/ifCond}}
