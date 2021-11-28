@@ -132,15 +132,7 @@
                 <td class="center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="center">{{player.data.data.wound_modifier}}</td>
-                {{#combat_active}}
-                    {{#ifCond ../player.data.data.action_cards.length '>=' 1}}
-                <td class="center">{{../player.data.data.action_cards[0]}}</td>
-                    {{else}}
-                <td class="center">-</td>
-                    {{/ifCond}}
-                {{else}}
-                <td class="center">-</td>
-                {{/combat_active}}
+                <td class="center"></td>{{#combat_active}}</tr>
                 {{#if (eq player.data.data.is_moved true)}}
                 <td class="center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
                 {{else}}

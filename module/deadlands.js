@@ -209,12 +209,9 @@ Hooks.once("init", function () {
         return options.inverse(this);
     });
 
-    Handlebars.registerHelper('combat_active', function (options) {
-        let ca = game.settings.get('deadlands_classic', 'combat_active');
-        if (ca) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
+    Handlebars.registerHelper('combat_active', function (name, options) {
+        let act = dc_utils.get_actor(name);
+        return act.data.data.action_cards[0] ? act.data.data.action_cards[0] : '-';
     });
 
     Handlebars.registerHelper('isDriver', function (vehicle, options) {
