@@ -121,6 +121,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".attack-dominant").click(this._on_attack_dominant.bind(this));
         html.find(".attack-off").click(this._on_attack_off.bind(this));
         html.find(".target-player").click(this._on_target_player.bind(this));
+        html.find(".select-token").click(this._on_select_token.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -446,5 +447,12 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
         tkn.setTarget({releaseOthers: true});
+    }
+
+    _on_target_player(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
+        tkn.control({releaseOthers: true});
     }
 }
