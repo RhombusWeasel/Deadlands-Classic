@@ -18,7 +18,7 @@
         <h2 class="center">Posse</h2>
         <table>
             <tr class="center">
-                <td class="perc5 center"><i class="fas fa-crosshairs"/></td>
+                <td class="perc5 center" title="Target the token"><i class="fas fa-crosshairs"/></td>
                 <th>Name</th>
                 <th>Cash</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
@@ -26,25 +26,25 @@
                 <th><i class="fas fa-horse" title="Mounted"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
                 <td>
-                    <span class="fa-stack fa-2x">
+                    <span class="fa-stack fa-2x" title="White fate chips">
                         <i class="fas fa-circle fa-stack-2x White"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
                 <td>
-                    <span class="fa-stack fa-2x">
+                    <span class="fa-stack fa-2x" title="Red fate chips">
                         <i class="fas fa-circle fa-stack-2x Red"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
                 <td>
-                    <span class="fa-stack fa-2x">
+                    <span class="fa-stack fa-2x" title="Blue fate chips">
                         <i class="fas fa-circle fa-stack-2x Blue"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
                 <td>
-                    <span class="fa-stack fa-2x">
+                    <span class="fa-stack fa-2x" title="Legendary fate chips">
                         <i class="fas fa-circle fa-stack-2x Legendary"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
@@ -85,6 +85,7 @@
         <h2 class="center">Hostile</h2>
         <table>
             <tr class="center">
+                <th><i class="fas fa-hand-pointer" title="Select token"/></th>
                 <th>Name</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
                 <th><i class="fas fa-running" title="Running"></i></th>
@@ -97,6 +98,7 @@
             </tr>
             {{#each enemies as |player|}}
             <tr class="posse" data-name="{{player.name}}">
+                <td class="perc5 center"><a class="select-token"><i class="fas fa-hand-pointer"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
@@ -136,6 +138,7 @@
         <h2 class="center">Neutral</h2>
         <table>
             <tr class="center">
+                <td class="perc5 center" title="Target bystander"><i class="fas fa-crosshairs"/></td>
                 <th>Name</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
                 <th><i class="fas fa-running" title="Running"></i></th>
@@ -148,6 +151,7 @@
             </tr>
             {{#each neutral as |player|}}
             <tr class="posse" data-name="{{player.name}}">
+                <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
