@@ -70,6 +70,7 @@ export default class GMSheet extends ActorSheet {
                 let tokens = [];
                 let combatants = canvas.tokens.placeables.filter(i => i.document.actor.data.data.wind.value > 0);
                 for (let i = 0; i < combatants.length; i++) {
+                    console.log(combatants[i].name);
                     const tkn = dc_utils.get_actor(combatants[i].name);
                     tokens.push(tkn);
                 }
