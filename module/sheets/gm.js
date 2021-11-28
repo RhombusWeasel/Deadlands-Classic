@@ -67,7 +67,22 @@ export default class GMSheet extends ActorSheet {
             data.combat_active = game.settings.get('deadlands_classic','combat_active');
             if (data.combat_active) {
                 let action_list = [];
-                let users = dc_utils.gm.get_online_users();
+                let tokens = [];
+                let combatants = canvas.tokens.placeables.filter(i => i.document.actor.data.data.wind.value > 0);
+                for (let i = 0; i < combatants.length; i++) {
+                    const tkn = dc_utils.get_actor(combatants[i].name);
+                    tokens.push(tkn);
+                }
+                for (let t = 0; t < tokens.length; e++) {
+                    let act = tokens[e];
+                    let cards = act.data.data.action_cards;
+                    for (let c = 0; c < cards.length; c++) {
+                        const card = cards[c];
+                        let card_data = {'name': card.name, 'player': act.name};
+                        action_list.push(card_data);
+                    }
+                }
+                /* let users = dc_utils.gm.get_online_users();
                 let pcs = dc_utils.gm.get_player_owned_actors();
                 for (let i = 0; i < users.length; i++) {
                     if (!(users[i].isGM)) {
@@ -83,21 +98,23 @@ export default class GMSheet extends ActorSheet {
                     }
                 }
                 for (let e = 0; e < data.enemies.length; e++) {
-                    let cards = data.enemies[e].data.data.action_cards;
+                    let act = data.enemies[e];
+                    let cards = act.data.data.action_cards;
                     for (let c = 0; c < cards.length; c++) {
-                        const card = data.action_deck[c];
-                        let card_data = {'name': card.name, 'player': data.enemies[e].name};
+                        const card = cards[c];
+                        let card_data = {'name': card.name, 'player': act.name};
                         action_list.push(card_data);
                     }
                 }
-                for (let n = 0; n < data.neutral.length; n++) {
-                    let cards = data.neutral[n].data.data.action_cards;
+                for (let e = 0; e < data.neutral.length; e++) {
+                    let act = data.neutral[e];
+                    let cards = act.data.data.action_cards;
                     for (let c = 0; c < cards.length; c++) {
-                        const card = data.action_deck[c];
-                        let card_data = {'name': card.name, 'player': data.neutral[n].name};
+                        const card = cards[c];
+                        let card_data = {'name': card.name, 'player': act.name};
                         action_list.push(card_data);
                     }
-                }
+                } */
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
                 }
