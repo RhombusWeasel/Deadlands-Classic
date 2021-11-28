@@ -176,7 +176,6 @@ export default class GMSheet extends ActorSheet {
                     for (let cd = 0; cd < chk_list.length; cd++) {
                         const chk_card = chk_list[cd] ? chk_list[cd] : {name: "--"};
                         const card_data = {name: chk_card.name, player: act.name};
-                        console.log(act.name, card_data, `${cur_card}${cur_suit}`);
                         if (card_data.is_sleeved) break;
                         if (cur_card == 'Joker') {
                             if (chk_card.name == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
