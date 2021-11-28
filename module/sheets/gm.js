@@ -449,7 +449,7 @@ export default class GMSheet extends ActorSheet {
         tkn.setTarget({releaseOthers: true});
     }
 
-    _on_target_player(event) {
+    _on_select_token(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
