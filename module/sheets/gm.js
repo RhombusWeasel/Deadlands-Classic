@@ -173,24 +173,24 @@ export default class GMSheet extends ActorSheet {
                 for (let chk = 0; chk < list.length; chk++) {
                     const act = list[chk];
                     const chk_list = act.data.data.action_cards;
-                    console.log(act.name, chk_list);
                     let found = false;
                     for (let cd = 0; cd < chk_list.length; cd++) {
                         const chk_card = chk_list[cd] ? chk_list[cd] : {name: "--"};
                         const card_data = {name: chk_card.name, player: act.name};
+                        console.log(act.name, card_data, `${cur_card}${cur_suit}`);
                         if (cur_card == 'Joker') {
-                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
+                            if (chk_card.name == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
                                 r_list.push(card_data);
                                 rj_found = true;
                                 found = true;
                                 break;
-                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
+                            }else if(chk_card.name == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
                                 r_list.push(card_data);
                                 bj_found = true;
                                 found = true;
                                 break;
                             }
-                        }else if(chk_card == `${cur_card}${cur_suit}`){
+                        }else if(chk_card.name == `${cur_card}${cur_suit}`){
                             r_list.push(card_data);
                             found = true;
                             break;
@@ -201,10 +201,6 @@ export default class GMSheet extends ActorSheet {
                     }
                 }
             }
-        }
-        for (let i = 0; i < list.length; i++) {
-            const act = list[i];
-            r_list.push({name: '--', player: act.name});
         }
         return r_list;
     }
