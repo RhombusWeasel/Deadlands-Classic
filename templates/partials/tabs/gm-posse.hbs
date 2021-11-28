@@ -98,7 +98,6 @@
                 <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
                 <th><i class="fas fa-clock" title="Initiative card"></i></th>
-                <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
                 <th>Wind</th>
             </tr>
             {{#each enemies as |player|}}
@@ -131,12 +130,7 @@
                 <td class="center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 <td class="center">{{player.data.data.wound_modifier}}</td>
-                <td class="center">{{combat_active player.name}}</td>
-                {{#if (eq player.data.data.is_moved true)}}
-                <td class="center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
-                {{else}}
-                <td class="center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
-                {{/if}}
+                <td class="center"><a class="play-action-card">{{combat_active player.name}}</a></td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
             {{/each}}
