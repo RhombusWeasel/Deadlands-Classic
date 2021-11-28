@@ -1,6 +1,6 @@
 <section>
     <div>
-        {{#check_combat}}
+        {{#if action_list}}
             <h2 class="center">Combat Active</h2>
             <div class="flexrow">
                 <a><p class="new-round center">New Round</p></a>
@@ -9,7 +9,7 @@
             </div>
         {{else}}
             <h2 class="center start-combat"><a>Start Combat</a></h2>
-        {{/check_combat}}
+        {{/else}}
     </div>
     <div>
         <h2 class="center">Posse</h2>
