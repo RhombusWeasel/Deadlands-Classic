@@ -201,10 +201,6 @@ export default class GMSheet extends ActorSheet {
                 }
             }
         }
-        for (let i = 0; i < list.length; i++) {
-            const element = list[i];
-            r_list.push(element);
-        }
         return r_list;
     }
 
