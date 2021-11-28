@@ -2463,6 +2463,7 @@ const dc_utils = {
             });
             game.dc.action_deck.discard = []
             game.dc.action_deck.deck = dc_utils.deck.shuffle(game.dc.action_deck.deck);
+            dc_utils.chat.send('Action Deck', 'The action deck was recycled.');
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         deal_cards: function(act, amt) {
