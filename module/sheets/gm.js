@@ -161,13 +161,15 @@ export default class GMSheet extends ActorSheet {
         let r_list = []
         let rj_found = false;
         let bj_found = false;
-        for (let card = 0; card < dc_utils.cards.length ; card++) {
-            const cur_card = dc_utils.cards[card];
+        let cards = dc_utils.cards
+        cards.push('-');
+        for (let card = 0; card < cards.length ; card++) {
+            const cur_card = cards[card];
             for (let suit = 0; suit < dc_utils.suits.length; suit++) {
                 const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
                 for (let chk = 0; chk < list.length; chk++) {
                     const act = list[chk];
-                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : "2\u2663";
+                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : "-\u2663";
                     if (chk_card == `${cur_card}${cur_suit}`) {
                         if (cur_card == 'Joker') {
                             if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
