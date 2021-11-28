@@ -88,6 +88,7 @@ export default class GMSheet extends ActorSheet {
                 const tkn = dc_utils.get_actor(enemies[i].name);
                 data.enemies.push(tkn);
             }
+            data.enemies = this.sort_entities_by_card(data.entities);
             data.neutral = [];
             let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
             for (let i = 0; i < neutral.length; i++) {
@@ -154,6 +155,27 @@ export default class GMSheet extends ActorSheet {
             }
         } */
         return super.activateListeners(html);
+    }
+
+    sort_entities_by_card(list) {
+        let r_list = []
+        let rj_found = false;
+        let bj_found = false;
+        for (let card = 0; card < dc_utils.cards.length ; card++) {
+            const cur_card = dc_utils.cards[card];
+            for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
+                for (let chk = 0; chk < list.length; chk++) {
+                    const act = list[chk];
+                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0] : "2\u2663";
+                    if (chk_card == `${cur_card}${cur_suit}`) {
+                        r_list.push(list.splice(chk, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
+        return r_list;
     }
 
     _on_refresh(event) {
