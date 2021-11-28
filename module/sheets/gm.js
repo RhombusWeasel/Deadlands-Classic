@@ -173,6 +173,7 @@ export default class GMSheet extends ActorSheet {
                 for (let chk = 0; chk < list.length; chk++) {
                     const act = list[chk];
                     const chk_list = act.data.data.action_cards;
+                    console.log(act.name, chk_list);
                     let found = false;
                     for (let cd = 0; cd < chk_list.length; cd++) {
                         const chk_card = act.data.data.action_cards[cd] ? act.data.data.action_cards[cd] : {name: "--"};
