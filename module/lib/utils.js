@@ -1613,7 +1613,7 @@ const dc_utils = {
                     }else{
                         return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, Math.random() * 1000);
                     }
-                }, Math.random() * 500);
+                }, Math.random() * 1000);
             },
             set_bleeding: function(act, bool) {
                 act.update({data: {is_bleeding: bool}});

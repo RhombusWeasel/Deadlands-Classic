@@ -120,6 +120,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".remove-posse").click(this._on_remove_posse.bind(this));
         html.find(".attack-dominant").click(this._on_attack_dominant.bind(this));
         html.find(".attack-off").click(this._on_attack_off.bind(this));
+        html.find(".target-player").click(this._on_target_player.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -438,5 +439,12 @@ export default class GMSheet extends ActorSheet {
             }
         }
         operations.register_attack(data);
+    }
+
+    _on_target_player(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
+        tkn.setTarget({releaseOthers: true});
     }
 }

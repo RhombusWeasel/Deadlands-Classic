@@ -18,6 +18,7 @@
         <h2 class="center">Posse</h2>
         <table>
             <tr class="center">
+                <td class="perc5 center"><i class="fas fa-crosshairs"/></td>
                 <th>Name</th>
                 <th>Cash</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
@@ -54,6 +55,7 @@
         {{log posse_chips}}
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
+                <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
