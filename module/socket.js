@@ -604,9 +604,7 @@ let operations = {
                     play: {
                         label: 'Play',
                         callback: () => {
-                            let itm = char.items.find(i => i.name == data.name);
-                            char.deleteOwnedItem(itm._id);
-                            dc_utils.socket.emit('discard_card', data);
+                            
                         }
                     }
                 },

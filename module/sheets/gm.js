@@ -45,6 +45,19 @@ export default class GMSheet extends ActorSheet {
                     Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
                 }
             }
+            data.enemies = [];
+            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
+            for (let i = 0; i < enemies.length; i++) {
+                const tkn = dc_utils.get_actor(enemies[i].name);
+                data.enemies.push(tkn);
+            }
+            data.enemies = this.sort_entities_by_card(data.enemies);
+            data.neutral = [];
+            let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
+            for (let i = 0; i < neutral.length; i++) {
+                const tkn = dc_utils.get_actor(neutral[i].name);
+                data.neutral.push(tkn);
+            }
             data.tn = 5;
             for (const [key, mod] of Object.entries(data.modifiers)){
                 if (mod.active) {
@@ -53,7 +66,7 @@ export default class GMSheet extends ActorSheet {
             }
             data.combat_active = game.settings.get('deadlands_classic','combat_active');
             if (data.combat_active) {
-                let action_list = [];
+                /* let action_list = [];
                 let users = dc_utils.gm.get_online_users();
                 let pcs = dc_utils.gm.get_player_owned_actors();
                 for (let i = 0; i < users.length; i++) {
@@ -76,25 +89,15 @@ export default class GMSheet extends ActorSheet {
                 }
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
-                }
+                } */
+                data.action_list = this.sort_all_cards([].concat(data.posse).concat(data.enemies).concat(data.neutral));
+
             }else{
                 if (this.actor.data.data.action_cards.length > 0) {
                     this.actor.update({data: {action_cards: []}});
                 }
             }
-            data.enemies = [];
-            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
-            for (let i = 0; i < enemies.length; i++) {
-                const tkn = dc_utils.get_actor(enemies[i].name);
-                data.enemies.push(tkn);
-            }
-            data.enemies = this.sort_entities_by_card(data.enemies);
-            data.neutral = [];
-            let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
-            for (let i = 0; i < neutral.length; i++) {
-                const tkn = dc_utils.get_actor(neutral[i].name);
-                data.neutral.push(tkn);
-            }
+            
             data.time = dc_utils.time.get_date();
             return data;
         }
@@ -155,6 +158,53 @@ export default class GMSheet extends ActorSheet {
             }
         } */
         return super.activateListeners(html);
+    }
+
+    sort_all_cards(list) {
+        let r_list = []
+        let rj_found = false;
+        let bj_found = false;
+        let cards = dc_utils.cards
+        cards.push('-');
+        for (let card = 0; card < cards.length ; card++) {
+            const cur_card = cards[card];
+            for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
+                for (let chk = 0; chk < list.length; chk++) {
+                    const act = list[chk];
+                    const chk_list = act.data.data.action_cards;
+                    let found = false;
+                    for (let cd = 0; cd < chk_list.length; cd++) {
+                        const chk_card = act.data.data.action_cards[cd] ? act.data.data.action_cards[cd].name : "-\u2663";
+                        if (cur_card == 'Joker') {
+                            if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
+                                r_list.push(list.splice(chk, 1)[0]);
+                                rj_found = true;
+                                found = true;
+                                break;
+                            }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
+                                r_list.push(list.splice(chk, 1)[0]);
+                                bj_found = true;
+                                found = true;
+                                break;
+                            }
+                        }else if(chk_card == `${cur_card}${cur_suit}`){
+                            r_list.push(list.splice(chk, 1)[0]);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        break
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < list.length; i++) {
+            const element = list[i];
+            r_list.push(element);
+        }
+        return r_list;
     }
 
     sort_entities_by_card(list) {
