@@ -1,4 +1,3 @@
-import { setTimeout } from "timers/promises";
 import { dc } from "../config.js";
 function get_random_int(min, max) {
     min = Math.ceil(min);
@@ -465,7 +464,9 @@ export default class GMSheet extends ActorSheet {
         let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
         for (let i = 0; i < enemies.length; i++) {
             const tkn = dc_utils.get_actor(enemies[i].name);
-            dc_utils.combat.deal_cards(tkn, 1);
+            let t = setTimeout(() => {
+                dc_utils.combat.deal_cards(tkn, 1);
+            }, Math.random() * 500);
         }
     }
 }
