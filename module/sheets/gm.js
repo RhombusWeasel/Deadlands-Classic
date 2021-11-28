@@ -74,7 +74,7 @@ export default class GMSheet extends ActorSheet {
                     const tkn = dc_utils.get_actor(combatants[i].name);
                     tokens.push(tkn);
                 }
-                for (let t = 0; t < tokens.length; e++) {
+                for (let t = 0; t < tokens.length; t++) {
                     let act = tokens[t];
                     let cards = act.data.data.action_cards;
                     for (let c = 0; c < cards.length; c++) {
