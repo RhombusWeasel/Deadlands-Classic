@@ -484,5 +484,6 @@ export default class GMSheet extends ActorSheet {
             dc_utils.socket.emit('discard_card', card);
         }
         dc_utils.combat.remove_card(tkn, 0);
+        dc_utils.gm.update_sheet();
     }
 }
