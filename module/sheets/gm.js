@@ -27,6 +27,7 @@ export default class GMSheet extends ActorSheet {
                 {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
                 {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
             ];
+            data.combat_active = game.settings.get('deadlands_classic','combat_active');
             data.action_deck   = this.actor.data.data.action_cards;
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
