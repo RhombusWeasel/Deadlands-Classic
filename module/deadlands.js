@@ -211,7 +211,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('combat_active', function (name, options) {
         let act = dc_utils.get_actor(name);
-        return act.data.data.action_cards[0] ? act.data.data.action_cards[0] : '-';
+        return act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : '-';
     });
 
     Handlebars.registerHelper('check_combat', function (options) {
