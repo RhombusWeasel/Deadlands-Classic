@@ -1598,13 +1598,10 @@ const dc_utils = {
                     for (const loc in act.data.data.wounds) {
                         if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
                             let cur = act.data.data.wounds[loc];
+                            if (cur > 0) is_wounded = true;
                             if (cur * -1 < wm) {
                                 wm = cur * -1
                                 is_wounded = true
-                            }else{
-                                if (cur > 0) {
-                                    is_wounded = true
-                                }
                             }
                         }
                     }
