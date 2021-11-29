@@ -51,17 +51,17 @@
             {{/ifCond}}
         {{/each}}
         </tr>
+        <tr>
         {{#each modifiers as |mod|}}
             {{#ifCond @index '<=' 6}}
-        <tr>
-            {{#if (eq mod.data.data.active true)}}
+                {{#if (eq mod.data.data.active true)}}
             <td class="center modifier" data-index="{{@index}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
-            {{else}}
+                {{else}}
             <td class="center modifier" data-index="{{@index}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
-            {{/if}}
-        </tr>
+               {{/if}}
             {{/ifCond}}
         {{/each}}
+    </tr>
     </table>
     <div class="center">
         <a><p class="refresh">Refresh</p></a>
