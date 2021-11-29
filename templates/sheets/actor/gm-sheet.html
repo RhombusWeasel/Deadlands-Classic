@@ -46,14 +46,14 @@
     <table>
         <tr>
         {{#each modifiers as |mod|}}
-            {{#ifCond @index '<=' 6}}
+            {{#ifCond @index '<=' 4}}
             <th class="center">{{mod.name}} [{{mod.mod}}]</th>
             {{/ifCond}}
         {{/each}}
         </tr>
         <tr>
         {{#each modifiers as |mod|}}
-            {{#ifCond @index '<=' 6}}
+            {{#ifCond @index '<=' 4}}
                 {{#if (eq mod.data.data.active true)}}
             <td class="center modifier" data-index="{{@index}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
                 {{else}}
