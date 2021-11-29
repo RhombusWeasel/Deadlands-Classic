@@ -4,47 +4,43 @@
         <table>
             <tr class="center">
                 <td class="perc5 center" title="Target the token"><i class="fas fa-crosshairs"/></td>
-                <th>Name</th>
-                <th>Cash</th>
-                <th><i class="fas fa-tint" title="Bleeding"></i></th>
-                <th><i class="fas fa-running" title="Running"></i></th>
-                <th><i class="fas fa-horse" title="Mounted"></i></th>
-                <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
-                <td>
+                <th class="center">Name</th>
+                <th class="center"><i class="fas fa-tint" title="Bleeding"></i></th>
+                <th class="center"><i class="fas fa-running" title="Running"></i></th>
+                <th class="center"><i class="fas fa-horse" title="Mounted"></i></th>
+                <th class="center"><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
+                <td class="center">
                     <span class="fa-stack fa-2x" title="White fate chips">
                         <i class="fas fa-circle fa-stack-2x White"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
+                <td class="center">
                     <span class="fa-stack fa-2x" title="Red fate chips">
                         <i class="fas fa-circle fa-stack-2x Red"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
+                <td class="center">
                     <span class="fa-stack fa-2x" title="Blue fate chips">
                         <i class="fas fa-circle fa-stack-2x Blue"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
+                <td class="center">
                     <span class="fa-stack fa-2x" title="Legendary fate chips">
                         <i class="fas fa-circle fa-stack-2x Legendary"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                {{#if combat_active}}
-                <th><i class="fas fa-clock" title="Initiative card"></i></th>
-                {{/if}}
-                <th>Wind</th>
+                <th class="center"><i class="fas fa-clock" title="Initiative card"></i></th>
+                <th class="center">Wind</th>
                 <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
                 <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
-                <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
                 {{else}}
