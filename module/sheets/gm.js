@@ -155,11 +155,11 @@ export default class GMSheet extends ActorSheet {
                 gm_colls[i].nextElementSibling.style.maxHeight = gm_colls[i].nextElementSibling.scrollHeight + "px";
             }
         }
-        let data_box = document.getElementsByClassName("gm-data")[0];
+        /* let data_box = document.getElementsByClassName("gm-data")[0];
         var container_height = data_box.offsetHeight;
         var lastChild = data_box.childNodes[data_box.childNodes.length - 1];
         var vertical_offset = lastChild.offsetTop + lastChild.offsetHeight;
-        data_box.style.height = (container_height - vertical_offset) + "px";
+        data_box.style.height = (container_height - vertical_offset) + "px"; */
         return super.activateListeners(html);
     }
 
