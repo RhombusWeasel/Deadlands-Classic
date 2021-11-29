@@ -1593,27 +1593,19 @@ const dc_utils = {
             },
             calculate_wound_modifier: function(act, amt) {
                 return setTimeout(() => {
-                    let wm = act.data.data.wound_modifier
-                    let is_wounded = false
+                    let wm = 0;
+                    let is_wounded = false;
                     for (const loc in act.data.data.wounds) {
                         if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
                             let cur = act.data.data.wounds[loc];
-                            if (cur > 0) is_wounded = true;
-                            if (cur * -1 < wm) {
-                                wm = cur * -1
+                            if (cur < wm) {
+                                wm = cur
                                 is_wounded = true
                             }
                         }
                     }
-                    if (wm * -1 < amt) {
-                        wm = -amt;
-                    }
-                    if (is_wounded) {
-                        return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
-                    }else{
-                        return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, Math.random() * 1000);
-                    }
-                }, Math.random() * 1000);
+                    act.update({data: {wound_modifier: 0}});
+                }, Math.random() * 2000);
             },
             set_bleeding: function(act, bool) {
                 act.update({data: {is_bleeding: bool}});
