@@ -71,7 +71,7 @@
     <h1 class="center"></h1>
     {{#ifCond combat_active '==' true}}
     <div class="flexrow">
-        <div class="center new-round"><a>Next Round</a></div>
+        <div><div class="center new-round"><a>Next Round</a></div></div>
         <h2 class="center next-turn">{{action_list.[0].name}} {{action_list.[0].player}}</h2>
         <div class="center end-combat"><a>End Combat</a></div>
     </div>
@@ -82,7 +82,7 @@
     <nav class="sheet-tabs tabs gm-data" data-group="gm">
         <a class="item" data-tab="combat">Combat</a>
         <a class="item" data-tab="notes">Notes</a>
-        <a class="item" data-tab="posse">Posse</a>
+        <!-- <a class="item" data-tab="posse">Posse</a> -->
     </nav>
     <div class="flexcol">
         <section class="sheet-body scroller trait_scroller border">
