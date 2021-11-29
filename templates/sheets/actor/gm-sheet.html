@@ -46,6 +46,9 @@
     <div class="center">
         <a><p class="refresh">Refresh</p></a>
     </div>
+    {{#if action_list}}
+        {{log action_list.[0]}}
+    {{/if}}
     {{#ifCond combat_active '==' true}}
     <div class="flexrow">
         <div class="center"><a>Next Round</a></div>
