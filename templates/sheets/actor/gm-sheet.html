@@ -48,12 +48,12 @@
     </div>
     {{#ifCond combat_active '==' true}}
     <div class="flexrow">
-        <div class="center"><a>Next Round</a></div>
-        <h2 class="center">{{action_list.[0].name}} {{action_list.[0].player}}</h2>
-        <div class="center"><a>End Combat</a></div>
+        <div class="center new-round"><a>Next Round</a></div>
+        <h2 class="center next-turn">{{action_list.[0].name}} {{action_list.[0].player}}</h2>
+        <div class="center end-combat"><a>End Combat</a></div>
     </div>
     {{else}}
-    <h3 class="center">Start Combat</h3>
+    <h2 class="center start-combat"><a>Start Combat</a></h2>
     {{/ifCond}}
     <nav class="sheet-tabs tabs" data-group="gm">
         <a class="item" data-tab="combat">Combat</a>
