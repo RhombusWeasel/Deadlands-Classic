@@ -54,7 +54,7 @@
         <tr>
         {{#each modifiers as |mod|}}
             {{#ifCond @index '<=' 4}}
-                {{#if (eq mod.data.data.active true)}}
+                {{#if (eq mod.active true)}}
             <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
                 {{else}}
             <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
