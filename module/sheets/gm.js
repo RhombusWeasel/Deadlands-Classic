@@ -157,7 +157,7 @@ export default class GMSheet extends ActorSheet {
         }
         let data_box = document.getElementsByClassName("gm-data")[0];
         var container_height = data_box.offsetHeight;
-        var lastChild = data_box.childNodes[elem.childNodes.length - 1];
+        var lastChild = data_box.childNodes[data_box.childNodes.length - 1];
         var vertical_offset = lastChild.offsetTop + lastChild.offsetHeight;
         data_box.style.height = (container_height - vertical_offset) + "px";
         return super.activateListeners(html);
