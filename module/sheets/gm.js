@@ -161,7 +161,6 @@ export default class GMSheet extends ActorSheet {
         let rj_found = false;
         let bj_found = false;
         let cards = dc_utils.cards
-        cards.push('-');
         for (let card = 0; card < cards.length ; card++) {
             const cur_card = cards[card];
             for (let suit = 0; suit < dc_utils.suits.length; suit++) {
