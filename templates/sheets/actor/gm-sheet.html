@@ -44,26 +44,28 @@
     </table>
     {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
     <h2 class="center gm-collapsible">Global TN [{{tn}}]</h2>
-    <table>
-        <tr>
-        {{#each modifiers as |mod|}}
-            {{#ifCond @index '<=' 4}}
-            <th class="center">{{mod.name}} [{{mod.mod}}]</th>
-            {{/ifCond}}
-        {{/each}}
+    <div class="gm-content">
+        <table>
+            <tr>
+            {{#each modifiers as |mod|}}
+                {{#ifCond @index '<=' 4}}
+                <th class="center">{{mod.name}} [{{mod.mod}}]</th>
+                {{/ifCond}}
+            {{/each}}
+            </tr>
+            <tr>
+            {{#each modifiers as |mod|}}
+                {{#ifCond @index '<=' 4}}
+                    {{#if (eq mod.active true)}}
+                <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
+                    {{else}}
+                <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
+                {{/if}}
+                {{/ifCond}}
+            {{/each}}
         </tr>
-        <tr>
-        {{#each modifiers as |mod|}}
-            {{#ifCond @index '<=' 4}}
-                {{#if (eq mod.active true)}}
-            <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
-                {{else}}
-            <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
-               {{/if}}
-            {{/ifCond}}
-        {{/each}}
-    </tr>
-    </table>
+        </table>
+    </div>
     <div class="center">
         <a><p class="refresh">Refresh</p></a>
     </div>
