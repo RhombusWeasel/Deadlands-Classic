@@ -48,7 +48,7 @@
             <tr>
             {{#each modifiers as |mod|}}
                 {{#ifCond @index '<=' 4}}
-                <th class="center">{{mod.name}} [{{mod.mod}}]</th>
+                <th class="center typed">{{mod.name}} [{{mod.mod}}]</th>
                 {{/ifCond}}
             {{/each}}
             </tr>
@@ -66,7 +66,7 @@
         </table>
     </div>
     <div class="center">
-        <h3><p class="refresh">Refresh</p></h3>
+        <h3><a><p class="refresh">Refresh</p></a></h3>
     </div>
     <h1 class="center"></h1>
     {{#ifCond combat_active '==' true}}
