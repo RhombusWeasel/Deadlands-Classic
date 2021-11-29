@@ -12,7 +12,7 @@ export default class GMSheet extends ActorSheet {
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }],
             classes: ["doc"],
             width: 500,
-            height: 700
+            height: 800
         });
     }
 
@@ -129,6 +129,7 @@ export default class GMSheet extends ActorSheet {
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
+
         if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
