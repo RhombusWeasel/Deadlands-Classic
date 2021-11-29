@@ -70,7 +70,6 @@ export default class GMSheet extends ActorSheet {
                 let tokens = [];
                 let combatants = canvas.tokens.placeables.filter(i => i.document.actor.data.data.wind.value > 0);
                 for (let i = 0; i < combatants.length; i++) {
-                    console.log(combatants[i].name);
                     const tkn = dc_utils.get_actor(combatants[i].name);
                     tokens.push(tkn);
                 }
@@ -87,6 +86,7 @@ export default class GMSheet extends ActorSheet {
                 }
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
+                    console.log(data.action_list);
                 }
             }else{
                 if (this.actor.data.data.action_cards.length > 0) {
