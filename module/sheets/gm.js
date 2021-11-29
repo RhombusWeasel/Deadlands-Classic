@@ -125,6 +125,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".target-player").click(this._on_target_player.bind(this));
         html.find(".select-token").click(this._on_select_token.bind(this));
         html.find(".draw-enemy-cards").click(this._on_draw_cards.bind(this));
+        html.find(".toggle-mod").click(this._on_toggle_modifier.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -560,5 +561,14 @@ export default class GMSheet extends ActorSheet {
         operations.discard_card(card);
         dc_utils.combat.remove_card(tkn, 0);
         dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_modifier(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let mod     = element.closest(".modifier").dataset.index;
+        let mods    = this.actor.data.data.modifiers;
+        mods[mod].active = !mods[mod].active;
+        this.actor.update({data: {modifiers: mods}});
     }
 }
