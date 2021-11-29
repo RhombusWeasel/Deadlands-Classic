@@ -1630,13 +1630,13 @@ const dc_utils = {
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);
                     if (wounds - 1 > 0) {
-                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
                     }else{
-                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
                         return;
                     }
                 }else{
-                    dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
+                    dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
                 }
                 let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                 let next_heal = timestamp + act.data.data.healing_factor;
