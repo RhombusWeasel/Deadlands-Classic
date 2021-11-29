@@ -205,7 +205,6 @@ export default class GMSheet extends ActorSheet {
         let rj_found = false;
         let bj_found = false;
         let cards = dc_utils.cards
-        cards.push('-');
         for (let card = 0; card < cards.length ; card++) {
             const cur_card = cards[card];
             for (let suit = 0; suit < dc_utils.suits.length; suit++) {
@@ -558,11 +557,7 @@ export default class GMSheet extends ActorSheet {
         let tkn  = dc_utils.get_actor(element.closest(".posse").dataset.name);
         let card = tkn.data.data.action_cards[0];
         card.char = tkn.name;
-        if (game.user.isGM){
-            operations.discard_card(card);
-        }else{
-            dc_utils.socket.emit('discard_card', card);
-        }
+        operations.discard_card(card);
         dc_utils.combat.remove_card(tkn, 0);
         dc_utils.gm.update_sheet();
     }
