@@ -128,7 +128,7 @@ export default class GMSheet extends ActorSheet {
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
-        if (!(game.dc.gm_collapse)) {
+        /* if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
         let gm_colls = document.getElementsByClassName("gm-collapsible");
@@ -136,14 +136,14 @@ export default class GMSheet extends ActorSheet {
             if (!(game.dc.gm_collapse[i])) {
                 game.dc.gm_collapse[i] = false
             }
-            colls[i].addEventListener("click", function() {
+            gm_colls[i].addEventListener("click", function() {
                 this.classList.toggle("active");
-                let content = this.nextElementSibling;
+                let gm_content = this.nextElementSibling;
                 if (!(game.dc.gm_collapse[i])) {
-                    content.style.maxHeight = null;
+                    gm_content.style.maxHeight = null;
                     game.dc.gm_collapse[i] = true;
                 }else{
-                    content.style.maxHeight = content.scrollHeight + "px";
+                    gm_content.style.maxHeight = content.scrollHeight + "px";
                     game.dc.gm_collapse[i] = false;
                 }
             });
@@ -152,7 +152,7 @@ export default class GMSheet extends ActorSheet {
             } else {
                 gm_colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
             }
-        }
+        } */
         return super.activateListeners(html);
     }
 
