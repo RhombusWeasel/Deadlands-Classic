@@ -1055,7 +1055,7 @@ const dc_utils = {
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
     stackable: ['goods', 'components'],
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     day_suffix: ['', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st'],
     dow:['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
@@ -1630,18 +1630,18 @@ const dc_utils = {
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);
                     if (wounds - 1 > 0) {
-                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
                     }else{
-                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
                         return;
                     }
                 }else{
-                    dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
+                    dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name} wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
                 }
                 let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                 let next_heal = timestamp + act.data.data.healing_factor;
                 dc_utils.char.wounds.calculate_wound_modifier(act, wounds - 1);
-                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 500);
+                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 1000);
             },
         },
         armour: {

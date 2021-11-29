@@ -1135,7 +1135,9 @@
             "blueprint_deck",
             "goods",
             "components",
-            "boon"
+            "boon",
+            "quest",
+            "literature"
         ],
         "templates": {
             "description": {
@@ -1164,7 +1166,8 @@
                 "emits_light": false,
                 "bright_light": 0,
                 "dim_light": 0,
-                "light_angle": 360
+                "light_angle": 360,
+                "is_timepiece": false
             }
         },
         "firearm": {

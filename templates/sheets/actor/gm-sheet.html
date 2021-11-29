@@ -43,6 +43,26 @@
         </tr>
     </table>
     {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
+    <table>
+        <tr>
+        {{#each modifiers as |mod|}}
+            {{#ifCond @index '<=' 6}}
+            <th class="center">{{mod.name}} [{{mod.mod}}]</th>
+            {{/ifCond}}
+        {{/each}}
+        </tr>
+        {{#each modifiers as |mod|}}
+            {{#ifCond @index '<=' 6}}
+        <tr>
+            {{#if (eq mod.data.data.active true)}}
+            <td class="center modifier" data-index="{{@index}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
+            {{else}}
+            <td class="center modifier" data-index="{{@index}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
+            {{/if}}
+        </tr>
+            {{/ifCond}}
+        {{/each}}
+    </table>
     <div class="center">
         <a><p class="refresh">Refresh</p></a>
     </div>
