@@ -42,7 +42,7 @@
         </tr>
     </table>
     {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
-    <h2 class="center gm-collapsible">Global TN [{{tn}}]</h2>
+    <h3 class="center gm-collapsible">Global TN [{{tn}}]</h3>
     <div class="gm-content">
         <table>
             <tr>
@@ -66,7 +66,7 @@
         </table>
     </div>
     <div class="center">
-        <a><p class="refresh">Refresh</p></a>
+        <h3><p class="refresh">Refresh</p></h3>
     </div>
     {{#ifCond combat_active '==' true}}
     <div class="flexrow">
@@ -75,7 +75,7 @@
         <div class="center end-combat"><a>End Combat</a></div>
     </div>
     {{else}}
-    <h2 class="center start-combat"><a>Start Combat</a></h2>
+    <h3 class="center start-combat"><a>Start Combat</a></h3>
     {{/ifCond}}
     <nav class="sheet-tabs tabs" data-group="gm">
         <a class="item" data-tab="combat">Combat</a>
