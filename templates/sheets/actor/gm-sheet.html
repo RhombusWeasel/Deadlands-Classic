@@ -1,3 +1,4 @@
+{{log this}}
 <form class="{{cssClass}} typed" autocomplete="off">
     <table>
         <tr>
@@ -46,7 +47,6 @@
         <a><p class="refresh">Refresh</p></a>
     </div>
     {{#ifCond combat_active '==' true}}
-        {{log this}}
     <div class="flexrow">
         <div class="center"><a>Next Round</a></div>
         <h3 class="center">{{action_list[0].name}}{{action_list[0].card}}</h3>
