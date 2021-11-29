@@ -144,7 +144,7 @@ export default class GMSheet extends ActorSheet {
                     gm_content.style.maxHeight = null;
                     game.dc.gm_collapse[i] = true;
                 }else{
-                    gm_content.style.maxHeight = content.scrollHeight + "px";
+                    gm_content.style.maxHeight = gm_content.scrollHeight + "px";
                     game.dc.gm_collapse[i] = false;
                 }
             });
