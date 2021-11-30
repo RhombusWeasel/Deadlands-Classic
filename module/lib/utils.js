@@ -1596,13 +1596,13 @@ const dc_utils = {
                     for (const loc in act.data.data.wounds) {
                         if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
                             let cur = act.data.data.wounds[loc];
-                            if (cur < wm) {
+                            if (cur > wm) {
                                 wm = cur
                                 is_wounded = true
                             }
                         }
                     }
-                    act.update({data: {wound_modifier: 0}});
+                    act.update({data: {wound_modifier: wm * -1}});
                 }, Math.random() * 2000);
             },
             set_bleeding: function(act, bool) {
