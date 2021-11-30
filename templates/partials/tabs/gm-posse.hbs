@@ -1,61 +1,46 @@
 <section>
-    <div class="flexrow border">
-        <select class=" perc50 center typed add-posse-select">
-            {{#each chars as |char|}}
-                {{#if (eq char.id ../data.id)}}
-            <option value="{{char.id}}" selected>{{char.name}}</option>
-                {{else}}
-            <option value="{{char.id}}">{{char.name}}</option>
-                {{/if}}
-            {{/each}}
-            <option value=""></option>
-        </select>
-        <div class="center">
-            <a class="add-to-posse">Add</a>
-        </div>
-    </div>
     <div>
         <h2 class="center">Posse</h2>
         <table>
             <tr class="center">
-                <th>Name</th>
-                <th>Cash</th>
-                <th><i class="fas fa-tint" title="Bleeding"></i></th>
-                <th><i class="fas fa-running" title="Running"></i></th>
-                <th><i class="fas fa-horse" title="Mounted"></i></th>
-                <th><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
-                <td>
-                    <span class="fa-stack fa-2x">
+                <td class="perc5 center" title="Target the token"><i class="fas fa-crosshairs"/></td>
+                <th class="center">Name</th>
+                <th class="center"><i class="fas fa-tint" title="Bleeding"></i></th>
+                <th class="center"><i class="fas fa-running" title="Running"></i></th>
+                <th class="center"><i class="fas fa-horse" title="Mounted"></i></th>
+                <th class="center"><i class="fas fa-user-injured" title="Wound Modifier"></i></th>
+                <td class="center">
+                    <span class="fa-stack fa-2x" title="White fate chips">
                         <i class="fas fa-circle fa-stack-2x White"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
-                    <span class="fa-stack fa-2x">
+                <td class="center">
+                    <span class="fa-stack fa-2x" title="Red fate chips">
                         <i class="fas fa-circle fa-stack-2x Red"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
-                    <span class="fa-stack fa-2x">
+                <td class="center">
+                    <span class="fa-stack fa-2x" title="Blue fate chips">
                         <i class="fas fa-circle fa-stack-2x Blue"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <td>
-                    <span class="fa-stack fa-2x">
+                <td class="center">
+                    <span class="fa-stack fa-2x" title="Legendary fate chips">
                         <i class="fas fa-circle fa-stack-2x Legendary"></i>
                         <i class="fas fa-atom fa-stack-1x"></i>
                     </span>
                 </td>
-                <th>Wind</th>
+                <th class="center"><i class="fas fa-clock" title="Initiative card"></i></th>
+                <th class="center">Wind</th>
                 <td><i class="fas fa-trash" title="Remove player from the posse list."></i></td>
             </tr>
-        {{log posse_chips}}
         {{#each posse as |player|}}
             <tr class="posse" data-name="{{player.name}}" data-index="{{@index}}">
+                <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
-                <td class="perc10 right">${{player.data.data.cash}}</td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
                 {{else}}
@@ -75,14 +60,21 @@
                 {{#each player.chips as |chip|}}
                 <td class="perc5 center">{{chip}}</td>
                 {{/each}}
+                <td class="center"><a class="play-action-card">{{combat_active player.name}}</a></td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
                 <td class="perc5 center"><a class="remove-posse"><i class="fas fa-trash" title="Remove {{player.name}} from the posse list."></i></a></td>
             </tr>
         {{/each}}
         </table>
-        <h2 class="center">Hostile</h2>
+        <div class="flexrow">
+            <h2 class="center">Hostile</h2>
+        {{#check_combat}}
+            <h2 class="center"><a class="draw-enemy-cards">Draw Cards</a></h2>
+        {{/check_combat}}
+        </div>
         <table>
             <tr class="center">
+                <th><i class="fas fa-hand-pointer" title="Select token"/></th>
                 <th>Name</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
                 <th><i class="fas fa-running" title="Running"></i></th>
@@ -90,43 +82,40 @@
                 <th><i class="fas fa-hand-point-right" title="Attack with dominant hand"></i></th>
                 <th><i class="fas fa-hand-point-left" title="Attack with off hand"></i></th>
                 <th><i class="fas fa-user-injured" title="Wound modifier"></i></th>
-                <th><i class="fas fa-clipboard-check" title="Moved this round"></i></th>
+                <th><i class="fas fa-clock" title="Initiative card"></i></th>
                 <th>Wind</th>
             </tr>
             {{#each enemies as |player|}}
             <tr class="posse" data-name="{{player.name}}">
+                <td class="center"><a class="select-token"><i class="fas fa-hand-pointer"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
-                <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
+                <td class="center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-times"></i></a></td>
+                <td class="center"><a class="toggle-bleeding"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.is_running true)}}
-                <td class="perc5 center"><a class="toggle-running"><i class="fas fa-check"></i></a></td>
+                <td class="center"><a class="toggle-running"><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc5 center"><a class="toggle-running"><i class="fas fa-times"></i></a></td>
+                <td class="center"><a class="toggle-running"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.is_mounted true)}}
-                <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-check"></i></a></td>
+                <td class="center"><a class="toggle-mounted"><i class="fas fa-check"></i></a></td>
                 {{else}}
-                <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
+                <td class="center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.equipped.dominant 'Nuthin')}}
-                <td class="perc5 center"></td>
+                <td class="center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="attack-dominant"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="center"><a class="attack-dominant"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
                 {{#if (eq player.data.data.equipped.off 'Nuthin')}}
-                <td class="perc5 center"></td>
+                <td class="center"></td>
                 {{else}}
-                <td class="perc5 center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
+                <td class="center"><a class="attack-off"><i class="fas fa-crosshairs"></i></a></td>
                 {{/if}}
-                <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
-                {{#if (eq player.data.data.is_moved true)}}
-                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-check"></i></a></td>
-                {{else}}
-                <td class="perc5 center"><a class="toggle-gm-moved"><i class="fas fa-times"></i></a></td>
-                {{/if}}
+                <td class="center">{{player.data.data.wound_modifier}}</td>
+                <td class="center"><a class="play-action-card">{{combat_active player.name}}</a></td>
                 <td class="perc10 right">{{player.data.data.wind.value}}/{{player.data.data.wind.max}}</td>
             </tr>
             {{/each}}
@@ -134,6 +123,7 @@
         <h2 class="center">Neutral</h2>
         <table>
             <tr class="center">
+                <td class="perc5 center" title="Target bystander"><i class="fas fa-crosshairs"/></td>
                 <th>Name</th>
                 <th><i class="fas fa-tint" title="Bleeding"></i></th>
                 <th><i class="fas fa-running" title="Running"></i></th>
@@ -146,6 +136,7 @@
             </tr>
             {{#each neutral as |player|}}
             <tr class="posse" data-name="{{player.name}}">
+                <td class="perc5 center"><a class="target-player"><i class="fas fa-crosshairs"></i></a></td>
                 <td class="perc20 open-sheet"><a title="Open {{player.name}}'s character sheet">{{player.name}}</a></td>
                 {{#if (eq player.data.data.is_bleeding true)}}
                 <td class="perc5 center"><a class="toggle-bleeding"><i class="fas fa-check"></i></a></td>
@@ -182,5 +173,20 @@
             </tr>
             {{/each}}
         </table>
+    </div>
+    <div class="flexrow border">
+        <select class=" perc50 center typed add-posse-select">
+            {{#each chars as |char|}}
+                {{#if (eq char.id ../data.id)}}
+            <option value="{{char.id}}" selected>{{char.name}}</option>
+                {{else}}
+            <option value="{{char.id}}">{{char.name}}</option>
+                {{/if}}
+            {{/each}}
+            <option value=""></option>
+        </select>
+        <div class="center">
+            <a class="add-to-posse">Add</a>
+        </div>
     </div>
 </section>

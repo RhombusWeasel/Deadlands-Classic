@@ -524,7 +524,11 @@ export default class PlayerSheet extends ActorSheet {
         let index = parseInt(element.closest(".item").dataset.itemindex);
         let card = this.actor.data.data.action_cards[index];
         card.char = this.actor.name;
-        dc_utils.socket.emit('discard_card', card);
+        if (game.user.isGM){
+            operations.discard_card(card);
+        }else{
+            dc_utils.socket.emit('discard_card', card);
+        }
         dc_utils.combat.remove_card(this.actor, index);
     }
 

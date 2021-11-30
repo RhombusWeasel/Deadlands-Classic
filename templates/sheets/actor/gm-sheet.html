@@ -1,64 +1,100 @@
 <form class="{{cssClass}} typed" autocomplete="off">
-    <table>
-        <tr>
-            <th class="perc15 center"></th>
-            <th class="perc15 center time time-up" data-period="month"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="perc15 center time time-up" data-period="day"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="perc15 center time time-up" data-period="year"><a><i class="fas fa-angle-up"></i></a></th>
-            <th class="perc15 center">
-                <a class="time time-up" data-period="hour">
-                    <i class="fas fa-angle-up"></i>
-                </a>
-                :
-                <a class="time time-up" data-period="minute">
-                    <i class="fas fa-angle-up"></i>
-                </a>
-            </th>
-            <th class="perc25 center">Moon</th>
-        </tr>
-        <tr>
-            <td class="perc15 center">{{time.weekday}}</td>
-            <td class="perc15 center">{{time.month}}</td>
-            <td class="perc15 center">{{time.day}}</td>
-            <td class="perc15 center">{{time.year}}</td>
-            <td class="perc15 center">{{time.hour}}:{{time.minute}}</td>
-            <td class="perc25 center">{{time.moon}}</td>
-        </tr>
-        <tr>
-            <th class="perc15 center"></th>
-            <th class="perc15 center time time-down" data-period="month"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="perc15 center time time-down" data-period="day"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="perc15 center time time-down" data-period="year"><a><i class="fas fa-angle-down"></i></a></th>
-            <th class="perc15 center">
-                <a class="time time-down" data-period="hour">
-                    <i class="fas fa-angle-down"></i>
-                </a>
-                :
-                <a class="time time-down" data-period="minute">
-                    <i class="fas fa-angle-down"></i>
-                </a>
-            </th>
-            <th class="perc25 center"></th>
-        </tr>
-    </table>
-    {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
-    <div class="center">
-        <a><p class="refresh">Refresh</p></a>
+    <div class="flexcol">
+        <table>
+            <tr>
+                <th class="perc15 center"></th>
+                <th class="perc15 center time time-up" data-period="month"><a><i class="fas fa-angle-up"></i></a></th>
+                <th class="perc15 center time time-up" data-period="day"><a><i class="fas fa-angle-up"></i></a></th>
+                <th class="perc15 center time time-up" data-period="year"><a><i class="fas fa-angle-up"></i></a></th>
+                <th class="perc15 center">
+                    <a class="time time-up" data-period="hour">
+                        <i class="fas fa-angle-up"></i>
+                    </a>
+                    :
+                    <a class="time time-up" data-period="minute">
+                        <i class="fas fa-angle-up"></i>
+                    </a>
+                </th>
+                <th class="perc25 center">Moon</th>
+            </tr>
+            <tr>
+                <td class="perc15 center">{{time.weekday}}</td>
+                <td class="perc15 center">{{time.month}}</td>
+                <td class="perc15 center">{{time.day}}</td>
+                <td class="perc15 center">{{time.year}}</td>
+                <td class="perc15 center">{{time.hour}}:{{time.minute}}</td>
+                <td class="perc25 center">{{time.moon}}</td>
+            </tr>
+            <tr>
+                <th class="perc15 center"></th>
+                <th class="perc15 center time time-down" data-period="month"><a><i class="fas fa-angle-down"></i></a></th>
+                <th class="perc15 center time time-down" data-period="day"><a><i class="fas fa-angle-down"></i></a></th>
+                <th class="perc15 center time time-down" data-period="year"><a><i class="fas fa-angle-down"></i></a></th>
+                <th class="perc15 center">
+                    <a class="time time-down" data-period="hour">
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+                    :
+                    <a class="time time-down" data-period="minute">
+                        <i class="fas fa-angle-down"></i>
+                    </a>
+                </th>
+                <th class="perc25 center"></th>
+            </tr>
+        </table>
+        {{> "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs"}}
+        <h3 class="center gm-collapsible">Global TN [{{tn}}]</h3>
+        <div class="gm-content">
+            <table>
+                <tr>
+                {{#each modifiers as |mod|}}
+                    {{#ifCond @index '<=' 4}}
+                    <th class="center typed">{{mod.name}} [{{mod.mod}}]</th>
+                    {{/ifCond}}
+                {{/each}}
+                </tr>
+                <tr>
+                {{#each modifiers as |mod|}}
+                    {{#ifCond @index '<=' 4}}
+                        {{#if (eq mod.active true)}}
+                    <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-check toggle-mod"></i></a></td>
+                        {{else}}
+                    <td class="center modifier" data-index="{{@key}}"><a><i class="fas fa-times toggle-mod"></i></a></td>
+                    {{/if}}
+                    {{/ifCond}}
+                {{/each}}
+            </tr>
+            </table>
+        </div>
+        <div class="center">
+            <h3><a><p class="refresh">Refresh</p></a></h3>
+        </div>
+        <h1 class="center"></h1>
+        {{#ifCond combat_active '==' true}}
+        <div class="flexrow">
+            <div><div class="center new-round"><a>Next Round</a></div></div>
+            <h2 class="center next-turn">{{action_list.[0].name}} {{action_list.[0].player}}</h2>
+            <div class="center end-combat"><a>End Combat</a></div>
+        </div>
+        {{else}}
+        <h3 class="center start-combat"><a>Start Combat</a></h3>
+        {{/ifCond}}
+        <h1 class="center"></h1>
+        <nav class="sheet-tabs tabs gm-data" data-group="gm">
+            <a class="item" data-tab="combat">Combat</a>
+            <a class="item" data-tab="notes">Notes</a>
+            <!-- <a class="item" data-tab="posse">Posse</a> -->
+        </nav>
+        <section class="sheet-body scroller trait_scroller border">
+            <div class="tab combat" data-group="gm" data-tab="combat">
+                {{> "systems/deadlands_classic/templates/partials/tabs/gm-combat.hbs"}}
+            </div>
+            <div class="tab notes" data-group="gm" data-tab="notes">
+                <textarea name="data.notes" id="notes" cols="30" rows="30">{{data.data.notes}}</textarea>
+            </div>
+            <div class="tab posse" data-group="gm" data-tab="posse">
+                {{> "systems/deadlands_classic/templates/partials/tabs/gm-posse.hbs"}}
+            </div>
+        </section>
     </div>
-    <nav class="sheet-tabs tabs" data-group="gm">
-        <a class="item" data-tab="combat">Combat</a>
-        <a class="item" data-tab="notes">Notes</a>
-        <a class="item" data-tab="posse">Posse</a>
-    </nav>
-    <section class="sheet-body scroller trait_scroller border">
-        <div class="tab combat" data-group="gm" data-tab="combat">
-            {{> "systems/deadlands_classic/templates/partials/tabs/gm-combat.hbs"}}
-        </div>
-        <div class="tab notes" data-group="gm" data-tab="notes">
-            <textarea name="data.notes" id="notes" cols="30" rows="30">{{data.data.notes}}</textarea>
-        </div>
-        <div class="tab posse" data-group="gm" data-tab="posse">
-            {{> "systems/deadlands_classic/templates/partials/tabs/gm-posse.hbs" this posse_chips=posse_chips}}
-        </div>
-    </section>
 </form>

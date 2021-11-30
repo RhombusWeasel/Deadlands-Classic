@@ -12,7 +12,7 @@ export default class GMSheet extends ActorSheet {
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "combat" }],
             classes: ["doc"],
             width: 500,
-            height: 700
+            height: 800
         });
     }
 
@@ -27,6 +27,7 @@ export default class GMSheet extends ActorSheet {
                 {name: "Blue", bounty: "3", amount: fate_chips.filter(function(i){return i.name == 'Blue'}).length},
                 {name: "Legendary", bounty: "5", amount: fate_chips.filter(function(i){return i.name == 'Legendary'}).length},
             ];
+            data.combat_active = game.settings.get('deadlands_classic','combat_active');
             data.action_deck   = this.actor.data.data.action_cards;
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
@@ -44,6 +45,19 @@ export default class GMSheet extends ActorSheet {
                     Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
                 }
             }
+            data.enemies = [];
+            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
+            for (let i = 0; i < enemies.length; i++) {
+                const tkn = dc_utils.get_actor(enemies[i].name);
+                data.enemies.push(tkn);
+            }
+            data.enemies = this.sort_entities_by_card(data.enemies);
+            data.neutral = [];
+            let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
+            for (let i = 0; i < neutral.length; i++) {
+                const tkn = dc_utils.get_actor(neutral[i].name);
+                data.neutral.push(tkn);
+            }
             data.tn = 5;
             for (const [key, mod] of Object.entries(data.modifiers)){
                 if (mod.active) {
@@ -53,46 +67,33 @@ export default class GMSheet extends ActorSheet {
             data.combat_active = game.settings.get('deadlands_classic','combat_active');
             if (data.combat_active) {
                 let action_list = [];
-                let users = dc_utils.gm.get_online_users();
-                let pcs = dc_utils.gm.get_player_owned_actors();
-                for (let i = 0; i < users.length; i++) {
-                    if (!(users[i].isGM)) {
-                        for (let p = 0; p < pcs.length; p++) {
-                            let char = pcs[p];
-                            let ad_cards = char.data.data.action_cards;
-                            for (let c = 0; c < ad_cards.length; c++) {
-                                const card = ad_cards[c];
-                                let card_data = {'name': card.name, 'player': char.name};
-                                action_list.push(card_data);
-                            }
+                let tokens = [];
+                let combatants = canvas.tokens.placeables.filter(i => i.document.actor.data.data.wind.value > 0);
+                for (let i = 0; i < combatants.length; i++) {
+                    const tkn = dc_utils.get_actor(combatants[i].name);
+                    tokens.push(tkn);
+                }
+                for (let t = 0; t < tokens.length; t++) {
+                    let act = tokens[t];
+                    let cards = act.data.data.action_cards;
+                    for (let c = 0; c < cards.length; c++) {
+                        const card = cards[c];
+                        if (card.name != act.data.data.sleeved_card) {
+                            let card_data = {'name': card.name, 'player': act.name};
+                            action_list.push(card_data);
                         }
                     }
                 }
-                for (let c = 0; c < data.action_deck.length; c++) {
-                    const card = data.action_deck[c];
-                    let card_data = {'name': card.name, 'player': 'GM'};
-                    action_list.push(card_data);
-                }
                 if (action_list.length > 0) {
                     data.action_list = dc_utils.deck.sort(action_list);
+                    console.log(data.action_list);
                 }
             }else{
                 if (this.actor.data.data.action_cards.length > 0) {
                     this.actor.update({data: {action_cards: []}});
                 }
             }
-            data.enemies = [];
-            let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
-            for (let i = 0; i < enemies.length; i++) {
-                const tkn = dc_utils.get_actor(enemies[i].name);
-                data.enemies.push(tkn);
-            }
-            data.neutral = [];
-            let neutral = canvas.tokens.placeables.filter(i => i.data.disposition != -1 && i.document.actor.data.data.wind.value > 0 && i.document.actor.hasPlayerOwner == false);
-            for (let i = 0; i < neutral.length; i++) {
-                const tkn = dc_utils.get_actor(neutral[i].name);
-                data.neutral.push(tkn);
-            }
+            
             data.time = dc_utils.time.get_date();
             return data;
         }
@@ -109,6 +110,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".end-combat").click(this._on_end_combat.bind(this));
         html.find(".draw-card").click(this._on_draw_card.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
+        html.find(".play-action-card").click(this._on_play_posse_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
         html.find(".add-to-posse").click(this._on_add_posse.bind(this));
@@ -120,35 +122,125 @@ export default class GMSheet extends ActorSheet {
         html.find(".remove-posse").click(this._on_remove_posse.bind(this));
         html.find(".attack-dominant").click(this._on_attack_dominant.bind(this));
         html.find(".attack-off").click(this._on_attack_off.bind(this));
+        html.find(".target-player").click(this._on_target_player.bind(this));
+        html.find(".select-token").click(this._on_select_token.bind(this));
+        html.find(".draw-enemy-cards").click(this._on_draw_cards.bind(this));
+        html.find(".toggle-mod").click(this._on_toggle_modifier.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
-        /* if (!(game.dc.gm_collapse)) {
+
+        if (!(game.dc.gm_collapse)) {
             game.dc.gm_collapse = []
         }
-        let colls = document.getElementsByClassName("gm-collapsible");
-        for (let i = 0; i < colls.length; i++) {
+        let gm_colls = document.getElementsByClassName("gm-collapsible");
+        for (let i = 0; i < gm_colls.length; i++) {
             if (!(game.dc.gm_collapse[i])) {
                 game.dc.gm_collapse[i] = false
             }
-            colls[i].addEventListener("click", function() {
+            gm_colls[i].addEventListener("click", function() {
                 this.classList.toggle("active");
-                let content = this.nextElementSibling;
+                let gm_content = this.nextElementSibling;
                 if (!(game.dc.gm_collapse[i])) {
-                    content.style.maxHeight = null;
+                    gm_content.style.maxHeight = null;
                     game.dc.gm_collapse[i] = true;
                 }else{
-                    content.style.maxHeight = content.scrollHeight + "px";
+                    gm_content.style.maxHeight = gm_content.scrollHeight + "px";
                     game.dc.gm_collapse[i] = false;
                 }
             });
             if (game.dc.gm_collapse[i]) {
-                colls[i].nextElementSibling.style.maxHeight = null;
+                gm_colls[i].nextElementSibling.style.maxHeight = null;
             } else {
-                colls[i].nextElementSibling.style.maxHeight = colls[i].nextElementSibling.scrollHeight + "px";
+                gm_colls[i].nextElementSibling.style.maxHeight = gm_colls[i].nextElementSibling.scrollHeight + "px";
             }
-        } */
+        }
+        /* let data_box = document.getElementsByClassName("gm-data")[0];
+        var container_height = data_box.offsetHeight;
+        var lastChild = data_box.childNodes[data_box.childNodes.length - 1];
+        var vertical_offset = lastChild.offsetTop + lastChild.offsetHeight;
+        data_box.style.height = (container_height - vertical_offset) + "px"; */
         return super.activateListeners(html);
+    }
+
+    sort_all_cards(list) {
+        let r_list = []
+        let rj_found = false;
+        let bj_found = false;
+        let cards = dc_utils.cards
+        for (let card = 0; card < cards.length ; card++) {
+            const cur_card = cards[card];
+            for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
+                for (let chk = 0; chk < list.length; chk++) {
+                    const act = list[chk];
+                    const chk_list = act.data.data.action_cards;
+                    let found = false;
+                    for (let cd = 0; cd < chk_list.length; cd++) {
+                        const chk_card = chk_list[cd] ? chk_list[cd] : {name: "--"};
+                        const card_data = {name: chk_card.name, player: act.name};
+                        if (card_data.is_sleeved) break;
+                        if (cur_card == 'Joker') {
+                            if (chk_card.name == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
+                                r_list.push(card_data);
+                                rj_found = true;
+                                found = true;
+                                break;
+                            }else if(chk_card.name == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
+                                r_list.push(card_data);
+                                bj_found = true;
+                                found = true;
+                                break;
+                            }
+                        }else if(chk_card.name == `${cur_card}${cur_suit}`){
+                            r_list.push(card_data);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (found) {
+                        break
+                    }
+                }
+            }
+        }
+        return r_list;
+    }
+
+    sort_entities_by_card(list) {
+        let r_list = []
+        let rj_found = false;
+        let bj_found = false;
+        let cards = dc_utils.cards
+        for (let card = 0; card < cards.length ; card++) {
+            const cur_card = cards[card];
+            for (let suit = 0; suit < dc_utils.suits.length; suit++) {
+                const cur_suit = dc_utils.suit_symbols[dc_utils.suits[suit]];
+                for (let chk = 0; chk < list.length; chk++) {
+                    const act = list[chk];
+                    const chk_card = act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : "-\u2663";
+                    if (cur_card == 'Joker') {
+                        if (chk_card == `Joker ${dc_utils.suit_symbols.red_joker}` && !(rj_found)) {
+                            r_list.push(list.splice(chk, 1)[0]);
+                            rj_found = true;
+                            break;
+                        }else if(chk_card == `Joker ${dc_utils.suit_symbols.black_joker}` && !(bj_found)) {
+                            r_list.push(list.splice(chk, 1)[0]);
+                            bj_found = true;
+                            break;
+                        }
+                    }else if(chk_card == `${cur_card}${cur_suit}`){
+                        r_list.push(list.splice(chk, 1)[0]);
+                        break;
+                    }
+                }
+            }
+        }
+        for (let i = 0; i < list.length; i++) {
+            const element = list[i];
+            r_list.push(element);
+        }
+        return r_list;
     }
 
     _on_refresh(event) {
@@ -297,7 +389,7 @@ export default class GMSheet extends ActorSheet {
             data: {}
         });
         game.settings.set('deadlands_classic', 'combat_active', false);
-        return this.render();
+        dc_utils.gm.update_sheet();
     }
 
     _on_draw_card() {
@@ -318,7 +410,6 @@ export default class GMSheet extends ActorSheet {
         if (game.dc.combat_active) {
             let data = this.getData();
             let next = data.action_list.pop();
-            //console.log(next);
         }
     }
 
@@ -438,5 +529,52 @@ export default class GMSheet extends ActorSheet {
             }
         }
         operations.register_attack(data);
+    }
+
+    _on_target_player(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
+        tkn.setTarget({releaseOthers: true});
+    }
+
+    _on_select_token(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_token(element.closest(".posse").dataset.name);
+        tkn.control({releaseOthers: true});
+    }
+
+    _on_draw_cards(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let enemies = canvas.tokens.placeables.filter(i => i.data.disposition == -1 && i.document.actor.data.data.wind.value > 0);
+        for (let i = 0; i < enemies.length; i++) {
+            const tkn = dc_utils.get_actor(enemies[i].name);
+            let t = setTimeout(() => {
+                dc_utils.combat.deal_cards(tkn, 1);
+                dc_utils.gm.update_sheet();
+            }, Math.random() * 3000);
+        }
+    }
+
+    _on_play_posse_card(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        let card = tkn.data.data.action_cards[0];
+        card.char = tkn.name;
+        operations.discard_card(card);
+        dc_utils.combat.remove_card(tkn, 0);
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_toggle_modifier(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let mod     = element.closest(".modifier").dataset.index;
+        let mods    = this.actor.data.data.modifiers;
+        mods[mod].active = !mods[mod].active;
+        this.actor.update({data: {modifiers: mods}});
     }
 }

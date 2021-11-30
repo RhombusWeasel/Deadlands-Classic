@@ -1055,7 +1055,7 @@ const dc_utils = {
     hand_slots: [{key: 'dominant', label: 'Dominant'}, {key: 'off', label: 'Off'}],
     equip_slots: [{key: 'head', label: 'Head'}, {key: 'body', label: 'Body'}, {key: 'legs', label: 'Legs'}],
     stackable: ['goods', 'components'],
-    months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    months: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     day_suffix: ['', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st', 'nd', 'rd', 'th', 'th', 'th', 'th', 'th', 'th', 'th', 'st'],
     dow:['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
     moon_phases: ['New', 'Waxing Crescent', 'Quarter', 'Waxing Gibbous', 'Full', 'Waning Gibbous', 'Last Quarter', 'Waning Crescent'],
@@ -1104,6 +1104,9 @@ const dc_utils = {
     pad: function(str, size) {
         while (str.length < (size || 2)) {str = "0" + str;}
         return str;
+    },
+    stagger: function(func) {
+        setTimeout(func, Math.random * 1000);
     },
     sort: {
         compare: function(object1, object2, key) {
@@ -1554,11 +1557,9 @@ const dc_utils = {
                         dc_utils.chat.send('Wound', `${act.name} takes ${dc_utils.pluralize(amt, 'wound', 'wounds')} to the ${dc_utils.hit_locations[loc]}`);
                         dc_utils.char.wounds.calculate_wound_modifier(act, amt);
                         dc_utils.char.wounds.apply_wind_damage(act, tot);
-                        if (act.data.data.heals[loc] == 0) {
-                            let timestamp = game.settings.get('deadlands_classic', 'unixtime');
-                            let next_heal = timestamp + act.data.data.healing_factor
-                            data.heals = {[loc]: next_heal}
-                        }
+                        let timestamp = game.settings.get('deadlands_classic', 'unixtime');
+                        let next_heal = timestamp + act.data.data.healing_factor;
+                        data.heals = {[loc]: next_heal};
                         act.update({data});
                     }, Math.random() * 500);
                 }else{
@@ -1589,29 +1590,20 @@ const dc_utils = {
                 }
             },
             calculate_wound_modifier: function(act, amt) {
-                let wm = act.data.data.wound_modifier
-                let is_wounded = false
-                for (const loc in act.data.data.wounds) {
-                    if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
-                        let cur = act.data.data.wounds[loc];
-                        if (cur * -1 < wm) {
-                            wm = cur * -1
-                            is_wounded = true
-                        }else{
-                            if (cur > 0) {
+                return setTimeout(() => {
+                    let wm = 0;
+                    let is_wounded = false;
+                    for (const loc in act.data.data.wounds) {
+                        if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined') {
+                            let cur = act.data.data.wounds[loc];
+                            if (cur > wm) {
+                                wm = cur
                                 is_wounded = true
                             }
                         }
                     }
-                }
-                if (wm * -1 < amt) {
-                    wm = -amt;
-                }
-                if (is_wounded) {
-                    return setTimeout(() => {act.update({data: {wound_modifier: wm}})}, Math.random() * 1000);
-                }else{
-                    return setTimeout(() => {act.update({data: {wound_modifier: 0}})}, Math.random() * 1000);
-                }
+                    act.update({data: {wound_modifier: wm * -1}});
+                }, Math.random() * 2000);
             },
             set_bleeding: function(act, bool) {
                 act.update({data: {is_bleeding: bool}});
@@ -1625,18 +1617,18 @@ const dc_utils = {
                 if (data.roll.success) {
                     dc_utils.char.wounds.remove(act, loc, 1);
                     if (wounds - 1 > 0) {
-                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} feels a little better.`)
                     }else{
-                        dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
+                        dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} is fully healed!`);
                         return;
                     }
                 }else{
-                    dc_utils.chat.send('Healing', `${act.name} wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
+                    dc_utils.chat.send('Healing', `TN: ${data.tn}`, `Roll: ${data.roll.total}`, `${act.name}'s wound to the ${dc_utils.hit_locations[loc]} don't seem to be healin' quite right.`)
                 }
                 let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                 let next_heal = timestamp + act.data.data.healing_factor;
                 dc_utils.char.wounds.calculate_wound_modifier(act, wounds - 1);
-                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 500);
+                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 1000);
             },
         },
         armour: {
@@ -2458,6 +2450,7 @@ const dc_utils = {
             });
             game.dc.action_deck.discard = []
             game.dc.action_deck.deck = dc_utils.deck.shuffle(game.dc.action_deck.deck);
+            dc_utils.chat.send('Action Deck', 'The action deck was recycled.');
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         deal_cards: function(act, amt) {
@@ -2475,7 +2468,7 @@ const dc_utils = {
         remove_card: function(act, index) {
             let hand = act.data.data.action_cards;
             hand.splice(index, 1);
-            act.update({data: {action_cards: hand}});
+            setTimeout(() => {act.update({data: {action_cards: hand}})}, Math.random * 1000);
         },
         get_cards: function(act) {
 
