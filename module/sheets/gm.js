@@ -32,8 +32,10 @@ export default class GMSheet extends ActorSheet {
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
             data.posse = [];
-            for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
-                data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
+            if (game.user.character.data.data.posse.length > 0) {
+                for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
+                    data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
+                }
             }
             data.posse_chips  = [];
             for (let i = 0; i < data.posse.length; i++) {
