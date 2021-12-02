@@ -6,6 +6,14 @@ A system for playing Deadlands Classic in Foundry VTT.
 Install by copy/pasting this link into the manifest URL textbox in the install system screen in foundry.
 https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json
 
+# We now have a Discord: https://discord.gg/ZMg8eQvNzm
+If you have any trouble getting this all set up I'll be easier to reach there.
+
+# Getting Started:
+First thing's first, you'll need a GM Actor.  This is like a players character sheet but it gives you the Marshal a place to draw Fate Chips and action cards, it's also got a calendar at the top to let you set the date and time for the campaign.  So, once you've created the GM player then open up the sheet for it and set it to the GM Sheet in the menu at the top of the character sheet labelled 'Sheet'.  Once that's done, you're all set on the Marshal side, then you'll need a Player.
+Same as the Marshal create a new actor only this time select 'Player' from the dropdown, on the plus side, the player should already be set to the correct sheet so you're good to go there.  Once your player is created and has a cool new name you can go back to your GM Sheet and add the player to the Posse using the dropdown on the 'Combat' tab.  Select the player from the dropdown and click 'Add', once done this character is controlled by the GM Sheet you linked it to, this is useful if you want to run a second Posse through the campaign you made.  If you want a second Posse then create a second GM Sheet and add the new Posse to the new GM Sheet.
+OK, so we've got a Marshal and a Player setup, now it's time to launch a Private Browsing Window and login as the player you just made.  From this split view you can test the dice rolls etc.  If you set a TN on the Marshal Sheet then it will apply to the Players rolls and you can toggle their bleeding/running/mounted states from the GM Sheet too as well as see how many fate chips and wind they have left.
+
 ## Combat Automation Update
 The latest version has now got fully automated combat.  Players must have a weapon with which to attack and set a target, once this is done the player can click the attack 
 button on their sheet and the attack roll will be made.  All skill rolls now have popups attached so players can choose to spend fate chips on the rolls.
