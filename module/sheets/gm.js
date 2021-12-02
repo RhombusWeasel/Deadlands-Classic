@@ -31,6 +31,9 @@ export default class GMSheet extends ActorSheet {
             data.action_deck   = this.actor.data.data.action_cards;
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
+            if (this.actor.data.data.add_posse_name == '') {
+                this.actor.update({data: {add_posse_name: data.chars[0].id}})
+            }
             data.posse = [];
             if (game.user.character.data.data.posse.length > 0) {
                 for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
@@ -39,13 +42,15 @@ export default class GMSheet extends ActorSheet {
                 }
             }
             data.posse_chips  = [];
-            for (let i = 0; i < data.posse.length; i++) {
-                const hero = data.posse[i];
-                data.posse[i].chips = {
-                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
-                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
-                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
-                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
+            if (data.posse.length > 0) {
+                for (let i = 0; i < data.posse.length; i++) {
+                    const hero = data.posse[i];
+                    data.posse[i].chips = {
+                        White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
+                        Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
+                        Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
+                        Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
+                    }
                 }
             }
             data.enemies = [];
