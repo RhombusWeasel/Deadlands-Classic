@@ -175,6 +175,7 @@
         </table>
     </div>
     <div class="flexrow border">
+        {{#ifCond chars.length '>' 0}}
         <select class=" perc50 center typed add-posse-select">
             {{#each chars as |char|}}
                 {{#if (eq char.id ../data.id)}}
@@ -187,5 +188,11 @@
         <div class="center">
             <a class="add-to-posse">Add</a>
         </div>
+        {{else}}
+        <div class="center">
+            <p class="center">There are no player owned actors</p>
+            <p class="center">Create a character and assign it to a player</p>
+        </div>
+        {{/ifCond}}
     </div>
 </section>
