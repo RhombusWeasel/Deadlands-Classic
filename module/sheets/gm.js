@@ -18,7 +18,7 @@ export default class GMSheet extends ActorSheet {
 
     getData() {
         if (game.user.isGM && this.actor.data.type == 'gm') {
-            if (this.actor.id != game.user.character.id) dc_utils.chat.send('System', `You are not currently set as ${this.actor.name}`, `Set your character to ${this.actor.name} in the configure player settings menu at the bottom left of the screen.`, `Right click the GM player and select 'User Configuration' then select ${this.actor.name} from the list.`);
+            if (!(game.user?.character?.id)) dc_utils.chat.send('System', `You are not currently set as ${this.actor.name}`, `Set your character to ${this.actor.name} in the configure player settings menu at the bottom left of the screen.`, `Right click the GM player and select 'User Configuration' then select ${this.actor.name} from the list.`);
             const data = super.getData();
             data.config = CONFIG.dc;
             let fate_chips = dc_utils.char.items.get(this.actor, "chip");
