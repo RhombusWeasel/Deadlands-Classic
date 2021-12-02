@@ -34,7 +34,8 @@ export default class GMSheet extends ActorSheet {
             data.posse = [];
             if (game.user.character.data.data.posse.length > 0) {
                 for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
-                    data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
+                    let char = game.actors.get(game.user.character.data.data.posse[i]);
+                    if (char) data.posse.push(char);
                 }
             }
             data.posse_chips  = [];
@@ -426,8 +427,10 @@ export default class GMSheet extends ActorSheet {
         let posse = this.actor.data.data.posse;
         posse.push(this.actor.data.data.add_posse_name);
         let char = game.actors.get(this.actor.data.data.add_posse_name);
-        char.update({data: {marshal: this.actor.name}});
-        this.actor.update({data: {posse: posse}});
+        if (char) {
+            char.update({data: {marshal: this.actor.name}});
+            this.actor.update({data: {posse: posse}});
+        }
     }
 
     _on_remove_posse(event) {
