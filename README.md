@@ -5,6 +5,7 @@ A system for playing Deadlands Classic in Foundry VTT.
 
 Install by copy/pasting this link into the manifest URL textbox in the install system screen in foundry.
 https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json
+
 You will also need a companion module I made to add Deadlands style exploding dice to the Foundry dice roller.
 This is installed in the 'Add-on Modules' tab in the Foundry menu, same method, paste the below link into the URL box at the bottom of the window.
 https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic-Dice-Explosion/main/module.json
