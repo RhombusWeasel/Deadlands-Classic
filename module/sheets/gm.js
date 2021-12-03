@@ -18,6 +18,7 @@ export default class GMSheet extends ActorSheet {
 
     getData() {
         if (game.user.isGM && this.actor.data.type == 'gm') {
+            if (!(game.user?.character?.id)) dc_utils.chat.send('System', `You are not currently set as ${this.actor.name}`, `Set your character to ${this.actor.name} in the configure player settings menu at the bottom left of the screen.`, `Right click the GM player and select 'User Configuration' then select ${this.actor.name} from the list.`);
             const data = super.getData();
             data.config = CONFIG.dc;
             let fate_chips = dc_utils.char.items.get(this.actor, "chip");
@@ -31,18 +32,30 @@ export default class GMSheet extends ActorSheet {
             data.action_deck   = this.actor.data.data.action_cards;
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
+            if (data.chars.length > 0) {
+                if (this.actor.data.data.add_posse_name == '') {
+                    this.actor.update({data: {add_posse_name: data.chars[0].id}})
+                }
+            }else{
+                dc_utils.chat.send('System', `There are no player owned actors.`, `Create an actor and assign a player as the owner.`);
+            }
             data.posse = [];
-            for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
-                data.posse.push(game.actors.get(game.user.character.data.data.posse[i]));
+            if (game.user.character.data.data.posse.length > 0) {
+                for (let i = 0; i < game.user.character.data.data.posse.length; i++) {
+                    let char = game.actors.get(game.user.character.data.data.posse[i]);
+                    if (char) data.posse.push(char);
+                }
             }
             data.posse_chips  = [];
-            for (let i = 0; i < data.posse.length; i++) {
-                const hero = data.posse[i];
-                data.posse[i].chips = {
-                    White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
-                    Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
-                    Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
-                    Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
+            if (data.posse.length > 0) {
+                for (let i = 0; i < data.posse.length; i++) {
+                    const hero = data.posse[i];
+                    data.posse[i].chips = {
+                        White: hero.items.filter(function(i){return i.name == 'White' && i.type == 'chip'}).length,
+                        Red: hero.items.filter(function(i){return i.name == 'Red' && i.type == 'chip'}).length,
+                        Blue: hero.items.filter(function(i){return i.name == 'Blue' && i.type == 'chip'}).length,
+                        Legendary: hero.items.filter(function(i){return i.name == 'Legendary' && i.type == 'chip'}).length,
+                    }
                 }
             }
             data.enemies = [];
@@ -424,8 +437,10 @@ export default class GMSheet extends ActorSheet {
         let posse = this.actor.data.data.posse;
         posse.push(this.actor.data.data.add_posse_name);
         let char = game.actors.get(this.actor.data.data.add_posse_name);
-        char.update({data: {marshal: this.actor.name}});
-        this.actor.update({data: {posse: posse}});
+        if (char) {
+            char.update({data: {marshal: this.actor.name}});
+            this.actor.update({data: {posse: posse}});
+        }
     }
 
     _on_remove_posse(event) {
