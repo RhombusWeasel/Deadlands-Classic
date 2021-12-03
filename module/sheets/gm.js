@@ -32,7 +32,7 @@ export default class GMSheet extends ActorSheet {
             data.action_deck   = this.actor.data.data.action_cards;
             data.modifiers = this.actor.data.data.modifiers;
             data.chars = dc_utils.gm.get_player_owned_actors();
-            if ( data.chars.length > 0) {
+            if (data.chars.length > 0) {
                 if (this.actor.data.data.add_posse_name == '') {
                     this.actor.update({data: {add_posse_name: data.chars[0].id}})
                 }
