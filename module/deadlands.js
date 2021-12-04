@@ -209,13 +209,6 @@ Hooks.once("init", function () {
         return options.inverse(this);
     });
 
-    Handlebars.registerHelper('isGM', function (options) {
-        if (dc_utils.gm.get_player_owned_actors().length > 0) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
-    });
-
     Handlebars.registerHelper('combat_active', function (name, options) {
         let act = dc_utils.get_actor(name);
         return act.data.data.action_cards[0] ? act.data.data.action_cards[0].name : '-';

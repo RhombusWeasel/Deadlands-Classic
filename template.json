@@ -1036,15 +1036,7 @@
                 "onerous": {"name": "Onerous", "mod": -2, "active":false},
                 "impressive": {"name": "Impressive", "mod": -4, "active":false},
                 "incredible": {"name": "Incredible", "mod": -6, "active":false},
-                "heroic": {"name": "Heroic", "mod": -8, "active":false},
-                "low_light": {"name": "Low Light", "mod": -2, "active":false},
-                "no_light": {"name": "No Light", "mod": -4, "active":false},
-                "firer_running": {"name": "Firer Runnin'", "mod": -4, "active":false},
-                "firer_mounted": {"name": "Firer Mounted", "mod": -2, "active":false},
-                "target_moving": {"name": "Target Movin'", "mod": -4, "active":false},
-                "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
-                "fannin": {"name": "Fannin", "mod": -2, "active":false},
-                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
+                "heroic": {"name": "Heroic", "mod": -8, "active":false}
             },
             "player_target": "all",
             "action_cards": [],
