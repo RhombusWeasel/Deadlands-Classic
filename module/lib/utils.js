@@ -1134,7 +1134,7 @@ const dc_utils = {
             return game.users.contents.filter(function(i) {return i.active});
         },
         get_player_owned_actors: function() {
-            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner});
+            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner && i.type == 'player'});
         },
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();
