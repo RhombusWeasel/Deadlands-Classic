@@ -68,6 +68,20 @@
                 <td class="center"><a class="name-toggle"><i class="fas fa-times"></i></a></td>
             {{/if}}
             </tr>
+            <tr>
+                <th class="perc50 center">Marshal</th>
+                <td>
+                    <select name="data.marshal">
+                        {{#each gms as |marshal|}}
+                            {{#if (eq marshal.name ../data.data.marshal)}}
+                        <option value="{{marshal.name}}" selected>{{marshal.name}}</option>
+                            {{else}}
+                        <option value="{{marshal.name}}">{{marshal.name}}</option>
+                            {{/if}}
+                        {{/each}}
+                    </select>
+                </td>
+            </tr>
         </table>
     </div>
 </section>

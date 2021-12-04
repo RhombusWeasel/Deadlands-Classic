@@ -95,7 +95,8 @@
                 "send_amount": 0,
                 "current_vehicle": "None",
                 "show_editor": false,
-                "marshal": "Marshal"
+                "marshal": "Marshal",
+                "completed_quests": []
             },
             "attributes": {
                 "traits": {
@@ -1285,9 +1286,10 @@
             "value_select": 2,
             "modifiers": []
         },
-        "book": {
+        "literature": {
             "pages": [],
-            "current_page": 0
+            "current_page": 0,
+            "template": "page"
         }
     }
 }

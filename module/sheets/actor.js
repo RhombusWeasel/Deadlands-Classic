@@ -91,6 +91,7 @@ export default class PlayerSheet extends ActorSheet {
         let owned  = dc_utils.user.get_owned_actors();
         let online = dc_utils.gm.get_online_actors();
         data.players       = owned.concat(online.filter((item) => owned.indexOf(item) < 0));
+        data.gms           = game.actors.filter(i => i.type == 'gm');
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
         data.action_deck   = this.actor.data.data.action_cards;
