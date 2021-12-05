@@ -204,7 +204,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('strain_max', function (vig, options) {
-        return vig.die_type.slice(1, vig.die_type.length);
+        return vig.die_type.substring(1, vig.die_type.length);
     });
 
     Handlebars.registerHelper('isGM', function (options) {

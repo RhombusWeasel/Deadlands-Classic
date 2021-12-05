@@ -801,7 +801,7 @@ export default class PlayerSheet extends ActorSheet {
         let item = this.actor.getOwnedItem(itemId);
         let strain = parseInt(this.actor.data.data.strain);
         let i_strain = parseInt(item.data.data.strain);
-        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
+        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.substring(1, this.actor.data.data.traits.vigor.die_type.length));
         console.log('Strain: U/I/M', strain, i_strain, max_strain);
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
         data.roll = dc_utils.roll.new(data);
