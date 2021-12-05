@@ -144,6 +144,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".blueprint").click(this._on_new_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
+        html.find(".use-chi").click(this._on_use_chi.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".heal-roll").click(this._on_heal_roll.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
@@ -789,6 +790,24 @@ export default class PlayerSheet extends ActorSheet {
         for (let i = 0; i < draw; i++) {
             setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
         }
+        r.toMessage({rollMode: 'gmroll'});
+        dc_utils.chat.send('Hex', reply);
+    }
+
+    _on_use_chi(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
+        let roll = dc_utils.roll.new(data);
+        let reply = `
+            <div>
+                <h2 class="center">Chi Power</h2>
+                <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
+            </div>
+            ${dc_utils.roll.get_result_template(roll)}
+        `;
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Hex', reply);
     }
