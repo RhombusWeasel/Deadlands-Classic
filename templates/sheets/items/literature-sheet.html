@@ -7,7 +7,7 @@
                 <tr>
                     <th>Template</th>
                     <td>
-                        <select name="data.template">
+                        <select class="document-template" name="data.template">
                         {{#each documents as |doc|}}
                             {{#if (eq @key ../data.data.template)}}
                             <option value="{{@key}}" selected>{{doc.label}}</option>

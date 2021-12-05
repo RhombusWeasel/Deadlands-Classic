@@ -18,8 +18,12 @@ export default class DCItem extends ItemSheet {
     }
 
     activateListeners(html) {
+        // On Click
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
+
+        // On Change
+        html.find(".document-template").change(this._on_document_select.bind(this));
         return super.activateListeners(html);
     }
 
@@ -55,5 +59,14 @@ export default class DCItem extends ItemSheet {
         let mods = item.data.data.modifiers;
         mods.splice(index, 1);
         item.update({data: {modifiers: mods}});
+    }
+
+    _on_document_select(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let type    = element.value
+        if(dc_utils.documents[type]?.build) {
+            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}})
+        }
     }
 }

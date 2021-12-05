@@ -1311,9 +1311,10 @@
             "prefab": {
                 "letter": {
                     "date": 0,
-                    "body": "",
-                    "reciever": "",
-                    "sender": ""
+                    "greeting": "Howdy Partner!",
+                    "body": "I am writing to inform you...",
+                    "sign_off": "Kindest regards",
+                    "signature": "Some Person"
                 },
                 "newspaper": {
                     "date": "Wed Nov 8th 1876",

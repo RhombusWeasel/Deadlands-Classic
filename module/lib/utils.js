@@ -75,14 +75,6 @@ const dc_utils = {
         {key: "strength", label: "Strength"},
         {key: "vigor", label: "Vigor"},
     ],
-    documents: {
-        letter: {label: 'Letter'},
-        telegram: {label: 'Telegram'},
-        flyer: {label: 'Flyer'},
-        wanted_poster: {label: 'Wanted Poster'},
-        newspaper: {label: 'Newspaper'},
-        book: {label: 'Book'},
-    },
     names: {
         american: {
             surnames: [
@@ -2707,5 +2699,54 @@ const dc_utils = {
             b %= 8;
             return Math.abs(b);
         },
+    },
+    documents: {
+        letter: {
+            label: 'Letter',
+            build: function(data) {
+                return `
+                    <form class="typed">
+                        <div><p>${data.date}</p></div>
+                        <div><p>${data.greeting}</p></div>
+                        <div><p>${data.body}</p></div>
+                        <div><p>${data.signature}</p></div>
+                    </form>
+                `
+            },
+        },
+        telegram: {
+            label: 'Telegram',
+            build: function(data) {
+                return `
+                    <form class="typed">
+                        <div><p>${data.date}</p></div>
+                        <div><p>${data.body}</p></div>
+                    </form>
+                `
+            },
+        },
+        flyer: {label: 'Flyer'},
+        wanted_poster: {label: 'Wanted Poster'},
+        newspaper: {
+            label: 'Newspaper',
+            build: function(data) {
+                return `
+                    <form class="typed">
+                        <div class="flexrow">
+                            <p class="perc10 center">${data.date}</p>
+                            <h2 class="perc80 center">${data.paper}</h2>
+                            <div>
+                                <p class="perc10 center">only</p>
+                                <p class="perc10 center">${data.price}</p>
+                            </div>
+                        </div>
+                        <div><p>${data.headline}</p></div>
+                        <div><p>${data.main_article}</p></div>
+                        <div><p>${dc_utils.char.random_name('american', 'male')}</p></div>
+                    </form>
+                `
+            },
+        },
+        book: {label: 'Book'},
     },
 };
