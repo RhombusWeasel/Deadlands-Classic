@@ -16,6 +16,7 @@
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
+                <td>
                 <select name="data.type" id="type-select">
                 {{#if (eq data.data.type_select 'skill_mod')}}
                     {{#each skills as |skill|}}
@@ -36,6 +37,7 @@
                     {{/each}}
                 {{/if}}
                 </select>
+                </td>
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.speed"}}</th>
