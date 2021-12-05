@@ -96,7 +96,8 @@
                 "current_vehicle": "None",
                 "show_editor": false,
                 "marshal": "Marshal",
-                "completed_quests": []
+                "completed_quests": [],
+                "strain": 0
             },
             "attributes": {
                 "traits": {
