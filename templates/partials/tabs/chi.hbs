@@ -1,7 +1,7 @@
 <section>
     <h2 class="center">Strain</h2>
     {{#if (eq data.data.show_editor true)}}
-    <h2 class="center"><input type="number" name="data.strain" value="{{data.data.strain}}">/{{strain_max data.data.traits.vigor}}</h2>
+    <h2 class="center"><input class="perc5 center" type="number" name="data.strain" value="{{data.data.strain}}">/{{strain_max data.data.traits.vigor}}</h2>
     {{else}}
     <h2 class="center">{{data.data.strain}}/{{strain_max data.data.traits.vigor}}</h2>
     {{/if}}
