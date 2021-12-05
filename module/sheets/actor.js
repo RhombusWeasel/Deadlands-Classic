@@ -808,8 +808,7 @@ export default class PlayerSheet extends ActorSheet {
             </div>
             ${dc_utils.roll.get_result_template(data)}
         `;
-        r.toMessage({rollMode: 'gmroll'});
-        dc_utils.chat.send('Hex', reply);
+        dc_utils.chat.send(reply);
     }
 
     _on_cast_miracle(event) {
