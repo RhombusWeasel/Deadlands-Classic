@@ -800,13 +800,13 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
-        let roll = dc_utils.roll.new(data);
+        data.roll = dc_utils.roll.new(data);
         let reply = `
             <div>
                 <h2 class="center">Chi Power</h2>
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
-            ${dc_utils.roll.get_result_template(dc_utils.roll.evaluate(roll))}
+            ${dc_utils.roll.get_result_template(dc_utils.roll.evaluate(data))}
         `;
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Hex', reply);
