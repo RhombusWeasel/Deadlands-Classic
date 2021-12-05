@@ -2735,9 +2735,9 @@ const dc_utils = {
                         <div class="flexrow">
                             <p class="perc10 center">${data.date}</p>
                             <h2 class="perc80 center">${data.paper}</h2>
-                            <div>
-                                <p class="perc10 center">only</p>
-                                <p class="perc10 center">${data.price}</p>
+                            <div class="perc10 center">
+                                <p class="center">only</p>
+                                <p class="center">${data.price}</p>
                             </div>
                         </div>
                         <div><p>${data.headline}</p></div>
