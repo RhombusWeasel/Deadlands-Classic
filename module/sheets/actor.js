@@ -804,7 +804,7 @@ export default class PlayerSheet extends ActorSheet {
         data.roll = dc_utils.roll.new(data);
         let reply = `
             <div>
-                <h2 class="center">Chi Power</h2>
+                <h2 class="center">Ancient Mastery</h2>
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
         `;
@@ -834,6 +834,7 @@ export default class PlayerSheet extends ActorSheet {
                 <p class="center">${this.actor.name} prays to the one true God to use ${item.name}!</p>
                 ${build_skill_template(data)}
             </div>
+
         `;
         dc_utils.chat.send(reply);
     }
