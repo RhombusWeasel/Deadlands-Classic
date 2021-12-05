@@ -2705,12 +2705,12 @@ const dc_utils = {
             label: 'Letter',
             build: function(data) {
                 return `
-                    <form class="typed">
+                    <div class="typed">
                         <div><p>${data.date}</p></div>
                         <div><p>${data.greeting}</p></div>
                         <div><p>${data.body}</p></div>
                         <div><p>${data.signature}</p></div>
-                    </form>
+                    </div>
                 `
             },
         },
@@ -2718,10 +2718,10 @@ const dc_utils = {
             label: 'Telegram',
             build: function(data) {
                 return `
-                    <form class="typed">
+                    <div class="typed">
                         <div><p>${data.date}</p></div>
                         <div><p>${data.body}</p></div>
-                    </form>
+                    </div>
                 `
             },
         },
@@ -2731,7 +2731,7 @@ const dc_utils = {
             label: 'Newspaper',
             build: function(data) {
                 return `
-                    <form class="typed">
+                    <div class="typed">
                         <div class="flexrow">
                             <p class="perc10 center">${data.date}</p>
                             <h2 class="perc80 center">${data.paper}</h2>
@@ -2743,7 +2743,7 @@ const dc_utils = {
                         <div><p>${data.headline}</p></div>
                         <div><p>${data.main_article}</p></div>
                         <div><p>${dc_utils.char.random_name('american', 'male')}</p></div>
-                    </form>
+                    </div>
                 `
             },
         },
