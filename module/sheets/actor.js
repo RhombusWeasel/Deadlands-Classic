@@ -826,11 +826,11 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'faith');
         data.roll = dc_utils.roll.new(data);
         let reply = `
             <div>
-                <h2 class="center">Chi Power</h2>
+                <h2 class="center">Divine Intervention</h2>
                 <p class="center">${this.actor.name} prays to the one true God to use ${item.name}!</p>
                 ${build_skill_template(data)}
             </div>
