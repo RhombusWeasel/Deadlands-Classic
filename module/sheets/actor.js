@@ -806,7 +806,7 @@ export default class PlayerSheet extends ActorSheet {
                 <h2 class="center">Chi Power</h2>
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
-            ${dc_utils.roll.get_result_template(roll)}
+            ${dc_utils.roll.get_result_template(dc_utils.roll.evaluate(roll))}
         `;
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Hex', reply);
