@@ -800,6 +800,7 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let strain = parseInt(this.actor.data.data.strain);
+        let i_strain = parseInt(item.data.data.strain);
         let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
         data.roll = dc_utils.roll.new(data);
@@ -809,7 +810,7 @@ export default class PlayerSheet extends ActorSheet {
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
         `;
-        if (strain + item.data.data.strain > max_strain) {
+        if (strain + i_strain > max_strain) {
             reply += `
             <div>
                 <p class="center">This would take ${this.actor.name} over their max strain.</p>
@@ -817,7 +818,7 @@ export default class PlayerSheet extends ActorSheet {
             `
         }else{
             reply += `${build_skill_template(data)}`
-            this.actor.update({data: {strain: strain + item.data.data.strain}});
+            this.actor.update({data: {strain: strain + i_strain}});
         }
         dc_utils.chat.send(reply);
     }
