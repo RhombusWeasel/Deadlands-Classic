@@ -816,6 +816,7 @@ export default class PlayerSheet extends ActorSheet {
             `
         }else{
             reply += `${build_skill_template(data)}`
+            this.actor.update({data: {strain: this.actor.data.data.strain + item.data.data.strain}});
         }
         dc_utils.chat.send(reply);
     }
