@@ -799,6 +799,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
+        let strain = parseInt(this.actor.data.data.strain);
         let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
         data.roll = dc_utils.roll.new(data);
@@ -808,7 +809,7 @@ export default class PlayerSheet extends ActorSheet {
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
         `;
-        if (this.actor.data.data.strain + item.data.data.strain > max_strain) {
+        if (strain + item.data.data.strain > max_strain) {
             reply += `
             <div>
                 <p class="center">This would take ${this.actor.name} over their max strain.</p>
