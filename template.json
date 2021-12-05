@@ -1129,6 +1129,7 @@
             "miracle",
             "trick",
             "hex",
+            "chi",
             "favor",
             "edge",
             "hinderance",
@@ -1203,7 +1204,7 @@
             ],
             "tn": "5",
             "speed": "1",
-            "duration": "1 round",
+            "duration": "Instant",
             "range": "5 yards/faith level"
         },
         "trick": {
@@ -1226,6 +1227,15 @@
             "speed": "1",
             "duration": "instant",
             "range": "5 yards/hex level"
+        },
+        "chi": {
+            "templates": [
+                "description"
+            ],
+            "strain": 1,
+            "tn": "5",
+            "speed": "1",
+            "duration": "Instant"
         },
         "favor": {
             "templates": [
