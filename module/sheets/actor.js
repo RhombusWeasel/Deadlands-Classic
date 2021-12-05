@@ -82,6 +82,7 @@ export default class PlayerSheet extends ActorSheet {
         data.components    = dc_utils.char.items.get(this.actor, "components");
         data.hinderances   = dc_utils.char.items.get(this.actor, "hinderance");
         data.edges         = dc_utils.char.items.get(this.actor, "edge");
+        data.chi_powers    = dc_utils.char.items.get(this.actor, "chi");
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
         data.boons         = dc_utils.char.items.get(this.actor, "boon");
@@ -91,6 +92,7 @@ export default class PlayerSheet extends ActorSheet {
         let owned  = dc_utils.user.get_owned_actors();
         let online = dc_utils.gm.get_online_actors();
         data.players       = owned.concat(online.filter((item) => owned.indexOf(item) < 0));
+        data.gms           = game.actors.filter(i => i.type == 'gm');
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
         data.action_deck   = this.actor.data.data.action_cards;
@@ -142,6 +144,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".blueprint").click(this._on_new_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
+        html.find(".use-chi").click(this._on_use_chi.bind(this));
         html.find(".cast-miracle").click(this._on_cast_miracle.bind(this));
         html.find(".heal-roll").click(this._on_heal_roll.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
@@ -791,20 +794,49 @@ export default class PlayerSheet extends ActorSheet {
         dc_utils.chat.send('Hex', reply);
     }
 
+    _on_use_chi(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let itemId = element.closest(".item").dataset.itemid;
+        let item = this.actor.getOwnedItem(itemId);
+        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
+        data.roll = dc_utils.roll.new(data);
+        let reply = `
+            <div>
+                <h2 class="center">Ancient Mastery</h2>
+                <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
+            </div>
+        `;
+        if (this.actor.data.data.strain + item.data.data.strain > max_strain) {
+            reply += `
+            <div>
+                <p class="center">This would take ${this.actor.name} over their max strain.</p>
+            </div>
+            `
+        }else{
+            reply += `${build_skill_template(data)}`
+        }
+        dc_utils.chat.send(reply);
+    }
+
     _on_cast_miracle(event) {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let roll_str = `Casts ${item.name}: [[${act.data.data.traits.spirit.skills.faith.level}${act.data.data.traits.spirit.die_type}ex + ${act.data.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
-        ChatMessage.create({ 
-            content: `
-                <h3 style="text-align:center">Miracle</h3>
-                <p style="text-align:center">${roll_str}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'faith');
+        data.roll = dc_utils.roll.new(data);
+        let reply = `
+            <div>
+                <h2 class="center">Divine Intervention</h2>
+                <p class="center">${this.actor.name} prays to the one true God to use ${item.name}!</p>
+                ${build_skill_template(data)}
+            </div>
+
+        `;
+        dc_utils.chat.send(reply);
     }
 
     _on_type_select(event) {

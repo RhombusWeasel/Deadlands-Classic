@@ -6,6 +6,11 @@ const dc_utils = {
     suit_symbols: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663", red_joker: String.fromCodePoint(0x1F607), black_joker: String.fromCodePoint(0x1F608)},
     joker_cards: ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     joker_suits: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663"},
+    marshal_fate_responses: [
+        `I think you might've pissed 'em off`,
+        `Let's hope they don't have it in for ya.`,
+        `I don't like it when they get like this...`,
+    ],
     bounty: {"White": 1, "Red": 2, "Blue": 3, "Legendary": 5},
     skills: [
         {key: "cognition", label: "Cognition"},
@@ -47,6 +52,7 @@ const dc_utils = {
         {key: "dodge", label: "Dodge"},
         {key: "drivin", label: "Drivin'"},
         {key: "fightin", label: "Fightin (Brawlin)"},
+        {key: "fightin_2", label: "Fightin II"},
         {key: "horse_ridin", label: "Horse Ridin'"},
         {key: "sneak", label: "Sneak"},
         {key: "swimmin", label: "Swimmin'"},
@@ -63,6 +69,8 @@ const dc_utils = {
         {key: "tinkerin", label: "Tinkerin'"},
         {key: "spirit", label: "Spirit"},
         {key: "faith", label: "Faith"},
+        {key: "rituals", label: "Rituals"},
+        {key: "chi", label: "Chi"},
         {key: "guts", label: "Guts"},
         {key: "strength", label: "Strength"},
         {key: "vigor", label: "Vigor"},
@@ -1134,7 +1142,7 @@ const dc_utils = {
             return game.users.contents.filter(function(i) {return i.active});
         },
         get_player_owned_actors: function() {
-            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner});
+            return game.actors.contents.filter(function(i) {return i.hasPlayerOwner && i.type == 'player'});
         },
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();

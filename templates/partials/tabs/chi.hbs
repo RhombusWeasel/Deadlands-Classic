@@ -1,0 +1,33 @@
+<section>
+    <h2 class="center">Strain</h2>
+    {{#if (eq data.data.show_editor true)}}
+    <h2 class="center"><input class="perc5 center" type="number" name="data.strain" value="{{data.data.strain}}">/{{strain_max data.data.traits.vigor}}</h2>
+    {{else}}
+    <h2 class="center">{{data.data.strain}}/{{strain_max data.data.traits.vigor}}</h2>
+    {{/if}}
+    {{#if chi_powers}}
+    <h2 class="center">Chi Powers</h2>
+        {{#each chi_powers as |chi|}}
+    <table class="item" data-itemId="{{this.id}}">
+        <tr>
+            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc80 center"><h2 class="center">{{this.name}}</h2></td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+    </table>
+    <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
+    <table class="item" data-itemId="{{this.id}}">
+        <tr>
+            <th>TN</th>
+            <th>Strain</th>
+            <th>Focus</th>
+        </tr>
+        <tr>
+            <td class="perc30 center">{{this.data.data.tn}}</td>
+            <td class="perc40 center">{{this.data.data.strain}}</td>
+            <td class="perc30 center"><a class="use-chi"><i class="fas fa-bahai" title="Focus your chi into {{this.name}}"></i></a></td>
+        </tr>
+    </table>
+        {{/each}}
+    {{/if}}
+</section>

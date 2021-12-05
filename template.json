@@ -95,7 +95,9 @@
                 "send_amount": 0,
                 "current_vehicle": "None",
                 "show_editor": false,
-                "marshal": "Marshal"
+                "marshal": "Marshal",
+                "completed_quests": [],
+                "strain": 0
             },
             "attributes": {
                 "traits": {
@@ -819,6 +821,16 @@
                             "level": 0,
                             "modifier": -8
                         },
+                        "rituals": {
+                            "name": "Rituals",
+                            "level": 0,
+                            "modifier": -8
+                        },
+                        "chi": {
+                            "name": "Chi",
+                            "level": 0,
+                            "modifier": -8
+                        },
                         "guts": {
                             "name": "Guts",
                             "level": 0,
@@ -1036,15 +1048,7 @@
                 "onerous": {"name": "Onerous", "mod": -2, "active":false},
                 "impressive": {"name": "Impressive", "mod": -4, "active":false},
                 "incredible": {"name": "Incredible", "mod": -6, "active":false},
-                "heroic": {"name": "Heroic", "mod": -8, "active":false},
-                "low_light": {"name": "Low Light", "mod": -2, "active":false},
-                "no_light": {"name": "No Light", "mod": -4, "active":false},
-                "firer_running": {"name": "Firer Runnin'", "mod": -4, "active":false},
-                "firer_mounted": {"name": "Firer Mounted", "mod": -2, "active":false},
-                "target_moving": {"name": "Target Movin'", "mod": -4, "active":false},
-                "hip_shootin": {"name": "Hip Shootin'", "mod": -2, "active":false},
-                "fannin": {"name": "Fannin", "mod": -2, "active":false},
-                "one_handed": {"name": "One Handed Shot", "mod": -2, "active":false}
+                "heroic": {"name": "Heroic", "mod": -8, "active":false}
             },
             "player_target": "all",
             "action_cards": [],
@@ -1126,6 +1130,7 @@
             "miracle",
             "trick",
             "hex",
+            "chi",
             "favor",
             "edge",
             "hinderance",
@@ -1136,7 +1141,6 @@
             "goods",
             "components",
             "boon",
-            "quest",
             "literature"
         ],
         "templates": {
@@ -1201,7 +1205,7 @@
             ],
             "tn": "5",
             "speed": "1",
-            "duration": "1 round",
+            "duration": "Instant",
             "range": "5 yards/faith level"
         },
         "trick": {
@@ -1224,6 +1228,15 @@
             "speed": "1",
             "duration": "instant",
             "range": "5 yards/hex level"
+        },
+        "chi": {
+            "templates": [
+                "description"
+            ],
+            "strain": 1,
+            "tn": "5",
+            "speed": "1",
+            "duration": "Instant"
         },
         "favor": {
             "templates": [
@@ -1293,9 +1306,10 @@
             "value_select": 2,
             "modifiers": []
         },
-        "book": {
+        "literature": {
             "pages": [],
-            "current_page": 0
+            "current_page": 0,
+            "template": "page"
         }
     }
 }

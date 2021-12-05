@@ -1,0 +1,23 @@
+<form class="{{cssClass}} typed" autocomplete="off">
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div>
+        <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
+        <table>
+            <tr>
+                <th>{{localize "dc.items.combat.miracle.tn"}}</th>
+                <th>Strain</th>
+                <th>{{localize "dc.items.combat.miracle.speed"}}</th>
+                <th>{{localize "dc.items.combat.miracle.duration"}}</th>
+            </tr>
+            <tr>
+                <td><input style="text-align: center;" type="text" name="data.tn" value="{{data.data.tn}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.strain" value="{{data.data.strain}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.data.speed}}"/></td>
+                <td><input style="text-align: center;" type="text" name="data.duration" value="{{data.data.duration}}"/></td>
+            </tr>
+        </table>
+    </div>
+</form>

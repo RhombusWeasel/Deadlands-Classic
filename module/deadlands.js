@@ -18,6 +18,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/chi.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",
@@ -202,15 +203,12 @@ Hooks.once("init", function () {
         return act.data.data[tab][loc];
     });
 
-    Handlebars.registerHelper('isGM', function (options) {
-        if (game.user.isGM) {
-            return options.fn(this);
-        }
-        return options.inverse(this);
+    Handlebars.registerHelper('strain_max', function (vig, options) {
+        return vig.die_type.slice(1, vig.die_type.length);
     });
 
     Handlebars.registerHelper('isGM', function (options) {
-        if (dc_utils.gm.get_player_owned_actors().length > 0) {
+        if (game.user.isGM) {
             return options.fn(this);
         }
         return options.inverse(this);

@@ -31,7 +31,7 @@
             <tr>
                 <th class="perc50 center">Name List</th>
                 <td class="center">
-                    <select name="data.ethnicity" id="ethnicity-select">
+                    <select class="typed" name="data.ethnicity" id="ethnicity-select">
                     {{#if (eq data.data.ethnicity "american")}}
                         <option value="american" selected>American/European</option>
                     {{else}}
@@ -67,6 +67,20 @@
             {{else}}
                 <td class="center"><a class="name-toggle"><i class="fas fa-times"></i></a></td>
             {{/if}}
+            </tr>
+            <tr>
+                <th class="perc50 center" title="Should be set to the same name as the GM character that is the marshal for this actor.">Marshal</th>
+                <td class="center">
+                    <select class="typed" name="data.marshal">
+                        {{#each gms as |marshal|}}
+                            {{#if (eq marshal.name ../data.data.marshal)}}
+                        <option value="{{marshal.name}}" selected>{{marshal.name}}</option>
+                            {{else}}
+                        <option value="{{marshal.name}}">{{marshal.name}}</option>
+                            {{/if}}
+                        {{/each}}
+                    </select>
+                </td>
             </tr>
         </table>
     </div>
