@@ -820,6 +820,16 @@
                             "level": 0,
                             "modifier": -8
                         },
+                        "rituals": {
+                            "name": "Rituals",
+                            "level": 0,
+                            "modifier": -8
+                        },
+                        "chi": {
+                            "name": "Chi",
+                            "level": 0,
+                            "modifier": -8
+                        },
                         "guts": {
                             "name": "Guts",
                             "level": 0,
@@ -1129,7 +1139,6 @@
             "goods",
             "components",
             "boon",
-            "quest",
             "literature"
         ],
         "templates": {

@@ -1,0 +1,18 @@
+<section>
+    {{#if chi_powers}}
+    <div>
+        <h2 class="center">Chi Powers</h2>
+        {{#each chi_powers as |chi|}}
+        <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
+        <table>
+            <tr class="item" data-itemId="{{this.id}}">
+                <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc40">{{this.name}}</td>
+                <td class="perc10 center"><a class="use-chi"><i class="fas fa-bahai" title="Use {{this.name}}"></i></a></td>
+            </tr>
+        </table>
+        {{/each}}
+    </div>
+    {{/if}}
+    </div>
+</section>

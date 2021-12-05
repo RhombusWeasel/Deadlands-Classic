@@ -332,14 +332,9 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
         let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
-        let responses = [
-            `I think you might've pissed 'em off`,
-            `Let's hope he doesn't have it in for ya.`,
-            `I don't like it when he gets like this...`,
-        ];
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                let r_msg = responses[Math.floor(Math.random() * responses.length)]
+                let r_msg = dc_utils.marshal_fate_responses[Math.floor(Math.random() * dc_utils.marshal_fate_responses.length)]
                 dc_utils.chat.send('Fate', `The Marshal uses a ${chip_type} fate chip.`, `${r_msg}`);
                 dc_utils.char.items.delete(this.actor, chip._id);
                 break;
@@ -368,7 +363,7 @@ export default class GMSheet extends ActorSheet {
             data: {}
         });
         game.settings.set('deadlands_classic', 'combat_active', true);
-        return this.render();
+        return dc_utils.gm.update_sheet();
     }
 
     _on_new_round(event) {
@@ -384,7 +379,7 @@ export default class GMSheet extends ActorSheet {
             operation: 'roll_quickness',
             data: {}
         });
-        return this.render();
+        return dc_utils.gm.update_sheet();
     }
 
     _on_end_combat(event) {
@@ -402,7 +397,7 @@ export default class GMSheet extends ActorSheet {
             data: {}
         });
         game.settings.set('deadlands_classic', 'combat_active', false);
-        dc_utils.gm.update_sheet();
+        return dc_utils.gm.update_sheet();
     }
 
     _on_draw_card() {

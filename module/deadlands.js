@@ -18,6 +18,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/chi.hbs",
         "systems/deadlands_classic/templates/partials/tabs/combat.hbs",
         "systems/deadlands_classic/templates/partials/tabs/core.hbs",
         "systems/deadlands_classic/templates/partials/tabs/description.hbs",

@@ -82,6 +82,7 @@ export default class PlayerSheet extends ActorSheet {
         data.components    = dc_utils.char.items.get(this.actor, "components");
         data.hinderances   = dc_utils.char.items.get(this.actor, "hinderance");
         data.edges         = dc_utils.char.items.get(this.actor, "edge");
+        data.chi_powers    = dc_utils.char.items.get(this.actor, "chi");
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
         data.boons         = dc_utils.char.items.get(this.actor, "boon");
