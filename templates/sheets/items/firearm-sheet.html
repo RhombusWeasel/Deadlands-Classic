@@ -19,7 +19,7 @@
                 <td>
                     <select name="data.gun_type" id="type-select">
                     {{#each skills as |skill|}}
-                        {{#if (eq ../data.data.target_select skill.key)}}
+                        {{#if (eq ../data.data.gun_type skill.key)}}
                         <option value="{{skill.key}}" selected>{{skill.label}}</option>
                         {{else}}
                         <option value="{{skill.key}}">{{skill.label}}</option>
