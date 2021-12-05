@@ -799,6 +799,7 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
+        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
         data.roll = dc_utils.roll.new(data);
         let reply = `
@@ -806,8 +807,16 @@ export default class PlayerSheet extends ActorSheet {
                 <h2 class="center">Chi Power</h2>
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
-            ${dc_utils.roll.get_result_template(data)}
         `;
+        if (this.actor.data.data.strain + item.data.data.strain > max_strain) {
+            reply += `
+            <div>
+                <p class="center">This would take ${this.actor.name} over their max strain.</p>
+            </div>
+            `
+        }else{
+            reply += `${build_skill_template(data)}`
+        }
         dc_utils.chat.send(reply);
     }
 
@@ -817,14 +826,16 @@ export default class PlayerSheet extends ActorSheet {
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
-        let roll_str = `Casts ${item.name}: [[${act.data.data.traits.spirit.skills.faith.level}${act.data.data.traits.spirit.die_type}ex + ${act.data.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
-        ChatMessage.create({ 
-            content: `
-                <h3 style="text-align:center">Miracle</h3>
-                <p style="text-align:center">${roll_str}</p>
-            `,
-            whisper: ChatMessage.getWhisperRecipients('GM')
-        });
+        let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
+        data.roll = dc_utils.roll.new(data);
+        let reply = `
+            <div>
+                <h2 class="center">Chi Power</h2>
+                <p class="center">${this.actor.name} prays to the one true God to use ${item.name}!</p>
+                ${build_skill_template(data)}
+            </div>
+        `;
+        dc_utils.chat.send(reply);
     }
 
     _on_type_select(event) {

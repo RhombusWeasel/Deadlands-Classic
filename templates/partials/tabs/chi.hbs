@@ -18,12 +18,14 @@
     <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
     <table class="item" data-itemId="{{this.id}}">
         <tr>
+            <th>TN</th>
             <th>Strain</th>
             <th>Focus</th>
         </tr>
         <tr>
-            <td class="perc50 center">{{this.data.data.tn}}</td>
-            <td class="perc50 center"><a class="use-chi"><i class="fas fa-bahai" title="Focus your chi into {{this.name}}"></i></a></td>
+            <td class="perc35 center">{{this.data.data.tn}}</td>
+            <td class="perc35 center">{{this.data.data.strain}}</td>
+            <td class="perc30 center"><a class="use-chi"><i class="fas fa-bahai" title="Focus your chi into {{this.name}}"></i></a></td>
         </tr>
     </table>
         {{/each}}
