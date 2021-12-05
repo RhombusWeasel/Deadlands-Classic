@@ -2733,7 +2733,9 @@ const dc_utils = {
                 return `
                     <div class="typed">
                         <div class="flexrow">
-                            <p class="perc10 center">${data.date}</p>
+                            <div class="perc10 center">
+                                <p class="perc10 center">${data.date}</p>
+                            </div>
                             <h2 class="perc80 center">${data.paper}</h2>
                             <div class="perc10 center">
                                 <p class="center">only</p>
