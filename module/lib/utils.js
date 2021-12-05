@@ -75,6 +75,13 @@ const dc_utils = {
         {key: "strength", label: "Strength"},
         {key: "vigor", label: "Vigor"},
     ],
+    documents: {
+        letter: {label: 'Letter'},
+        telegram: {label: 'Telegram'},
+        flyer: {label: 'Flyer'},
+        wanted_poster: {label: 'Wanted Poster'},
+        book: {label: 'Book'},
+    },
     names: {
         american: {
             surnames: [

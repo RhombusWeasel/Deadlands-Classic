@@ -8,6 +8,7 @@ export default class DCItem extends ItemSheet {
         data.config    = CONFIG.dc;
         data.locations = dc_utils.hit_locations;
         data.skills    = dc_utils.skills;
+        data.documents = dc_utils.documents;
         if (this.object.actor) {
             data.modifiers = this.object.actor.items.get(this.item.id).data.data.modifiers;
         }else{
