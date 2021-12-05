@@ -203,6 +203,10 @@ Hooks.once("init", function () {
         return act.data.data[tab][loc];
     });
 
+    Handlebars.registerHelper('strain_max', function (vig, options) {
+        return vig.die_type.slice(1, vig.die_type.length);
+    });
+
     Handlebars.registerHelper('isGM', function (options) {
         if (game.user.isGM) {
             return options.fn(this);
