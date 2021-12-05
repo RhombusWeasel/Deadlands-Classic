@@ -4,9 +4,12 @@
         {{#each miracles as |mir|}}
         <table class="item" data-itemId="{{this.id}}">
             <tr>
-                <td class="center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td><h3>{{this.name}}</h3></td>
+                <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                <td class="perc90 center"><h3>{{this.name}}</h3></td>
             </tr>
+        </table>
+        <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
+        <table>
             <tr>
                 <th>TN</th>
                 <th>Pray</th>
