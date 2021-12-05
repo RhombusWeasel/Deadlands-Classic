@@ -1307,9 +1307,23 @@
             "modifiers": []
         },
         "literature": {
-            "pages": [],
-            "current_page": 0,
-            "template": "page"
+            "template": "letter",
+            "prefab": {
+                "letter": {
+                    "date": 0,
+                    "body": "",
+                    "reciever": "",
+                    "sender": ""
+                },
+                "newspaper": {
+                    "date": "Wed Nov 8th 1876",
+                    "paper": "The Tombstone Epitaph",
+                    "price": "5¢",
+                    "headline": "",
+                    "main_article": "",
+                    "sub_articles": 1
+                }
+            }
         }
     }
 }

@@ -80,6 +80,7 @@ const dc_utils = {
         telegram: {label: 'Telegram'},
         flyer: {label: 'Flyer'},
         wanted_poster: {label: 'Wanted Poster'},
+        newspaper: {label: 'Newspaper'},
         book: {label: 'Book'},
     },
     names: {

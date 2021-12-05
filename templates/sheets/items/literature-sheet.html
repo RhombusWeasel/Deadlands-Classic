@@ -18,6 +18,32 @@
                         </select>
                     </td>
                 </tr>
+                {{#if (eq data.data.template 'newspaper')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Paper</th>
+                    <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" name="data.prefab.newspaper.price" value="{{data.data.prefab.newspaper.price}}"></td>
+                </tr>
+                <tr>
+                    <th>Headline</th>
+                    <td><input type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
+                </tr>
+                <tr>
+                    <th>Main Article</th>
+                    <td><input type="text" name="data.prefab.newspaper.main_article" value="{{data.data.prefab.newspaper.main_article}}"></td>
+                </tr>
+                <tr>
+                    <th>Filler Articles</th>
+                    <td><input type="number" name="data.prefab.newspaper.sub_articles" value="{{data.data.prefab.newspaper.sub_articles}}"></td>
+                </tr>
+                {{/if}}
             </table>
         </div>
         {{/isGM}}
