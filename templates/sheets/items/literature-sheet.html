@@ -18,6 +18,24 @@
                         </select>
                     </td>
                 </tr>
+                {{#if (eq data.data.template 'letter')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Recipient</th>
+                    <td><input type="text" name="data.prefab.letter.reciever" value="{{data.data.prefab.letter.reciever}}"></td>
+                </tr>
+                <tr>
+                    <th>Body</th>
+                    <td><input type="text" name="data.prefab.letter.body" value="{{data.data.prefab.letter.body}}"></td>
+                </tr>
+                <tr>
+                    <th>Sender</th>
+                    <td><input type="text" name="data.prefab.letter.sender" value="{{data.data.prefab.letter.sender}}"></td>
+                </tr>
+                {{/if}}
                 {{#if (eq data.data.template 'newspaper')}}
                 <tr>
                     <th>Date</th>
