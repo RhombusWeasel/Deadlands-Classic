@@ -5,16 +5,18 @@
         <div>
             <table>
                 <tr>
-                    <th>{{Template}}</th>
-                    <select name="data.template">
+                    <th>Template</th>
+                    <td>
+                        <select name="data.template">
                         {{#each documents as |doc|}}
                             {{#if (eq @key ../data.data.template)}}
-                        <option value="{{@key}}" selected>{{doc.label}}</option>
+                            <option value="{{@key}}" selected>{{doc.label}}</option>
                             {{else}}
-                        <option value="{{@key}}">{{doc.label}}</option>
+                            <option value="{{@key}}">{{doc.label}}</option>
                             {{/if}}
                         {{/each}}
-                    </select>
+                        </select>
+                    </td>
                 </tr>
             </table>
         </div>
