@@ -6,19 +6,26 @@
     <h2 class="center">{{data.data.strain}}/{{strain_max data.data.traits.vigor}}</h2>
     {{/if}}
     {{#if chi_powers}}
-    <div>
-        <h2 class="center">Chi Powers</h2>
+    <h2 class="center">Chi Powers</h2>
         {{#each chi_powers as |chi|}}
-        <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
-        <table>
-            <tr class="item" data-itemId="{{this.id}}">
-                <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
-                <td class="perc70">{{this.name}}</td>
-                <td class="perc10 center"><a class="use-chi"><i class="fas fa-bahai" title="Use {{this.name}}"></i></a></td>
-                <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
-            </tr>
-        </table>
+    <table class="item" data-itemId="{{this.id}}">
+        <tr>
+            <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+            <td class="perc80 center"><h2 class="center">{{this.name}}</h2></td>
+            <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{this.name}}"></i></a></td>
+        </tr>
+    </table>
+    <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="soft">{{this.data.data.description}}</textarea>
+    <table>
+        <tr>
+            <th>Strain</th>
+            <th>Focus</th>
+        </tr>
+        <tr>
+            <td class="perc50 center">{{this.data.data.tn}}</td>
+            <td class="perc50 center"><a class="use-chi"><i class="fas fa-bahai" title="Focus your chi into {{this.name}}"></i></a></td>
+        </tr>
+    </table>
         {{/each}}
-    </div>
     {{/if}}
 </section>
