@@ -18,24 +18,13 @@
                 <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
                 <td>
                     <select name="data.gun_type" id="type-select">
-                    {{#if (eq data.data.gun_type 'skill_mod')}}
-                        {{#each skills as |skill|}}
-                            {{#if (eq ../data.data.target_select skill.key)}}
+                    {{#each skills as |skill|}}
+                        {{#if (eq ../data.data.target_select skill.key)}}
                         <option value="{{skill.key}}" selected>{{skill.label}}</option>
-                            {{else}}
+                        {{else}}
                         <option value="{{skill.key}}">{{skill.label}}</option>
-                            {{/if}}
-                        {{/each}}
-                    {{/if}}
-                    {{#if (eq data.data.gun_type 'armour_mod')}}
-                        {{#each locations as |loc|}}
-                            {{#if (eq ../data.data.target_select @key)}}
-                        <option value="{{@key}}" selected>{{loc}}</option>
-                            {{else}}
-                        <option value="{{@key}}">{{loc}}</option>
-                            {{/if}}
-                        {{/each}}
-                    {{/if}}
+                        {{/if}}
+                    {{/each}}
                     </select>
                 </td>
             </tr>
