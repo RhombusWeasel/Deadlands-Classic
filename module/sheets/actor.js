@@ -139,7 +139,6 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".attack").click(this._on_attack.bind(this));
-        html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".blueprint").click(this._on_new_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
