@@ -21,6 +21,7 @@ export default class DCItem extends ItemSheet {
         // On Click
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
+        html.find(".render-preview").click(this._on_render_preview.bind(this));
 
         // On Change
         html.find(".document-template").change(this._on_document_select.bind(this));
@@ -29,7 +30,7 @@ export default class DCItem extends ItemSheet {
 
     _on_add_modifier(event) {
         event.preventDefault();
-        let item
+        let item;
         if (this.object.actor) {
             item = this.object.actor.items.get(this.item.id);
         } else {
@@ -64,9 +65,16 @@ export default class DCItem extends ItemSheet {
     _on_document_select(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let type    = element.value
+        let type    = element.value;
         if(dc_utils.documents[type]?.build) {
-            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}})
+            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}});
+        }
+    }
+
+    _on_render_preview(event) {
+        let type = this.item.data.data.template;
+        if(dc_utils.documents[type]?.build) {
+            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}});
         }
     }
 }
