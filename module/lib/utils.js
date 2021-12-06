@@ -2733,21 +2733,21 @@ const dc_utils = {
                 return `
                     <div>
                         <div class="flexrow">
-                            <p class="side-banner">${data.date}</p>
-                            <p class="name-banner center">${data.paper}</p>
-                            <p class="side-banner">Only 5¢</p>
+                            <p style="font-family: "Lucida Sans Typewriter"; font-size: small; text-align: center; width: 5%;">${data.date}</p>
+                            <p style="font-family: "Lucida Sans Typewriter"; font-size: small; text-align: center; width: 90%;">${data.paper}</p>
+                            <p style="font-family: "Lucida Sans Typewriter"; font-size: small; text-align: center; width: 5%;">Only 5¢</p>
                         </div>
-                        <p class="headline">${data.headline}</p></div>
+                        <p style="font-family: "Lucida Sans Typewriter"; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
                             <div>
-                                <p class="sub-article">${dc_utils.documents.newspaper.random_article()}</p>
+                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 25%;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                             <div class="main-article">
-                                <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                                <p style="column-count: ${data.columns}">${data.main_article}</p>
+                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 50%; column-count: ${data.columns}">${data.main_article}</p>
+                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 100%;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
                             <div>
-                                <p class="sub-article">${dc_utils.documents.newspaper.random_article()}</p>
+                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 100%;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
                     </div>
