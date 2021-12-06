@@ -2746,6 +2746,9 @@ const dc_utils = {
                                 <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                                 <p class="article">${data.main_article}</p>
                             </div>
+                            <div>
+                                <p>${dc_utils.documents.newspaper.random_article()}</p>
+                            </div>
                         </div>
                     </div>
                 `
@@ -2781,15 +2784,17 @@ const dc_utils = {
                     Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
                 },
                 starts:   [
-                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} today.  The arresting officer Deputy {{random name male}}.',
+                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} today.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
                     'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
                 ],
                 crimes: [
                     'rustling cattle',
-                    'robbing a train'
+                    'robbing a train',
+                    'holding up a stage-coach'
                 ],
                 sentances: [
                     'five years hard labour',
+                    'ten years in the state penitentiary',
                     'six months of community service',
                     'death by New Science'
                 ],
