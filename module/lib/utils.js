@@ -2733,9 +2733,9 @@ const dc_utils = {
                 return `
                     <div class="typed">
                         <div class="flexrow">
-                            <p class="sub-banner">${data.date}</p>
+                            <p class="side-banner">${data.date}</p>
                             <p class="name-banner center">${data.paper}</p>
-                            <p class="sub-banner">Only ${data.price}</p>
+                            <p class="side-banner">Only 5¢</p>
                         </div>
                         <p class="headline">${data.headline}</p></div>
                         <div class="flexrow">
