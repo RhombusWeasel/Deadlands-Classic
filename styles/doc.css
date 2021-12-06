@@ -103,3 +103,6 @@
 .Legendary {
     color: yellow;
 }
+.article {
+    column-count: 3;
+}
