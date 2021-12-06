@@ -2739,15 +2739,15 @@ const dc_utils = {
                         </div>
                         <p style="font-family: "Lucida Sans Typewriter"; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
-                            <div>
-                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 25%;">${dc_utils.documents.newspaper.random_article()}</p>
+                            <div style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 25%;">
+                                <p>${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
-                            <div class="main-article">
-                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 50%; column-count: ${data.columns}">${data.main_article}</p>
-                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 100%;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                            <div style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 50%;">
+                                <p style="column-count: ${data.columns}">${data.main_article}</p>
+                                <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
-                            <div>
-                                <p style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 100%;">${dc_utils.documents.newspaper.random_article()}</p>
+                            <div style="font-family: "Lucida Sans Typewriter"; font-size: xx-small; text-align: center; width: 25%;">
+                                <p>${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
                     </div>
