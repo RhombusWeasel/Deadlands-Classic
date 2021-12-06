@@ -1323,6 +1323,7 @@
                     "price": "5¢",
                     "headline": "",
                     "main_article": "",
+                    "columns": 2,
                     "sub_articles": 1
                 }
             }
