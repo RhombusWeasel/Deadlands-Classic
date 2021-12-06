@@ -2733,20 +2733,20 @@ const dc_utils = {
                 return `
                     <div>
                         <div class="flexrow">
-                            <p style="font-family: Lucida Sans Typewriter; font-size: small; text-align: center; width: 5%;">${data.date}</p>
-                            <p style="font-family: Lucida Sans Typewriter; font-size: small; text-align: center; width: 90%;">${data.paper}</p>
-                            <p style="font-family: Lucida Sans Typewriter; font-size: small; text-align: center; width: 5%;">Only 5¢</p>
+                            <p style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%;">${data.date}</p>
+                            <p style="font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 90%;">${data.paper}</p>
+                            <p style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%;">Only 5¢</p>
                         </div>
                         <p style="font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
-                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 25%;">
+                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; width: 25%;">
                                 <p>${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
-                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 50%;">
+                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; width: 50%;">
                                 <p style="column-count: ${data.columns}">${data.main_article}</p>
                                 <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
-                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 25%;">
+                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; width: 25%;">
                                 <p>${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
