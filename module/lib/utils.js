@@ -2814,16 +2814,15 @@ const dc_utils = {
                 let name      = dc_utils.char.random_name('american', gender);
 
                 let r_str = data.starts[Math.floor(Math.random() * data.starts.length)]
-                r_str.replace("{{pronoun}}", pronoun);
-                r_str.replace("{{group pronoun}}", g_pronoun);
-                r_str.replace("{{name}}", name);
-                r_str.replace("{{city}}", city);
-                r_str.replace("{{state}}", state);
-                r_str.replace("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)]);
-                r_str.replace("{{name}}", data.crimes[Math.floor(Math.random() * data.crimes.length)]);
-                r_str.replace("{{random name male}}", dc_utils.char.random_name('american', 'male'));
-                r_str.replace("{{random name female}}", dc_utils.char.random_name('american', 'female'));
-                return r_str;
+                return r_str.replace("{{pronoun}}", pronoun)
+                .replace("{{group pronoun}}", g_pronoun)
+                .replace("{{name}}", name)
+                .replace("{{city}}", city)
+                .replace("{{state}}", state)
+                .replace("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)])
+                .replace("{{name}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
+                .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
+                .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
             },
         },
         book: {label: 'Book'},
