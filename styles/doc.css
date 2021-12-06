@@ -106,3 +106,8 @@
 .article {
     column-count: 3;
 }
+.headline {
+    font-family: "Lucida Sans Typewriter";
+    font-size: medium;
+    text-align: center;
+}

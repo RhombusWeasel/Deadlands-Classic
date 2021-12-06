@@ -2737,12 +2737,11 @@ const dc_utils = {
                             <h2 class="perc90 center">${data.paper}</h2>
                             <p class="perc5 center">Only ${data.price}</p>
                         </div>
-                        <div><h1>${data.headline}</h1></div>
                         <div>
+                            <p class="headline">${data.headline}</p></div>
                             <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             <p class="article">${data.main_article}</p>
                         </div>
-                        <div></div>
                     </div>
                 `
             },
