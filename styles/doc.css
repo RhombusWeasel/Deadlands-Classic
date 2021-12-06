@@ -107,11 +107,30 @@
 .Legendary {
     color: yellow;
 }
-.article {
-    column-count: 3;
+.side-banner{
+    font-family: "Lucida Sans Typewriter";
+    font-size: small;
+    text-align: center;
+    width: 5%;
+}
+.name-banner {
+    font-family: "Lucida Sans Typewriter";
+    font-size: medium;
+    text-align: center;
+    width: 90%;
 }
 .headline {
     font-family: "Lucida Sans Typewriter";
     font-size: medium;
     text-align: center;
+}
+.main-article {
+    width: 60%;
+    font-family: "Lucida Sans Typewriter";
+    font-size: xx-small;
+}
+.sub-article {
+    width: 20%;
+    font-family: "Lucida Sans Typewriter";
+    font-size: xx-small;
 }

@@ -2733,21 +2733,21 @@ const dc_utils = {
                 return `
                     <div class="typed">
                         <div class="flexrow">
-                            <p class="perc5 center">${data.date}</p>
-                            <p class="headline perc90 center">${data.paper}</p>
-                            <p class="perc5 center">Only ${data.price}</p>
+                            <p class="sub-banner">${data.date}</p>
+                            <p class="name-banner center">${data.paper}</p>
+                            <p class="sub-banner">Only ${data.price}</p>
                         </div>
                         <p class="headline">${data.headline}</p></div>
                         <div class="flexrow">
                             <div>
-                                <p class="typed-small">${dc_utils.documents.newspaper.random_article()}</p>
+                                <p class="sub-article">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
-                            <div class="perc60">
-                                <p class="typed-small">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                                <p class="typed-small" style="column-count: ${data.columns}">${data.main_article}</p>
+                            <div class="main-article">
+                                <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                                <p style="column-count: ${data.columns}">${data.main_article}</p>
                             </div>
                             <div>
-                                <p class="typed-small">${dc_utils.documents.newspaper.random_article()}</p>
+                                <p class="sub-article">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
                     </div>
@@ -2785,13 +2785,15 @@ const dc_utils = {
                     Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
                 },
                 starts:   [
-                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} today.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
+                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} last week.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
                     'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
                 ],
                 crimes: [
                     'rustling cattle',
                     'robbing a train',
-                    'holding up a stage-coach'
+                    'holding up a stage-coach',
+                    'committing telegraph fraud',
+                    'starting a cult to overthrow the government'
                 ],
                 sentances: [
                     'five years hard labour',
@@ -2821,7 +2823,7 @@ const dc_utils = {
                 .replace("{{city}}", city)
                 .replace("{{state}}", state)
                 .replace("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)])
-                .replace("{{name}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
+                .replace("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
             },
