@@ -2737,13 +2737,84 @@ const dc_utils = {
                             <p class="headline perc90 center">${data.paper}</p>
                             <p class="perc5 center">Only ${data.price}</p>
                         </div>
-                        <div>
-                            <p class="headline">${data.headline}</p></div>
-                            <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                            <p class="article">${data.main_article}</p>
+                        <p class="headline">${data.headline}</p></div>
+                        <div class="flexrow">
+                            <div>
+                                <p>${dc_utils.documents.newspaper.random_article()}</p>
+                            </div>
+                            <div>
+                                <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                                <p class="article">${data.main_article}</p>
+                            </div>
                         </div>
                     </div>
                 `
+            },
+            article_data: {
+                states: {
+                    northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
+                    southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'New Mexico', 'Texas'],
+                    disputed: ['California', 'Colorado', 'Kansas', 'Oklahoma'],
+                },
+                cities: {
+                    Arizona:      ['Dead End', 'Despair', 'Mona', 'Phoenix', 'Potential', 'Prescott', 'Tombstone', 'Tucson'],
+                    Arkensas:     ["Little Rock"],
+                    California:   ["Devil's Armpit", "Dragon's Breath"],
+                    Colorado:     ["Cauldron", "Denver"],
+                    Dakota:       ["Bear Butte", "Deadwood"],
+                    Idaho:        ["Boise", "Silver City"],
+                    Illinois:     ["Chicago", "Peoria"],
+                    Iowa:         ["Cedar Rapids", "Des Moines"],
+                    Kansas:       ["Coffeyville", "Dodge City"],
+                    Louisiana:    ["New Orleans", "Purchase"],
+                    Minnesota:    ["Bismark", "Fargo"],
+                    Mississippi:  ["Biloxi", "Natchez"],
+                    Missouri:     ["Kansas City", "St. Lois"],
+                    Montana:      ["Billings", "Butte City"],
+                    Nebraska:     ["Grand Island"],
+                    Nevada:       ["Cedar City", "Virginia City"],
+                    "New Mexico": ["Albuquerque", "Roswell", "Sante Fe"],
+                    Oklahoma:     ["Perry"],
+                    Oregon:       ["Portland", "Salem"],
+                    Washington:   ["Seattle", "Walla Walla", "Olympia", "Tacoma"],
+                    Wisconsin:    ["Duluth", "Milwaukee"],
+                    Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
+                },
+                starts:   [
+                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} today.  The arresting officer Deputy {{random name male}}.',
+                    'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
+                ],
+                crimes: [
+                    'rustling cattle',
+                    'robbing a train'
+                ],
+                sentances: [
+                    'five years hard labour',
+                    'six months of community service',
+                    'death by New Science'
+                ],
+            },
+            random_article: function() {
+                let data      = dc_utils.documents.newspaper.article_data;
+                let territory = data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]];
+                let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)];
+                let city      = data.cities[state][Math.floor(Math.random() * data.cities[state].length)]
+                let sex_rng   = Math.random()
+                let gender    = sex_rng > 0.49 ? 'male' : 'female';
+                let pronoun   = sex_rng > 0.49 ? 'man' : 'woman';
+                let g_pronoun = sex_rng > 0.49 ? 'men' : 'women';
+                let name      = dc_utils.char.random_name('american', gender);
+
+                let r_str = data.starts[Math.floor(Math.random() * data.states[territory].length)]
+                r_str.replace("{{pronoun}}", pronoun);
+                r_str.replace("{{group pronoun}}", g_pronoun);
+                r_str.replace("{{name}}", name);
+                r_str.replace("{{city}}", city);
+                r_str.replace("{{state}}", state);
+                r_str.replace("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)]);
+                r_str.replace("{{name}}", data.crimes[Math.floor(Math.random() * data.crimes.length)]);
+                r_str.replace("{{random name male}}", dc_utils.char.random_name('american', 'male'));
+                r_str.replace("{{random name female}}", dc_utils.char.random_name('american', 'female'));
             },
         },
         book: {label: 'Book'},
