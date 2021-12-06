@@ -2802,8 +2802,11 @@ const dc_utils = {
             random_article: function() {
                 let data      = dc_utils.documents.newspaper.article_data;
                 let territory = data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]];
+                console.log(territory);
                 let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)];
+                console.log(state);
                 let city      = data.cities[state][Math.floor(Math.random() * data.cities[state].length)]
+                console.log(city);
                 let sex_rng   = Math.random()
                 let gender    = sex_rng > 0.49 ? 'male' : 'female';
                 let pronoun   = sex_rng > 0.49 ? 'man' : 'woman';
