@@ -10,6 +10,10 @@
     overflow-y:scroll;
     height:400px
 }
+.typed-small{
+    font-family: "Lucida Sans Typewriter";
+    font-size: x-small;
+}
 .typed{
     font-family: "Lucida Sans Typewriter";
     font-size: smaller;

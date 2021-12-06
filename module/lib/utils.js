@@ -2740,14 +2740,14 @@ const dc_utils = {
                         <p class="headline">${data.headline}</p></div>
                         <div class="flexrow">
                             <div>
-                                <p>${dc_utils.documents.newspaper.random_article()}</p>
+                                <p class="typed-small">${dc_utils.documents.newspaper.random_article()}</p>
+                            </div>
+                            <div class="perc60">
+                                <p class="typed-small">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                                <p class="typed-small" style="column-count: ${data.columns}">${data.main_article}</p>
                             </div>
                             <div>
-                                <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                                <p style="column-count: ${data.columns}">${data.main_article}</p>
-                            </div>
-                            <div>
-                                <p>${dc_utils.documents.newspaper.random_article()}</p>
+                                <p class="typed-small">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
                     </div>
