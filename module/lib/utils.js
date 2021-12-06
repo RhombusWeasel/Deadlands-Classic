@@ -2813,7 +2813,7 @@ const dc_utils = {
                 let g_pronoun = sex_rng > 0.49 ? 'men' : 'women';
                 let name      = dc_utils.char.random_name('american', gender);
 
-                let r_str = data.starts[Math.floor(Math.random() * data.states[territory].length)]
+                let r_str = data.starts[Math.floor(Math.random() * data.starts.length)]
                 r_str.replace("{{pronoun}}", pronoun);
                 r_str.replace("{{group pronoun}}", g_pronoun);
                 r_str.replace("{{name}}", name);
