@@ -128,9 +128,11 @@
     width: 40%;
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
+    padding: 5px;
 }
 .sub-article {
     width: 30%;
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
+    padding: 5px;
 }

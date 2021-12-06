@@ -2731,7 +2731,7 @@ const dc_utils = {
             label: 'Newspaper',
             build: function(data) {
                 return `
-                    <div class="typed">
+                    <div>
                         <div class="flexrow">
                             <p class="side-banner">${data.date}</p>
                             <p class="name-banner center">${data.paper}</p>
