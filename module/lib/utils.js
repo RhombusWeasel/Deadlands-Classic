@@ -2751,7 +2751,7 @@ const dc_utils = {
                             </div>
                         </div>
                     </div>
-                `
+                `;
             },
             article_data: {
                 states: {
@@ -2779,6 +2779,7 @@ const dc_utils = {
                     "New Mexico": ["Albuquerque", "Roswell", "Sante Fe"],
                     Oklahoma:     ["Perry"],
                     Oregon:       ["Portland", "Salem"],
+                    Texas:        ["Providence", "Houston", "Pinebox"],
                     Washington:   ["Seattle", "Walla Walla", "Olympia", "Tacoma"],
                     Wisconsin:    ["Duluth", "Milwaukee"],
                     Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
