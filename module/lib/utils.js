@@ -2744,7 +2744,7 @@ const dc_utils = {
                             </div>
                             <div>
                                 <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                                <p class="article">${data.main_article}</p>
+                                <p style="column-count: ${data.columns}">${data.main_article}</p>
                             </div>
                             <div>
                                 <p>${dc_utils.documents.newspaper.random_article()}</p>
@@ -2823,6 +2823,7 @@ const dc_utils = {
                 r_str.replace("{{name}}", data.crimes[Math.floor(Math.random() * data.crimes.length)]);
                 r_str.replace("{{random name male}}", dc_utils.char.random_name('american', 'male'));
                 r_str.replace("{{random name female}}", dc_utils.char.random_name('american', 'female'));
+                return r_str;
             },
         },
         book: {label: 'Book'},
