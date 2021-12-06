@@ -1308,6 +1308,7 @@
         },
         "literature": {
             "template": "letter",
+            "output":"",
             "prefab": {
                 "letter": {
                     "date": 0,

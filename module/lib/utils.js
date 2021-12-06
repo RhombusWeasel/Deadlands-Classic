@@ -2739,7 +2739,7 @@ const dc_utils = {
                         </div>
                         <div><p>${data.headline}</p></div>
                         <div><p>${data.main_article}</p></div>
-                        <div><p>${dc_utils.char.random_name('american', 'male')}</p></div>
+                        <div><p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p></div>
                     </div>
                 `
             },
