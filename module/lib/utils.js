@@ -2783,16 +2783,19 @@ const dc_utils = {
                 starts:   [
                     'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} last week.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
                     'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
+                    'According to reports coming out of {{city}} {{state}}, one {{pronoun}}, {{name}} managed to save {{number}} {{a animal}}s from a freak explosion at {{building}}.  One eye witness, Mr {{random name male}} was quoted to say "The {{a animal}}\'s did it!  I seen em\' doin\' it! Them {{a animal}}\'s deserve {{sentance}}!" he is believed to be insane.'
                 ],
 
-                animals: ['an armadillo', 'an albatross', 'a cat', 'a cobra', 'a donkey', 'a dog'],
+                animals_c: ['cat', 'cobra', 'donkey', 'dog'],
+                animals_v: ['armadillo', 'albatross'],
                 buildings: ['an Orphanage', 'City Hall', 'a bridge', 'a bank', 'a general store', 'a {{product}} factory'],
                 crimes: [
                     'rustling cattle',
                     'robbing a train',
                     'holding up a stage-coach',
                     'committing telegraph fraud',
-                    'starting an {{animal}} worshiping cult',
+                    'starting a {{a animal}} worshiping cult',
+                    'starting an {{an animal}} worshiping cult',
                     'vandalizing {{building}}',
                     'attempting to blow up {{building}}',
                     '{{animal}} rustling',
@@ -2832,7 +2835,8 @@ const dc_utils = {
                 .replace("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
-                .replace("{{animal}}", data.animals[Math.floor(Math.random() * data.animals.length)])
+                .replace("{{a animal}}", data.animals_c[Math.floor(Math.random() * data.animals_c.length)])
+                .replace("{{an animal}}", data.animals_v[Math.floor(Math.random() * data.animals_v.length)])
                 .replace("{{building}}", data.buildings[Math.floor(Math.random() * data.buildings.length)])
                 .replace("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                 .replace("{{product}}", data.products[Math.floor(Math.random() * data.products.length)])
