@@ -2914,7 +2914,7 @@ const dc_utils = {
                             <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 90%"><p>${data.paper}</p></div>
                             <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%"><p>Only 5¢</p></div>
                         </div>
-                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
+                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 100%;">${data.headline}</p></div>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
                             <div style="width: 400px">
