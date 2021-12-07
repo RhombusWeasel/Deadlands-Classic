@@ -2917,7 +2917,7 @@ const dc_utils = {
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 100%;">${data.headline}</p></div>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
-                            <div style="width: 400px">
+                            <div style="width: 600px">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
@@ -2955,7 +2955,7 @@ const dc_utils = {
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
                 let r_str = `
-                <div style="width: 200px">
+                <div style="width: 100px">
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${headline}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
