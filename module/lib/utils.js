@@ -2827,19 +2827,19 @@ const dc_utils = {
 
                 let r_str = data.starts[Math.floor(Math.random() * data.starts.length)]
                 return r_str.replace("{{pronoun}}", pronoun)
-                .replace("{{group pronoun}}", g_pronoun)
-                .replace("{{name}}", name)
-                .replace("{{city}}", city)
-                .replace("{{state}}", state)
-                .replace("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)])
-                .replace("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
-                .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
-                .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
-                .replace("{{a animal}}", data.animals_c[Math.floor(Math.random() * data.animals_c.length)])
-                .replace("{{an animal}}", data.animals_v[Math.floor(Math.random() * data.animals_v.length)])
-                .replace("{{building}}", data.buildings[Math.floor(Math.random() * data.buildings.length)])
-                .replace("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
-                .replace("{{product}}", data.products[Math.floor(Math.random() * data.products.length)])
+                .replaceAll("{{group pronoun}}", g_pronoun)
+                .replaceAll("{{name}}", name)
+                .replaceAll("{{city}}", city)
+                .replaceAll("{{state}}", state)
+                .replaceAll("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)])
+                .replaceAll("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
+                .replaceAll("{{random name male}}", dc_utils.char.random_name('american', 'male'))
+                .replaceAll("{{random name female}}", dc_utils.char.random_name('american', 'female'))
+                .replaceAll("{{a animal}}", data.animals_c[Math.floor(Math.random() * data.animals_c.length)])
+                .replaceAll("{{an animal}}", data.animals_v[Math.floor(Math.random() * data.animals_v.length)])
+                .replaceAll("{{building}}", data.buildings[Math.floor(Math.random() * data.buildings.length)])
+                .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replaceAll("{{product}}", data.products[Math.floor(Math.random() * data.products.length)])
             },
         },
         book: {label: 'Book'},
