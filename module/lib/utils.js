@@ -2852,9 +2852,10 @@ const dc_utils = {
             random_article: function() {
                 let data      = dc_utils.documents.newspaper.article_data;
                 let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
+                let state     = data.states[territory][Math.floor(Math.random() * territory.length)]
                 let details = {
                     territory: territory,
-                    state:     data.states[territory][Math.floor(Math.random() * territory.length)],
+                    state:     state,
                     city:      data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:     data.crimes[Math.floor(Math.random() * data.crimes.length)],
                     char:      {
