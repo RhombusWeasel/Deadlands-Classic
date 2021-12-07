@@ -2733,14 +2733,15 @@ const dc_utils = {
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
             starts:   [
-                'A gang of {{number}} {{group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.  The arresting officer {{officer name full}}({{age}}) expects them to recieve {{sentance}}.',
-                'Reports coming in from {{city}}, {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
-                'According to reports coming out of {{city}} {{state}}, one {{culprit name full}} managed to save {{number}} {{a subject animal}}s from a freak explosion at a {{a subject building}}.'
+                `A gang of {{number}} {{group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.  The arresting officer {{officer name full}}({{age}}) expects all {{number}} to recieve {{sentance}}.`,
+                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}. The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
+                ``,
+                ``,
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
-                `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium!  I've got {{random colour}} {{a subject product}}, I've got {{random colour}} {{a subject product}}, hell I've even got {{random colour}} {{a subject product}} and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
+                `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium!  I've got {{random colour}} {{a subject product}}'s, I've got {{random colour}} {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
             ],
             animals_a: ['cat', 'cobra', 'donkey', 'dog'],
             animals_an: ['armadillo', 'albatross'],
@@ -2754,8 +2755,8 @@ const dc_utils = {
                 'committing telegraph fraud',
                 'starting a {{a subject animal}} worshiping cult',
                 'starting an {{an subject animal}} worshiping cult',
-                'vandalizing a {{a building}}',
-                'vandalizing an {{an building}}',
+                'vandalizing a {{a subject building}}',
+                'vandalizing an {{an subject building}}',
                 'attempting to blow up a {{a subject building}}',
                 'attempting to blow up an {{an subject building}}',
                 '{{a subject animal}} rustling',
@@ -2840,12 +2841,12 @@ const dc_utils = {
                         </div>
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
-                            <div style="width: 20%"><p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p></div>
+                            ${dc_utils.documents.newspaper.random_article()}
                             <div style="width: 60%">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
-                            <div style="width: 20%"><p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p></div>
+                            ${dc_utils.documents.newspaper.random_article()}
                         </div>
                     </div>
                 `;
@@ -2859,6 +2860,7 @@ const dc_utils = {
                     state:     state,
                     city:      data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:     data.crimes[Math.floor(Math.random() * data.crimes.length)],
+                    sentance:  data.sentances[Math.floor(Math.random() * data.sentances.length)],
                     char:      {
                         culprit: {
                             gender: Math.random() > 0.49 ? 'male' : 'female',
@@ -2877,24 +2879,52 @@ const dc_utils = {
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 console.log(details)
-                let r_str = data.starts[Math.floor(Math.random() * data.starts.length)];
-                r_str += ' ' + data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)];
+                let r_str = `
+                <div style="width: 20%">
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                </div>
+                `;
                 let count = 0;
-                while (r_str.includes('{{') && count < 20) {
+                while (r_str.includes('{{') && count < 100) {
                     console.log(r_str);
                     count += 1;
                     r_str = r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
                     .replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
                     .replaceAll('{{culprit name first}}', details.char.culprit.name[0])
+                    .replaceAll('{{culprit group pronoun}}', data.pronouns[details.char.culprit.gender].group)
+                    .replaceAll('{{culprit singular pronoun}}', data.pronouns[details.char.culprit.gender].singular)
+                    .replaceAll('{{culprit polite group pronoun}}', data.pronouns[details.char.culprit.gender].polite.group)
+                    .replaceAll('{{culprit polite singular pronoun}}', data.pronouns[details.char.culprit.gender].polite.singular)
+                    .replaceAll('{{culprit subjective pronoun}}', data.pronouns[details.char.culprit.gender].subjective)
+                    .replaceAll('{{culprit objective pronoun}}', data.pronouns[details.char.culprit.gender].objective)
+                    .replaceAll('{{culprit clause pronoun}}', data.pronouns[details.char.culprit.gender].clause)
                     .replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
                     .replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
+                    .replaceAll('{{officer rank}}', details.char.officer.rank)
+                    .replaceAll('{{officer group pronoun}}', data.pronouns[details.char.officer.gender].group)
+                    .replaceAll('{{officer singular pronoun}}', data.pronouns[details.char.officer.gender].singular)
+                    .replaceAll('{{officer polite group pronoun}}', data.pronouns[details.char.officer.gender].polite.group)
+                    .replaceAll('{{officer polite singular pronoun}}', data.pronouns[details.char.officer.gender].polite.singular)
+                    .replaceAll('{{officer subjective pronoun}}', data.pronouns[details.char.officer.gender].subjective)
+                    .replaceAll('{{officer objective pronoun}}', data.pronouns[details.char.officer.gender].objective)
+                    .replaceAll('{{officer clause pronoun}}', data.pronouns[details.char.officer.gender].clause)
                     .replaceAll('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1])
                     .replaceAll('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1])
                     .replaceAll('{{witness name first}}', details.char.witness.name[0])
+                    .replaceAll('{{witness group pronoun}}', data.pronouns[details.char.witness.gender].group)
+                    .replaceAll('{{witness singular pronoun}}', data.pronouns[details.char.witness.gender].singular)
+                    .replaceAll('{{witness polite group pronoun}}', data.pronouns[details.char.witness.gender].polite.group)
+                    .replaceAll('{{witness polite singular pronoun}}', data.pronouns[details.char.witness.gender].polite.singular)
+                    .replaceAll('{{witness subjective pronoun}}', data.pronouns[details.char.witness.gender].subjective)
+                    .replaceAll('{{witness objective pronoun}}', data.pronouns[details.char.witness.gender].objective)
+                    .replaceAll('{{witness clause pronoun}}', data.pronouns[details.char.witness.gender].clause)
                     .replaceAll('{{territory}}', details.territory)
                     .replaceAll('{{state}}', details.state)
                     .replaceAll('{{city}}', details.city)
                     .replaceAll('{{crime}}', details.crime)
+                    .replaceAll('{{sentance}}', details.sentance)
                     .replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
                     .replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
                     .replaceAll('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
@@ -2902,6 +2932,7 @@ const dc_utils = {
                     .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                     .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
                     .replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
+
                     .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                     .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
                     .replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
