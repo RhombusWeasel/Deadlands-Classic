@@ -2821,7 +2821,7 @@ const dc_utils = {
                 ],
                 numbers: ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
                 officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
-                proffessions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
+                professions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
                 pronouns: {
                     male:   {
                         title:      'Mr',
