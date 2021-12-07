@@ -2882,7 +2882,7 @@ const dc_utils = {
                 while (r_str.includes('{{') && count < 20) {
                     console.log(r_str);
                     count += 1;
-                    r_str.replace('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
+                    r_str = r_str.replace('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
                     .replace('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
                     .replace('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
                     .replace('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
