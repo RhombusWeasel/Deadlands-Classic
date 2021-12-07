@@ -2850,10 +2850,11 @@ const dc_utils = {
                 },
             },
             random_article: function() {
-                let data    = dc_utils.documents.newspaper.article_data;
+                let data      = dc_utils.documents.newspaper.article_data;
+                let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
                 let details = {
-                    territory: data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]],
-                    state:     territory[Math.floor(Math.random() * territory.length)],
+                    territory: territory,
+                    state:     data.states[territory][Math.floor(Math.random() * territory.length)],
                     city:      data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:     data.crimes[Math.floor(Math.random() * data.crimes.length)],
                     char:      {
