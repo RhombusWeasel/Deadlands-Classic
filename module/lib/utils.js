@@ -2875,37 +2875,37 @@ const dc_utils = {
                 details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split();
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split();
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split();
+                console.log(details)
                 let r_str = data.starts[Math.floor(Math.random() * data.starts.length)];
                 r_str += ' ' + data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)];
                 let count = 0;
                 while (r_str.includes('{{') && count < 20) {
                     console.log(r_str);
                     count += 1;
-                    r_str.replace('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1]);
-                    r_str.replace('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1]);
-                    r_str.replace('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1]);
-                    r_str.replace('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1]);
-                    r_str.replace('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1]);
-                    r_str.replace('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1]);
-                    r_str.replace('{{territory}}', details.territory);
-                    r_str.replace('{{state}}', details.state);
-                    r_str.replace('{{city}}', details.city);
-                    r_str.replace('{{crime}}', details.crime);
-                    r_str.replace('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)]);
-                    r_str.replace('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)]);
-                    r_str.replace('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)]);
-                    r_str.replace('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)]);
-                    r_str.replace("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)]);
-                    r_str.replace("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)]);
-                    r_str.replace("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
-
-                    r_str.replace("{{random name male}}", dc_utils.char.random_name('american', 'male'));
-                    r_str.replace("{{random name female}}", dc_utils.char.random_name('american', 'female'));
-                    r_str.replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)]);
-                    r_str.replace('{{age}}', Math.floor((Math.random() * 88) + 12));
-                    r_str.replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)]);
-                    r_str.replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)]);
-                    r_str.replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
+                    r_str.replace('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
+                    .replace('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
+                    .replace('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
+                    .replace('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
+                    .replace('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1])
+                    .replace('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1])
+                    .replace('{{territory}}', details.territory)
+                    .replace('{{state}}', details.state)
+                    .replace('{{city}}', details.city)
+                    .replace('{{crime}}', details.crime)
+                    .replace('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
+                    .replace('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
+                    .replace('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
+                    .replace('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)])
+                    .replace("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                    .replace("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
+                    .replace("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
+                    .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
+                    .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
+                    .replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
+                    .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
+                    .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                    .replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
+                    .replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
                 }
                 return r_str;
             },
