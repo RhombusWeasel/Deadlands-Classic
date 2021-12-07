@@ -2735,7 +2735,7 @@ const dc_utils = {
             headlines: [
                 `{{capital crime}} Epidemic`,
                 `{{capital crime}} in {{state}}`,
-                `{{culprit polite pronoun}} bandit gets just desserts`,
+                `{{culprit polite singular pronoun}} bandit gets just desserts`,
                 `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`
             ],
             starts:   [
@@ -2853,7 +2853,7 @@ const dc_utils = {
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
-                            <div style="width: 60%">
+                            <div style="width: 400px">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
@@ -2894,8 +2894,8 @@ const dc_utils = {
                     return word[0].toUpperCase() + word.substring(1); 
                 }).join(" ");
                 let r_str = `
-                <div style="width: 20%">
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px;">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p>
+                <div style="width: 200px">
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
