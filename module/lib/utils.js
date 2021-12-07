@@ -2742,11 +2742,11 @@ const dc_utils = {
                             <div>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
-                            <div">
+                            <div>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; column-count: ${data.columns}">${data.main_article}</p>
                                 <p>Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
-                            <div">
+                            <div>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
