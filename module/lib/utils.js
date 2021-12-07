@@ -2758,7 +2758,7 @@ const dc_utils = {
                 .replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
             }
             if (capitalize) {
-                return r_str.map((word) => { 
+                return r_str.split(' ').map((word) => { 
                     return word[0].toUpperCase() + word.substring(1); 
                 }).join(" ");
             }else{
