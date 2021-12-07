@@ -2890,7 +2890,7 @@ const dc_utils = {
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 let words = details.crime.split(' ');
-                letc_crime = words.map((word) => { 
+                let c_crime = words.map((word) => { 
                     return word[0].toUpperCase() + word.substring(1); 
                 }).join(" ");
                 c_crime = c_crime.join(' ')
