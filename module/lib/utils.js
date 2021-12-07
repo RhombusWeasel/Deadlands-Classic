@@ -2963,7 +2963,7 @@ const dc_utils = {
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                 </div>
                 `;
-                return r_str;
+                return dc_utils.documents.apply_templates(r_str, data, details, false);
             },
         },
         book: {label: 'Book'},
