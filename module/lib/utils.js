@@ -2783,7 +2783,7 @@ const dc_utils = {
                 starts:   [
                     'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} last week.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
                     'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
-                    'According to reports coming out of {{city}} {{state}}, one {{pronoun}}, {{name}} managed to save {{number}} {{a animal}}s from a freak explosion at {{building}}.  One eye witness, Mr {{random name male}} was quoted to say "The {{a animal}}\'s did it!  I seen em\' doin\' it! Them {{a animal}}\'s deserve {{sentance}}!" he is believed to be insane.'
+                    'According to reports coming out of {{city}} {{state}}, one {{pronoun}}, {{name}} managed to save {{number}} {{a animal}}s from a freak explosion at {{building}}.  One eye witness, Mr {{random name male}} was quoted to say "The {{a animal}}\'s did it!  I seen em\' doin\' it! Them {{a animal}}\'s deserve {{sentance}}!".  He is believed to be insane.'
                 ],
 
                 animals_c: ['cat', 'cobra', 'donkey', 'dog'],
