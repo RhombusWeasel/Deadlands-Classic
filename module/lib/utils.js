@@ -2784,19 +2784,29 @@ const dc_utils = {
                     'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} last week.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
                     'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
                 ],
+
+                animals: ['an armadillo', 'an albatross', 'a cat', 'a cobra', 'a donkey', 'a dog'],
+                buildings: ['an Orphanage', 'City Hall', 'a bridge', 'a bank', 'a general store', 'a {{product}} factory'],
                 crimes: [
                     'rustling cattle',
                     'robbing a train',
                     'holding up a stage-coach',
                     'committing telegraph fraud',
-                    'starting a cult to overthrow the government'
+                    'starting an {{animal}} worshiping cult',
+                    'vandalizing {{building}}',
+                    'attempting to blow up {{building}}',
+                    '{{animal}} rustling',
+                    'smuggling counterfeit jeans'
                 ],
+                products: ['munitions', 'fireworks', 'glass eye', 'wooden leg', 'piano', 'gun'],
                 sentances: [
-                    'five years hard labour',
-                    'ten years in the state penitentiary',
-                    'six months of community service',
+                    '{{number}} years of military service or the noose',
+                    '{{number}} years with no chance of parole',
+                    '{{number}} years in the state penitentiary',
                     'death by New Science'
                 ],
+                
+                numbers: ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
             },
             random_article: function() {
                 let data      = dc_utils.documents.newspaper.article_data;
@@ -2822,6 +2832,10 @@ const dc_utils = {
                 .replace("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
+                .replace("{{animal}}", data.animals[Math.floor(Math.random() * data.animals.length)])
+                .replace("{{building}}", data.buildings[Math.floor(Math.random() * data.buildings.length)])
+                .replace("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replace("{{product}}", data.products[Math.floor(Math.random() * data.products.length)])
             },
         },
         book: {label: 'Book'},
