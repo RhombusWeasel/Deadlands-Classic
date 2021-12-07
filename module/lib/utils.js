@@ -2798,7 +2798,8 @@ const dc_utils = {
                     'starting an {{an animal}} worshiping cult',
                     'vandalizing {{building}}',
                     'attempting to blow up {{building}}',
-                    '{{animal}} rustling',
+                    '{{a animal}} rustling',
+                    '{{an animal}} rustling',
                     'smuggling counterfeit jeans'
                 ],
                 products: ['munitions', 'fireworks', 'glass eye', 'wooden leg', 'piano', 'gun'],
@@ -2814,11 +2815,8 @@ const dc_utils = {
             random_article: function() {
                 let data      = dc_utils.documents.newspaper.article_data;
                 let territory = data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]];
-                console.log(territory);
                 let state     = territory[Math.floor(Math.random() * territory.length)];
-                console.log(state);
                 let city      = data.cities[state][Math.floor(Math.random() * data.cities[state].length)]
-                console.log(city);
                 let sex_rng   = Math.random()
                 let gender    = sex_rng > 0.49 ? 'male' : 'female';
                 let pronoun   = sex_rng > 0.49 ? 'man' : 'woman';
