@@ -2893,8 +2893,6 @@ const dc_utils = {
                 let c_crime = words.map((word) => { 
                     return word[0].toUpperCase() + word.substring(1); 
                 }).join(" ");
-                c_crime = c_crime.join(' ')
-                console.log(details)
                 let r_str = `
                 <div style="width: 20%">
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px;">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p>
@@ -2906,7 +2904,6 @@ const dc_utils = {
                 `;
                 let count = 0;
                 while (r_str.includes('{{') && count < 100) {
-                    console.log(r_str);
                     count += 1;
                     r_str = r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
                     .replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
