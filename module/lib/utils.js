@@ -2788,7 +2788,7 @@ const dc_utils = {
                 witness_reports: [
                     `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
                     `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
-                    `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium"`,
+                    `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium!  I've got {{random colour}} {{a subject product}}, I've got {{random colour}} {{a subject product}}, hell I've even got {{random colour}} {{a subject product}} and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
                 ],
                 animals_a: ['cat', 'cobra', 'donkey', 'dog'],
                 animals_an: ['armadillo', 'albatross'],
@@ -2877,8 +2877,10 @@ const dc_utils = {
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split();
                 let r_str = data.starts[Math.floor(Math.random() * data.starts.length)];
                 r_str += ' ' + data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)];
-
-                while (r_str.includes('{{')) {
+                let count = 0;
+                while (r_str.includes('{{') && count < 20) {
+                    console.log(r_str);
+                    count += 1;
                     r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1]);
                     r_str.replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1]);
                     r_str.replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1]);
