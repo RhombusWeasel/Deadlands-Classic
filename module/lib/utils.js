@@ -2751,9 +2751,9 @@ const dc_utils = {
             },
             article_data: {
                 states: {
-                    northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
-                    southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'New Mexico', 'Texas'],
-                    disputed: ['California', 'Colorado', 'Kansas', 'Oklahoma'],
+                    Northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
+                    Southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'New Mexico', 'Texas'],
+                    Disputed: ['California', 'Colorado', 'Kansas', 'Oklahoma'],
                 },
                 cities: {
                     Arizona:      ['Dead End', 'Despair', 'Mona', 'Phoenix', 'Potential', 'Prescott', 'Tombstone', 'Tucson'],
@@ -2781,63 +2781,129 @@ const dc_utils = {
                     Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
                 },
                 starts:   [
-                    'A gang of {{group pronoun}}, led by {{name}}, were caught {{crime}} in {{city}} {{state}} last week.  The arresting officer Deputy {{random name male}} expects them to recieve {{sentance}}.',
-                    'Reports coming in from {{city}} {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
-                    'According to reports coming out of {{city}} {{state}}, one {{pronoun}}, {{name}} managed to save {{number}} {{a animal}}s from a freak explosion at {{building}}.  One eye witness, Mr {{random name male}} was quoted to say "The {{a animal}} \'s did it!  I seen em\' doin\' it! Them {{a animal}}\'s deserve {{sentance}}!".  He is believed to be insane.'
+                    'A gang of {{number}} {{group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.  The arresting officer {{officer name full}}({{age}}) expects them to recieve {{sentance}}.',
+                    'Reports coming in from {{city}}, {{state}} confirm one {{pronoun}} {{name}} was sentanced to {{sentance}} for {{crime}}.',
+                    'According to reports coming out of {{city}} {{state}}, one {{culprit name full}} managed to save {{number}} {{a subject animal}}s from a freak explosion at a {{a subject building}}.'
                 ],
-
-                animals_c: ['cat', 'cobra', 'donkey', 'dog'],
-                animals_v: ['armadillo', 'albatross'],
-                buildings: ['an Orphanage', 'City Hall', 'a bridge', 'a bank', 'a general store', 'a {{product}} factory'],
+                witness_reports: [
+                    `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
+                    `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
+                    `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium"`,
+                ],
+                animals_a: ['cat', 'cobra', 'donkey', 'dog'],
+                animals_an: ['armadillo', 'albatross'],
+                buildings_a: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
+                buildings_an: ['Orphanage'],
                 crimes: [
                     'rustling cattle',
                     'robbing a train',
                     'holding up a stage-coach',
                     'committing telegraph fraud',
-                    'starting a {{a animal}} worshiping cult',
-                    'starting an {{an animal}} worshiping cult',
-                    'vandalizing {{building}}',
-                    'attempting to blow up {{building}}',
-                    '{{a animal}} rustling',
-                    '{{an animal}} rustling',
-                    'smuggling counterfeit jeans'
+                    'starting a {{a subject animal}} worshiping cult',
+                    'starting an {{an subject animal}} worshiping cult',
+                    'vandalizing a {{a building}}',
+                    'vandalizing an {{an building}}',
+                    'attempting to blow up a {{a subject building}}',
+                    'attempting to blow up an {{an subject building}}',
+                    '{{a subject animal}} rustling',
+                    '{{an subject animal}} rustling',
+                    'smuggling {{a subject product}}',
+                    'smuggling {{an subject product}}',
                 ],
-                products: ['munitions', 'fireworks', 'glass eye', 'wooden leg', 'piano', 'gun'],
+                products_a: ['glass eye', 'wooden leg', 'piano', 'gun'],
+                products_an: ['munitions', 'fireworks'],
                 sentances: [
-                    '{{number}} years of military service or the noose',
-                    '{{number}} years with no chance of parole',
-                    '{{number}} years in the state penitentiary',
+                    '{{random number}} years of military service or the noose',
+                    '{{random number}} years with no chance of parole',
+                    '{{random number}} years in the state penitentiary',
+                    'a good ol\' fashioned hangin\'',
                     'death by New Science'
                 ],
-                
                 numbers: ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+                officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
+                proffessions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
+                pronouns: {
+                    male:   {
+                        title:      'Mr',
+                        singular:   'man',
+                        group:      'men',
+                        subjective: 'him',
+                        objective:  'he',
+                        clause:     'his',
+                        polite: {
+                            singular: 'gentleman',
+                            group: 'gentlemen',
+                        },
+                    },
+                    female: {
+                        title:      'Mrs',
+                        singular:   'woman',
+                        group:      'women',
+                        subjective: 'her',
+                        objective:  'she',
+                        clause:     'her',
+                        polite: {
+                            singular: 'lady',
+                            group: 'ladies',
+                        },
+                    },
+                },
             },
             random_article: function() {
-                let data      = dc_utils.documents.newspaper.article_data;
-                let territory = data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]];
-                let state     = territory[Math.floor(Math.random() * territory.length)];
-                let city      = data.cities[state][Math.floor(Math.random() * data.cities[state].length)]
-                let sex_rng   = Math.random()
-                let gender    = sex_rng > 0.49 ? 'male' : 'female';
-                let pronoun   = sex_rng > 0.49 ? 'man' : 'woman';
-                let g_pronoun = sex_rng > 0.49 ? 'men' : 'women';
-                let name      = dc_utils.char.random_name('american', gender);
+                let data    = dc_utils.documents.newspaper.article_data;
+                let details = {
+                    territory: data.states[Object.keys(data.states)[Math.floor(Math.random() * 3)]],
+                    state:     territory[Math.floor(Math.random() * territory.length)],
+                    city:      data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
+                    crime:     data.crimes[Math.floor(Math.random() * data.crimes.length)],
+                    char:      {
+                        culprit: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                        },
+                        officer: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                            rank:   data.officer_ranks[Math.floor(Math.random() * data.officer_ranks.length)],
+                        },
+                        witness: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                            profession: data.professions[Math.floor(Math.random() * data.professions.length)]
+                        },
+                    },
+                }
+                details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split();
+                details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split();
+                details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split();
+                let r_str = data.starts[Math.floor(Math.random() * data.starts.length)];
+                r_str += ' ' + data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)];
 
-                let r_str = data.starts[Math.floor(Math.random() * data.starts.length)]
-                return r_str.replace("{{pronoun}}", pronoun)
-                .replaceAll("{{group pronoun}}", g_pronoun)
-                .replaceAll("{{name}}", name)
-                .replaceAll("{{city}}", city)
-                .replaceAll("{{state}}", state)
-                .replaceAll("{{sentance}}", data.sentances[Math.floor(Math.random() * data.sentances.length)])
-                .replaceAll("{{crime}}", data.crimes[Math.floor(Math.random() * data.crimes.length)])
-                .replaceAll("{{random name male}}", dc_utils.char.random_name('american', 'male'))
-                .replaceAll("{{random name female}}", dc_utils.char.random_name('american', 'female'))
-                .replaceAll("{{a animal}}", data.animals_c[Math.floor(Math.random() * data.animals_c.length)])
-                .replaceAll("{{an animal}}", data.animals_v[Math.floor(Math.random() * data.animals_v.length)])
-                .replaceAll("{{building}}", data.buildings[Math.floor(Math.random() * data.buildings.length)])
-                .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
-                .replaceAll("{{product}}", data.products[Math.floor(Math.random() * data.products.length)])
+                while (r_str.includes('{{')) {
+                    r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1]);
+                    r_str.replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1]);
+                    r_str.replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1]);
+                    r_str.replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1]);
+                    r_str.replaceAll('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1]);
+                    r_str.replaceAll('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1]);
+                    r_str.replaceAll('{{territory}}', details.territory);
+                    r_str.replaceAll('{{state}}', details.state);
+                    r_str.replaceAll('{{city}}', details.city);
+                    r_str.replaceAll('{{crime}}', details.crime);
+                    r_str.replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)]);
+                    r_str.replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)]);
+                    r_str.replaceAll('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)]);
+                    r_str.replaceAll('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)]);
+                    r_str.replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)]);
+                    r_str.replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)]);
+                    r_str.replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
+
+                    r_str.replace("{{random name male}}", dc_utils.char.random_name('american', 'male'));
+                    r_str.replace("{{random name female}}", dc_utils.char.random_name('american', 'female'));
+                    r_str.replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)]);
+                    r_str.replace('{{age}}', Math.floor((Math.random() * 88) + 12));
+                    r_str.replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)]);
+                    r_str.replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)]);
+                    r_str.replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
+                }
+                return r_str;
             },
         },
         book: {label: 'Book'},
