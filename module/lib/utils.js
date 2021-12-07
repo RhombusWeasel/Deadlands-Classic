@@ -2897,6 +2897,7 @@ const dc_utils = {
                 console.log(details)
                 let r_str = `
                 <div style="width: 20%">
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px;">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
