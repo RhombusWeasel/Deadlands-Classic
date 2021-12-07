@@ -2752,7 +2752,7 @@ const dc_utils = {
             article_data: {
                 states: {
                     Northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
-                    Southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'Texas'],
+                    Southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'New Mexico', 'Texas'],
                     Disputed: ['California', 'Colorado', 'Kansas', 'Oklahoma'],
                 },
                 cities: {
@@ -2772,6 +2772,7 @@ const dc_utils = {
                     Montana:      ["Billings", "Butte City"],
                     Nebraska:     ["Grand Island"],
                     Nevada:       ["Cedar City", "Virginia City"],
+                    "New Mexico": ["Albuquerque", "Roswell", "Sante Fe"],
                     Oklahoma:     ["Perry"],
                     Oregon:       ["Portland", "Salem"],
                     Texas:        ["Providence", "Houston", "Pinebox"],
