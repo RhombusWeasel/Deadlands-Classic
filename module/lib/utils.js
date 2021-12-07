@@ -2872,9 +2872,9 @@ const dc_utils = {
                         },
                     },
                 }
-                details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split();
-                details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split();
-                details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split();
+                details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split(' ');
+                details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
+                details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 console.log(details)
                 let r_str = data.starts[Math.floor(Math.random() * data.starts.length)];
                 r_str += ' ' + data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)];
