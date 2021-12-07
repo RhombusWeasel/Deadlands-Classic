@@ -2733,17 +2733,21 @@ const dc_utils = {
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
             starts:   [
-                `A gang of {{number}} {{group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.  The arresting officer {{officer name full}}({{age}}) expects all {{number}} to recieve {{sentance}}.`,
-                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}. The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
-                ``,
-                ``,
+                `A gang of {{number}} {{culprit group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.`,
+                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}.`,
+                `Local man {{culprit name full}}({{age}}) was shot dead today whilst {{crime}} I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`,
+                `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!`,
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
-                `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} emporium!  I've got {{random colour}} {{a subject product}}'s, I've got {{random colour}} {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
+                `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} Emporium!  I got big {{a subject product}}'s, I got small {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
             ],
-            animals_a: ['cat', 'cobra', 'donkey', 'dog'],
+            officer_statements: [
+                `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
+                `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}.`
+            ],
+            animals_a: ['Bat', 'Bear', 'Cat', 'Cobra', 'Donkey', 'Dog'],
             animals_an: ['armadillo', 'albatross'],
             buildings_a: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
             buildings_an: ['Orphanage'],
@@ -2761,10 +2765,10 @@ const dc_utils = {
                 'attempting to blow up an {{an subject building}}',
                 '{{a subject animal}} rustling',
                 '{{an subject animal}} rustling',
-                'smuggling {{a subject product}}',
+                `smuggling {{a subject product}}'s`,
                 'smuggling {{an subject product}}',
             ],
-            products_a: ['glass eye', 'wooden leg', 'piano', 'gun'],
+            products_a: ['glass eye', 'wooden leg', 'piano', 'gun', 'harmonica', ''],
             products_an: ['munitions', 'fireworks'],
             sentances: [
                 '{{random number}} years of military service or the noose',
@@ -2883,6 +2887,7 @@ const dc_utils = {
                 <div style="width: 20%">
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                 </div>
                 `;
