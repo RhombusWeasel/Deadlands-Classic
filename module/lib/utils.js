@@ -2743,8 +2743,8 @@ const dc_utils = {
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                             <div>
-                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
-                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; width: 60%; column-count: ${data.columns}">${data.main_article}</p>
+                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; width: 60%;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
                             <div>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p>
