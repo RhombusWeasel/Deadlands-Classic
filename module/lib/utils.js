@@ -2701,6 +2701,70 @@ const dc_utils = {
         },
     },
     documents: {
+        apply_templates: function(r_str, data, details, capitalize){
+            let count = 0;
+            while (r_str.includes('{{') && count < 100) {
+                count += 1;
+                r_str = r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
+                .replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
+                .replaceAll('{{culprit name first}}', details.char.culprit.name[0])
+                .replaceAll('{{culprit group pronoun}}', data.pronouns[details.char.culprit.gender].group)
+                .replaceAll('{{culprit singular pronoun}}', data.pronouns[details.char.culprit.gender].singular)
+                .replaceAll('{{culprit polite group pronoun}}', data.pronouns[details.char.culprit.gender].polite.group)
+                .replaceAll('{{culprit polite singular pronoun}}', data.pronouns[details.char.culprit.gender].polite.singular)
+                .replaceAll('{{culprit subjective pronoun}}', data.pronouns[details.char.culprit.gender].subjective)
+                .replaceAll('{{culprit objective pronoun}}', data.pronouns[details.char.culprit.gender].objective)
+                .replaceAll('{{culprit clause pronoun}}', data.pronouns[details.char.culprit.gender].clause)
+                .replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
+                .replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
+                .replaceAll('{{officer rank}}', details.char.officer.rank)
+                .replaceAll('{{officer group pronoun}}', data.pronouns[details.char.officer.gender].group)
+                .replaceAll('{{officer singular pronoun}}', data.pronouns[details.char.officer.gender].singular)
+                .replaceAll('{{officer polite group pronoun}}', data.pronouns[details.char.officer.gender].polite.group)
+                .replaceAll('{{officer polite singular pronoun}}', data.pronouns[details.char.officer.gender].polite.singular)
+                .replaceAll('{{officer subjective pronoun}}', data.pronouns[details.char.officer.gender].subjective)
+                .replaceAll('{{officer objective pronoun}}', data.pronouns[details.char.officer.gender].objective)
+                .replaceAll('{{officer clause pronoun}}', data.pronouns[details.char.officer.gender].clause)
+                .replaceAll('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1])
+                .replaceAll('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1])
+                .replaceAll('{{witness name first}}', details.char.witness.name[0])
+                .replaceAll('{{witness group pronoun}}', data.pronouns[details.char.witness.gender].group)
+                .replaceAll('{{witness singular pronoun}}', data.pronouns[details.char.witness.gender].singular)
+                .replaceAll('{{witness polite group pronoun}}', data.pronouns[details.char.witness.gender].polite.group)
+                .replaceAll('{{witness polite singular pronoun}}', data.pronouns[details.char.witness.gender].polite.singular)
+                .replaceAll('{{witness subjective pronoun}}', data.pronouns[details.char.witness.gender].subjective)
+                .replaceAll('{{witness objective pronoun}}', data.pronouns[details.char.witness.gender].objective)
+                .replaceAll('{{witness clause pronoun}}', data.pronouns[details.char.witness.gender].clause)
+                .replaceAll('{{territory}}', details.territory)
+                .replaceAll('{{state}}', details.state)
+                .replaceAll('{{city}}', details.city)
+                .replaceAll('{{crime}}', details.crime)
+                .replaceAll('{{sentance}}', details.sentance)
+                .replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
+                .replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
+                .replaceAll('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
+                .replaceAll('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)])
+                .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
+                .replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
+
+                .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
+                .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
+                .replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
+                .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
+                .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
+                .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
+                .replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
+            }
+            if (capitalize) {
+                return r_str.map((word) => { 
+                    return word[0].toUpperCase() + word.substring(1); 
+                }).join(" ");
+            }else{
+                return r_str;
+            }
+        },
         data: {
             states: {
                 Northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
@@ -2733,8 +2797,8 @@ const dc_utils = {
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
             headlines: [
-                `{{capital crime}} Epidemic`,
-                `{{capital crime}} in {{state}}`,
+                `{{crime}} Epidemic`,
+                `{{crime}} in {{state}}`,
                 `{{culprit polite singular pronoun}} bandit gets just desserts`,
                 `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`
             ],
@@ -2889,75 +2953,16 @@ const dc_utils = {
                 details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split(' ');
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
-                let words = details.crime.split(' ');
-                let c_crime = words.map((word) => { 
-                    return word[0].toUpperCase() + word.substring(1); 
-                }).join(" ");
+                let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
                 let r_str = `
                 <div style="width: 200px">
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p>
+                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${headline}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
                     <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                 </div>
                 `;
-                let count = 0;
-                while (r_str.includes('{{') && count < 100) {
-                    count += 1;
-                    r_str = r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
-                    .replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
-                    .replaceAll('{{culprit name first}}', details.char.culprit.name[0])
-                    .replaceAll('{{culprit group pronoun}}', data.pronouns[details.char.culprit.gender].group)
-                    .replaceAll('{{culprit singular pronoun}}', data.pronouns[details.char.culprit.gender].singular)
-                    .replaceAll('{{culprit polite group pronoun}}', data.pronouns[details.char.culprit.gender].polite.group)
-                    .replaceAll('{{culprit polite singular pronoun}}', data.pronouns[details.char.culprit.gender].polite.singular)
-                    .replaceAll('{{culprit subjective pronoun}}', data.pronouns[details.char.culprit.gender].subjective)
-                    .replaceAll('{{culprit objective pronoun}}', data.pronouns[details.char.culprit.gender].objective)
-                    .replaceAll('{{culprit clause pronoun}}', data.pronouns[details.char.culprit.gender].clause)
-                    .replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
-                    .replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
-                    .replaceAll('{{officer rank}}', details.char.officer.rank)
-                    .replaceAll('{{officer group pronoun}}', data.pronouns[details.char.officer.gender].group)
-                    .replaceAll('{{officer singular pronoun}}', data.pronouns[details.char.officer.gender].singular)
-                    .replaceAll('{{officer polite group pronoun}}', data.pronouns[details.char.officer.gender].polite.group)
-                    .replaceAll('{{officer polite singular pronoun}}', data.pronouns[details.char.officer.gender].polite.singular)
-                    .replaceAll('{{officer subjective pronoun}}', data.pronouns[details.char.officer.gender].subjective)
-                    .replaceAll('{{officer objective pronoun}}', data.pronouns[details.char.officer.gender].objective)
-                    .replaceAll('{{officer clause pronoun}}', data.pronouns[details.char.officer.gender].clause)
-                    .replaceAll('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1])
-                    .replaceAll('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1])
-                    .replaceAll('{{witness name first}}', details.char.witness.name[0])
-                    .replaceAll('{{witness group pronoun}}', data.pronouns[details.char.witness.gender].group)
-                    .replaceAll('{{witness singular pronoun}}', data.pronouns[details.char.witness.gender].singular)
-                    .replaceAll('{{witness polite group pronoun}}', data.pronouns[details.char.witness.gender].polite.group)
-                    .replaceAll('{{witness polite singular pronoun}}', data.pronouns[details.char.witness.gender].polite.singular)
-                    .replaceAll('{{witness subjective pronoun}}', data.pronouns[details.char.witness.gender].subjective)
-                    .replaceAll('{{witness objective pronoun}}', data.pronouns[details.char.witness.gender].objective)
-                    .replaceAll('{{witness clause pronoun}}', data.pronouns[details.char.witness.gender].clause)
-                    .replaceAll('{{territory}}', details.territory)
-                    .replaceAll('{{state}}', details.state)
-                    .replaceAll('{{city}}', details.city)
-                    .replaceAll('{{crime}}', details.crime)
-                    .replaceAll('{{capital crime}}', c_crime)
-                    .replaceAll('{{sentance}}', details.sentance)
-                    .replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
-                    .replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
-                    .replaceAll('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
-                    .replaceAll('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)])
-                    .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
-                    .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
-                    .replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
-
-                    .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
-                    .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
-                    .replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
-                    .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
-                    .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
-                    .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
-                    .replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
-                    .replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
-                }
                 return r_str;
             },
         },
