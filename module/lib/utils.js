@@ -2733,20 +2733,20 @@ const dc_utils = {
                 return `
                     <div>
                         <div class="flexrow">
-                            <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%;">${data.date}</p>
-                            <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 90%;">${data.paper}</p>
-                            <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%;">Only 5¢</p>
+                            <div style="width: 5%"><p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">${data.date}</p></div>
+                            <div style="width: 90%"><p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center;">${data.paper}</p></div>
+                            <div style="width: 5%"><p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">Only 5¢</p></div>
                         </div>
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 90%;">${data.headline}</p></div>
                         <div class="flexrow">
-                            <div>
+                            <div style="width: 20%">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                             <div style="width: 60%">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             </div>
-                            <div>
+                            <div style="width: 20%">
                                 <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${dc_utils.documents.newspaper.random_article()}</p>
                             </div>
                         </div>
