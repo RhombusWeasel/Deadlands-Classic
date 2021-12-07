@@ -2732,16 +2732,23 @@ const dc_utils = {
                 Wisconsin:    ["Duluth", "Milwaukee"],
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
+            headlines: [
+                `{{capital crime}} Epidemic`,
+                `{{capital crime}} in {{state}}`,
+                `{{culprit polite pronoun}} bandit gets just desserts`,
+                `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`
+            ],
             starts:   [
                 `A gang of {{number}} {{culprit group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.`,
                 `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}.`,
-                `Local man {{culprit name full}}({{age}}) was shot dead today whilst {{crime}} I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`,
+                `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}} I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`,
                 `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!`,
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
                 `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} Emporium!  I got big {{a subject product}}'s, I got small {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
+                `local {{witness profession}}`
             ],
             officer_statements: [
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
@@ -2777,7 +2784,7 @@ const dc_utils = {
                 'a good ol\' fashioned hangin\'',
                 'death by New Science'
             ],
-            numbers: ['two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+            numbers: ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
             officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
             professions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
             pronouns: {
@@ -2882,6 +2889,11 @@ const dc_utils = {
                 details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split(' ');
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
+                let words = details.crime.split(' ');
+                letc_crime = words.map((word) => { 
+                    return word[0].toUpperCase() + word.substring(1); 
+                }).join(" ");
+                c_crime = c_crime.join(' ')
                 console.log(details)
                 let r_str = `
                 <div style="width: 20%">
@@ -2929,6 +2941,7 @@ const dc_utils = {
                     .replaceAll('{{state}}', details.state)
                     .replaceAll('{{city}}', details.city)
                     .replaceAll('{{crime}}', details.crime)
+                    .replaceAll('{{capital crime}}', c_crime)
                     .replaceAll('{{sentance}}', details.sentance)
                     .replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
                     .replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
