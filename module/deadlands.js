@@ -191,7 +191,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('wound_timer', function (val, options) {
         let date = game.settings.get('deadlands_classic', 'unixtime');
-        return (((((val - date) / 1000)/ 60)/ 60)/ 24);
+        return Math.floor((((((val - date) / 1000)/ 60)/ 60)/ 24));
     });
 
     Handlebars.registerHelper('location_name', function (val, options) {
