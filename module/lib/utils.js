@@ -2743,7 +2743,7 @@ const dc_utils = {
                 .replaceAll("{{number}}", details.number)
                 .replaceAll('{{a subject building}}', details.building)
                 .replaceAll('{{a subject animal}}', details.subject_animal)
-                .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
+                .replaceAll("{{a subject product}}", data.products[Math.floor(Math.random() * data.products.length)])
                 .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
