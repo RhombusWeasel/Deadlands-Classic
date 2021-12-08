@@ -2977,7 +2977,7 @@ const dc_utils = {
             clue: 'Reading is super cool!',
             build: function(data) {
                 return `
-                    <div style="width: 100%; height: 100%">
+                    <div style="width: 100%; height: 600px;">
                         <iframe style="width: 100%; height: 100%;" src="${data.url}"></iframe>
                     </div>
                 `
