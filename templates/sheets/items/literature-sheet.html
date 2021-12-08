@@ -9,11 +9,15 @@
                     <td>
                         <select class="document-template" name="data.template">
                         {{#each documents as |doc|}}
-                            {{#if (eq @key ../data.data.template)}}
+                            {{#ifCond @key '!=' 'data'}}
+                                {{ifCond @key '!=' 'apply_templates'}}
+                                    {{#if (eq @key ../data.data.template)}}
                             <option value="{{@key}}" selected>{{doc.label}}</option>
-                            {{else}}
+                                    {{else}}
                             <option value="{{@key}}">{{doc.label}}</option>
-                            {{/if}}
+                                    {{/if}}
+                                {{/ifCond}}
+                            {{/ifCond}}
                         {{/each}}
                         </select>
                     </td>
