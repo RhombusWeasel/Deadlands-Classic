@@ -2934,7 +2934,7 @@ const dc_utils = {
                     city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:          data.crimes[Math.floor(Math.random() * data.crimes.length)],
                     sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
-                    subject_animal: data.animals_a[Math.floor(Math.random() * data.animals.length)],
+                    subject_animal: data.animals[Math.floor(Math.random() * data.animals.length)],
                     number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
                     building:       data.buildings[Math.floor(Math.random() * data.buildings.length)],
                     product:        data.products[Math.floor(Math.random() * data.products.length)],
