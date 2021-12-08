@@ -22,6 +22,7 @@ export default class DCItem extends ItemSheet {
         html.find(".add-modifier").click(this._on_add_modifier.bind(this));
         html.find(".item-delete").click(this._on_remove_modifier.bind(this));
         html.find(".render-preview").click(this._on_render_preview.bind(this));
+        html.find(".toggle-clue").click(this._on_toggle_clue.bind(this));
 
         // On Change
         html.find(".document-template").change(this._on_document_select.bind(this));
@@ -72,9 +73,15 @@ export default class DCItem extends ItemSheet {
     }
 
     _on_render_preview(event) {
+        event.preventDefault();
         let type = this.item.data.data.template;
         if(dc_utils.documents[type]?.build) {
             this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}});
         }
+    }
+
+    _on_toggle_clue(event) {
+        event.preventDefault();
+        this.item.update({data: {prefab: {book: {skill_roll: !this.item.data.data.prefab.book.skill_roll}}}});
     }
 }
