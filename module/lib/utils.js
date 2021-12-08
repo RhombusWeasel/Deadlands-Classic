@@ -2748,14 +2748,13 @@ const dc_utils = {
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
-                .replace('{{random animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
+                .replace('{{random animal}}', data.animals[Math.floor(Math.random() * data.animals.length)])
                 .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
                 .replace('{{random crime}}', data.crimes[Math.floor(Math.random() * data.crimes.length)])
-                .replace('{{random building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
+                .replace('{{random building}}', data.buildings[Math.floor(Math.random() * data.buildings.length)])
                 .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
                 .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
-                .replace("{{a random product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
-                .replace("{{an random product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)]);
+                .replace("{{a random product}}", data.products[Math.floor(Math.random() * data.products.length)])
             }
             if (capitalize) {
                 return r_str.split(' ').map((word) => { 
@@ -2820,8 +2819,7 @@ const dc_utils = {
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
                 `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}.`
             ],
-            animals_a: ['Bat', 'Bear', 'Cat', 'Cobra', 'Donkey', 'Dog'],
-            animals_an: ['armadillo', 'albatross'],
+            animals: ['Bat', 'Bear', 'Cat', 'Cobra', 'Donkey', 'Dog'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
             crimes: [
@@ -2835,8 +2833,7 @@ const dc_utils = {
                 '{{a subject animal}} rustling',
                 `smuggling {{a subject product}}'s`,
             ],
-            products_a: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
-            products_an: ['Munitions', 'Fireworks'],
+            products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
             sentances: [
                 '{{random number}} years of military service or the noose',
                 '{{random number}} years with no chance of parole',
@@ -2909,13 +2906,13 @@ const dc_utils = {
             label: 'Newspaper',
             build: function(data) {
                 return `
-                    <div>
+                    <div style="width: 800px">
                         <div class="flexrow">
-                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%"><p style="">${data.date}</p></div>
-                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 90%"><p>${data.paper}</p></div>
-                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 5%"><p>Only 5¢</p></div>
+                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 50px"><p style="">${data.date}</p></div>
+                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 700px"><p>${data.paper}</p></div>
+                            <div style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 50px"><p>Only 5¢</p></div>
                         </div>
-                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 100%;">${data.headline}</p></div>
+                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 800px">${data.headline}</p></div>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
                             <div style="width: 600px">
@@ -2937,9 +2934,10 @@ const dc_utils = {
                     city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:          data.crimes[Math.floor(Math.random() * data.crimes.length)],
                     sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
-                    subject_animal: data.animals_a[Math.floor(Math.random() * data.animals_a.length)],
+                    subject_animal: data.animals_a[Math.floor(Math.random() * data.animals.length)],
                     number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
                     building:       data.buildings[Math.floor(Math.random() * data.buildings.length)],
+                    product:        data.products[Math.floor(Math.random() * data.products.length)],
                     char:           {
                         culprit: {
                             gender: Math.random() > 0.49 ? 'male' : 'female',
