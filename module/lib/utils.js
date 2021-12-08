@@ -116,7 +116,7 @@ const dc_utils = {
                 "Campbell",
                 "Carter",
                 "Clay",
-                "Coboy?",
+                "Coboy",
                 "Collins",
                 "Conely",
                 "Conn",
@@ -124,7 +124,7 @@ const dc_utils = {
                 "Conway",
                 "Cook",
                 "Cooley",
-                "Corceran?",
+                "Corceran",
                 "Craven",
                 "Creuser",
                 "Criley",
@@ -462,7 +462,6 @@ const dc_utils = {
                     "Roda",
                     "Saml",
                     "Sampson",
-                    "Sampson?",
                     "Samuel",
                     "Sandy",
                     "Sebastian",
@@ -514,7 +513,7 @@ const dc_utils = {
                     "Clara",
                     "Cora",
                     "Cornelia",
-                    "Cresentia?",
+                    "Cresentia",
                     "Dora",
                     "Dortha",
                     "E.M.",
@@ -536,7 +535,7 @@ const dc_utils = {
                     "Fredreka",
                     "Genevia",
                     "Gertrude",
-                    "Gumia?",
+                    "Gumia",
                     "Gusta",
                     "Gustine",
                     "Hannah",
@@ -2741,13 +2740,10 @@ const dc_utils = {
                 .replaceAll('{{city}}', details.city)
                 .replaceAll('{{crime}}', details.crime)
                 .replaceAll('{{sentance}}', details.sentance)
-                .replaceAll('{{a subject building}}', data.buildings_a[Math.floor(Math.random() * data.buildings_a.length)])
-                .replaceAll('{{an subject building}}', data.buildings_an[Math.floor(Math.random() * data.buildings_an.length)])
-                .replaceAll('{{a subject animal}}', data.animals_a[Math.floor(Math.random() * data.animals_a.length)])
-                .replaceAll('{{an subject animal}}', data.animals_an[Math.floor(Math.random() * data.animals_an.length)])
-                .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replaceAll("{{number}}", details.number)
+                .replaceAll('{{a subject building}}', details.building)
+                .replaceAll('{{a subject animal}}', details.subject_animal)
                 .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
-                .replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
                 .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
@@ -2826,8 +2822,7 @@ const dc_utils = {
             ],
             animals_a: ['Bat', 'Bear', 'Cat', 'Cobra', 'Donkey', 'Dog'],
             animals_an: ['armadillo', 'albatross'],
-            buildings_a: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
-            buildings_an: ['Orphanage'],
+            buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
             crimes: [
                 'rustling cattle',
@@ -2835,18 +2830,13 @@ const dc_utils = {
                 'holding up a stage-coach',
                 'committing telegraph fraud',
                 'starting a {{a subject animal}} worshiping cult',
-                'starting an {{an subject animal}} worshiping cult',
                 'vandalizing a {{a subject building}}',
-                'vandalizing an {{an subject building}}',
                 'attempting to blow up a {{a subject building}}',
-                'attempting to blow up an {{an subject building}}',
                 '{{a subject animal}} rustling',
-                '{{an subject animal}} rustling',
                 `smuggling {{a subject product}}'s`,
-                'smuggling {{an subject product}}',
             ],
-            products_a: ['glass eye', 'wooden leg', 'piano', 'gun', 'harmonica', 'banjo', 'steamwagon'],
-            products_an: ['munitions', 'fireworks'],
+            products_a: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
+            products_an: ['Munitions', 'Fireworks'],
             sentances: [
                 '{{random number}} years of military service or the noose',
                 '{{random number}} years with no chance of parole',
@@ -2855,7 +2845,7 @@ const dc_utils = {
                 'death by New Science'
             ],
             spooky_possessions: [
-                `some kind of bug took over {{culprit subjective pronoun}} mind`,
+                `some kind of bug took over {{culprit clause pronoun}} mind`,
                 `Demons from the pit's of Hell itself possessed {{culprit subjective pronoun}}`,
                 `something sticky and glowing {{random colour}} was dripping out {{culprit subjective pronoun}} eyes the whole time`,
             ],
@@ -2942,12 +2932,15 @@ const dc_utils = {
                 let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
                 let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)]
                 let details = {
-                    territory: territory,
-                    state:     state,
-                    city:      data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
-                    crime:     data.crimes[Math.floor(Math.random() * data.crimes.length)],
-                    sentance:  data.sentances[Math.floor(Math.random() * data.sentances.length)],
-                    char:      {
+                    territory:      territory,
+                    state:          state,
+                    city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
+                    crime:          data.crimes[Math.floor(Math.random() * data.crimes.length)],
+                    sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
+                    subject_animal: data.animals_a[Math.floor(Math.random() * data.animals_a.length)],
+                    number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
+                    building:       data.buildings[Math.floor(Math.random() * data.buildings.length)],
+                    char:           {
                         culprit: {
                             gender: Math.random() > 0.49 ? 'male' : 'female',
                         },
