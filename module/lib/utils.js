@@ -2735,6 +2735,7 @@ const dc_utils = {
                 .replaceAll('{{witness subjective pronoun}}', data.pronouns[details.char.witness.gender].subjective)
                 .replaceAll('{{witness objective pronoun}}', data.pronouns[details.char.witness.gender].objective)
                 .replaceAll('{{witness clause pronoun}}', data.pronouns[details.char.witness.gender].clause)
+                .replaceAll('{{witness profession}}', details.char.witness.profession)
                 .replaceAll('{{territory}}', details.territory)
                 .replaceAll('{{state}}', details.state)
                 .replaceAll('{{city}}', details.city)
@@ -2747,6 +2748,7 @@ const dc_utils = {
                 .replaceAll("{{number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                 .replaceAll("{{a subject product}}", data.products_a[Math.floor(Math.random() * data.products_a.length)])
                 .replaceAll("{{an subject product}}", data.products_an[Math.floor(Math.random() * data.products_an.length)])
+                .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
@@ -2810,9 +2812,9 @@ const dc_utils = {
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
-                `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{an subject animal}}'s did it!  I seen em' doin' it! Them {{an subject animal}}'s deserve {{sentance}}!".  However {{witness name formal}} is believed to be insane.`,
+                `One witness who wishes to remain anonymous reported "Look, I know this sounds crazy but {{spooky possession}}".  Another also not willing to put their name to an outright fabrication said "{{spooky possession}} I know how crazy that sounds but it's what I saw!"`,
                 `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} Emporium!  I got big {{a subject product}}'s, I got small {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
-                `local {{witness profession}}`
+                `local {{witness profession}} {{witness name full}}({{age}}) went on an unexpected crime spree today.  {{culprit name formal}} was first seen {{random crime}} after which witnesses report {{witness subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{a building target}} to the state of {{state}}.`
             ],
             officer_statements: [
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
@@ -2839,7 +2841,7 @@ const dc_utils = {
                 `smuggling {{a subject product}}'s`,
                 'smuggling {{an subject product}}',
             ],
-            products_a: ['glass eye', 'wooden leg', 'piano', 'gun', 'harmonica', ''],
+            products_a: ['glass eye', 'wooden leg', 'piano', 'gun', 'harmonica', 'banjo', 'steamwagon'],
             products_an: ['munitions', 'fireworks'],
             sentances: [
                 '{{random number}} years of military service or the noose',
@@ -2847,6 +2849,11 @@ const dc_utils = {
                 '{{random number}} years in the state penitentiary',
                 'a good ol\' fashioned hangin\'',
                 'death by New Science'
+            ],
+            spooky_possessions: [
+                `some kind of bug took over {{culprit subjective pronoun}} mind`,
+                `Demons from the pit's of Hell itself possessed {{culprit subjective pronoun}}`,
+                `something sticky and glowing {{random colour}} was dripping out {{culprit subjective pronoun}} eyes the whole time`,
             ],
             numbers: ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
             officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
