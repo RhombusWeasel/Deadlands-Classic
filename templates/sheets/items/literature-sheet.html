@@ -23,7 +23,7 @@
                     <th>URL</th>
                     <td><input class="document-template" type="text" name="data.prefab.book.url" value="{{data.data.prefab.book.url}}"></td>
                 </tr>
-                    {{#if (eq data.data.prefab.book.skill_roll)}}
+                    {{#if (eq data.data.prefab.book.skill_roll true)}}
                 <tr>
                     <th>Contains Clue</th>
                     <td class="center"><a><i class="fas fa-check toggle-clue"></i></a></td>
@@ -33,7 +33,7 @@
                     <td>
                         <select name="data.prefab.book.skill" id="skill-select">
                         {{#each skills as |skill|}}
-                            {{#if (eq ../data.data.gun_type skill.key)}}
+                            {{#if (eq ../data.data.prefab.book.skill skill.key)}}
                             <option value="{{skill.key}}" selected>{{skill.label}}</option>
                             {{else}}
                             <option value="{{skill.key}}">{{skill.label}}</option>

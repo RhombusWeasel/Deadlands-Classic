@@ -82,6 +82,6 @@ export default class DCItem extends ItemSheet {
 
     _on_toggle_clue(event) {
         event.preventDefault();
-        this.item.update({data: {prefab: {book: {skill_roll: !this.item.data.data.prefab.book.skill_roll}}}});
+        this.item.update({data: {prefab: {book: {skill_roll: !(this.item.data.data.prefab.book.skill_roll)}}}});
     }
 }
