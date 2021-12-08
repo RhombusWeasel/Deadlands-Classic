@@ -18,6 +18,41 @@
                         </select>
                     </td>
                 </tr>
+                {{#if (eq data.data.template 'book')}}
+                <tr>
+                    <th>URL</th>
+                    <td><input class="document-template" type="text" name="data.prefab.book.url" value="{{data.data.prefab.book.url}}"></td>
+                </tr>
+                    {{#if (eq data.data.prefab.book.skill_roll)}}
+                <tr>
+                    <th>Contains Clue</th>
+                    <td class="center"><a><i class="fas fa-check toggle-clue"></i></a></td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td>
+                        <select name="data.prefab.book.skill" id="skill-select">
+                        {{#each skills as |skill|}}
+                            {{#if (eq ../data.data.gun_type skill.key)}}
+                            <option value="{{skill.key}}" selected>{{skill.label}}</option>
+                            {{else}}
+                            <option value="{{skill.key}}">{{skill.label}}</option>
+                            {{/if}}
+                        {{/each}}
+                        </select>
+                    </td>
+                    <td>
+                        <th>Clue</th>
+                        <td><input class="document-template" type="number" name="data.prefab.book.clue" value="{{data.data.prefab.book.clue}}"></td>
+                    </td>
+                </tr>
+                    {{else}}
+                    <tr>
+                        <th>Clue</th>
+                        <td class="center"><a><i class="fas fa-times toggle-clue"></i></a></td>
+                    </tr>
+                    {{/if}}
+                {{/if}}
                 {{#if (eq data.data.template 'letter')}}
                 <tr>
                     <th>Date</th>
@@ -60,10 +95,6 @@
                 <tr>
                     <th>Column Count</th>
                     <td><input class="document-template" type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
-                </tr>
-                <tr>
-                    <th>Filler Articles</th>
-                    <td><input class="document-template" type="number" name="data.prefab.newspaper.sub_articles" value="{{data.data.prefab.newspaper.sub_articles}}"></td>
                 </tr>
                 {{/if}}
 

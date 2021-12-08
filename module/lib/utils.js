@@ -2797,7 +2797,7 @@ const dc_utils = {
             },
             headlines: [
                 `{{crime}} Epidemic!`,
-                `{{state}} starting a {{crime}} factory?`,
+                `{{state}} {{crime}} factory?`,
                 `{{culprit polite singular pronoun}} bandit gets just desserts`,
                 `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`,
                 `Crime Spree in {{state}} reaches new heights!`,
@@ -2968,6 +2968,13 @@ const dc_utils = {
                 return dc_utils.documents.apply_templates(r_str, data, details, false);
             },
         },
-        book: {label: 'Book'},
+        book: {
+            label: 'Book',
+            url: 'none',
+            skill_roll: false,
+            skill: 'cognition',
+            tn: 5,
+            clue: 'Reading is super cool!'
+        },
     },
 };

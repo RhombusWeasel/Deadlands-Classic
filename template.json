@@ -1310,6 +1310,13 @@
             "template": "letter",
             "output":"",
             "prefab": {
+                "book": {
+                    "url": "None",
+                    "skill_roll": false,
+                    "skill": "cognition",
+                    "tn": 5,
+                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!"
+                },
                 "letter": {
                     "date": 0,
                     "greeting": "Howdy Partner!",
