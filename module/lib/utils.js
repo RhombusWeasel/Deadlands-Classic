@@ -2796,8 +2796,8 @@ const dc_utils = {
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
             headlines: [
-                `{{crime}} Epidemic`,
-                `{{crime}} in {{state}}`,
+                `{{crime}} Epidemic!`,
+                `{{state}} starting a {{crime}} factory?`,
                 `{{culprit polite singular pronoun}} bandit gets just desserts`,
                 `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`,
                 `Crime Spree in {{state}} reaches new heights!`,
@@ -2808,7 +2808,7 @@ const dc_utils = {
                 `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}.`,
                 `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}} I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`,
                 `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!`,
-                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree today.  {{culprit name formal}} was first seen {{random crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} {{culprit subjective pronoun}} had occupied by force to the state of {{state}}.`,
+                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree today.  {{culprit name formal}} was first seen {{random crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} {{culprit objective pronoun}} had occupied by force to the state of {{state}}.`,
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
@@ -2819,8 +2819,8 @@ const dc_utils = {
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
                 `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}.`
             ],
-            animals: ['Bat', 'Bear', 'Cat', 'Cobra', 'Donkey', 'Dog'],
-            buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} factory'],
+            animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
+            buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
             crimes: [
                 'rustling cattle',
