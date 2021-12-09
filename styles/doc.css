@@ -121,7 +121,7 @@
 .letter-sig {
     font-family: "Corinthia", cursive;
     font-size: 32pt;
-    rotate: 5;
+    rotate: 50;
 }
 .newspaper{
     display: grid;
