@@ -2915,8 +2915,7 @@ const dc_utils = {
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.headline}</p>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
-                            <p style="width: 600px; display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article} \nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                            <p style="width: 600px; display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;"></p>
+                            <p style="font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             ${dc_utils.documents.newspaper.random_article()}
                         </div>
                     </div>
