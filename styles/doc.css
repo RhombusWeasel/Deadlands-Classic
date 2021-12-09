@@ -112,7 +112,7 @@
 }
 .letter {
     font-family: "Corinthia", cursive;
-    font-size: larger;
+    font-size: 32pt;
 }
 .newspaper{
     display: grid;
