@@ -114,6 +114,7 @@
     'db nb nb nb nb nb nb pb'
     'hl hl hl hl hl hl hl hl'
     's1 s1 ma ma ma ma s2 s2'
+    's1 s1 ma ma ma ma s2 s2'
     'a1 a1 ma ma ma ma a2 a2'
     ;
 }
@@ -126,7 +127,7 @@
 }
 .name-banner {
     font-family: "Lucida Sans Typewriter";
-    font-size: large;
+    font-size: x-large;
     font-weight: bolder;
     text-align: center;
     white-space: pre-wrap;
@@ -141,7 +142,7 @@
 }
 .headline {
     font-family: "Lucida Sans Typewriter";
-    font-size: larger;
+    font-size: xx-large;
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
