@@ -108,6 +108,7 @@
     color: yellow;
 }
 .newspaper{
+    display: grid;
     place-items: center;
     grid:
     'db nb nb nb nb nb nb pb'
