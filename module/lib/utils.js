@@ -2882,11 +2882,11 @@ const dc_utils = {
                 return `
                     <div>
                         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Corinthia">
-                        <div class="letter"><p>${data.date}</p></div>
+                        <div class="letter-date"><p>${data.date}</p></div>
                         <div class="letter"><p>${data.greeting}</p></div>
                         <div class="letter"><p>${data.body}</p></div>
                         <div class="letter"><p>${data.sign_off}</p></div>
-                        <div class="letter"><p>${data.signature}</p></div>
+                        <div class="letter-sig"><p>${data.signature}</p></div>
                     </div>
                 `
             },

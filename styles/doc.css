@@ -114,6 +114,15 @@
     font-family: "Corinthia", cursive;
     font-size: 24pt;
 }
+.letter-date {
+    font-family: "Corinthia", cursive;
+    font-size: 16pt;
+}
+.letter-sig {
+    font-family: "Corinthia", cursive;
+    font-size: 32pt;
+    rotate: 5;
+}
 .newspaper{
     display: grid;
     grid:
