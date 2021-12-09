@@ -1,3 +1,6 @@
+.textarea{
+    white-space: pre-line;
+}
 .scroller{
     overflow-y:scroll;
     height:500px
@@ -120,7 +123,7 @@
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: db;
 }
 .name-banner {
@@ -128,14 +131,14 @@
     font-size: x-large;
     font-weight: bolder;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: nb;
 }
 .price-banner{
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: pb;
 }
 .headline {
@@ -143,14 +146,14 @@
     font-size: xx-large;
     font-weight: bold;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: hl;
 }
 .main-article {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: ma;
 }
 .sub-hl-1 {
@@ -158,7 +161,7 @@
     font-size: small;
     font-weight: bold;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: s1;
 }
 .sub-hl-2 {
@@ -166,7 +169,7 @@
     font-size: small;
     font-weight: bold;
     text-align: center;
-    white-space: pre-wrap;
+    white-space: pre-line;
     grid-area: s2;
 }
 .article-1 {
@@ -174,10 +177,12 @@
     font-size: xx-small;
     padding: 5px;
     grid-area: a1;
+    white-space: pre-line;
 }
 .article-2 {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     grid-area: a2;
+    white-space: pre-line;
 }
