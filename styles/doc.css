@@ -110,11 +110,10 @@
 .newspaper{
     display: grid;
     grid:
-    'db nb nb nb nb nb nb pb'
-    'hl hl hl hl hl hl hl hl'
-    's1 s1 ma ma ma ma s2 s2'
-    's1 s1 ma ma ma ma s2 s2'
-    'a1 a1 ma ma ma ma a2 a2'
+    'db nb nb nb nb nb nb nb nb nb nb nb nb pb'
+    'hl hl hl hl hl hl hl hl hl hl hl hl hl hl'
+    's1 s1 s1 s1 ma ma ma ma ma ma s2 s2 s2 s2'
+    'a1 a1 a1 a1 ma ma ma ma ma ma a2 a2 a2 a2'
     ;
 }
 .date-banner{
@@ -123,7 +122,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: db;
-    place-items: center;
 }
 .name-banner {
     font-family: "Lucida Sans Typewriter";
@@ -132,7 +130,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: nb;
-    place-items: center;
 }
 .price-banner{
     font-family: "Lucida Sans Typewriter";
@@ -140,7 +137,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: pb;
-    place-items: center;
 }
 .headline {
     font-family: "Lucida Sans Typewriter";
@@ -149,7 +145,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: hl;
-    place-items: center;
 }
 .main-article {
     font-family: "Lucida Sans Typewriter";
@@ -165,7 +160,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: s1;
-    place-items: center;
 }
 .sub-hl-2 {
     font-family: "Lucida Sans Typewriter";
@@ -174,7 +168,6 @@
     text-align: center;
     white-space: pre-wrap;
     grid-area: s2;
-    place-items: center;
 }
 .article-1 {
     font-family: "Lucida Sans Typewriter";
