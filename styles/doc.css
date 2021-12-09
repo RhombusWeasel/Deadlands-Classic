@@ -173,13 +173,11 @@
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
-    white-space: pre-wrap;
     grid-area: a1;
 }
 .article-2 {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
-    white-space: pre-wrap;
     grid-area: a2;
 }
