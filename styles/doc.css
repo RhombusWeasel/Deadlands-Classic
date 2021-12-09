@@ -156,13 +156,20 @@
     white-space: pre-line;
     grid-area: ma;
 }
+.sub-hl-box-1{
+    place-items: center;
+    grid-area: s1;
+}
+.sub-hl-box-2{
+    place-items: center;
+    grid-area: s2;
+}
 .sub-hl-1 {
     font-family: "Lucida Sans Typewriter";
     font-size: small;
     font-weight: bold;
     text-align: center;
     white-space: pre-line;
-    grid-area: s1;
 }
 .sub-hl-2 {
     font-family: "Lucida Sans Typewriter";
@@ -172,17 +179,10 @@
     white-space: pre-line;
     grid-area: s2;
 }
-.article-1 {
+.sub-article {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     grid-area: a1;
-    white-space: pre-line;
-}
-.article-2 {
-    font-family: "Lucida Sans Typewriter";
-    font-size: xx-small;
-    padding: 5px;
-    grid-area: a2;
     white-space: pre-line;
 }
