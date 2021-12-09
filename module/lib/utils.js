@@ -2909,8 +2909,8 @@ const dc_utils = {
                     <div>
                         <div class="flexrow">
                             <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">${data.date}</p>
-                            <p style="width: 90%; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center;"><p>${data.paper}</p></div>
-                            <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;"><p>Only 5¢</p></div>
+                            <p style="width: 90%; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center;">${data.paper}</p>
+                            <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">Only 5¢</p>
                         </div>
                         <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.headline}</p></div>
                         <div class="flexrow">
