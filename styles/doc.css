@@ -1,5 +1,5 @@
 .textarea{
-    white-space: pre-line;
+    white-space: pre-wrap;
 }
 .scroller{
     overflow-y:scroll;
