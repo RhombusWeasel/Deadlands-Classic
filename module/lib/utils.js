@@ -2906,17 +2906,17 @@ const dc_utils = {
             label: 'Newspaper',
             build: function(data) {
                 return `
-                    <div>
-                        <div class="flexrow"  style="align-content: center;">
-                            <p style="width: 5%;" class="side-banner">${data.date}</p>
-                            <p style="width: 90%;" class="name-banner">${data.paper}</p>
-                            <p style="width: 5%; class="side-banner"">Only 5¢</p>
+                    <div class="newspaper">
+                        <div class="flexrow">
+                            <p class="side-banner">${data.date}</p>
+                            <p class="name-banner">${data.paper}</p>
+                            <p class="side-banner"">Only 5¢</p>
                         </div>
                         <p class="headline">${data.headline}</p>
-                        <div class="flexrow"  style="align-content: center;">
-                            ${dc_utils.documents.newspaper.random_article()}
-                            <p style="column-count: ${data.columns}" class="article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                            ${dc_utils.documents.newspaper.random_article()}
+                        <div class="flexrow">
+                            <p class="article-1>${dc_utils.documents.newspaper.random_article()}</p>
+                            <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                            <p class="article-2>${dc_utils.documents.newspaper.random_article()}</p>
                         </div>
                     </div>
                 `;

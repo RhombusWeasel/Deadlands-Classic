@@ -107,11 +107,25 @@
 .Legendary {
     color: yellow;
 }
+.newspaper{
+    grid: 
+    'side-banner name-banner name-banner name-banner name-banner name-banner name-banner side-banner'
+    'side-banner name-banner name-banner name-banner name-banner name-banner name-banner side-banner'
+    'headline headline headline headline headline headline headline headline'
+    'headline headline headline headline headline headline headline headline'
+    'sub-hl-1 sub-hl-1 main-article main-article main-article main-article sub-hl-2 sub-hl-2'
+    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
+    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
+    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
+    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
+    ;
+}
 .side-banner{
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     text-align: center;
     white-space: pre-wrap;
+    grid-area: side-banner;
 }
 .name-banner {
     font-family: "Lucida Sans Typewriter";
@@ -119,6 +133,7 @@
     font-weight: bolder;
     text-align: center;
     white-space: pre-wrap;
+    grid-area: name-banner;
 }
 .headline {
     font-family: "Lucida Sans Typewriter";
@@ -126,23 +141,42 @@
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
+    grid-area: headline;
 }
 .main-article {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     white-space: pre-wrap;
+    grid-area: main-article;
 }
-.sub-headline {
+.sub-hl-1 {
     font-family: "Lucida Sans Typewriter";
     font-size: small;
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
+    grid-area: sub-hl-1;
 }
-.sub-article {
+.sub-hl-2 {
+    font-family: "Lucida Sans Typewriter";
+    font-size: small;
+    font-weight: bold;
+    text-align: center;
+    white-space: pre-wrap;
+    grid-area: sub-hl-2;
+}
+.article-1 {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     white-space: pre-wrap;
+    grid-area: article-1;
+}
+.article-2 {
+    font-family: "Lucida Sans Typewriter";
+    font-size: xx-small;
+    padding: 5px;
+    white-space: pre-wrap;
+    grid-area: article-2;
 }
