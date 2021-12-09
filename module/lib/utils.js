@@ -2909,10 +2909,10 @@ const dc_utils = {
                     <div>
                         <div class="flexrow">
                             <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">${data.date}</p>
-                            <p style="width: 90%; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center;">${data.paper}</p>
+                            <p style="width: 90%; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.paper}</p>
                             <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">Only 5¢</p>
                         </div>
-                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.headline}</p></div>
+                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.headline}</p>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
                             <p style="width: 600px; display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
