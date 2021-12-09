@@ -120,7 +120,7 @@
     font-size: xx-small;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 'db';
+    grid-area: db;
 }
 .name-banner {
     font-family: "Lucida Sans Typewriter";
@@ -128,14 +128,14 @@
     font-weight: bolder;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 'nb';
+    grid-area: nb;
 }
 .price-banner{
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 'pb';
+    grid-area: pb;
 }
 .headline {
     font-family: "Lucida Sans Typewriter";
@@ -143,14 +143,14 @@
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 'hl';
+    grid-area: hl;
 }
 .main-article {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     white-space: pre-wrap;
-    grid-area: 'ma';
+    grid-area: ma;
 }
 .sub-hl-1 {
     font-family: "Lucida Sans Typewriter";
@@ -158,7 +158,7 @@
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 's1';
+    grid-area: s1;
 }
 .sub-hl-2 {
     font-family: "Lucida Sans Typewriter";
@@ -166,7 +166,7 @@
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: 's2';
+    grid-area: s2;
 }
 .article-1 {
     font-family: "Lucida Sans Typewriter";
