@@ -2907,9 +2907,9 @@ const dc_utils = {
             build: function(data) {
                 return `
                     <div class="newspaper">
-                        <p class="side-banner">${data.date}</p>
+                        <p class="date-banner">${data.date}</p>
                         <p class="name-banner">${data.paper}</p>
-                        <p class="side-banner"">Only 5¢</p>
+                        <p class="price-banner"">Only 5¢</p>
                         <p class="headline">${data.headline}</p>
                         ${dc_utils.documents.newspaper.random_article('1')}
                         <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
