@@ -2884,6 +2884,7 @@ const dc_utils = {
                         <div class="letter"><p>${data.date}</p></div>
                         <div class="letter"><p>${data.greeting}</p></div>
                         <div class="letter"><p>${data.body}</p></div>
+                        <div class="letter"><p>${data.sign_off}</p></div>
                         <div class="letter"><p>${data.signature}</p></div>
                     </div>
                 `
