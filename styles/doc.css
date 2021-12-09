@@ -161,7 +161,7 @@
     font-weight: bold;
     text-align: center;
     white-space: pre-wrap;
-    grid-area: s1;
+    grid-area: so;
 }
 .sub-hl-2 {
     font-family: "Lucida Sans Typewriter";
@@ -176,12 +176,12 @@
     font-size: xx-small;
     padding: 5px;
     white-space: pre-wrap;
-    grid-area: 'a1';
+    grid-area: a1;
 }
 .article-2 {
     font-family: "Lucida Sans Typewriter";
     font-size: xx-small;
     padding: 5px;
     white-space: pre-wrap;
-    grid-area: 'a2';
+    grid-area: a2;
 }
