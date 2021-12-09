@@ -110,13 +110,8 @@
 .newspaper{
     grid: 
     'side-banner name-banner name-banner name-banner name-banner name-banner name-banner side-banner'
-    'side-banner name-banner name-banner name-banner name-banner name-banner name-banner side-banner'
-    'headline headline headline headline headline headline headline headline'
     'headline headline headline headline headline headline headline headline'
     'sub-hl-1 sub-hl-1 main-article main-article main-article main-article sub-hl-2 sub-hl-2'
-    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
-    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
-    'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
     'article-1 article-1 main-article main-article main-article main-article article-2 article-2'
     ;
 }
