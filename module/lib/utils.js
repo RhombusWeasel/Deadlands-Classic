@@ -2952,9 +2952,9 @@ const dc_utils = {
                 let r_str = `
                 <div class="sub-hl-box-${side}"><p class="sub-headline">${headline}</p></div>
                 <p class="article-${side}">
-                    ${data.starts[Math.floor(Math.random() * data.starts.length)]}
-                    ${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}
-                    ${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}
+                    ${data.starts[Math.floor(Math.random() * data.starts.length)]}\n
+                    ${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}\n
+                    ${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}\n
                     Editorial by ${dc_utils.char.random_name('american', 'male')}
                 </p>
                 `;
