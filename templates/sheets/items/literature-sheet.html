@@ -25,7 +25,7 @@
                 {{#if (eq data.data.template 'book')}}
                 <tr>
                     <th>URL</th>
-                    <td><input class="document-template" type="text" name="data.prefab.book.url" value="{{data.data.prefab.book.url}}"></td>
+                    <td><input type="text" name="data.prefab.book.url" value="{{data.data.prefab.book.url}}"></td>
                 </tr>
                     {{#if (eq data.data.prefab.book.skill_roll true)}}
                 <tr>
@@ -47,7 +47,7 @@
                     </td>
                     <tr>
                         <th>Clue</th>
-                        <td><input class="document-template" type="text" name="data.prefab.book.clue" value="{{data.data.prefab.book.clue}}"></td>
+                        <td><input type="text" name="data.prefab.book.clue" value="{{data.data.prefab.book.clue}}"></td>
                     </tr>
                 </tr>
                     {{else}}
@@ -60,11 +60,11 @@
                 {{#if (eq data.data.template 'letter')}}
                 <tr>
                     <th>Date</th>
-                    <td><input class="document-template" type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
+                    <td><input type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
                 </tr>
                 <tr>
                     <th>Greeting</th>
-                    <td><input class="document-template" type="text" name="data.prefab.letter.greeting" value="{{data.data.prefab.letter.greeting}}"></td>
+                    <td><input type="text" name="data.prefab.letter.greeting" value="{{data.data.prefab.letter.greeting}}"></td>
                 </tr>
                 <tr>
                     <th>Body</th>
@@ -74,25 +74,25 @@
                 </tr>
                 <tr>
                     <th>Sender</th>
-                    <td><input class="document-template" type="text" name="data.prefab.letter.sender" value="{{data.data.prefab.letter.sender}}"></td>
+                    <td><input type="text" name="data.prefab.letter.sender" value="{{data.data.prefab.letter.sender}}"></td>
                 </tr>
                 {{/if}}
                 {{#if (eq data.data.template 'newspaper')}}
                 <tr>
                     <th>Date</th>
-                    <td><input class="document-template" type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
+                    <td><input type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
                 </tr>
                 <tr>
                     <th>Paper</th>
-                    <td><input class="document-template" type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
+                    <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
                 </tr>
                 <tr>
                     <th>Price</th>
-                    <td><input class="document-template" type="text" name="data.prefab.newspaper.price" value="{{data.data.prefab.newspaper.price}}"></td>
+                    <td><input type="text" name="data.prefab.newspaper.price" value="{{data.data.prefab.newspaper.price}}"></td>
                 </tr>
                 <tr>
                     <th>Headline</th>
-                    <td><input class="document-template" type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
+                    <td><input type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
                 </tr>
                 <tr>
                     <th>Main Article</th>
@@ -102,15 +102,13 @@
                 </tr>
                 <tr>
                     <th>Column Count</th>
-                    <td><input class="document-template" type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
+                    <td><input type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
                 </tr>
                 {{/if}}
-
-                <!-- Preview update button goes on all templates. -->
-                <tr class="center">
-                    <td><a class="center render-preview">Redraw Preview</a></td>
-                </tr>
             </table>
+            <div>
+                <a class="render-preview">Redraw Preview</a>
+            </div>
         </div>
         {{/isGM}}
         <!-- Preview -->
