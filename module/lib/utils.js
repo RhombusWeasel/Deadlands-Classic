@@ -2907,21 +2907,17 @@ const dc_utils = {
             build: function(data) {
                 return `
                     <div class="newspaper">
-                        <div class="flexrow">
-                            <p class="side-banner">${data.date}</p>
-                            <p class="name-banner">${data.paper}</p>
-                            <p class="side-banner"">Only 5¢</p>
-                        </div>
+                        <p class="side-banner">${data.date}</p>
+                        <p class="name-banner">${data.paper}</p>
+                        <p class="side-banner"">Only 5¢</p>
                         <p class="headline">${data.headline}</p>
-                        <div class="flexrow">
-                            <p class="article-1>${dc_utils.documents.newspaper.random_article()}</p>
-                            <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                            <p class="article-2>${dc_utils.documents.newspaper.random_article()}</p>
-                        </div>
+                        ${dc_utils.documents.newspaper.random_article('1')}
+                        <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                        ${dc_utils.documents.newspaper.random_article('2')}
                     </div>
                 `;
             },
-            random_article: function() {
+            random_article: function(side) {
                 let data      = dc_utils.documents.data;
                 let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
                 let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)]
@@ -2953,15 +2949,14 @@ const dc_utils = {
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
-                let width = '100px'
                 let r_str = `
-                <div style="align-content: center;">
-                    <p style="display: inline-block; width: ${width};" class="sub-headline">${headline}</p>
-                    <p style="display: inline-block; width: ${width};" class="sub-article">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
-                    <p style="display: inline-block; width: ${width};" class="sub-article">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
-                    <p style="display: inline-block; width: ${width};" class="sub-article">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
-                    <p style="display: inline-block; width: ${width};" class="sub-article">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                </div>
+                <p class="sub-hl-${side}">${headline}</p>
+                <p class="article-${side}">
+                    ${data.starts[Math.floor(Math.random() * data.starts.length)]}
+                    ${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}
+                    ${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}
+                    Editorial by ${dc_utils.char.random_name('american', 'male')}
+                </p>
                 `;
                 return dc_utils.documents.apply_templates(r_str, data, details, false);
             },
