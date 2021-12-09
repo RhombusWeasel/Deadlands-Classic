@@ -2880,11 +2880,11 @@ const dc_utils = {
             label: 'Letter',
             build: function(data) {
                 return `
-                    <div class="letter">
-                        <div><p>${data.date}</p></div>
-                        <div><p>${data.greeting}</p></div>
-                        <div><p>${data.body}</p></div>
-                        <div><p>${data.signature}</p></div>
+                    <div>
+                        <div class="letter"><p>${data.date}</p></div>
+                        <div class="letter"><p>${data.greeting}</p></div>
+                        <div class="letter"><p>${data.body}</p></div>
+                        <div class="letter"><p>${data.signature}</p></div>
                     </div>
                 `
             },
