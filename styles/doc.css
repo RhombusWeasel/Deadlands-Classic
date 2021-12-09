@@ -110,6 +110,10 @@
 .Legendary {
     color: yellow;
 }
+@import url('https://fonts.googleapis.com/css2?family=Corinthia&display=swap');
+.letter {
+    font-family: "Corinthia"
+}
 .newspaper{
     display: grid;
     grid:

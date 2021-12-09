@@ -2880,7 +2880,7 @@ const dc_utils = {
             label: 'Letter',
             build: function(data) {
                 return `
-                    <div class="typed">
+                    <div class="letter">
                         <div><p>${data.date}</p></div>
                         <div><p>${data.greeting}</p></div>
                         <div><p>${data.body}</p></div>
