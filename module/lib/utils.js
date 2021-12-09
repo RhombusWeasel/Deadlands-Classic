@@ -2906,19 +2906,17 @@ const dc_utils = {
             label: 'Newspaper',
             build: function(data) {
                 return `
-                    <div style="width: 800px">
+                    <div>
                         <div class="flexrow">
-                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 50px"><p style="">${data.date}</p></div>
-                            <div style="font-family: Lucida Sans Typewriter; font-size: medium; text-align: center; width: 700px"><p>${data.paper}</p></div>
-                            <div style="font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center; width: 50px"><p>Only 5¢</p></div>
+                            <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;">${data.date}</p>
+                            <p style="width: 90%; font-family: Lucida Sans Typewriter; font-size: medium; text-align: center;"><p>${data.paper}</p></div>
+                            <p style="width: 5%; font-family: Lucida Sans Typewriter; font-size: xx-small; text-align: center;"><p>Only 5¢</p></div>
                         </div>
-                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center; width: 800px">${data.headline}</p></div>
+                        <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: large; text-align: center;">${data.headline}</p></div>
                         <div class="flexrow">
                             ${dc_utils.documents.newspaper.random_article()}
-                            <div style="width: 600px">
-                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
-                                <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
-                            </div>
+                            <p style="width: 600px; display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px; column-count: ${data.columns}">${data.main_article}</p>
+                            <p style="width: 600px; display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                             ${dc_utils.documents.newspaper.random_article()}
                         </div>
                     </div>
@@ -2957,12 +2955,12 @@ const dc_utils = {
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
                 let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
                 let r_str = `
-                <div style="width: 100px">
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${headline}</p>
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
-                    <p style="display: inline-block; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                <div>
+                    <p style="display: inline-block; width: 100px; font-family: Lucida Sans Typewriter; font-size: small; padding: 5px; text-align: center;">${headline}</p>
+                    <p style="display: inline-block; width: 100px; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.starts[Math.floor(Math.random() * data.starts.length)]}</p>
+                    <p style="display: inline-block; width: 100px; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}</p>
+                    <p style="display: inline-block; width: 100px; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}</p>
+                    <p style="display: inline-block; width: 100px; font-family: Lucida Sans Typewriter; font-size: xx-small; padding: 5px;">Editorial by ${dc_utils.char.random_name('american', 'male')}</p>
                 </div>
                 `;
                 return dc_utils.documents.apply_templates(r_str, data, details, false);
