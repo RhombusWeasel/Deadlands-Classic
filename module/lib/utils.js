@@ -2897,10 +2897,14 @@ const dc_utils = {
         telegram: {
             label: 'Telegram',
             build: function(data) {
+                let cl = 'typed-letter';
+                if (data.hand_written) {
+                    cl = 'letter';
+                }
                 return `
                     <div class="typed">
                         <p class="${cl}-date">${data.date}</p>
-                        <p class="${cl}-header">${data.company}</p>
+                        <p class="telegram-header">${data.company}</p>
                         <p class="${cl}">${data.reciever}</p>
                         <p class="${cl}">${data.body}</p>
                         <p class="${cl}">${data.sender}</p>
