@@ -2881,7 +2881,6 @@ const dc_utils = {
             build: function(data) {
                 return `
                     <div>
-                        <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Corinthia">
                         <div class="letter-date"><p>${data.date}</p></div>
                         <div class="letter"><p>${data.greeting}</p></div>
                         <div class="letter"><p>${data.body}</p></div>
@@ -2909,7 +2908,6 @@ const dc_utils = {
             build: function(data) {
                 return `
                     <div class="newspaper">
-                        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Corinthia">
                         <p class="date-banner">${data.date}</p>
                         <p class="name-banner">${data.paper}</p>
                         <p class="price-banner"">Only 5¢</p>
