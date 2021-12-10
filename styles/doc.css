@@ -115,14 +115,22 @@
 .Legendary {
     color: yellow;
 }
-.letter {
-    font-family: "Corinthia", cursive;
-    font-size: 24pt;
-}
 .letter-date {
     font-family: "Corinthia", cursive;
     font-size: 16pt;
     text-align: right;
+}
+.letter {
+    font-family: "Corinthia", cursive;
+    font-size: 24pt;
+}
+.typed-letter-date {
+    font-family: "Special Elite";
+    font-size: 24pt;
+}
+.typed-letter {
+    font-family: "Special Elite";
+    font-size: 24pt;
 }
 .letter-sig {
     font-family: "Corinthia", cursive;

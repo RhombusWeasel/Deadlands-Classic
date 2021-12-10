@@ -22,6 +22,66 @@
                         </select>
                     </td>
                 </tr>
+                {{#if (eq data.data.template 'letter')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Greeting</th>
+                    <td><input type="text" name="data.prefab.letter.greeting" value="{{data.data.prefab.letter.greeting}}"></td>
+                </tr>
+                <tr>
+                    <th>Body</th>
+                    <td>
+                        <textarea name="data.prefab.letter.body">{{data.data.prefab.letter.body}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sign Off</th>
+                    <td><input type="text" name="data.prefab.letter.sign_off" value="{{data.data.prefab.letter.sign_off}}"></td>
+                </tr>
+                <tr>
+                    <th>Sender</th>
+                    <td><input type="text" name="data.prefab.letter.signature" value="{{data.data.prefab.letter.signature}}"></td>
+                </tr>
+                <tr>
+                    <th>Hand Written</th>
+                    {{#if (eq data.data.prefab.letter.hand_written true)}}
+                    <td class="center"><a><i class="fas fa-check toggle-typed"></i></a></td>
+                    {{else}}
+                    <td class="center"><a><i class="fas fa-check toggle-typed"></i></a></td>
+                    {{/if}}
+                </tr>
+                {{/if}}
+                {{#if (eq data.data.template 'newspaper')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Paper</th>
+                    <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" name="data.prefab.newspaper.price" value="{{data.data.prefab.newspaper.price}}"></td>
+                </tr>
+                <tr>
+                    <th>Headline</th>
+                    <td><input type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
+                </tr>
+                <tr>
+                    <th>Main Article</th>
+                    <td>
+                        <textarea name="data.prefab.newspaper.main_article">{{data.data.prefab.newspaper.main_article}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Column Count</th>
+                    <td><input type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
+                </tr>
+                {{/if}}
                 {{#if (eq data.data.template 'book')}}
                 <tr>
                     <th>URL</th>
@@ -56,58 +116,6 @@
                         <td class="center"><a><i class="fas fa-times toggle-clue"></i></a></td>
                     </tr>
                     {{/if}}
-                {{/if}}
-                {{#if (eq data.data.template 'letter')}}
-                <tr>
-                    <th>Date</th>
-                    <td><input type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
-                </tr>
-                <tr>
-                    <th>Greeting</th>
-                    <td><input type="text" name="data.prefab.letter.greeting" value="{{data.data.prefab.letter.greeting}}"></td>
-                </tr>
-                <tr>
-                    <th>Body</th>
-                    <td>
-                        <textarea name="data.prefab.letter.body">{{data.data.prefab.letter.body}}</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Sign Off</th>
-                    <td><input type="text" name="data.prefab.letter.sign_off" value="{{data.data.prefab.letter.sign_off}}"></td>
-                </tr>
-                <tr>
-                    <th>Sender</th>
-                    <td><input type="text" name="data.prefab.letter.signature" value="{{data.data.prefab.letter.signature}}"></td>
-                </tr>
-                {{/if}}
-                {{#if (eq data.data.template 'newspaper')}}
-                <tr>
-                    <th>Date</th>
-                    <td><input type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
-                </tr>
-                <tr>
-                    <th>Paper</th>
-                    <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
-                </tr>
-                <tr>
-                    <th>Price</th>
-                    <td><input type="text" name="data.prefab.newspaper.price" value="{{data.data.prefab.newspaper.price}}"></td>
-                </tr>
-                <tr>
-                    <th>Headline</th>
-                    <td><input type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
-                </tr>
-                <tr>
-                    <th>Main Article</th>
-                    <td>
-                        <textarea name="data.prefab.newspaper.main_article">{{data.data.prefab.newspaper.main_article}}</textarea>
-                    </td>
-                </tr>
-                <tr>
-                    <th>Column Count</th>
-                    <td><input type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
-                </tr>
                 {{/if}}
             </table>
             <div>

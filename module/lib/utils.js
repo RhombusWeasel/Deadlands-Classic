@@ -2879,15 +2879,19 @@ const dc_utils = {
         letter: {
             label: 'Letter',
             build: function(data) {
+                let cl = 'typed-letter';
+                if (data.hand_written) {
+                    cl = 'letter';
+                }
                 return `
                     <div>
-                        <div class="letter-date"><p>${data.date}</p></div>
-                        <div class="letter"><p>${data.greeting}</p></div>
-                        <div class="letter"><p>${data.body}</p></div>
-                        <div class="letter"><p>${data.sign_off}</p></div>
+                        <div class="${cl}-date"><p>${data.date}</p></div>
+                        <div class="${cl}"><p>${data.greeting}</p></div>
+                        <div class="${cl}"><p>${data.body}</p></div>
+                        <div class="${cl}"><p>${data.sign_off}</p></div>
                         <div class="letter-sig"><p>${data.signature}</p></div>
                     </div>
-                `
+                `;
             },
         },
         telegram: {
