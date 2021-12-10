@@ -156,9 +156,9 @@
 }
 .name-banner {
     font-family: "Corinthia";
-    font-style: italic;
+    font-style: normal;
     font-size: x-large;
-    font-weight: bolder;
+    font-weight: bold;
     text-align: center;
     white-space: pre-line;
     grid-area: nb;
