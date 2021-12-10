@@ -2949,8 +2949,9 @@ const dc_utils = {
                 details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split(' ');
                 details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
                 details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
+                let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
                 let r_str = `
-                <div class="sub-hl-box-${side}"><p class="sub-headline">${data.headlines[Math.floor(Math.random() * data.headlines.length)]}</p></div>
+                <div class="sub-hl-box-${side}"><p class="sub-headline">${headline}</p></div>
                 <p class="article-${side}">
                     ${data.starts[Math.floor(Math.random() * data.starts.length)]}\n
                     ${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}\n
