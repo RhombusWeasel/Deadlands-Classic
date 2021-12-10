@@ -2899,8 +2899,11 @@ const dc_utils = {
             build: function(data) {
                 return `
                     <div class="typed">
-                        <div><p>${data.date}</p></div>
-                        <div><p>${data.body}</p></div>
+                        <p class="${cl}-date">${data.date}</p>
+                        <p class="${cl}-header">${data.company}</p>
+                        <p class="${cl}">${data.reciever}</p>
+                        <p class="${cl}">${data.body}</p>
+                        <p class="${cl}">${data.sender}</p>
                     </div>
                 `
             },

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rye');
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia');
 
 .textbox{
     white-space: pre-line;
@@ -127,6 +128,7 @@
 .typed-letter-date {
     font-family: "Special Elite";
     font-size: 12pt;
+    text-align: right;
 }
 .typed-letter {
     font-family: "Special Elite";
@@ -135,6 +137,10 @@
 .letter-sig {
     font-family: "Corinthia", cursive;
     font-size: 32pt;
+}
+.telegram-header{
+    font-family: "UnifrakturMaguntia";
+    font-size: 24pt;
 }
 .newspaper{
     display: grid;

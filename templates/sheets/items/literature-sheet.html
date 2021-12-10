@@ -54,6 +54,34 @@
                     {{/if}}
                 </tr>
                 {{/if}}
+                {{#if (eq data.data.template 'telegram')}}
+                <tr>
+                    <tr>
+                        <th>Date</th>
+                        <td><input type="text" name="data.prefab.telegram.date" value="{{data.data.prefab.telegram.date}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Company</th>
+                        <td><input type="text" name="data.prefab.telegram.comapny" value="{{data.data.prefab.telegram.company}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Message</th>
+                        <td><input type="text" name="data.prefab.telegram.body" value="{{data.data.prefab.telegram.body}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Sender</th>
+                        <td><input type="text" name="data.prefab.telegram.sender" value="{{data.data.prefab.telegram.sender}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Hand Written</th>
+                        {{#if (eq data.data.prefab.telegram.hand_written true)}}
+                        <td class="center"><a><i class="fas fa-check toggle-typed"></i></a></td>
+                        {{else}}
+                        <td class="center"><a><i class="fas fa-times toggle-typed"></i></a></td>
+                        {{/if}}
+                    </tr>
+                </tr>
+                {{/if}}
                 {{#if (eq data.data.template 'newspaper')}}
                 <tr>
                     <th>Date</th>

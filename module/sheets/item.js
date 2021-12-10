@@ -88,6 +88,6 @@ export default class DCItem extends ItemSheet {
 
     _on_toggle_typed(event) {
         event.preventDefault();
-        this.item.update({data: {prefab: {letter: {hand_written: !(this.item.data.data.prefab.letter.hand_written)}}}});
+        this.item.update({data: {prefab: {[this.item.data.data.template]: {hand_written: !(this.item.data.data.prefab.letter.hand_written)}}}});
     }
 }

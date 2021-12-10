@@ -1310,19 +1310,19 @@
             "template": "letter",
             "output":"",
             "prefab": {
-                "book": {
-                    "url": "None",
-                    "skill_roll": false,
-                    "skill": "cognition",
-                    "tn": 5,
-                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!"
-                },
                 "letter": {
                     "date": 0,
                     "greeting": "Howdy Partner!",
                     "body": "I am writing to inform you...",
                     "sign_off": "Kindest regards",
                     "signature": "Some Person",
+                    "hand_written": true
+                },
+                "telegram": {
+                    "date": "1-1-1875",
+                    "company": "Western Union Telegraph Co.",
+                    "body": "Telegrams really cool. Watch out for Gremlins.",
+                    "sender": "Guy Incognito",
                     "hand_written": true
                 },
                 "newspaper": {
@@ -1333,6 +1333,13 @@
                     "main_article": "",
                     "columns": 2,
                     "sub_articles": 1
+                },
+                "book": {
+                    "url": "None",
+                    "skill_roll": false,
+                    "skill": "cognition",
+                    "tn": 5,
+                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!"
                 }
             }
         }
