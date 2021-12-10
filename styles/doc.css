@@ -1,17 +1,5 @@
-@font-face {
-    font-family: 'Corinthia';
-    font-style: normal;
-    src: url(https://fonts.gstatic.com/s/corinthia/v6/wEO_EBrAnchaJyPMHE01WPoK7Es.woff2) format('woff2');
-    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-@font-face {
-    font-family: 'Rye';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(https://fonts.gstatic.com/s/rye/v8/r05XGLJT86YzH57tbOo.woff2) format('woff2');
-    unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
-  }
+@import url('https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700');
+@import url('https://fonts.googleapis.com/css2?family=Rye');
 
 .textbox{
     white-space: pre-line;
