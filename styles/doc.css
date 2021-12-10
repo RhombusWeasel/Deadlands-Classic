@@ -11,7 +11,6 @@
     font-family: 'Paper-Name';
     font-style: bold;
     font-weight: 400;
-    font-display: swap;
     src: url(https://fonts.gstatic.com/s/corinthia/v6/wEO_EBrAnchaJyPMHE01WPoK7Es.woff2) format('woff2');
     unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
   }
@@ -151,7 +150,7 @@
     ;
 }
 .date-banner{
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-small;
     text-align: center;
     white-space: pre-line;
@@ -167,14 +166,14 @@
     grid-area: nb;
 }
 .price-banner{
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-small;
     text-align: center;
     white-space: pre-line;
     grid-area: pb;
 }
 .headline {
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-large;
     font-weight: bold;
     text-align: center;
@@ -182,7 +181,7 @@
     grid-area: hl;
 }
 .main-article {
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-small;
     padding: 5px;
     white-space: pre-line;
@@ -197,21 +196,21 @@
     grid-area: s2;
 }
 .sub-headline {
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: small;
     font-weight: bold;
     text-align: center;
     white-space: pre-line;
 }
 .article-1 {
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-small;
     padding: 5px;
     grid-area: a1;
     white-space: pre-line;
 }
 .article-2 {
-    font-family: "Lucida Sans Typewriter";
+    /* font-family: "Lucida Sans Typewriter"; */
     font-size: xx-small;
     padding: 5px;
     grid-area: a2;
