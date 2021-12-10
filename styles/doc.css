@@ -170,7 +170,7 @@
 .main-article {
     font-family: "Baskervville";
     font-size: x-small;
-    /* font-weight: bold; */
+    font-weight: bold;
     padding: 5px;
     white-space: pre-line;
     grid-area: ma;
@@ -193,7 +193,7 @@
 .article-1 {
     font-family: "Baskervville";
     font-size: x-small;
-    /* font-weight: bold; */
+    font-weight: bold;
     padding: 5px;
     grid-area: a1;
     white-space: pre-line;
@@ -201,7 +201,7 @@
 .article-2 {
     font-family: "Baskervville";
     font-size: x-small;
-    /* font-weight: bold; */
+    font-weight: bold;
     padding: 5px;
     grid-area: a2;
     white-space: pre-line;
