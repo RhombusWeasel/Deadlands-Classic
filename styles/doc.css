@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700');
 @import url('https://fonts.googleapis.com/css2?family=Rye');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite');
 
 .textbox{
     white-space: pre-line;
@@ -136,7 +137,7 @@
     ;
 }
 .date-banner{
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-small;
     text-align: center;
     white-space: pre-line;
@@ -152,14 +153,14 @@
     grid-area: nb;
 }
 .price-banner{
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-small;
     text-align: center;
     white-space: pre-line;
     grid-area: pb;
 }
 .headline {
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-large;
     font-weight: bold;
     text-align: center;
@@ -167,7 +168,7 @@
     grid-area: hl;
 }
 .main-article {
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-small;
     padding: 5px;
     white-space: pre-line;
@@ -182,21 +183,21 @@
     grid-area: s2;
 }
 .sub-headline {
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: small;
     font-weight: bold;
     text-align: center;
     white-space: pre-line;
 }
 .article-1 {
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-small;
     padding: 5px;
     grid-area: a1;
     white-space: pre-line;
 }
 .article-2 {
-    font-family: "Lucida Sans Typewriter";
+    font-family: "Special Elite";
     font-size: xx-small;
     padding: 5px;
     grid-area: a2;
