@@ -144,12 +144,16 @@
     'co co co co co co co co co co'
     'bd bd bd bd bd bd bd bd bd bd'
     'bd bd bd bd bd bd bd bd bd bd'
-    'st st st st st st st st st st'
     ;
 }
-.telegram-date {
-    place-items: center;
-    grid-area: st;
+.telegram-stamp-box {
+    position: relative;
+    top: -66%;
+    left: 58%;
+    width: 200px;
+    height: 100px;
+    transform: translate(-100px, -50px);
+    transform: rotate(-14deg);
 }
 .telegram-header{
     font-family: "UnifrakturMaguntia";
@@ -162,18 +166,10 @@
 }
 .telegram-date-text {
     position: relative;
-    top: -66%;
-    left: 58%;
-    transform: rotate(-14deg);
 }
 .telegram-stamp {
-    position: relative;
-    top: -66%;
-    left: 58%;
     width: 200px;
     height: 100px;
-    transform: translate(-100px, -50px);
-    transform: rotate(-14deg);
 }
 .newspaper{
     display: grid;
