@@ -1326,7 +1326,7 @@
                     "sender": "Guy Incognito",
                     "hand_written": true
                 },
-                "wanted": {
+                "wanted_poster": {
                     "date":"Wed Nov 8th 1876",
                     "crime": "FOR TRAIN ROBBERY",
                     "name": "Thomas 'Black Jack' Ketchum",
