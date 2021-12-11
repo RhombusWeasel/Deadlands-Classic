@@ -2946,7 +2946,7 @@ const dc_utils = {
                         <p class="price-banner"">Only 5¢</p>
                         <p class="headline">${data.headline}</p>
                         ${dc_utils.documents.newspaper.random_article('1')}
-                        <div class="newspaper-image"><img src="${data.img}" data-edit="img" title="${data.name}" height="256" width="256"/></div>
+                        <div class="newspaper-image"><img style="object-fit: fill" src="${data.img}" data-edit="img" title="${data.name}"/></div>
                         <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
                         ${dc_utils.documents.newspaper.random_article('2')}
                     </div>
