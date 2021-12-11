@@ -69,7 +69,9 @@ export default class DCItem extends ItemSheet {
         let element = event.currentTarget;
         let type    = element.value;
         if(dc_utils.documents[type]?.build) {
-            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}});
+            let data = this.item.data.data.prefab[type];
+            data.img = this.item.img;
+            this.item.update({data: {output: dc_utils.documents[type].build(data)}});
         }
     }
 
@@ -78,7 +80,9 @@ export default class DCItem extends ItemSheet {
         let type = this.item.data.data.template;
         console.log(this.item.data.data.template);
         if(dc_utils.documents[type]?.build) {
-            this.item.update({data: {output: dc_utils.documents[type].build(this.item.data.data.prefab[type])}});
+            let data = this.item.data.data.prefab[type];
+            data.img = this.item.img;
+            this.item.update({data: {output: dc_utils.documents[type].build(data)}});
         }
     }
 
