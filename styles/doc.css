@@ -170,6 +170,7 @@
 .telegram-stamp {
     width: 200px;
     height: 100px;
+    border: 0ch;
 }
 .newspaper{
     display: grid;
