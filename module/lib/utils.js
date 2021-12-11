@@ -2924,8 +2924,8 @@ const dc_utils = {
                     <p class="wanted-banner">WANTED</p>
                     <p class="wanted-sub">${data.crime}</p>
                     <div class="flexrow">
-                        <p class="wanted-details">${data.details}</p>
-                        <p class="wanted-details">${data.description}</p>
+                        <p class="typed-letter">${data.details}</p>
+                        <p class="typed-letter">${data.description}</p>
                     </div>
                     <p class="wanted-sub">${data.name}</p>
                     <p class="wanted-sub">${data.reward}</p>
