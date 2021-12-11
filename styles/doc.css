@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite');
 @import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1');
 @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One');
 
 .textbox{
     white-space: pre-line;
@@ -176,11 +177,20 @@
     height: 100px;
     border: 0ch;
 }
-.flyer-box {
-    display: grid;
+.wanted-banner {
+    font-family: "Alpha Slab One";
+    font-size: 32pt;
+    text-align: center;
 }
-.wanted-box {
-    display: grid;
+.wanted-sub {
+    font-family: "Alpha Slab One";
+    font-size: 28pt;
+    text-align: center;
+}
+.wanted-details {
+    font-family: "Alpha Slab One";
+    font-size: 16pt;
+    text-align: center;
 }
 .newspaper{
     display: grid;

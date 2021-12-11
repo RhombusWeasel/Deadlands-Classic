@@ -2917,11 +2917,20 @@ const dc_utils = {
                 `
             },
         },
-        flyer: {label: 'Flyer'},
         wanted_poster: {
             label: 'Wanted Poster',
             build: function(data) {
-                
+                return `
+                    <p class="wanted-banner">WANTED</p>
+                    <p class="wanted-sub">${data.crime}</p>
+                    <p class="wanted-details">${data.details}</p>
+                    <p class="wanted-details">${data.description}</p>
+                    <p class="wanted-sub">${data.name}</p>
+                    <p class="wanted-sub">${data.reward}</p>
+                    <p class="wanted-sub">REWARD</p>
+                    <p class="wanted-sub">THIS NOTICE TAKES PLACE OF ALL PREVIOUS REWARD NOTICES</p>
+                    <p class="wanted-sub">CONTACT: ${data.contact}</p>
+                `;
             }
         },
         newspaper: {
