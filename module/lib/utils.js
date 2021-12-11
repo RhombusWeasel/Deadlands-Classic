@@ -2923,7 +2923,7 @@ const dc_utils = {
                 return `
                     <p class="wanted-banner">WANTED</p>
                     <p class="wanted-sub">${data.crime}</p>
-                    <div class="wanted-image">
+                    <div class="flexrow" style="place-items: center;">
                         <p class="typed-letter">${data.details}</p>
                         <img src="${data.img}" data-edit="img" title="${data.name}" height="256" width="256"/>
                         <p class="typed-letter">${data.description}</p>
