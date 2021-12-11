@@ -2908,9 +2908,11 @@ const dc_utils = {
                             <p class="${cl}-date">${data.date}</p>
                         </div>
                         <p class="telegram-header">${data.company}</p>
-                        <p class="${cl}">${data.reciever}</p>
-                        <p class="${cl}">${data.body}</p>
-                        <p class="${cl}">${data.sender}</p>
+                        <div class="telegram-body">
+                            <p class="${cl}">${data.reciever}</p>
+                            <p class="${cl}">${data.body}</p>
+                            <p class="${cl}">${data.sender}</p>
+                        </div>
                     </div>
                 `
             },
