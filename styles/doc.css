@@ -148,8 +148,8 @@
 }
 .telegram-stamp-box {
     position: relative;
-    top: -66%;
-    left: 58%;
+    top: 4%;
+    left: 101%;
     width: 200px;
     height: 100px;
     transform: translate(-100px, -50px);
@@ -166,6 +166,9 @@
 }
 .telegram-date-text {
     position: relative;
+    position: relative;
+    top: -65%;
+    left: 59%;
 }
 .telegram-stamp {
     width: 200px;
