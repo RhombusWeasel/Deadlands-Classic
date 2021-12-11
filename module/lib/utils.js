@@ -2905,7 +2905,7 @@ const dc_utils = {
                     <div class="telegram">
                         <div class="telegram-date">
                             <img class="telegram-stamp" src="https://cdn.pixabay.com/photo/2014/04/02/10/24/stamp-303749_960_720.png">
-                            <p class="${cl}-date">${data.date}</p>
+                            <p class="telegram-date-text">${data.date}</p>
                         </div>
                         <p class="telegram-header">${data.company}</p>
                         <div class="telegram-body">
