@@ -202,8 +202,11 @@
     display: grid;
     grid:
     'db nb nb nb nb nb nb nb nb nb nb nb nb pb'
+    'db nb nb nb nb nb nb nb nb nb nb nb nb pb'
+    'hl hl hl hl hl hl hl hl hl hl hl hl hl hl'
     'hl hl hl hl hl hl hl hl hl hl hl hl hl hl'
     's1 s1 s1 im im im im im im im im s2 s2 s2'
+    'a1 a1 a1 im im im im im im im im a2 a2 a2'
     'a1 a1 a1 ma ma ma ma ma ma ma ma a2 a2 a2'
     ;
 }
@@ -238,7 +241,7 @@
     grid-area: hl;
 }
 .newspaper-image {
-    place-items: center;
+    place-content: center;
     grid-area: im;
 }
 .main-article {
