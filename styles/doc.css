@@ -138,9 +138,22 @@
     font-family: "Corinthia", cursive;
     font-size: 32pt;
 }
+.telegram {
+    display: grid;
+    grid: 
+    'co co co co co co co co st st'
+    'bd bd bd bd bd bd bd bd bd bd'
+    ;
+}
 .telegram-header{
     font-family: "UnifrakturMaguntia";
     font-size: 24pt;
+    grid-area: co;
+}
+.telegram-stamp {
+    width: 100px;
+    height: 50px;
+    grid-area: st;
 }
 .newspaper{
     display: grid;
