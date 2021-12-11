@@ -2925,7 +2925,7 @@ const dc_utils = {
                     <p class="wanted-sub">${data.crime}</p>
                     <div class="flexrow">
                         <p class="typed-letter">${data.details}</p>
-                        <img src="{{data.img}}" data-edit="img"/>
+                        <img src="{{data.img}}" data-edit="img" title="{{data.name}}"/>
                         <p class="typed-letter">${data.description}</p>
                     </div>
                     <p class="wanted-sub">${data.name}</p>
