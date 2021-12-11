@@ -160,9 +160,8 @@
 }
 .telegram-date-text {
     position: relative;
-    top: 50%;
-    left: 50%;
-    grid-area: st;
+    top: 0%;
+    left: 90%;
 }
 .telegram-stamp {
     width: 200px;
