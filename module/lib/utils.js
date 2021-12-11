@@ -2923,13 +2923,15 @@ const dc_utils = {
                 return `
                     <p class="wanted-banner">WANTED</p>
                     <p class="wanted-sub">${data.crime}</p>
-                    <p class="wanted-details">${data.details}</p>
-                    <p class="wanted-details">${data.description}</p>
+                    <div class="flexrow">
+                        <p class="wanted-details">${data.details}</p>
+                        <p class="wanted-details">${data.description}</p>
+                    </div>
                     <p class="wanted-sub">${data.name}</p>
                     <p class="wanted-sub">${data.reward}</p>
                     <p class="wanted-sub">REWARD</p>
-                    <p class="wanted-sub">THIS NOTICE TAKES PLACE OF ALL PREVIOUS REWARD NOTICES</p>
-                    <p class="wanted-sub">CONTACT: ${data.contact}</p>
+                    <p class="wanted-details">THIS NOTICE TAKES PLACE OF ALL PREVIOUS REWARD NOTICES</p>
+                    <p class="wanted-details">CONTACT: ${data.contact}</p>
                 `;
             }
         },
