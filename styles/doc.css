@@ -141,8 +141,10 @@
 .telegram {
     display: grid;
     grid: 
-    'co co co co co co co co st st'
+    'co co co co co co co co co co'
     'bd bd bd bd bd bd bd bd bd bd'
+    'bd bd bd bd bd bd bd bd bd bd'
+    'bd bd bd bd bd bd st st bd bd'
     ;
 }
 .telegram-date {
