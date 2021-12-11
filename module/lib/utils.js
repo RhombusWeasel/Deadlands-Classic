@@ -2918,7 +2918,12 @@ const dc_utils = {
             },
         },
         flyer: {label: 'Flyer'},
-        wanted_poster: {label: 'Wanted Poster'},
+        wanted_poster: {
+            label: 'Wanted Poster',
+            build: function(data) {
+                
+            }
+        },
         newspaper: {
             label: 'Newspaper',
             build: function(data) {

@@ -155,13 +155,13 @@
     transform: translate(-100px, -50px);
     transform: rotate(-14deg);
 }
-.telegram-header{
+.telegram-header {
     font-family: "UnifrakturMaguntia";
     font-size: 24pt;
     text-align: center;
     grid-area: co;
 }
-.telegram-body{
+.telegram-body {
     grid-area: bd;
 }
 .telegram-date-text {
@@ -169,11 +169,18 @@
     position: relative;
     top: -65%;
     left: 59%;
+    transform: rotate(-2deg);
 }
 .telegram-stamp {
     width: 200px;
     height: 100px;
     border: 0ch;
+}
+.flyer-box {
+    display: grid;
+}
+.wanted-box {
+    display: grid;
 }
 .newspaper{
     display: grid;
