@@ -1321,6 +1321,7 @@
                 "telegram": {
                     "date": "1-1-1875",
                     "company": "Western Union Telegraph Co.",
+                    "reciever": "Mr J. Doe",
                     "body": "Telegrams really cool. Watch out for Gremlins.",
                     "sender": "Guy Incognito",
                     "hand_written": true
