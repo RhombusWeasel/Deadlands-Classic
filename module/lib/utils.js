@@ -2885,6 +2885,7 @@ const dc_utils = {
                 }
                 return `
                     <div>
+                        <img src="https://cdn.pixabay.com/photo/2014/04/02/10/24/stamp-303749_960_720.png">
                         <div class="${cl}-date"><p>${data.date}</p></div>
                         <div class="${cl}"><p>${data.greeting}</p></div>
                         <div class="${cl}"><p>${data.body}</p></div>
@@ -2903,6 +2904,7 @@ const dc_utils = {
                 }
                 return `
                     <div class="typed">
+                        
                         <p class="${cl}-date">${data.date}</p>
                         <p class="telegram-header">${data.company}</p>
                         <p class="${cl}">${data.reciever}</p>
