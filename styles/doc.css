@@ -187,6 +187,12 @@
     font-size: 24pt;
     text-align: center;
 }
+.wanted-image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 .wanted-details {
     font-family: "Alfa Slab One";
     font-size: 16pt;
