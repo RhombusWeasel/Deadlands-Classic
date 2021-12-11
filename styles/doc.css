@@ -145,15 +145,19 @@
     'bd bd bd bd bd bd bd bd bd bd'
     ;
 }
+.telegram-date {
+    place-items: center;
+    grid-area: st;
+}
 .telegram-header{
     font-family: "UnifrakturMaguntia";
     font-size: 24pt;
+    text-align: center;
     grid-area: co;
 }
 .telegram-stamp {
     width: 100px;
     height: 50px;
-    grid-area: st;
 }
 .newspaper{
     display: grid;
