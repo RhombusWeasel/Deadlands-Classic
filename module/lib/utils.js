@@ -2751,7 +2751,7 @@ const dc_utils = {
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
                 .replace('{{random animal}}', data.animals[Math.floor(Math.random() * data.animals.length)])
                 .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
-                .replace('{{random crime}}', data.crimes[Math.floor(Math.random() * data.crimes.length)])
+                .replace('{{random crime}}', data.crime_list[Math.floor(Math.random() * data.crime_list.length)].article)
                 .replace('{{random building}}', data.buildings[Math.floor(Math.random() * data.buildings.length)])
                 .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
                 .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
