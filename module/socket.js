@@ -236,7 +236,7 @@ let operations = {
                 if (data.roll.success) {
                     let dialog = new Dialog({
                         title: 'Clue!',
-                        content: data.clue,
+                        content: `<p class=center>${data.clue}</p>`,
                         close: () => {
                             console.log('Skill Dialog Closed');
                         }
