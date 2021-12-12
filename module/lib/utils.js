@@ -2756,9 +2756,11 @@ const dc_utils = {
                 .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
                 .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                 .replace("{{a random product}}", data.products[Math.floor(Math.random() * data.products.length)])
+                .replace("{{cunning}}", data.cunning[Math.floor(Math.random() * data.cunning.length)])
+                .replace("{{bags}}", data.bags[Math.floor(Math.random() * data.bags.length)])
             }
             if (capitalize) {
-                return r_str.split(' ').map((word) => { 
+                return r_str.split(' ').map((word) => {
                     return word[0].toUpperCase() + word.substring(1); 
                 }).join(" ");
             }else{
@@ -2796,12 +2798,14 @@ const dc_utils = {
                 Wisconsin:    ["Duluth", "Milwaukee"],
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
+            bags:['bags', 'gets', 'catches'],
+            cunning: ['wily', 'crafty', 'cunning', 'shrewd'],
             headlines: [
-                `{{crime}} Epidemic!`,
-                `{{state}} {{crime}} factory?`,
+                `{{crime headline}} Epidemic!`,
+                `{{state}} {{crime headline}} factory?`,
                 `{{culprit polite singular pronoun}} bandit gets just desserts`,
-                `Wily {{officer rank}} gets {{officer clause pronoun}} {{culprit singular pronoun}}`,
-                `Crime Spree in {{state}} reaches new heights!`,
+                `{{cunning}} {{officer rank}} {{bags}} {{officer clause pronoun}} {{culprit singular pronoun}}`,
+                `{{crime headline}} Spree in {{state}} reaches new heights!`,
                 `{{state}} {{number}} get {{sentance}}`
             ],
             starts:   [
@@ -2825,6 +2829,7 @@ const dc_utils = {
             colours: ['red','yellow','pink','green','purple','orange','blue'],
             crime_list: [
                 {headline: 'rustling', article: 'rustling {{a subject animal}}'},
+                {headline: 'rustling', article: 'stealing {{a subject contraband}}'},
                 {headline: 'train robbery', article: 'robbing a train'},
                 {headline: 'hold up', article: 'holding up a stage coach'},
                 {headline: 'cult', article: 'founding a {{a subject animal}} cult'},
@@ -2833,7 +2838,7 @@ const dc_utils = {
                 {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
                 {headline: 'fraud', article: 'Committing {{subject fraud}}'},
             ],
-            contraband: ['Gun', 'Columbian Marching Powder', 'strange green goo'],
+            contraband: ['Guns', 'Drugs', 'Explosives', 'gold', 'ghost rock'],
             products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
             sentances: [
                 '{{random number}} years of military service or the noose',
