@@ -1310,6 +1310,9 @@
             "modifiers": []
         },
         "literature": {
+            "templates": [
+                "description"
+            ],
             "template": "letter",
             "output":"",
             "prefab": {
