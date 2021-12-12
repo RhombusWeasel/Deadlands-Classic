@@ -2819,11 +2819,11 @@ const dc_utils = {
                 `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), and {{culprit clause pronoun}} {{number sub 1}} accomplices were sentanced to {{sentance}} for {{crime}} last week. {{plea for order}}`,
                 `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}}.  {{plea for order}}`,
                 `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!  {{plea for order}}`,
-                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree last month.  {{culprit name formal}} was first seen {{crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} {{culprit objective pronoun}} had occupied by force to the state of {{state}}.`,
+                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree last month.  {{culprit name formal}} was first seen {{crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} [that {{culprit objective pronoun}} had occupied by force] back to the state of {{state}}.`,
             ],
             witness_reports: [
-                `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
-                `One witness who wishes to remain anonymous reported "Look, I know this sounds crazy but {{spooky possession}}".  Another also not willing to put their name to an outright fabrication said "{{spooky possession}} I know how crazy that sounds but it's what I saw!"`,
+                `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed at least by this reporter to be insane.  I think it might be high time to investigate just exactly why so many people I interview are certifiably insane.`,
+                `One witness who wishes to remain anonymous reported "Look, I know this sounds crazy but {{spooky possession}}".  Another also not willing to put their name to an outright fabrication said "{{spooky possession}} I know how crazy that sounds but it's what I saw!"  I mean come on now, {{spooky possession}}!  Like we were all born yesterday, P.T Barnum has a point, there is a sucker born every minute and I'm afraid it's you this minute dear reader if you believe that nonsense!`,
                 `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} Emporium!  I got big {{a subject product}}'s, I got small {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
             ],
             officer_statements: [
@@ -2832,7 +2832,8 @@ const dc_utils = {
             ],
             pleas_for_order: [
                 `Now I know the good people of {{city}} will agree that this just can't stand, we need to start to wake up to this {{crime headline}} epidemic that's sweeping across our fine nation and we need to act fast.`,
-                `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`
+                `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?  We need to get back to family values!`,
+                ``
             ],
             animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
@@ -2846,12 +2847,12 @@ const dc_utils = {
                 {headline: 'robbery', article: 'stealing {{a subject contraband}}'},
                 {headline: 'train robbery', article: 'robbing a train'},
                 {headline: 'hold up', article: 'holding up a stage coach'},
-                {headline: 'cult', article: 'founding a {{a subject animal}} cult'},
+                {headline: 'cult', article: 'founding a {{a subject animal}} worshiping cult'},
                 {headline: 'vandalism', article: 'vandalising a {{a subject building}}'},
                 {headline: 'arson', article: 'burning down a {{a subject building}}'},
                 {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
                 {headline: 'fraud', article: 'committing {{a subject fraud}} fraud'},
-                {headline: 'murder', article: '{{crime count}} counts of first degree murder'},
+                {headline: 'murder', article: `murdering {{crime count}} people and {{random number}} {{random animal}}'s`},
             ],
             dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
             fraud: ['mail', 'telegraph', 'financial'],
