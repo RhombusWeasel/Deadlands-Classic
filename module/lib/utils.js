@@ -2742,9 +2742,12 @@ const dc_utils = {
                 .replaceAll('{{crime headline}}', data.crime_list[details.crime].headline)
                 .replaceAll('{{sentance}}', details.sentance)
                 .replaceAll("{{number}}", details.number)
-                .replaceAll('{{a subject building}}', details.building)
+                .replaceAll("{{number sub 1}}", details.number - 1)
                 .replaceAll('{{a subject animal}}', details.subject_animal)
-                .replaceAll("{{a subject product}}", data.products[Math.floor(Math.random() * data.products.length)])
+                .replaceAll('{{a subject building}}', details.building)
+                .replaceAll("{{a subject contraband}}", details.contraband)
+                .replaceAll("{{a subject fraud}}", details.fraud)
+                .replaceAll("{{a subject product}}", details.product)
                 .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
@@ -2757,7 +2760,9 @@ const dc_utils = {
                 .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                 .replace("{{a random product}}", data.products[Math.floor(Math.random() * data.products.length)])
                 .replace("{{cunning}}", data.cunning[Math.floor(Math.random() * data.cunning.length)])
-                .replace("{{bags}}", data.bags[Math.floor(Math.random() * data.bags.length)])
+                .replace("{{captures}}", data.captures[Math.floor(Math.random() * data.captures.length)])
+                .replace("{{captured}}", data.captured[Math.floor(Math.random() * data.captured.length)])
+                .replace("{{dastardly}}", data.dastardly[Math.floor(Math.random() * data.dastardly.length)])
             }
             if (capitalize) {
                 return r_str.split(' ').map((word) => {
@@ -2798,22 +2803,20 @@ const dc_utils = {
                 Wisconsin:    ["Duluth", "Milwaukee"],
                 Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
             },
-            bags:['bags', 'gets', 'catches'],
-            cunning: ['wily', 'crafty', 'cunning', 'shrewd'],
             headlines: [
-                `{{crime headline}} Epidemic!`,
+                `{{crime headline}} Epidemic in {{state}}!`,
                 `{{state}} {{crime headline}} factory?`,
-                `{{culprit polite singular pronoun}} bandit gets just desserts`,
-                `{{cunning}} {{officer rank}} {{bags}} {{officer clause pronoun}} {{culprit singular pronoun}}`,
-                `{{crime headline}} Spree in {{state}} reaches new heights!`,
+                `{{culprit polite singular pronoun}} bandit {{captured}}`,
+                `{{cunning}} {{officer rank}} {{captures}} {{officer clause pronoun}} {{culprit singular pronoun}}`,
+                `{{crime headline}} Spree in {{state}}!`,
                 `{{state}} {{number}} get {{sentance}}`
             ],
             starts:   [
-                `A gang of {{number}} {{culprit group pronoun}}, led by {{culprit name full}}({{age}}), were caught {{crime}} in {{city}}, {{state}} last week.`,
-                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), was sentanced to {{sentance}} for {{crime}}.`,
-                `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}} I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`,
-                `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!`,
-                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree today.  {{culprit name formal}} was first seen {{crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} {{culprit objective pronoun}} had occupied by force to the state of {{state}}.`,
+                `A {{dastardly}} gang of {{number}} {{culprit group pronoun}}, led by {{culprit name full}}({{age}}), were {{captured}} {{crime}} in {{city}}, {{state}} last week. {{plea for order}}`,
+                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), and {{culprit clause pronoun}} {{number sub 1}} accomplices were sentanced to {{sentance}} for {{crime}} last week. {{plea for order}}`,
+                `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}}.  {{plea for order}}`,
+                `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!  {{plea for order}}`,
+                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree last month.  {{culprit name formal}} was first seen {{crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} {{culprit objective pronoun}} had occupied by force to the state of {{state}}.`,
             ],
             witness_reports: [
                 `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed to be insane.`,
@@ -2824,27 +2827,37 @@ const dc_utils = {
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
                 `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}.`
             ],
+            pleas_for_order: [
+                `Now I know the good people of {{city}} will agree that this just can't stand, we need to start to wake up to this {{crime headline}} epidemic that's sweeping across our fine nation and we need to act fast.`,
+                `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?`
+            ],
             animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
+            captures:['bags', 'gets', 'catches', 'nabs', 'traps', 'brings in', 'apprehends'],
+            captured: ['caught', 'apprehended', 'captured', 'arrested', 'caught in the act', 'caught red handed'],
+            cunning: ['wily', 'crafty', 'cunning', 'shrewd'],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
+            contraband: ['Guns', 'Drugs', 'Explosives', 'gold', 'ghost rock'],
             crime_list: [
                 {headline: 'rustling', article: 'rustling {{a subject animal}}'},
-                {headline: 'rustling', article: 'stealing {{a subject contraband}}'},
+                {headline: 'robbery', article: 'stealing {{a subject contraband}}'},
                 {headline: 'train robbery', article: 'robbing a train'},
                 {headline: 'hold up', article: 'holding up a stage coach'},
                 {headline: 'cult', article: 'founding a {{a subject animal}} cult'},
                 {headline: 'vandalism', article: 'vandalising a {{a subject building}}'},
                 {headline: 'arson', article: 'burning down a {{a subject building}}'},
                 {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
-                {headline: 'fraud', article: 'Committing {{subject fraud}}'},
+                {headline: 'fraud', article: 'committing {{a subject fraud}} fraud'},
+                {headline: 'murder', article: 'first degree murder'},
             ],
-            contraband: ['Guns', 'Drugs', 'Explosives', 'gold', 'ghost rock'],
+            dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
+            fraud: ['mail', 'telegraph', 'financial'],
             products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
             sentances: [
-                '{{random number}} years of military service or the noose',
-                '{{random number}} years with no chance of parole',
-                '{{random number}} years in the state penitentiary',
-                'a good ol\' fashioned hangin\'',
+                '{{sentance number}} years of military service or the noose',
+                '{{sentance number}} years with no chance of parole',
+                '{{sentance number}} years in the state penitentiary',
+                `a good ol' fashioned hangin'`,
                 'death by New Science'
             ],
             spooky_possessions: [
@@ -2963,18 +2976,22 @@ const dc_utils = {
                 let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
                 let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)]
                 let details = {
-                    territory:      territory,
-                    state:          state,
-                    city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
-                    crime:          Math.floor(Math.random() * data.crime_list.length),
-                    sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
-                    subject_animal: data.animals[Math.floor(Math.random() * data.animals.length)],
-                    number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
-                    building:       data.buildings[Math.floor(Math.random() * data.buildings.length)],
-                    product:        data.products[Math.floor(Math.random() * data.products.length)],
-                    char:           {
+                    territory:       territory,
+                    state:           state,
+                    city:            data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
+                    crime:           Math.floor(Math.random() * data.crime_list.length),
+                    sentance:        data.sentances[Math.floor(Math.random() * data.sentances.length)],
+                    sentance_number: data.numbers[Math.floor(Math.random() * data.sentances.length)],
+                    subject_animal:  data.animals[Math.floor(Math.random() * data.animals.length)],
+                    number:          data.numbers[Math.floor(Math.random() * data.numbers.length)],
+                    fraud:           data.fraud[Math.floor(Math.random() * data.fraud.length)],
+                    building:        data.buildings[Math.floor(Math.random() * data.buildings.length)],
+                    product:         data.products[Math.floor(Math.random() * data.products.length)],
+                    contraband:      data.contraband[Math.floor(Math.random() * data.contraband.length)],
+                    char:            {
                         culprit: {
                             gender: Math.random() > 0.49 ? 'male' : 'female',
+                            profession: data.professions[Math.floor(Math.random() * data.professions.length)]
                         },
                         officer: {
                             gender: Math.random() > 0.49 ? 'male' : 'female',
