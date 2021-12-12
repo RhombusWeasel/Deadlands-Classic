@@ -2739,7 +2739,7 @@ const dc_utils = {
                 .replaceAll('{{state}}', details.state)
                 .replaceAll('{{city}}', details.city)
                 .replaceAll('{{crime}}', data.crime_list[details.crime].article)
-                .replaceAll('{{crime headline}}', data.crime_list[details.crime].headline)
+                .replaceAll('{{crime count}}', details.crime_count)
                 .replaceAll('{{sentance}}', details.sentance)
                 .replaceAll("{{number}}", details.number)
                 .replaceAll("{{number sub 1}}", details.number - 1)
@@ -2763,6 +2763,7 @@ const dc_utils = {
                 .replace("{{cunning}}", data.cunning[Math.floor(Math.random() * data.cunning.length)])
                 .replace("{{captures}}", data.captures[Math.floor(Math.random() * data.captures.length)])
                 .replace("{{captured}}", data.captured[Math.floor(Math.random() * data.captured.length)])
+                .replace('{{crime headline}}', data.crime_list[details.crime].headline)
                 .replace("{{dastardly}}", data.dastardly[Math.floor(Math.random() * data.dastardly.length)])
             }
             if (capitalize) {
@@ -2838,7 +2839,7 @@ const dc_utils = {
             captured: ['caught', 'apprehended', 'captured', 'arrested', 'caught in the act', 'caught red handed'],
             cunning: ['wily', 'crafty', 'cunning', 'shrewd'],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
-            contraband: ['Guns', 'Drugs', 'Explosives', 'gold', 'ghost rock'],
+            contraband: ['guns', 'drugs', 'explosives', 'gold', 'ghost rock'],
             crime_list: [
                 {headline: 'rustling', article: 'rustling {{a subject animal}}'},
                 {headline: 'robbery', article: 'stealing {{a subject contraband}}'},
@@ -2849,7 +2850,7 @@ const dc_utils = {
                 {headline: 'arson', article: 'burning down a {{a subject building}}'},
                 {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
                 {headline: 'fraud', article: 'committing {{a subject fraud}} fraud'},
-                {headline: 'murder', article: 'the murder of {{random name}}'},
+                {headline: 'murder', article: '{{crime count}} counts of first degree murder'},
             ],
             dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
             fraud: ['mail', 'telegraph', 'financial'],
@@ -2981,6 +2982,7 @@ const dc_utils = {
                     state:           state,
                     city:            data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
                     crime:           Math.floor(Math.random() * data.crime_list.length),
+                    crime_count:     data.numbers[Math.floor(Math.random() * data.sentances.length)],
                     sentance:        data.sentances[Math.floor(Math.random() * data.sentances.length)],
                     sentance_number: data.numbers[Math.floor(Math.random() * data.sentances.length)],
                     subject_animal:  data.animals[Math.floor(Math.random() * data.animals.length)],
