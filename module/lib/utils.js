@@ -2842,7 +2842,7 @@ const dc_utils = {
             colours: ['red','yellow','pink','green','purple','orange','blue'],
             contraband: ['guns', 'drugs', 'explosives', 'gold', 'ghost rock'],
             crime_list: [
-                {headline: 'rustling', article: 'rustling {{a subject animal}}'},
+                {headline: 'rustling', article: `rustling {{a subject animal}}'s`},
                 {headline: 'robbery', article: 'stealing {{a subject contraband}}'},
                 {headline: 'train robbery', article: 'robbing a train'},
                 {headline: 'hold up', article: 'holding up a stage coach'},
