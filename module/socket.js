@@ -228,13 +228,17 @@ let operations = {
         game.user.character.sheet.render(false);
     },
     reveal_clue: function(data) {
-        let act = dc_utils.get_actor(data.roller);
-        if (act.isOwner) {
-            if (data.roll.success) {
-                let dialog = new Dialog({
-                    title: 'Clue!',
-                    content: data.clue
-                }).render(true);
+        if (game.user.isGM) {
+            dc_utils.socket.emit('reveal_clue', data);
+        }else{
+            let act = dc_utils.get_actor(data.roller);
+            if (act.isOwner) {
+                if (data.roll.success) {
+                    let dialog = new Dialog({
+                        title: 'Clue!',
+                        content: data.clue
+                    }).render(true);
+                }
             }
         }
     },
