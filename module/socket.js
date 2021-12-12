@@ -236,7 +236,10 @@ let operations = {
                 if (data.roll.success) {
                     let dialog = new Dialog({
                         title: 'Clue!',
-                        content: data.clue
+                        content: data.clue,
+                        close: () => {
+                            console.log('Skill Dialog Closed');
+                        }
                     }).render(true);
                 }
             }
