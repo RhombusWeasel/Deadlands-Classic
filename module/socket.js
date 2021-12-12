@@ -236,7 +236,11 @@ let operations = {
                 if (data.roll.success) {
                     let dialog = new Dialog({
                         title: 'Clue!',
-                        content: `<p class=center>${data.clue}</p>`,
+                        content: `
+                        <form class="center typed">
+                            <p class=center>${data.clue}</p>
+                        </form>
+                        `,
                         close: () => {
                             console.log('Skill Dialog Closed');
                         }
