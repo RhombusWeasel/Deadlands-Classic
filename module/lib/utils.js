@@ -2961,7 +2961,7 @@ const dc_utils = {
                     territory:      territory,
                     state:          state,
                     city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
-                    crime:          Math.random() * data.crime_list.length,
+                    crime:          Math.floor(Math.random() * data.crime_list.length),
                     sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
                     subject_animal: data.animals[Math.floor(Math.random() * data.animals.length)],
                     number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
