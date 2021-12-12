@@ -21,7 +21,7 @@ export default class DCItem extends ItemSheet {
                     let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
                     data.next_op = 'reveal_clue';
                     data.clue    = this.item.data.data.prefab.book.clue;
-                    dc_utils.socket.emit('check_tn', data);
+                    operations.skill_roll(data);
                 }
             }, this.item.data.data.prefab.book.timer * 1000);
         }
