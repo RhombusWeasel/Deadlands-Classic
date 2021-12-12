@@ -2749,6 +2749,7 @@ const dc_utils = {
                 .replaceAll("{{a subject fraud}}", details.fraud)
                 .replaceAll("{{a subject product}}", details.product)
                 .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
+                .replaceAll("{{plea for order}}", data.pleas_for_order[Math.floor(Math.random() * data.pleas_for_order.length)])
 
                 .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
                 .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
@@ -2756,7 +2757,7 @@ const dc_utils = {
                 .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
                 .replace('{{random crime}}', data.crime_list[Math.floor(Math.random() * data.crime_list.length)].article)
                 .replace('{{random building}}', data.buildings[Math.floor(Math.random() * data.buildings.length)])
-                .replace('{{age}}', Math.floor((Math.random() * 88) + 12))
+                .replace('{{age}}', Math.floor((Math.random() * 68) + 12))
                 .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
                 .replace("{{a random product}}", data.products[Math.floor(Math.random() * data.products.length)])
                 .replace("{{cunning}}", data.cunning[Math.floor(Math.random() * data.cunning.length)])
@@ -2848,7 +2849,7 @@ const dc_utils = {
                 {headline: 'arson', article: 'burning down a {{a subject building}}'},
                 {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
                 {headline: 'fraud', article: 'committing {{a subject fraud}} fraud'},
-                {headline: 'murder', article: 'first degree murder'},
+                {headline: 'murder', article: 'the murder of {{random name}}'},
             ],
             dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
             fraud: ['mail', 'telegraph', 'financial'],
