@@ -2743,7 +2743,7 @@ const dc_utils = {
                 .replaceAll('{{sentance}}', details.sentance)
                 .replaceAll('{{sentance number}}', details.sentance_number)
                 .replaceAll("{{number}}", details.number)
-                .replaceAll("{{number sub 1}}", details.number - 1)
+                .replaceAll("{{number sub 1}}", data.number_lookup[data.number.indexOf(details.number)] - 1)
                 .replaceAll('{{a subject animal}}', details.subject_animal)
                 .replaceAll('{{a subject building}}', details.building)
                 .replaceAll("{{a subject contraband}}", details.contraband)
@@ -2869,6 +2869,7 @@ const dc_utils = {
                 `something sticky and glowing {{random colour}} was dripping out {{culprit clause pronoun}} eyes the whole time`,
             ],
             numbers: ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+            number_lookup: [3,4,5,6,7,8,9,10],
             officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
             professions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
             pronouns: {
