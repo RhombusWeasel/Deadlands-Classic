@@ -2714,6 +2714,7 @@ const dc_utils = {
                 .replaceAll('{{culprit subjective pronoun}}', data.pronouns[details.char.culprit.gender].subjective)
                 .replaceAll('{{culprit objective pronoun}}', data.pronouns[details.char.culprit.gender].objective)
                 .replaceAll('{{culprit clause pronoun}}', data.pronouns[details.char.culprit.gender].clause)
+                .replaceAll('{{culprit child pronoun}}', data.pronouns[details.char.culprit.gender].child)
                 .replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
                 .replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
                 .replaceAll('{{officer rank}}', details.char.officer.rank)
@@ -2766,6 +2767,7 @@ const dc_utils = {
                 .replace("{{captured}}", data.captured[Math.floor(Math.random() * data.captured.length)])
                 .replace('{{crime headline}}', data.crime_list[details.crime].headline)
                 .replace("{{dastardly}}", data.dastardly[Math.floor(Math.random() * data.dastardly.length)])
+                .replace("{{reporter insult}}", data.reporter_insults[Math.floor(Math.random() * data.reporter_insults.length)])
             }
             if (capitalize) {
                 return r_str.split(' ').map((word) => {
@@ -2828,12 +2830,13 @@ const dc_utils = {
             ],
             officer_statements: [
                 `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
-                `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}.`
+                `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}. The govenor was unavailable for comment but one aide said "{{reporter insult}}"`,
+                `{{officer name full}}({{age}}) the arresting officer had this to say.  "{{culprit name formal}}, is related to a local {{a subject product}} magnate and I think this is just a case of {{culprit child pronoun}}'s will be {{culprit child pronoun}}'s.  I'd also like to address the {{dastardly}} rumours going around about corruption in the {{city}} police department, these lies are unfounded and frankly it's counterfeight news."`
             ],
             pleas_for_order: [
                 `Now I know the good people of {{city}} will agree that this just can't stand, we need to start to wake up to this {{crime headline}} epidemic that's sweeping across our fine nation and we need to act fast.`,
                 `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?  We need to get back to family values!`,
-                ``
+                `I think we all can come together tonight and add {{city}} to our collective prayers, and I for one will be donating to all the various charities that spring from this tragic event that has befallen our brothers and sisters in {{state}}.`
             ],
             animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
@@ -2857,10 +2860,18 @@ const dc_utils = {
             dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
             fraud: ['mail', 'telegraph', 'financial'],
             products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
+            reporter_insults: [
+                'Scram News Jockey',
+                `You reporters don't know when to leave it alone some things you should just let lie if you know what's good for you.`,
+                `Eat shit Muckraker`,
+                `Get out of here! This is private property`,
+                `Who let you in here! {{random name male}} you are fired! You! Get out!`
+            ],
             sentances: [
                 '{{sentance number}} years of military service or the noose',
                 '{{sentance number}} years with no chance of parole',
                 '{{sentance number}} years in the state penitentiary',
+                '{{sentance number}} years hard time',
                 `a good ol' fashioned hangin'`,
                 'death by New Science'
             ],
@@ -2881,6 +2892,7 @@ const dc_utils = {
                     subjective: 'him',
                     objective:  'he',
                     clause:     'his',
+                    child:      'boy',
                     polite: {
                         singular: 'gentleman',
                         group: 'gentlemen',
@@ -2893,6 +2905,7 @@ const dc_utils = {
                     subjective: 'her',
                     objective:  'she',
                     clause:     'her',
+                    child:      'girl',
                     polite: {
                         singular: 'lady',
                         group: 'ladies',
