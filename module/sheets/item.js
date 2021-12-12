@@ -17,7 +17,8 @@ export default class DCItem extends ItemSheet {
         if (this.item.data.data.template == 'book' && this.item.data.data.prefab.book.skill_check) {
             setTimeout(() => {
                 if (!(game.user.isGM)) {
-                    let act = game.user.character;
+                    console.log('This fired.');
+                    let act = dc_utils.get_actor(game.user.character.name);
                     let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
                     data.next_op = 'reveal_clue';
                     data.clue    = this.item.data.data.prefab.book.clue;
