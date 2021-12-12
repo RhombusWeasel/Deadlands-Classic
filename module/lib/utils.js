@@ -2738,7 +2738,8 @@ const dc_utils = {
                 .replaceAll('{{territory}}', details.territory)
                 .replaceAll('{{state}}', details.state)
                 .replaceAll('{{city}}', details.city)
-                .replaceAll('{{crime}}', details.crime)
+                .replaceAll('{{crime}}', data.crime_list[details.crime].article)
+                .replaceAll('{{crime headline}}', data.crime_list[details.crime].headline)
                 .replaceAll('{{sentance}}', details.sentance)
                 .replaceAll("{{number}}", details.number)
                 .replaceAll('{{a subject building}}', details.building)
@@ -2822,17 +2823,17 @@ const dc_utils = {
             animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
             colours: ['red','yellow','pink','green','purple','orange','blue'],
-            crimes: [
-                'rustling cattle',
-                'robbing a train',
-                'holding up a stage-coach',
-                'committing telegraph fraud',
-                'starting a {{a subject animal}} worshiping cult',
-                'vandalizing a {{a subject building}}',
-                'attempting to blow up a {{a subject building}}',
-                '{{a subject animal}} rustling',
-                `smuggling {{a subject product}}'s`,
+            crime_list: [
+                {headline: 'rustling', article: 'rustling {{a subject animal}}'},
+                {headline: 'train robbery', article: 'robbing a train'},
+                {headline: 'hold up', article: 'holding up a stage coach'},
+                {headline: 'cult', article: 'founding a {{a subject animal}} cult'},
+                {headline: 'vandalism', article: 'vandalising a {{a subject building}}'},
+                {headline: 'arson', article: 'burning down a {{a subject building}}'},
+                {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
+                {headline: 'fraud', article: 'Committing {{subject fraud}}'},
             ],
+            contraband: ['Gun', 'Columbian Marching Powder', 'strange green goo'],
             products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
             sentances: [
                 '{{random number}} years of military service or the noose',
@@ -2960,7 +2961,7 @@ const dc_utils = {
                     territory:      territory,
                     state:          state,
                     city:           data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
-                    crime:          data.crimes[Math.floor(Math.random() * data.crimes.length)],
+                    crime:          Math.random() * data.crime_list.length,
                     sentance:       data.sentances[Math.floor(Math.random() * data.sentances.length)],
                     subject_animal: data.animals[Math.floor(Math.random() * data.animals.length)],
                     number:         data.numbers[Math.floor(Math.random() * data.numbers.length)],
