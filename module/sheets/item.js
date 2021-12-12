@@ -15,14 +15,16 @@ export default class DCItem extends ItemSheet {
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
         if (this.item.data.data.template == 'book' && this.item.data.data.prefab.book.skill_check) {
+            console.log('Setting skill check timer.');
             setTimeout(() => {
                 if (!(game.user.isGM)) {
-                    console.log('This fired.');
                     let act = dc_utils.get_actor(game.user.character.name);
-                    let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
-                    data.next_op = 'reveal_clue';
-                    data.clue    = this.item.data.data.prefab.book.clue;
-                    operations.skill_roll(data);
+                    if (act.isOwner) {
+                        let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
+                        data.next_op = 'reveal_clue';
+                        data.clue    = this.item.data.data.prefab.book.clue;
+                        operations.skill_roll(data);
+                    }
                 }
             }, this.item.data.data.prefab.book.timer * 1000);
         }
