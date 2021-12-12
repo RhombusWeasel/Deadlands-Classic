@@ -14,6 +14,17 @@ export default class DCItem extends ItemSheet {
         }else{
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
+        if (this.item.data.data.template == 'book' && this.item.data.data.prefab.book.skill_check) {
+            setTimeout(() => {
+                if (!(game.user.isGM)) {
+                    let act = game.user.character;
+                    let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
+                    data.next_op = 'reveal_clue';
+                    data.clue    = this.item.data.data.prefab.book.clue;
+                    dc_utils.socket.emit('check_tn', data);
+                }
+            }, this.item.data.data.prefab.book.timer * 1000);
+        }
         return data;
     }
 

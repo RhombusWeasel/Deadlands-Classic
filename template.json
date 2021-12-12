@@ -1356,7 +1356,8 @@
                     "skill_roll": false,
                     "skill": "cognition",
                     "tn": 5,
-                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!"
+                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!",
+                    "timer": 30
                 }
             }
         }

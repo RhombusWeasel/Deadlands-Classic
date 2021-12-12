@@ -227,6 +227,17 @@ let operations = {
     force_update: function(data) {
         game.user.character.sheet.render(false);
     },
+    reveal_clue: function(data) {
+        let act = dc_utils.get_actor(data.roller);
+        if (act.isOwner) {
+            if (data.roll.success) {
+                let dialog = new Dialog({
+                    title: 'Clue!',
+                    content: data.clue
+                }).render(true);
+            }
+        }
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
