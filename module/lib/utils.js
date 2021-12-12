@@ -2741,6 +2741,7 @@ const dc_utils = {
                 .replaceAll('{{crime}}', data.crime_list[details.crime].article)
                 .replaceAll('{{crime count}}', details.crime_count)
                 .replaceAll('{{sentance}}', details.sentance)
+                .replaceAll('{{sentance number}}', details.sentance_number)
                 .replaceAll("{{number}}", details.number)
                 .replaceAll("{{number sub 1}}", details.number - 1)
                 .replaceAll('{{a subject animal}}', details.subject_animal)
