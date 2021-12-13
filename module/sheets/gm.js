@@ -464,7 +464,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_bleeding: !act.data.data.is_bleeding}});
+        dc_utils.random_update(act, {data: {is_bleeding: !act.data.data.is_bleeding}});
         dc_utils.gm.update_sheet();
     }
 
@@ -473,7 +473,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_running: !act.data.data.is_running}});
+        dc_utils.random_update(act, {data: {is_running: !act.data.data.is_running}});
         dc_utils.gm.update_sheet();
     }
 
@@ -482,7 +482,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_mounted: !act.data.data.is_mounted}});
+        dc_utils.random_update(act, {data: {is_mounted: !act.data.data.is_mounted}});
         dc_utils.gm.update_sheet();
     }
 
@@ -491,7 +491,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_moved: !act.data.data.is_moved}});
+        dc_utils.random_update(act, {data: {is_moved: !act.data.data.is_moved}});
         dc_utils.gm.update_sheet();
     }
 

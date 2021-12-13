@@ -60,7 +60,7 @@ export default class DCItem extends ItemSheet {
             target: item.data.data.target_select,
             modifier: item.data.data.value_select
         });
-        item.update({data: {modifiers: mods}});
+        dc_utils.random_update(item, {data: {modifiers: mods}});
         return this.getData();
     }
 
@@ -76,7 +76,7 @@ export default class DCItem extends ItemSheet {
         }
         let mods = item.data.data.modifiers;
         mods.splice(index, 1);
-        item.update({data: {modifiers: mods}});
+        dc_utils.random_update(item, {data: {modifiers: mods}});
     }
 
     _on_document_select(event) {
@@ -86,7 +86,7 @@ export default class DCItem extends ItemSheet {
         if(dc_utils.documents[type]?.build) {
             let data = this.item.data.data.prefab[type];
             data.img = this.item.img;
-            this.item.update({data: {output: dc_utils.documents[type].build(data)}});
+            this.dc_utils.random_update(item, {data: {output: dc_utils.documents[type].build(data)}});
         }
     }
 
@@ -97,17 +97,17 @@ export default class DCItem extends ItemSheet {
         if(dc_utils.documents[type]?.build) {
             let data = this.item.data.data.prefab[type];
             data.img = this.item.img;
-            this.item.update({data: {output: dc_utils.documents[type].build(data)}});
+            this.dc_utils.random_update(item, {data: {output: dc_utils.documents[type].build(data)}});
         }
     }
 
     _on_toggle_clue(event) {
         event.preventDefault();
-        this.item.update({data: {prefab: {book: {skill_roll: !(this.item.data.data.prefab.book.skill_roll)}}}});
+        this.dc_utils.random_update(item, {data: {prefab: {book: {skill_roll: !(this.item.data.data.prefab.book.skill_roll)}}}});
     }
 
     _on_toggle_typed(event) {
         event.preventDefault();
-        this.item.update({data: {prefab: {[this.item.data.data.template]: {hand_written: !(this.item.data.data.prefab[this.item.data.data.template].hand_written)}}}});
+        this.dc_utils.random_update(item, {data: {prefab: {[this.item.data.data.template]: {hand_written: !(this.item.data.data.prefab[this.item.data.data.template].hand_written)}}}});
     }
 }

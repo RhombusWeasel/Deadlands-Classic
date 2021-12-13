@@ -1098,6 +1098,11 @@ const dc_utils = {
     get_token: function(name) {
         return canvas.tokens.placeables.find(i => i.name == name);
     },
+    random_update: function(ob, data) {
+        return setTimeout(() => {
+            ob.update(data);
+        }, Math.random() * 1000)
+    },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
      * @param {STR} a The Singular version
@@ -1180,7 +1185,7 @@ const dc_utils = {
                 minute:     60000 * 5
             }
             let new_val = act.data.data.timestamp + (val[period] * mult)
-            act.update({data: {timestamp: new_val}});
+            dc_utils.random_update(act, {data: {timestamp: new_val}});
             game.settings.set('deadlands_classic','unixtime', new_val);
             dc_utils.gm.update_sheet();
         },
@@ -1216,11 +1221,11 @@ const dc_utils = {
             },
             add: function(act, amt) {
                 let bty = act.data.data.bounty
-                return act.update({data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
+                return dc_utils.random_update(act, {data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
             },
             remove: function(act, amt) {
                 let bty = act.data.data.bounty
-                return act.update({data: {bounty: {value: bty.value - amt}}})
+                return dc_utils.random_update(act, {data: {bounty: {value: bty.value - amt}}})
             },
         },
         skill: {
@@ -1270,9 +1275,9 @@ const dc_utils = {
             set_level: function(act, skill_name, lvl) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: lvl}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: lvl}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
                 }
             },
             add_level: function(act, skill_name, amt) {
@@ -1282,22 +1287,22 @@ const dc_utils = {
                     dc_utils.char.skill.add_modifier(act, skill_name, 8);
                 }
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: skill.level + amt}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: skill.level + amt}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
                 }
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 let sk_mod = parseInt(skill.modifier) || 0;
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
                     if (skill.trait_fb) {
                         let trait = dc_utils.char.skill.get(act, skill.trait);
                         sk_mod -= trait.modifier;
                     }
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
                 }
             },
             remove_level: function(act, skill_name, amt) {
@@ -1307,27 +1312,27 @@ const dc_utils = {
                     dc_utils.char.skill.add_modifier(act, skill_name, -8);
                 }
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: skill.level - amt}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: skill.level - amt}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
                 }
             },
             remove_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
                 }
             },
             set_die_type: function(act, skill_name, sides) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                return act.update({data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
+                return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
             },
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.die_sides < 12) {
-                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
                 }
             },
         },
@@ -1365,7 +1370,7 @@ const dc_utils = {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item.id])}, Math.random() * 1000);
             },
             update: function(item, data) {
-                setTimeout(() => {item.update({data: data})}, Math.random() * 1000);
+                dc_utils.random_update(item, {data: data});
             },
             get: function(act, item_type, sort_key = 'name') {
                 return act.items.filter(function (item) {return item.type == item_type})
@@ -1408,7 +1413,7 @@ const dc_utils = {
                         light_angle: 360
                     });
                 }
-                return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
+                return dc_utils.random_update(act, {data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
                 dc_utils.char.items.unequip(act, slot);
@@ -1432,7 +1437,7 @@ const dc_utils = {
                         light_angle: item.data.data.light_angle
                     });
                 }
-                return act.update({data: {data: {equipped: {[slot]: id}}}});
+                return dc_utils.random_update(act, {data: {data: {equipped: {[slot]: id}}}});
             },
             is_equipped: function(act, slot, id) {
                 if (id == act.data.data.equipped[slot]) {
@@ -1443,7 +1448,7 @@ const dc_utils = {
             delete: function(act, id) {
                 let item = act.items.get(id);
                 if (item?.data?.data?.amount > 1) {
-                    return item.update({data: {amount: item.data.data.amount - 1}});
+                    return dc_utils.random_update(item, {data: {amount: item.data.data.amount - 1}});
                 }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
@@ -1486,7 +1491,7 @@ const dc_utils = {
                     }
                     let total = '$' + (ppu * item.data.data.amount).toFixed(2);
                     if (total != item.data.data.total_cost) {
-                        item.update({data: {total_cost: total}});
+                        dc_utils.random_update(item, {data: {total_cost: total}});
                     }
                 }
             },
@@ -1494,7 +1499,7 @@ const dc_utils = {
                 let has_item = dc_utils.char.has(act, item.type, item.name);
                 if (has_item) {
                     if (has_item.type == 'goods') {
-                        has_item.update({data: {amount: has_item.data.data.amount + amount}});
+                        dc_utils.random_update(has_item, {data: {amount: has_item.data.data.amount + amount}});
                         return true;
                     }
                 }
@@ -1545,7 +1550,7 @@ const dc_utils = {
                 let tot = act.data.data.wounds[loc] + amt;
                 if (amt > 0) {
                     if (ws >= amt) {
-                        act.update({data: {wound_soak: ws - amt}});
+                        dc_utils.random_update(act, {data: {wound_soak: ws - amt}});
                         dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
                         return true;
                     }else{
@@ -1553,7 +1558,7 @@ const dc_utils = {
                         if (ws > 0) {
                             dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
                         }
-                        act.update({data: {wound_soak: 0}});
+                        dc_utils.random_update(act, {data: {wound_soak: 0}});
                     }
                     return setTimeout(() => {
                         let data = {
@@ -1567,7 +1572,7 @@ const dc_utils = {
                         let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                         let next_heal = timestamp + act.data.data.healing_factor;
                         data.heals = {[loc]: next_heal};
-                        act.update({data});
+                        dc_utils.random_update(act, {data});
                     }, Math.random() * 500);
                 }else{
                     dc_utils.chat.send('Wound', `${act.name} was lucky they just winged 'em.`);
@@ -1575,7 +1580,7 @@ const dc_utils = {
             },
             remove: function(act, loc, amt) {
                 let tot = act.data.data.wounds[loc] - amt;
-                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+                return dc_utils.random_update(act, {data: {wounds: {[loc]: tot}}});
             },
             apply_wind_damage: function(act, amt) {
                 if (amt > 0) {
@@ -1583,7 +1588,7 @@ const dc_utils = {
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
                         let total = parseInt(act.data.data.wind.value) - wind_roll._total;
-                        act.update({data: {wind: {value: total}}});
+                        dc_utils.random_update(act, {data: {wind: {value: total}}});
                         if (total <= 0) {
                             let tkn = dc_utils.get_token(act.name);
                             if (tkn) {
@@ -1609,11 +1614,11 @@ const dc_utils = {
                             }
                         }
                     }
-                    act.update({data: {wound_modifier: wm * -1}});
+                    dc_utils.random_update(act, {data: {wound_modifier: wm * -1}});
                 }, Math.random() * 2000);
             },
             set_bleeding: function(act, bool) {
-                act.update({data: {is_bleeding: bool}});
+                dc_utils.random_update(act, {data: {is_bleeding: bool}});
             },
             heal_roll: function(act, loc) {
                 let wounds = act.data.data.wounds[loc]
@@ -1635,7 +1640,7 @@ const dc_utils = {
                 let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                 let next_heal = timestamp + act.data.data.healing_factor;
                 dc_utils.char.wounds.calculate_wound_modifier(act, wounds - 1);
-                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 1000);
+                return dc_utils.random_update(act, {data: {heals: {[loc]: next_heal}}});
             },
         },
         armour: {
@@ -1644,11 +1649,11 @@ const dc_utils = {
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
+                dc_utils.random_update(act, {data: {armour: {[location]: cur + parseInt(amt)}}});
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
+                dc_utils.random_update(act, {data: {armour: {[location]: cur - parseInt(amt)}}});
             },
         },
         chips: {
@@ -1685,15 +1690,15 @@ const dc_utils = {
                 return act.data.data.cash;
             },
             set: function(act, value) {
-                return act.update({data: {cash: value}});
+                return dc_utils.random_update(act, {data: {cash: value}});
             },
             add: function(act, amt) {
                 let tot = act.data.data.cash + amt;
-                return act.update({data: {cash: tot}});
+                return dc_utils.random_update(act, {data: {cash: tot}});
             },
             subtract: function(act, amt) {
                 let tot = act.data.data.cash - amt;
-                return act.update({data: {cash: tot}});
+                return dc_utils.random_update(act, {data: {cash: tot}});
             },
         },
         weapon: {
@@ -1724,11 +1729,11 @@ const dc_utils = {
                 return act.data.data.wind;
             },
             set: function(act, value) {
-                act.update({data: {wind: {value: value}}});
+                dc_utils.random_update(act, {data: {wind: {value: value}}});
             },
             reset: function(act) {
                 let max = act.data.data.wind.max;
-                act.update({data: {wind: {value: max}}});
+                dc_utils.random_update(act, {data: {wind: {value: max}}});
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
@@ -2410,7 +2415,7 @@ const dc_utils = {
         aim: function(act, index) {
             let bonus = act.data.data.aim_bonus + 2
             if (bonus < 6) {
-                act.update({data: {aim_bonus: bonus}});
+                dc_utils.random_update(act, {data: {aim_bonus: bonus}});
                 dc_utils.combat.remove_card(this.actor, index);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
@@ -2418,7 +2423,7 @@ const dc_utils = {
             }
         },
         clear_aim: function(act) {
-            act.update({data: {aim_bonus: 0}});
+            dc_utils.random_update(act, {data: {aim_bonus: 0}});
         },
         sleeve_card: function(act, card) {
             if (act.data.data.sleeved_card != 'none') {
@@ -2433,7 +2438,7 @@ const dc_utils = {
                     return false;
                 }
             }
-            act.update({data: {sleeved_card: card.name}});
+            dc_utils.random_update(act, {data: {sleeved_card: card.name}});
         },
         new_combat: function() {
             let deck = {
@@ -2469,13 +2474,13 @@ const dc_utils = {
                 let card = game.dc.action_deck.deck.pop();
                 hand.push(card);
             }
-            act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
+            dc_utils.random_update(act, {data: {action_cards: dc_utils.deck.sort(hand)}});
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         remove_card: function(act, index) {
             let hand = act.data.data.action_cards;
             hand.splice(index, 1);
-            setTimeout(() => {act.update({data: {action_cards: hand}})}, Math.random * 1000);
+            dc_utils.random_update(act, {data: {action_cards: hand}});
         },
         get_cards: function(act) {
 
@@ -2507,7 +2512,7 @@ const dc_utils = {
                     gunner: gunner,
                     character: 'Empty'
                 });
-                act.update({data: {passengers: {onboard: onboard}}});
+                dc_utils.random_update(act, {data: {passengers: {onboard: onboard}}});
                 if (gunner) {
                     dc_utils.vehicle.weapons.add_slot(act, onboard.length - 1);
                 }
@@ -2515,7 +2520,7 @@ const dc_utils = {
             remove_slot: function(act, index) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard.splice(index, 1);
-                act.update({data: {passengers: {onboard: onboard}}});
+                dc_utils.random_update(act, {data: {passengers: {onboard: onboard}}});
             },
             enter: function(act, passenger, seat) {
                 let data = {
@@ -2532,7 +2537,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: data});
+                dc_utils.random_update(act, {data: data});
             },
             exit: function(act, seat) {
                 let data = {
@@ -2551,7 +2556,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: data});
+                dc_utils.random_update(act, {data: data});
             }
         },
         locations: {
@@ -2564,7 +2569,7 @@ const dc_utils = {
                     armour,
                     malfunctions
                 });
-                act.update({
+                dc_utils.random_update(act, {
                     data: {
                         hit_locations: locs
                     }
@@ -2573,7 +2578,7 @@ const dc_utils = {
             remove_location: function(act, index) {
                 let locs = act.data.data.hit_locations;
                 locs.splice(index, 1);
-                act.update({
+                dc_utils.random_update(act, {
                     data: {
                         hit_locations: locs
                     }
@@ -2589,12 +2594,12 @@ const dc_utils = {
                     weapon: 'Empty',
                     weapon_name: 'Empty'
                 });
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             remove_slot: function(act, index) {
                 let weapons = act.data.data.weapons;
                 weapons.splice(index, 1);
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             set_gunner: function(act, name, seat) {
                 let weapons = act.data.data.weapons;
@@ -2605,7 +2610,7 @@ const dc_utils = {
                         break;
                     }
                 }
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             get_mountable: function(act) {
                 return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
@@ -2615,7 +2620,7 @@ const dc_utils = {
                 let weapons = act.data.data.weapons;
                 weapons[slot].weapon = item_id;
                 weapons[slot].weapon_name = item_name;
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
         },
         cargo: {
