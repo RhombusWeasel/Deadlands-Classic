@@ -1537,7 +1537,7 @@ const dc_utils = {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        item.update({data: {amount: total - amount}});
+                        dc_utils.random_update(item, {data: {amount: total - amount}});
                         return true;
                     }
                 }
@@ -1710,7 +1710,7 @@ const dc_utils = {
                         return false;
                     }
                     shots = shots - 1;
-                    item.update({"data.chamber": shots});
+                    dc_utils.random_update(item, {"data.chamber": shots});
                     return true;
                 }
                 return false;
@@ -1790,12 +1790,12 @@ const dc_utils = {
     },
     item: {
         add_modifier: function(item, data){
-            item.update({data: {modifiers: data}});
+            dc_utils.random_update(item, {data: {modifiers: data}});
         },
         remove_modifier: function(item, index) {
             let mods = item.data.data.modifiers;
             mods.splice(index);
-            item.update({data: {modifiers: mods}});
+            dc_utils.random_update(item, {data: {modifiers: mods}});
         },
     },
     roll: {
@@ -2642,7 +2642,7 @@ const dc_utils = {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        item.update({data: {amount: total - amount}});
+                        dc_utils.random_update(item, {data: {amount: total - amount}});
                         return true;
                     }
                 }
