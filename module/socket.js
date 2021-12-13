@@ -241,9 +241,12 @@ let operations = {
                             <p class=center>${data.clue}</p>
                         </form>
                         `,
-                        close: () => {
-                            console.log('Skill Dialog Closed');
-                        }
+                        buttons: {
+                            ok: {
+                                icon: '<i class="fas fa-check"></i>',
+                                label: 'Ok',
+                            },
+                        },
                     }).render(true);
                 }
             }
