@@ -237,7 +237,7 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             this.actor.update({data: {traits: {[element.value]: {level: item.data.data.level, die_type: item.data.data.die_type}}}});
         }
-        item.update({data: {trait: element.value}});
+        dc_utils.random_update(item, {data: {trait: element.value}});
     }
 
     _on_skill_roll(event) {
@@ -301,7 +301,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         if (bounty >= cost) {
             this.actor.update({data: {bounty: {value: bounty - cost}}});
-            item.update({'data.level': level + 1});
+            dc_utils.random_update(item, {'data.level': level + 1});
         }
     }
 
@@ -659,7 +659,7 @@ export default class PlayerSheet extends ActorSheet {
                     shots += max;
                 }
                 ammo.update({"data.amount": ammo.data.data.amount - max});
-                item.update({"data.chamber": shots});
+                dc_utils.random_update(item, {"data.chamber": shots});
             }else{
                 reply = `Looks like you ain't got no more ammo left, I hope you brought another gun!`
             }
