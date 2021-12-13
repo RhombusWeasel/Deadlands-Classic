@@ -15,7 +15,7 @@ export default class DCItem extends ItemSheet {
             data.modifiers = game.items.get(this.item.id).data.data.modifiers;
         }
         console.log(this.item.data.data.template, this.item.data.data.prefab.book.skill_roll)
-        if (this.item.type == 'litereature' && this.item.data.data.template == 'book' && this.item.data.data.prefab.book.skill_roll) {
+        if (this.item.type == 'literature' && this.item.data.data.template == 'book' && this.item.data.data.prefab.book.skill_roll) {
             console.log('Setting skill check timer.');
             setTimeout(() => {
                 if (!(game.user.isGM)) {
