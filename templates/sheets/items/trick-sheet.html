@@ -13,7 +13,7 @@
                 <th>{{localize "dc.items.combat.hex.range"}}</th>
             </tr>
             <tr>
-                <td><input style="text-align: center;" type="text" name="data.trait" value="{{data.data.trait}}"/></td>
+                <td>{{> systems/deadlands_classic/templates/partials/reuseable/skill-dropdown.hbs this key_name='trait' value=data.data.trait}}</td>
                 <td><input style="text-align: center;" type="text" name="data.speed" value="{{data.data.speed}}"/></td>
                 <td><input style="text-align: center;" type="text" name="data.duration" value="{{data.data.duration}}"/></td>
                 <td><input style="text-align: center;" type="text" name="data.range" value="{{data.data.range}}"/></td>

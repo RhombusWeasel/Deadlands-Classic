@@ -1184,7 +1184,7 @@
             "cost": "$20.00",
             "amount": 1,
             "calibur": ".44",
-            "gun_type": "pistol",
+            "gun_type": "shootin_pistol",
             "speed": 1,
             "range": 10,
             "rof": 1,
@@ -1199,7 +1199,7 @@
                 "description"
             ],
             "cost": "$10.00",
-            "amount": 1,
+            "skill": "fightin_brawlin",
             "damage": "1d4"
         },
         "miracle": {
