@@ -1317,7 +1317,7 @@
             "output":"",
             "prefab": {
                 "letter": {
-                    "date": 0,
+                    "date": "Wed Nov 8th 1876",
                     "greeting": "Howdy Partner!",
                     "body": "I am writing to inform you...",
                     "sign_off": "Kindest regards",
@@ -1345,7 +1345,7 @@
                 "newspaper": {
                     "date": "Wed Nov 8th 1876",
                     "paper": "The Tombstone Epitaph",
-                    "price": "5¢",
+                    "price": "$0.05",
                     "headline": "",
                     "main_article": "",
                     "columns": 2,
