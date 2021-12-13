@@ -97,17 +97,17 @@ export default class DCItem extends ItemSheet {
         if(dc_utils.documents[type]?.build) {
             let data = this.item.data.data.prefab[type];
             data.img = this.item.img;
-            this.dc_utils.random_update(item, {data: {output: dc_utils.documents[type].build(data)}});
+            dc_utils.random_update(this.item, {data: {output: dc_utils.documents[type].build(data)}});
         }
     }
 
     _on_toggle_clue(event) {
         event.preventDefault();
-        this.dc_utils.random_update(item, {data: {prefab: {book: {skill_roll: !(this.item.data.data.prefab.book.skill_roll)}}}});
+        dc_utils.random_update(this.item, {data: {prefab: {book: {skill_roll: !(this.item.data.data.prefab.book.skill_roll)}}}});
     }
 
     _on_toggle_typed(event) {
         event.preventDefault();
-        this.dc_utils.random_update(item, {data: {prefab: {[this.item.data.data.template]: {hand_written: !(this.item.data.data.prefab[this.item.data.data.template].hand_written)}}}});
+        dc_utils.random_update(this.item, {data: {prefab: {[this.item.data.data.template]: {hand_written: !(this.item.data.data.prefab[this.item.data.data.template].hand_written)}}}});
     }
 }
