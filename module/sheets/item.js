@@ -22,6 +22,7 @@ export default class DCItem extends ItemSheet {
                     if (act.isOwner) {
                         let data = dc_utils.roll.new_roll_packet(act, 'skill', this.item.data.data.prefab.book.skill);
                         data.next_op = 'reveal_clue';
+                        data.tn      = this.item.data.data.tn;
                         data.clue    = this.item.data.data.prefab.book.clue;
                         operations.skill_roll(data);
                     }
