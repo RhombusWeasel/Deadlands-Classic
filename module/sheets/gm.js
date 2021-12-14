@@ -124,6 +124,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".draw-card").click(this._on_draw_card.bind(this));
         html.find(".play-card").click(this._on_play_card.bind(this));
         html.find(".play-action-card").click(this._on_play_posse_card.bind(this));
+        html.find(".deal-action-card").click(this._on_deal_posse_card.bind(this));
         html.find(".refresh").click(this._on_refresh.bind(this));
         html.find(".next-turn").click(this._on_next_turn.bind(this));
         html.find(".add-to-posse").click(this._on_add_posse.bind(this));
@@ -577,6 +578,14 @@ export default class GMSheet extends ActorSheet {
         card.char = tkn.name;
         operations.discard_card(card);
         dc_utils.combat.remove_card(tkn, 0);
+        dc_utils.gm.update_sheet();
+    }
+
+    _on_deal_posse_card(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        dc_utils.combat.deal_cards(tkn, 1);
         dc_utils.gm.update_sheet();
     }
 
