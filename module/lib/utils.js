@@ -7,7 +7,7 @@ const dc_utils = {
     joker_cards: ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     joker_suits: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663"},
     marshal_fate_responses: [
-        `I think you might've pissed 'em off`,
+        `I think somebody might've pissed 'em off`,
         `Let's hope they don't have it in for ya.`,
         `I don't like it when they get like this...`,
     ],

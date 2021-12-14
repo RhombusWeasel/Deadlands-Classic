@@ -1199,7 +1199,7 @@
                 "description"
             ],
             "cost": "$10.00",
-            "skill": "fightin_brawlin",
+            "skill": "fightin",
             "damage": "1d4"
         },
         "miracle": {

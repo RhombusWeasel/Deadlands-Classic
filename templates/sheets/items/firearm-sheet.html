@@ -16,17 +16,7 @@
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
-                <td>
-                    <select name="data.gun_type" id="type-select">
-                    {{#each skills as |skill|}}
-                        {{#if (eq ../data.data.gun_type skill.key)}}
-                        <option value="{{skill.key}}" selected>{{skill.label}}</option>
-                        {{else}}
-                        <option value="{{skill.key}}">{{skill.label}}</option>
-                        {{/if}}
-                    {{/each}}
-                    </select>
-                </td>
+                <td>{{> systems/deadlands_classic/templates/partials/reuseable/skill-dropdown.hbs this key_name='gun_type' value=data.data.gun_type}}</td>
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.speed"}}</th>
