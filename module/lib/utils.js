@@ -1101,7 +1101,7 @@ const dc_utils = {
     random_update: function(ob, data) {
         return setTimeout(() => {
             ob.update(data);
-        }, Math.random() * 1000)
+        }, Math.random() * 500)
     },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
@@ -1116,9 +1116,6 @@ const dc_utils = {
     pad: function(str, size) {
         while (str.length < (size || 2)) {str = "0" + str;}
         return str;
-    },
-    stagger: function(func) {
-        setTimeout(func, Math.random * 1000);
     },
     sort: {
         compare: function(object1, object2, key) {
