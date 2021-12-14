@@ -56,7 +56,7 @@
                 {{else}}
                 <td class="perc5 center"><a class="toggle-mounted"><i class="fas fa-times"></i></a></td>
                 {{/if}}
-                <td class="perc5 center">{{player.data.data.wound_modifier}}</td>
+                <td class="perc5 center"><a class="wound-player" title="Cause a wound to {{player.name}}">{{player.data.data.wound_modifier}}</a></td>
                 {{#each player.chips as |chip|}}
                 <td class="perc5 center">{{chip}}</td>
                 {{/each}}
