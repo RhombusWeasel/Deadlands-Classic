@@ -7,7 +7,7 @@ const dc_utils = {
     joker_cards: ["A", "K", "Q", "J", "10", "9", "8", "7", "6", "5", "4", "3", "2"],
     joker_suits: {Spades: "\u2660", Hearts: "\u2661", Diamonds: "\u2662", Clubs: "\u2663"},
     marshal_fate_responses: [
-        `I think you might've pissed 'em off`,
+        `I think somebody might've pissed 'em off`,
         `Let's hope they don't have it in for ya.`,
         `I don't like it when they get like this...`,
     ],
@@ -116,7 +116,7 @@ const dc_utils = {
                 "Campbell",
                 "Carter",
                 "Clay",
-                "Coboy?",
+                "Coboy",
                 "Collins",
                 "Conely",
                 "Conn",
@@ -124,7 +124,7 @@ const dc_utils = {
                 "Conway",
                 "Cook",
                 "Cooley",
-                "Corceran?",
+                "Corceran",
                 "Craven",
                 "Creuser",
                 "Criley",
@@ -462,7 +462,6 @@ const dc_utils = {
                     "Roda",
                     "Saml",
                     "Sampson",
-                    "Sampson?",
                     "Samuel",
                     "Sandy",
                     "Sebastian",
@@ -514,7 +513,7 @@ const dc_utils = {
                     "Clara",
                     "Cora",
                     "Cornelia",
-                    "Cresentia?",
+                    "Cresentia",
                     "Dora",
                     "Dortha",
                     "E.M.",
@@ -536,7 +535,7 @@ const dc_utils = {
                     "Fredreka",
                     "Genevia",
                     "Gertrude",
-                    "Gumia?",
+                    "Gumia",
                     "Gusta",
                     "Gustine",
                     "Hannah",
@@ -1099,6 +1098,11 @@ const dc_utils = {
     get_token: function(name) {
         return canvas.tokens.placeables.find(i => i.name == name);
     },
+    random_update: function(ob, data) {
+        return setTimeout(() => {
+            ob.update(data);
+        }, Math.random() * 1000)
+    },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
      * @param {STR} a The Singular version
@@ -1181,7 +1185,7 @@ const dc_utils = {
                 minute:     60000 * 5
             }
             let new_val = act.data.data.timestamp + (val[period] * mult)
-            act.update({data: {timestamp: new_val}});
+            dc_utils.random_update(act, {data: {timestamp: new_val}});
             game.settings.set('deadlands_classic','unixtime', new_val);
             dc_utils.gm.update_sheet();
         },
@@ -1217,11 +1221,11 @@ const dc_utils = {
             },
             add: function(act, amt) {
                 let bty = act.data.data.bounty
-                return act.update({data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
+                return dc_utils.random_update(act, {data: {bounty: {value: bty.value + amt, max: bty.max + amt}}})
             },
             remove: function(act, amt) {
                 let bty = act.data.data.bounty
-                return act.update({data: {bounty: {value: bty.value - amt}}})
+                return dc_utils.random_update(act, {data: {bounty: {value: bty.value - amt}}})
             },
         },
         skill: {
@@ -1271,9 +1275,9 @@ const dc_utils = {
             set_level: function(act, skill_name, lvl) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: lvl}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: lvl}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: lvl}}}}}});
                 }
             },
             add_level: function(act, skill_name, amt) {
@@ -1283,22 +1287,22 @@ const dc_utils = {
                     dc_utils.char.skill.add_modifier(act, skill_name, 8);
                 }
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: skill.level + amt}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: skill.level + amt}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level + amt}}}}}});
                 }
             },
             add_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 let sk_mod = parseInt(skill.modifier) || 0;
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {modifier: sk_mod + mod}}}});
                 } else {
                     if (skill.trait_fb) {
                         let trait = dc_utils.char.skill.get(act, skill.trait);
                         sk_mod -= trait.modifier;
                     }
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: sk_mod + mod}}}}}});
                 }
             },
             remove_level: function(act, skill_name, amt) {
@@ -1308,27 +1312,27 @@ const dc_utils = {
                     dc_utils.char.skill.add_modifier(act, skill_name, -8);
                 }
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {level: skill.level - amt}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {level: skill.level - amt}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {level: skill.level - amt}}}}}});
                 }
             },
             remove_modifier: function(act, skill_name, mod) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.trait == skill_name) {
-                    return act.update({data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill_name]: {modifier: skill.modifier - mod}}}});
                 } else {
-                    return act.update({data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {skills: {[skill_name]: {modifier: skill.modifier - mod}}}}}});
                 }
             },
             set_die_type: function(act, skill_name, sides) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
-                return act.update({data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
+                return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {die_type: `${sides}`}}}});
             },
             increase_die_type: function(act, skill_name) {
                 let skill = dc_utils.char.skill.get(act, skill_name);
                 if (skill.die_sides < 12) {
-                    return act.update({data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
+                    return dc_utils.random_update(act, {data: {traits: {[skill.trait]: {die_type: `d${skill.die_sides + 2}`}}}});
                 }
             },
         },
@@ -1366,7 +1370,7 @@ const dc_utils = {
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item.id])}, Math.random() * 1000);
             },
             update: function(item, data) {
-                setTimeout(() => {item.update({data: data})}, Math.random() * 1000);
+                dc_utils.random_update(item, {data: data});
             },
             get: function(act, item_type, sort_key = 'name') {
                 return act.items.filter(function (item) {return item.type == item_type})
@@ -1409,7 +1413,7 @@ const dc_utils = {
                         light_angle: 360
                     });
                 }
-                return act.update({data: {data: {equipped: {[slot]: 'Nuthin'}}}});
+                return dc_utils.random_update(act, {data: {data: {equipped: {[slot]: 'Nuthin'}}}});
             },
             equip: function(act, slot, id) {
                 dc_utils.char.items.unequip(act, slot);
@@ -1433,7 +1437,7 @@ const dc_utils = {
                         light_angle: item.data.data.light_angle
                     });
                 }
-                return act.update({data: {data: {equipped: {[slot]: id}}}});
+                return dc_utils.random_update(act, {data: {data: {equipped: {[slot]: id}}}});
             },
             is_equipped: function(act, slot, id) {
                 if (id == act.data.data.equipped[slot]) {
@@ -1444,7 +1448,7 @@ const dc_utils = {
             delete: function(act, id) {
                 let item = act.items.get(id);
                 if (item?.data?.data?.amount > 1) {
-                    return item.update({data: {amount: item.data.data.amount - 1}});
+                    return dc_utils.random_update(item, {data: {amount: item.data.data.amount - 1}});
                 }
                 setTimeout(() => {act.deleteEmbeddedDocuments("Item", [id])}, 500);
             },
@@ -1487,7 +1491,7 @@ const dc_utils = {
                     }
                     let total = '$' + (ppu * item.data.data.amount).toFixed(2);
                     if (total != item.data.data.total_cost) {
-                        item.update({data: {total_cost: total}});
+                        dc_utils.random_update(item, {data: {total_cost: total}});
                     }
                 }
             },
@@ -1495,7 +1499,7 @@ const dc_utils = {
                 let has_item = dc_utils.char.has(act, item.type, item.name);
                 if (has_item) {
                     if (has_item.type == 'goods') {
-                        has_item.update({data: {amount: has_item.data.data.amount + amount}});
+                        dc_utils.random_update(has_item, {data: {amount: has_item.data.data.amount + amount}});
                         return true;
                     }
                 }
@@ -1533,7 +1537,7 @@ const dc_utils = {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        item.update({data: {amount: total - amount}});
+                        dc_utils.random_update(item, {data: {amount: total - amount}});
                         return true;
                     }
                 }
@@ -1546,7 +1550,7 @@ const dc_utils = {
                 let tot = act.data.data.wounds[loc] + amt;
                 if (amt > 0) {
                     if (ws >= amt) {
-                        act.update({data: {wound_soak: ws - amt}});
+                        dc_utils.random_update(act, {data: {wound_soak: ws - amt}});
                         dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(amt, 'wound', 'wounds')} supernaturally!`);
                         return true;
                     }else{
@@ -1554,7 +1558,7 @@ const dc_utils = {
                         if (ws > 0) {
                             dc_utils.chat.send('Supernatural Vigor!', `${act.name} soaks ${dc_utils.pluralize(ws, 'wound', 'wounds')} supernaturally!`);
                         }
-                        act.update({data: {wound_soak: 0}});
+                        dc_utils.random_update(act, {data: {wound_soak: 0}});
                     }
                     return setTimeout(() => {
                         let data = {
@@ -1568,7 +1572,7 @@ const dc_utils = {
                         let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                         let next_heal = timestamp + act.data.data.healing_factor;
                         data.heals = {[loc]: next_heal};
-                        act.update({data});
+                        dc_utils.random_update(act, {data});
                     }, Math.random() * 500);
                 }else{
                     dc_utils.chat.send('Wound', `${act.name} was lucky they just winged 'em.`);
@@ -1576,7 +1580,7 @@ const dc_utils = {
             },
             remove: function(act, loc, amt) {
                 let tot = act.data.data.wounds[loc] - amt;
-                return setTimeout(() => {act.update({data: {wounds: {[loc]: tot}}})}, Math.random() * 500);
+                return dc_utils.random_update(act, {data: {wounds: {[loc]: tot}}});
             },
             apply_wind_damage: function(act, amt) {
                 if (amt > 0) {
@@ -1584,7 +1588,7 @@ const dc_utils = {
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
                         let total = parseInt(act.data.data.wind.value) - wind_roll._total;
-                        act.update({data: {wind: {value: total}}});
+                        dc_utils.random_update(act, {data: {wind: {value: total}}});
                         if (total <= 0) {
                             let tkn = dc_utils.get_token(act.name);
                             if (tkn) {
@@ -1610,11 +1614,11 @@ const dc_utils = {
                             }
                         }
                     }
-                    act.update({data: {wound_modifier: wm * -1}});
+                    dc_utils.random_update(act, {data: {wound_modifier: wm * -1}});
                 }, Math.random() * 2000);
             },
             set_bleeding: function(act, bool) {
-                act.update({data: {is_bleeding: bool}});
+                dc_utils.random_update(act, {data: {is_bleeding: bool}});
             },
             heal_roll: function(act, loc) {
                 let wounds = act.data.data.wounds[loc]
@@ -1636,7 +1640,7 @@ const dc_utils = {
                 let timestamp = game.settings.get('deadlands_classic', 'unixtime');
                 let next_heal = timestamp + act.data.data.healing_factor;
                 dc_utils.char.wounds.calculate_wound_modifier(act, wounds - 1);
-                return setTimeout(() => {act.update({data: {heals: {[loc]: next_heal}}})}, Math.random() * 1000);
+                return dc_utils.random_update(act, {data: {heals: {[loc]: next_heal}}});
             },
         },
         armour: {
@@ -1645,11 +1649,11 @@ const dc_utils = {
             },
             add: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                setTimeout(() => {act.update({data: {armour: {[location]: cur + parseInt(amt)}}})}, Math.random() * 500);
+                dc_utils.random_update(act, {data: {armour: {[location]: cur + parseInt(amt)}}});
             },
             remove: function(act, location, amt) {
                 let cur = dc_utils.char.armour.get(act, location);
-                setTimeout(() => {act.update({data: {armour: {[location]: cur - parseInt(amt)}}})}, Math.random() * 500);
+                dc_utils.random_update(act, {data: {armour: {[location]: cur - parseInt(amt)}}});
             },
         },
         chips: {
@@ -1686,15 +1690,15 @@ const dc_utils = {
                 return act.data.data.cash;
             },
             set: function(act, value) {
-                return act.update({data: {cash: value}});
+                return dc_utils.random_update(act, {data: {cash: value}});
             },
             add: function(act, amt) {
                 let tot = act.data.data.cash + amt;
-                return act.update({data: {cash: tot}});
+                return dc_utils.random_update(act, {data: {cash: tot}});
             },
             subtract: function(act, amt) {
                 let tot = act.data.data.cash - amt;
-                return act.update({data: {cash: tot}});
+                return dc_utils.random_update(act, {data: {cash: tot}});
             },
         },
         weapon: {
@@ -1706,7 +1710,7 @@ const dc_utils = {
                         return false;
                     }
                     shots = shots - 1;
-                    item.update({"data.chamber": shots});
+                    dc_utils.random_update(item, {"data.chamber": shots});
                     return true;
                 }
                 return false;
@@ -1725,11 +1729,11 @@ const dc_utils = {
                 return act.data.data.wind;
             },
             set: function(act, value) {
-                act.update({data: {wind: {value: value}}});
+                dc_utils.random_update(act, {data: {wind: {value: value}}});
             },
             reset: function(act) {
                 let max = act.data.data.wind.max;
-                act.update({data: {wind: {value: max}}});
+                dc_utils.random_update(act, {data: {wind: {value: max}}});
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
@@ -1786,12 +1790,12 @@ const dc_utils = {
     },
     item: {
         add_modifier: function(item, data){
-            item.update({data: {modifiers: data}});
+            dc_utils.random_update(item, {data: {modifiers: data}});
         },
         remove_modifier: function(item, index) {
             let mods = item.data.data.modifiers;
             mods.splice(index);
-            item.update({data: {modifiers: mods}});
+            dc_utils.random_update(item, {data: {modifiers: mods}});
         },
     },
     roll: {
@@ -2411,7 +2415,7 @@ const dc_utils = {
         aim: function(act, index) {
             let bonus = act.data.data.aim_bonus + 2
             if (bonus < 6) {
-                act.update({data: {aim_bonus: bonus}});
+                dc_utils.random_update(act, {data: {aim_bonus: bonus}});
                 dc_utils.combat.remove_card(this.actor, index);
                 dc_utils.chat.send('Aim', `${act.name} takes a moment to aim. [+${bonus}]`);
             }else{
@@ -2419,7 +2423,7 @@ const dc_utils = {
             }
         },
         clear_aim: function(act) {
-            act.update({data: {aim_bonus: 0}});
+            dc_utils.random_update(act, {data: {aim_bonus: 0}});
         },
         sleeve_card: function(act, card) {
             if (act.data.data.sleeved_card != 'none') {
@@ -2434,7 +2438,7 @@ const dc_utils = {
                     return false;
                 }
             }
-            act.update({data: {sleeved_card: card.name}});
+            dc_utils.random_update(act, {data: {sleeved_card: card.name}});
         },
         new_combat: function() {
             let deck = {
@@ -2470,13 +2474,13 @@ const dc_utils = {
                 let card = game.dc.action_deck.deck.pop();
                 hand.push(card);
             }
-            act.update({data: {action_cards: dc_utils.deck.sort(hand)}});
+            dc_utils.random_update(act, {data: {action_cards: dc_utils.deck.sort(hand)}});
             dc_utils.journal.save('action_deck', game.dc.action_deck);
         },
         remove_card: function(act, index) {
             let hand = act.data.data.action_cards;
             hand.splice(index, 1);
-            setTimeout(() => {act.update({data: {action_cards: hand}})}, Math.random * 1000);
+            dc_utils.random_update(act, {data: {action_cards: hand}});
         },
         get_cards: function(act) {
 
@@ -2508,7 +2512,7 @@ const dc_utils = {
                     gunner: gunner,
                     character: 'Empty'
                 });
-                act.update({data: {passengers: {onboard: onboard}}});
+                dc_utils.random_update(act, {data: {passengers: {onboard: onboard}}});
                 if (gunner) {
                     dc_utils.vehicle.weapons.add_slot(act, onboard.length - 1);
                 }
@@ -2516,7 +2520,7 @@ const dc_utils = {
             remove_slot: function(act, index) {
                 let onboard = act.data.data.passengers.onboard;
                 onboard.splice(index, 1);
-                act.update({data: {passengers: {onboard: onboard}}});
+                dc_utils.random_update(act, {data: {passengers: {onboard: onboard}}});
             },
             enter: function(act, passenger, seat) {
                 let data = {
@@ -2533,7 +2537,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: data});
+                dc_utils.random_update(act, {data: data});
             },
             exit: function(act, seat) {
                 let data = {
@@ -2552,7 +2556,7 @@ const dc_utils = {
                         }
                     }
                 }
-                act.update({data: data});
+                dc_utils.random_update(act, {data: data});
             }
         },
         locations: {
@@ -2565,7 +2569,7 @@ const dc_utils = {
                     armour,
                     malfunctions
                 });
-                act.update({
+                dc_utils.random_update(act, {
                     data: {
                         hit_locations: locs
                     }
@@ -2574,7 +2578,7 @@ const dc_utils = {
             remove_location: function(act, index) {
                 let locs = act.data.data.hit_locations;
                 locs.splice(index, 1);
-                act.update({
+                dc_utils.random_update(act, {
                     data: {
                         hit_locations: locs
                     }
@@ -2590,12 +2594,12 @@ const dc_utils = {
                     weapon: 'Empty',
                     weapon_name: 'Empty'
                 });
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             remove_slot: function(act, index) {
                 let weapons = act.data.data.weapons;
                 weapons.splice(index, 1);
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             set_gunner: function(act, name, seat) {
                 let weapons = act.data.data.weapons;
@@ -2606,7 +2610,7 @@ const dc_utils = {
                         break;
                     }
                 }
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
             get_mountable: function(act) {
                 return act.items.filter(function(i) {return i.data.data.vehicle_mountable == true})
@@ -2616,7 +2620,7 @@ const dc_utils = {
                 let weapons = act.data.data.weapons;
                 weapons[slot].weapon = item_id;
                 weapons[slot].weapon_name = item_name;
-                act.update({data: {weapons: weapons}});
+                dc_utils.random_update(act, {data: {weapons: weapons}});
             },
         },
         cargo: {
@@ -2638,7 +2642,7 @@ const dc_utils = {
                         setTimeout(() => {act.deleteEmbeddedDocuments("Item", [item_id])}, 1000);
                         return true;
                     }else{
-                        item.update({data: {amount: total - amount}});
+                        dc_utils.random_update(item, {data: {amount: total - amount}});
                         return true;
                     }
                 }
@@ -2698,6 +2702,361 @@ const dc_utils = {
             b = Math.round(jd * 8); //scale fraction from 0-8 and round
             b %= 8;
             return Math.abs(b);
+        },
+    },
+    documents: {
+        apply_templates: function(r_str, data, details, capitalize){
+            let count = 0;
+            while (r_str.includes('{{') && count < 100) {
+                count += 1;
+                r_str = r_str.replaceAll('{{culprit name full}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[0] + ' ' + details.char.culprit.name[1])
+                .replaceAll('{{culprit name formal}}', data.pronouns[details.char.culprit.gender].title + ' ' + details.char.culprit.name[1])
+                .replaceAll('{{culprit name first}}', details.char.culprit.name[0])
+                .replaceAll('{{culprit group pronoun}}', data.pronouns[details.char.culprit.gender].group)
+                .replaceAll('{{culprit singular pronoun}}', data.pronouns[details.char.culprit.gender].singular)
+                .replaceAll('{{culprit polite group pronoun}}', data.pronouns[details.char.culprit.gender].polite.group)
+                .replaceAll('{{culprit polite singular pronoun}}', data.pronouns[details.char.culprit.gender].polite.singular)
+                .replaceAll('{{culprit subjective pronoun}}', data.pronouns[details.char.culprit.gender].subjective)
+                .replaceAll('{{culprit objective pronoun}}', data.pronouns[details.char.culprit.gender].objective)
+                .replaceAll('{{culprit clause pronoun}}', data.pronouns[details.char.culprit.gender].clause)
+                .replaceAll('{{culprit child pronoun}}', data.pronouns[details.char.culprit.gender].child)
+                .replaceAll('{{officer name full}}', details.char.officer.rank + ' ' + details.char.officer.name[0] + ' ' + details.char.officer.name[1])
+                .replaceAll('{{officer name formal}}', details.char.officer.rank + ' ' + details.char.officer.name[1])
+                .replaceAll('{{officer rank}}', details.char.officer.rank)
+                .replaceAll('{{officer group pronoun}}', data.pronouns[details.char.officer.gender].group)
+                .replaceAll('{{officer singular pronoun}}', data.pronouns[details.char.officer.gender].singular)
+                .replaceAll('{{officer polite group pronoun}}', data.pronouns[details.char.officer.gender].polite.group)
+                .replaceAll('{{officer polite singular pronoun}}', data.pronouns[details.char.officer.gender].polite.singular)
+                .replaceAll('{{officer subjective pronoun}}', data.pronouns[details.char.officer.gender].subjective)
+                .replaceAll('{{officer objective pronoun}}', data.pronouns[details.char.officer.gender].objective)
+                .replaceAll('{{officer clause pronoun}}', data.pronouns[details.char.officer.gender].clause)
+                .replaceAll('{{witness name full}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[0] + ' ' + details.char.witness.name[1])
+                .replaceAll('{{witness name formal}}', data.pronouns[details.char.witness.gender].title + ' ' + details.char.witness.name[1])
+                .replaceAll('{{witness name first}}', details.char.witness.name[0])
+                .replaceAll('{{witness group pronoun}}', data.pronouns[details.char.witness.gender].group)
+                .replaceAll('{{witness singular pronoun}}', data.pronouns[details.char.witness.gender].singular)
+                .replaceAll('{{witness polite group pronoun}}', data.pronouns[details.char.witness.gender].polite.group)
+                .replaceAll('{{witness polite singular pronoun}}', data.pronouns[details.char.witness.gender].polite.singular)
+                .replaceAll('{{witness subjective pronoun}}', data.pronouns[details.char.witness.gender].subjective)
+                .replaceAll('{{witness objective pronoun}}', data.pronouns[details.char.witness.gender].objective)
+                .replaceAll('{{witness clause pronoun}}', data.pronouns[details.char.witness.gender].clause)
+                .replaceAll('{{witness profession}}', details.char.witness.profession)
+                .replaceAll('{{territory}}', details.territory)
+                .replaceAll('{{state}}', details.state)
+                .replaceAll('{{city}}', details.city)
+                .replaceAll('{{crime}}', data.crime_list[details.crime].article)
+                .replaceAll('{{crime count}}', details.crime_count)
+                .replaceAll('{{sentance}}', details.sentance)
+                .replaceAll('{{sentance number}}', details.sentance_number)
+                .replaceAll("{{number}}", details.number)
+                .replaceAll("{{number sub 1}}", data.number_lookup[data.numbers.indexOf(details.number)] - 1)
+                .replaceAll('{{a subject animal}}', details.subject_animal)
+                .replaceAll('{{a subject building}}', details.building)
+                .replaceAll("{{a subject contraband}}", details.contraband)
+                .replaceAll("{{a subject fraud}}", details.fraud)
+                .replaceAll("{{a subject product}}", details.product)
+                .replaceAll("{{spooky possession}}", data.spooky_possessions[Math.floor(Math.random() * data.spooky_possessions.length)])
+                .replaceAll("{{plea for order}}", data.pleas_for_order[Math.floor(Math.random() * data.pleas_for_order.length)])
+
+                .replace("{{random name male}}", dc_utils.char.random_name('american', 'male'))
+                .replace("{{random name female}}", dc_utils.char.random_name('american', 'female'))
+                .replace('{{random animal}}', data.animals[Math.floor(Math.random() * data.animals.length)])
+                .replace('{{random colour}}', data.colours[Math.floor(Math.random() * data.colours.length)])
+                .replace('{{random crime}}', data.crime_list[Math.floor(Math.random() * data.crime_list.length)].article)
+                .replace('{{random building}}', data.buildings[Math.floor(Math.random() * data.buildings.length)])
+                .replace('{{age}}', Math.floor((Math.random() * 68) + 12))
+                .replace("{{random number}}", data.numbers[Math.floor(Math.random() * data.numbers.length)])
+                .replace("{{a random product}}", data.products[Math.floor(Math.random() * data.products.length)])
+                .replace("{{cunning}}", data.cunning[Math.floor(Math.random() * data.cunning.length)])
+                .replace("{{captures}}", data.captures[Math.floor(Math.random() * data.captures.length)])
+                .replace("{{captured}}", data.captured[Math.floor(Math.random() * data.captured.length)])
+                .replace('{{crime headline}}', data.crime_list[details.crime].headline)
+                .replace("{{dastardly}}", data.dastardly[Math.floor(Math.random() * data.dastardly.length)])
+                .replace("{{reporter insult}}", data.reporter_insults[Math.floor(Math.random() * data.reporter_insults.length)])
+            }
+            if (capitalize) {
+                return r_str.split(' ').map((word) => {
+                    return word[0].toUpperCase() + word.substring(1); 
+                }).join(" ");
+            }else{
+                return r_str;
+            }
+        },
+        data: {
+            states: {
+                Northern: ['Dakota', 'Idaho', 'Illinois', 'Iowa', 'Minnesota', 'Montana', 'Nebraska', 'Nevada', 'Oregon', 'Washington', 'Wisconsin', 'Wyoming'],
+                Southern: ['Arizona', 'Arkensas', 'Louisiana', 'Mississippi', 'Missouri', 'New Mexico', 'Texas'],
+                Disputed: ['California', 'Colorado', 'Kansas', 'Oklahoma'],
+            },
+            cities: {
+                Arizona:      ['Dead End', 'Despair', 'Mona', 'Phoenix', 'Potential', 'Prescott', 'Tombstone', 'Tucson'],
+                Arkensas:     ["Little Rock"],
+                California:   ["Devil's Armpit", "Dragon's Breath"],
+                Colorado:     ["Cauldron", "Denver"],
+                Dakota:       ["Bear Butte", "Deadwood"],
+                Idaho:        ["Boise", "Silver City"],
+                Illinois:     ["Chicago", "Peoria"],
+                Iowa:         ["Cedar Rapids", "Des Moines"],
+                Kansas:       ["Coffeyville", "Dodge City"],
+                Louisiana:    ["New Orleans", "Purchase"],
+                Minnesota:    ["Bismark", "Fargo"],
+                Mississippi:  ["Biloxi", "Natchez"],
+                Missouri:     ["Kansas City", "St. Lois"],
+                Montana:      ["Billings", "Butte City"],
+                Nebraska:     ["Grand Island"],
+                Nevada:       ["Cedar City", "Virginia City"],
+                "New Mexico": ["Albuquerque", "Roswell", "Sante Fe"],
+                Oklahoma:     ["Perry"],
+                Oregon:       ["Portland", "Salem"],
+                Texas:        ["Providence", "Houston", "Pinebox"],
+                Washington:   ["Seattle", "Walla Walla", "Olympia", "Tacoma"],
+                Wisconsin:    ["Duluth", "Milwaukee"],
+                Wyoming:      ["Cheyenne", "Laramie", "Medicine Wheel"],
+            },
+            headlines: [
+                `{{crime headline}} Epidemic in {{state}}!`,
+                `{{state}} {{crime headline}} factory?`,
+                `{{culprit polite singular pronoun}} bandit {{captured}}`,
+                `{{cunning}} {{officer rank}} {{captures}} {{officer clause pronoun}} {{culprit singular pronoun}}`,
+                `{{crime headline}} Spree in {{state}}!`,
+                `{{state}} {{number}} get {{sentance}}`
+            ],
+            starts:   [
+                `A {{dastardly}} gang of {{number}} {{culprit group pronoun}}, led by {{culprit name full}}({{age}}), were {{captured}} {{crime}} in {{city}}, {{state}} last week. {{plea for order}}`,
+                `Reports coming in from {{city}}, {{state}} confirm one {{culprit name full}}({{age}}), and {{culprit clause pronoun}} {{number sub 1}} accomplices were sentanced to {{sentance}} for {{crime}} last week. {{plea for order}}`,
+                `Local {{culprit singular pronoun}} {{culprit name full}}({{age}}) was shot dead today whilst {{crime}}.  {{plea for order}}`,
+                `It seems that the crime epidemic in {{city}}, {{state}} has reached new heights with another {{culprit singular pronoun}}, a {{culprit name full}}({{age}}) being sentanced to {{sentance}} for {{crime}}!  {{plea for order}}`,
+                `local {{witness profession}} {{culprit name full}}({{age}}) went on an unexpected crime spree last month.  {{culprit name formal}} was first seen {{crime}} after which witnesses report {{culprit subjective pronoun}} {{random crime}} before finally being apprehended attempting to randsome back a {{random building}} [that {{culprit objective pronoun}} had occupied by force] back to the state of {{state}}.`,
+            ],
+            witness_reports: [
+                `One eye witness, {{witness name full}}({{age}}) a local contrarian, was quoted to say "The {{a subject animal}}'s did it!  I seen em' doin' it! Them and the {{random animal}}'s, this goes all the way to the top man! Even the {{random animal}}'s are in on it!".  However {{witness name formal}} is believed at least by this reporter to be insane.  I think it might be high time to investigate just exactly why so many people I interview are certifiably insane.`,
+                `One witness who wishes to remain anonymous reported "Look, I know this sounds crazy but {{spooky possession}}".  Another also not willing to put their name to an outright fabrication said "{{spooky possession}} I know how crazy that sounds but it's what I saw!"  I mean come on now, {{spooky possession}}!  Like we were all born yesterday, P.T Barnum has a point, there is a sucker born every minute and I'm afraid it's you this minute dear reader if you believe that nonsense!`,
+                `local {{a subject product}} merchant {{witness name full}}({{age}}) was willing to go on record stating: "You lookin' to buy a {{a subject product}}?  Come on down and see me at Crazy {{witness name first}}'s {{a subject product}} Emporium!  I got big {{a subject product}}'s, I got small {{a subject product}}'s, hell I've even got {{random colour}} {{a subject product}}'s and I will not be beaten on price!  What're you talkin about {{crime}} son?  Can't you see I'm trying to work here!"`,
+            ],
+            officer_statements: [
+                `The arresting officer {{officer name full}}({{age}}) gave a statement saying "{{crime}} is no joke in {{state}}, if you are a fugitive from the law like {{culprit name formal}} here, let me tell you right now.  The {{officer rank}}'s of {{state}} are vigilant.  We will find you."`,
+                `{{officer name full}}({{age}}) gave a short response via telegram saying {{officer objective pronoun}} expects all {{number}} to recieve the maximum penalty in {{state}}, {{sentance}}. The govenor was unavailable for comment but one aide said "{{reporter insult}}"`,
+                `{{officer name full}}({{age}}) the arresting officer had this to say.  "{{culprit name formal}}, is related to a local {{a subject product}} magnate and I think this is just a case of {{culprit child pronoun}}'s will be {{culprit child pronoun}}'s.  I'd also like to address the {{dastardly}} rumours going around about corruption in the {{city}} police department, these lies are unfounded and frankly it's counterfeight news."`
+            ],
+            pleas_for_order: [
+                `Now I know the good people of {{city}} will agree that this just can't stand, we need to start to wake up to this {{crime headline}} epidemic that's sweeping across our fine nation and we need to act fast.`,
+                `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?  We need to get back to family values!`,
+                `I think we all can come together tonight and add {{city}} to our collective prayers, and I for one will be donating to all the various charities that spring from this tragic event that has befallen our brothers and sisters in {{state}}.`
+            ],
+            animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
+            buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
+            captures:['bags', 'gets', 'catches', 'nabs', 'traps', 'brings in', 'apprehends'],
+            captured: ['caught', 'apprehended', 'captured', 'arrested', 'caught in the act', 'caught red handed'],
+            cunning: ['wily', 'crafty', 'cunning', 'shrewd'],
+            colours: ['red','yellow','pink','green','purple','orange','blue'],
+            contraband: ['guns', 'drugs', 'explosives', 'gold', 'ghost rock'],
+            crime_list: [
+                {headline: 'rustling', article: `rustling {{a subject animal}}'s`},
+                {headline: 'robbery', article: 'stealing {{a subject contraband}}'},
+                {headline: 'train robbery', article: 'robbing a train'},
+                {headline: 'hold up', article: 'holding up a stage coach'},
+                {headline: 'cult', article: 'founding a {{a subject animal}} worshiping cult'},
+                {headline: 'vandalism', article: 'vandalising a {{a subject building}}'},
+                {headline: 'arson', article: 'burning down a {{a subject building}}'},
+                {headline: 'smuggling', article: 'smuggling {{a subject contraband}}'},
+                {headline: 'fraud', article: 'committing {{a subject fraud}} fraud'},
+                {headline: 'murder', article: `murdering {{crime count}} people and {{random number}} {{random animal}}'s`},
+            ],
+            dastardly: ['villinous', 'dastardly', 'despicable', 'contemptable'],
+            fraud: ['mail', 'telegraph', 'financial'],
+            products: ['Glass Eye', 'Wooden Leg', 'Piano', 'Gun', 'Harmonica', 'Banjo', 'Steamwagon'],
+            reporter_insults: [
+                'Scram News Jockey',
+                `You reporters don't know when to leave it alone some things you should just let lie if you know what's good for you.`,
+                `Eat shit Muckraker`,
+                `Get out of here! This is private property`,
+                `Who let you in here! {{random name male}} you are fired! You! Get out!`
+            ],
+            sentances: [
+                '{{sentance number}} years of military service or the noose',
+                '{{sentance number}} years with no chance of parole',
+                '{{sentance number}} years in the state penitentiary',
+                '{{sentance number}} years hard time',
+                `a good ol' fashioned hangin'`,
+                'death by New Science'
+            ],
+            spooky_possessions: [
+                `some kind of bug took over {{culprit clause pronoun}} mind`,
+                `Demons possessed {{culprit subjective pronoun}}`,
+                `something sticky and glowing {{random colour}} was dripping out {{culprit clause pronoun}} eyes the whole time`,
+            ],
+            numbers: ['three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'],
+            number_lookup: [3,4,5,6,7,8,9,10],
+            officer_ranks: ['Deputy', 'Sheriff', 'Marshal', 'Agent', 'Officer'],
+            professions: ['butcher', 'baker', 'candle maker', 'plumber', 'doctor', 'passer by'],
+            pronouns: {
+                male:   {
+                    title:      'Mr',
+                    singular:   'man',
+                    group:      'men',
+                    subjective: 'him',
+                    objective:  'he',
+                    clause:     'his',
+                    child:      'boy',
+                    polite: {
+                        singular: 'gentleman',
+                        group: 'gentlemen',
+                    },
+                },
+                female: {
+                    title:      'Mrs',
+                    singular:   'woman',
+                    group:      'women',
+                    subjective: 'her',
+                    objective:  'she',
+                    clause:     'her',
+                    child:      'girl',
+                    polite: {
+                        singular: 'lady',
+                        group: 'ladies',
+                    },
+                },
+            },
+        },
+        letter: {
+            label: 'Letter',
+            build: function(data) {
+                let cl = 'typed-letter';
+                if (data.hand_written) {
+                    cl = 'letter';
+                }
+                return `
+                    <div>
+                        <div class="${cl}-date"><p>${data.date}</p></div>
+                        <div class="${cl}"><p>${data.greeting}</p></div>
+                        <div class="${cl}"><p>${data.body}</p></div>
+                        <div class="${cl}"><p>${data.sign_off}</p></div>
+                        <div class="letter-sig"><p>${data.signature}</p></div>
+                    </div>
+                `;
+            },
+        },
+        telegram: {
+            label: 'Telegram',
+            build: function(data) {
+                let cl = 'typed-letter';
+                if (data.hand_written) {
+                    cl = 'letter';
+                }
+                return `
+                    <div class="telegram">
+                        <div class="telegram-stamp-box">
+                            <img class="telegram-stamp" src="https://cdn.pixabay.com/photo/2014/04/02/10/24/stamp-303749_960_720.png">
+                            <p class="telegram-date-text">${data.date}</p>
+                        </div>
+                        <p class="telegram-header">${data.company}</p>
+                        <div class="telegram-body">
+                            <p class="${cl}">${data.reciever}</p>
+                            <p class="${cl}">${data.body}</p>
+                            <p class="${cl}">${data.sender}</p>
+                        </div>
+                    </div>
+                `
+            },
+        },
+        wanted_poster: {
+            label: 'Wanted Poster',
+            build: function(data) {
+                return `
+                    <p class="wanted-banner">WANTED</p>
+                    <p class="wanted-sub">${data.crime}</p>
+                    <div class="flexrow" style="place-items: center;">
+                        <p class="typed-letter">${data.details}</p>
+                        <img src="${data.img}" data-edit="img" title="${data.name}" height="256" width="256"/>
+                        <p class="typed-letter">${data.description}</p>
+                    </div>
+                    <p class="wanted-sub">${data.name}</p>
+                    <p class="wanted-sub">${data.reward}</p>
+                    <p class="wanted-sub">REWARD</p>
+                    <p class="wanted-details">THIS NOTICE TAKES PLACE OF ALL PREVIOUS REWARD NOTICES</p>
+                    <p class="wanted-details">CONTACT: ${data.contact}</p>
+                `;
+            }
+        },
+        newspaper: {
+            label: 'Newspaper',
+            build: function(data) {
+                return `
+                    <div class="newspaper">
+                        <p class="date-banner">${data.date}</p>
+                        <p class="name-banner">${data.paper}</p>
+                        <p class="price-banner"">Only 5¢</p>
+                        <p class="headline">${data.headline}</p>
+                        ${dc_utils.documents.newspaper.random_article('1')}
+                        <div class="newspaper-image"><img style="object-fit: fill" src="${data.img}" data-edit="img" title="${data.name}"/></div>
+                        <p style="column-count: ${data.columns}" class="main-article">${data.main_article} \n\nEditorial by ${dc_utils.char.random_name('american', 'male')}</p>
+                        ${dc_utils.documents.newspaper.random_article('2')}
+                    </div>
+                `;
+            },
+            random_article: function(side) {
+                let data      = dc_utils.documents.data;
+                let territory = Object.keys(data.states)[Math.floor(Math.random() * 3)];
+                let state     = data.states[territory][Math.floor(Math.random() * data.states[territory].length)]
+                let details = {
+                    territory:       territory,
+                    state:           state,
+                    city:            data.cities[state][Math.floor(Math.random() * data.cities[state].length)],
+                    crime:           Math.floor(Math.random() * data.crime_list.length),
+                    crime_count:     data.numbers[Math.floor(Math.random() * data.sentances.length)],
+                    sentance:        data.sentances[Math.floor(Math.random() * data.sentances.length)],
+                    sentance_number: data.numbers[Math.floor(Math.random() * data.sentances.length)],
+                    subject_animal:  data.animals[Math.floor(Math.random() * data.animals.length)],
+                    number:          data.numbers[Math.floor(Math.random() * data.numbers.length)],
+                    fraud:           data.fraud[Math.floor(Math.random() * data.fraud.length)],
+                    building:        data.buildings[Math.floor(Math.random() * data.buildings.length)],
+                    product:         data.products[Math.floor(Math.random() * data.products.length)],
+                    contraband:      data.contraband[Math.floor(Math.random() * data.contraband.length)],
+                    char:            {
+                        culprit: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                            profession: data.professions[Math.floor(Math.random() * data.professions.length)]
+                        },
+                        officer: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                            rank:   data.officer_ranks[Math.floor(Math.random() * data.officer_ranks.length)],
+                        },
+                        witness: {
+                            gender: Math.random() > 0.49 ? 'male' : 'female',
+                            profession: data.professions[Math.floor(Math.random() * data.professions.length)]
+                        },
+                    },
+                }
+                details.char.culprit.name = dc_utils.char.random_name('american', details.char.culprit.gender).split(' ');
+                details.char.officer.name = dc_utils.char.random_name('american', details.char.officer.gender).split(' ');
+                details.char.witness.name = dc_utils.char.random_name('american', details.char.witness.gender).split(' ');
+                let headline = dc_utils.documents.apply_templates(data.headlines[Math.floor(Math.random() * data.headlines.length)], data, details, true);
+                let r_str = `
+                <div class="sub-hl-box-${side}"><p class="sub-headline">${headline}</p></div>
+                <p class="article-${side}">
+                    ${data.starts[Math.floor(Math.random() * data.starts.length)]}\n
+                    ${data.witness_reports[Math.floor(Math.random() * data.witness_reports.length)]}\n
+                    ${data.officer_statements[Math.floor(Math.random() * data.officer_statements.length)]}\n
+                    Editorial by ${dc_utils.char.random_name('american', 'male')}
+                </p>
+                `;
+                return dc_utils.documents.apply_templates(r_str, data, details, false);
+            },
+        },
+        book: {
+            label: 'Book',
+            url: 'none',
+            skill_roll: false,
+            skill: 'cognition',
+            tn: 5,
+            clue: 'Reading is super cool!',
+            build: function(data) {
+                return `
+                    <div style="width: 100%; height: 800px;">
+                        <iframe style="width: 100%; height: 100%;" src="${data.url}"></iframe>
+                    </div>
+                `
+            },
         },
     },
 };

@@ -7,7 +7,7 @@
     <div>
         <h2 class="center">Tricks</h2>
         {{#each tricks as |hex|}}
-        <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="hard">{{this.data.data.description}}</textarea>
+        <textarea class="textbox" name="{{this.name}}.description" cols="30" rows="5" wrap="hard">{{this.data.data.description}}</textarea>
         <table>
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
@@ -24,7 +24,7 @@
     <div>
         <h2 class="center">Hexes</h2>
         {{#each hexes as |hex|}}
-        <textarea name="{{this.name}}.description" cols="30" rows="5" wrap="hard">{{this.data.data.description}}</textarea>
+        <textarea class="textbox" name="{{this.name}}.description" cols="30" rows="5" wrap="hard">{{this.data.data.description}}</textarea>
         <table>
             <tr class="item" data-itemId="{{this.id}}">
                 <td class="perc10"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>

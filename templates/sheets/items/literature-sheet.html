@@ -1,0 +1,207 @@
+<form class="{{cssClass}} typed" autocomplete="off">
+    <div class="flexrow">
+        {{#isGM}}
+        <!-- Editor -->
+        <div>
+            <table>
+                <tr>
+                    <th>Template</th>
+                    <td>
+                        <select class="document-template" name="data.template">
+                        {{#each documents as |doc|}}
+                            {{#ifCond @key '!=' 'data'}}
+                                {{#ifCond @key '!=' 'apply_templates'}}
+                                    {{#ifCond @key '!=' 'book'}}
+                                        {{#if (eq @key ../data.data.template)}}
+                            <option value="{{@key}}" selected>{{doc.label}}</option>
+                                        {{else}}
+                            <option value="{{@key}}">{{doc.label}}</option>
+                                        {{/if}}
+                                    {{/ifCond}}
+                                {{/ifCond}}
+                            {{/ifCond}}
+                        {{/each}}
+                        </select>
+                    </td>
+                </tr>
+                {{#if (eq data.data.template 'letter')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.letter.date" value="{{data.data.prefab.letter.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Greeting</th>
+                    <td><input type="text" name="data.prefab.letter.greeting" value="{{data.data.prefab.letter.greeting}}"></td>
+                </tr>
+                <tr>
+                    <th>Body</th>
+                    <td>
+                        <textarea name="data.prefab.letter.body">{{data.data.prefab.letter.body}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Sign Off</th>
+                    <td><input type="text" name="data.prefab.letter.sign_off" value="{{data.data.prefab.letter.sign_off}}"></td>
+                </tr>
+                <tr>
+                    <th>Sender</th>
+                    <td><input type="text" name="data.prefab.letter.signature" value="{{data.data.prefab.letter.signature}}"></td>
+                </tr>
+                <tr>
+                    <th>Hand Written</th>
+                    {{#if (eq data.data.prefab.letter.hand_written true)}}
+                    <td class="center"><a><i class="fas fa-check toggle-typed"></i></a></td>
+                    {{else}}
+                    <td class="center"><a><i class="fas fa-times toggle-typed"></i></a></td>
+                    {{/if}}
+                </tr>
+                {{/if}}
+                {{#if (eq data.data.template 'telegram')}}
+                <tr>
+                    <tr>
+                        <th>Date</th>
+                        <td><input type="text" name="data.prefab.telegram.date" value="{{data.data.prefab.telegram.date}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Company</th>
+                        <td><input type="text" name="data.prefab.telegram.comapny" value="{{data.data.prefab.telegram.company}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Recipient</th>
+                        <td><input type="text" name="data.prefab.telegram.reciever" value="{{data.data.prefab.telegram.reciever}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Message</th>
+                        <td><input type="text" name="data.prefab.telegram.body" value="{{data.data.prefab.telegram.body}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Sender</th>
+                        <td><input type="text" name="data.prefab.telegram.sender" value="{{data.data.prefab.telegram.sender}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Hand Written</th>
+                        {{#if (eq data.data.prefab.telegram.hand_written true)}}
+                        <td class="center"><a><i class="fas fa-check toggle-typed"></i></a></td>
+                        {{else}}
+                        <td class="center"><a><i class="fas fa-times toggle-typed"></i></a></td>
+                        {{/if}}
+                    </tr>
+                </tr>
+                {{/if}}
+                {{#if (eq data.data.template 'wanted_poster')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.date" value="{{data.data.prefab.wanted_poster.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Crime</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.crime" value="{{data.data.prefab.wanted_poster.crime}}"></td>
+                </tr>
+                <tr>
+                    <th>Name</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.name" value="{{data.data.prefab.wanted_poster.name}}"></td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td><img name="data.prefab.wanted_poster.img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/></td>
+                </tr>
+                <tr>
+                    <th>Details</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.details" value="{{data.data.prefab.wanted_poster.details}}"></td>
+                </tr>
+                <tr>
+                    <th>Description</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.description" value="{{data.data.prefab.wanted_poster.description}}"></td>
+                </tr>
+                <tr>
+                    <th>Reward</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.reward" value="{{data.data.prefab.wanted_poster.reward}}"></td>
+                </tr>
+                <tr>
+                    <th>Contact</th>
+                    <td><input type="text" name="data.prefab.wanted_poster.contact" value="{{data.data.prefab.wanted_poster.contact}}"></td>
+                </tr>
+                {{/if}}
+                {{#if (eq data.data.template 'newspaper')}}
+                <tr>
+                    <th>Date</th>
+                    <td><input type="text" name="data.prefab.newspaper.date" value="{{data.data.prefab.newspaper.date}}"></td>
+                </tr>
+                <tr>
+                    <th>Paper</th>
+                    <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" name="data.cost" value="{{data.data.cost}}"></td>
+                </tr>
+                <tr>
+                    <th>Headline</th>
+                    <td><input type="text" name="data.prefab.newspaper.headline" value="{{data.data.prefab.newspaper.headline}}"></td>
+                </tr>
+                <tr>
+                    <th>Image</th>
+                    <td><img name="data.prefab.wanted.img" src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/></td>
+                </tr>
+                <tr>
+                    <th>Main Article</th>
+                    <td>
+                        <textarea name="data.prefab.newspaper.main_article" rows="25">{{data.data.prefab.newspaper.main_article}}</textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Column Count</th>
+                    <td><input type="number" name="data.prefab.newspaper.columns" value="{{data.data.prefab.newspaper.columns}}"></td>
+                </tr>
+                {{/if}}
+                {{#if (eq data.data.template 'book')}}
+                <tr>
+                    <th>URL</th>
+                    <td><input type="text" name="data.prefab.book.url" value="{{data.data.prefab.book.url}}"></td>
+                </tr>
+                    {{#if (eq data.data.prefab.book.skill_roll true)}}
+                <tr>
+                    <th>Contains Clue</th>
+                    <td class="center"><a><i class="fas fa-check toggle-clue"></i></a></td>
+                </tr>
+                <tr>
+                    <th>Skill</th>
+                    <td>
+                        <select name="data.prefab.book.skill" id="skill-select">
+                        {{#each skills as |skill|}}
+                            {{#if (eq ../data.data.prefab.book.skill skill.key)}}
+                            <option value="{{skill.key}}" selected>{{skill.label}}</option>
+                            {{else}}
+                            <option value="{{skill.key}}">{{skill.label}}</option>
+                            {{/if}}
+                        {{/each}}
+                        </select>
+                    </td>
+                    <tr>
+                        <th>Clue</th>
+                        <td><input type="text" name="data.prefab.book.clue" value="{{data.data.prefab.book.clue}}"></td>
+                    </tr>
+                    <tr>
+                        <th>Timer</th>
+                        <td><input type="number" name="data.prefab.book.timer" value="{{data.data.prefab.book.timer}}"></td>
+                    </tr>
+                </tr>
+                    {{else}}
+                    <tr>
+                        <th>Clue</th>
+                        <td class="center"><a><i class="fas fa-times toggle-clue"></i></a></td>
+                    </tr>
+                    {{/if}}
+                {{/if}}
+            </table>
+            <div class="center">
+                <a class="render-preview">Redraw Preview</a>
+            </div>
+        </div>
+        {{/isGM}}
+        <!-- Preview -->
+        <div>
+            {{{data.data.output}}}
+        </div>
+    </div>
+</form>

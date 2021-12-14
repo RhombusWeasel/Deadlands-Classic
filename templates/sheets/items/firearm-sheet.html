@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.gun_type"}}</th>
-                <td><input style="text-align: center;" type="text" name="data.gun_type" value="{{data.data.gun_type}}"/></td>
+                <td>{{> systems/deadlands_classic/templates/partials/reuseable/skill-dropdown.hbs this key_name='gun_type' value=data.data.gun_type}}</td>
             </tr>
             <tr>
                 <th>{{localize "dc.items.combat.firearm.speed"}}</th>

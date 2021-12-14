@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Corinthia:wght@400;700');
+@import url('https://fonts.googleapis.com/css2?family=Rye');
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite');
+@import url('https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia');
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One');
+
+.textbox{
+    white-space: pre-line;
+}
 .scroller{
     overflow-y:scroll;
     height:500px
@@ -9,6 +19,10 @@
 .vehicle-scroller{
     overflow-y:scroll;
     height:400px
+}
+.typed-small{
+    font-family: "Lucida Sans Typewriter";
+    font-size: xx-small;
 }
 .typed{
     font-family: "Lucida Sans Typewriter";
@@ -102,4 +116,170 @@
 }
 .Legendary {
     color: yellow;
+}
+.letter-date {
+    font-family: "Corinthia", cursive;
+    font-size: 16pt;
+    text-align: right;
+}
+.letter {
+    font-family: "Corinthia", cursive;
+    font-size: 24pt;
+}
+.typed-letter-date {
+    font-family: "Special Elite";
+    font-size: 12pt;
+    text-align: right;
+}
+.typed-letter {
+    font-family: "Special Elite";
+    font-size: 12pt;
+}
+.letter-sig {
+    font-family: "Corinthia", cursive;
+    font-size: 32pt;
+}
+.telegram {
+    display: grid;
+    grid: 
+    'co co co co co co co co co co'
+    'bd bd bd bd bd bd bd bd bd bd'
+    'bd bd bd bd bd bd bd bd bd bd'
+    ;
+}
+.telegram-stamp-box {
+    position: relative;
+    top: 4%;
+    left: 101%;
+    width: 200px;
+    height: 100px;
+    transform: translate(-100px, -50px);
+    transform: rotate(-14deg);
+}
+.telegram-header {
+    font-family: "UnifrakturMaguntia";
+    font-size: 24pt;
+    text-align: center;
+    grid-area: co;
+}
+.telegram-body {
+    grid-area: bd;
+}
+.telegram-date-text {
+    position: relative;
+    position: relative;
+    top: -65%;
+    left: 59%;
+    transform: rotate(-2deg);
+}
+.telegram-stamp {
+    width: 200px;
+    height: 100px;
+    border: 0ch;
+}
+.wanted-banner {
+    font-family: "Alfa Slab One";
+    font-size: 32pt;
+    text-align: center;
+}
+.wanted-sub {
+    font-family: "Alfa Slab One";
+    font-size: 24pt;
+    text-align: center;
+}
+.wanted-image {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    place-content: center;
+}
+.wanted-details {
+    font-family: "Alfa Slab One";
+    font-size: 16pt;
+    text-align: center;
+}
+.newspaper{
+    display: grid;
+    grid:
+    'db nb nb nb nb nb nb nb nb nb nb nb nb pb'
+    'db nb nb nb nb nb nb nb nb nb nb nb nb pb'
+    'hl hl hl hl hl hl hl hl hl hl hl hl hl hl'
+    'hl hl hl hl hl hl hl hl hl hl hl hl hl hl'
+    's1 s1 s1 im im im im im im im im s2 s2 s2'
+    'a1 a1 a1 im im im im im im im im a2 a2 a2'
+    'a1 a1 a1 ma ma ma ma ma ma ma ma a2 a2 a2'
+    ;
+}
+.date-banner{
+    font-family: "Baskervville";
+    font-size: xx-small;
+    text-align: center;
+    white-space: pre-line;
+    grid-area: db;
+}
+.name-banner {
+    font-family: "Rye";
+    font-style: normal;
+    font-size: xx-large;
+    text-align: center;
+    white-space: pre-line;
+    grid-area: nb;
+}
+.price-banner{
+    font-family: "Baskervville";
+    font-size: xx-small;
+    text-align: center;
+    white-space: pre-line;
+    grid-area: pb;
+}
+.headline {
+    font-family: "Baskervville";
+    font-size: 32pt;
+    font-weight: bold;
+    text-align: center;
+    white-space: pre-line;
+    grid-area: hl;
+}
+.newspaper-image {
+    place-content: center;
+    grid-area: im;
+}
+.main-article {
+    font-family: "Baskervville";
+    font-size: x-small;
+    font-weight: bold;
+    padding: 5px;
+    white-space: pre-line;
+    grid-area: ma;
+}
+.sub-hl-box-1{
+    place-items: center;
+    grid-area: s1;
+}
+.sub-hl-box-2{
+    place-items: center;
+    grid-area: s2;
+}
+.sub-headline {
+    font-family: "Baskervville";
+    font-size: medium;
+    font-weight: bold;
+    text-align: center;
+    white-space: pre-line;
+}
+.article-1 {
+    font-family: "Baskervville";
+    font-size: x-small;
+    font-weight: bold;
+    padding: 5px;
+    grid-area: a1;
+    white-space: pre-line;
+}
+.article-2 {
+    font-family: "Baskervville";
+    font-size: x-small;
+    font-weight: bold;
+    padding: 5px;
+    grid-area: a2;
+    white-space: pre-line;
 }

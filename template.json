@@ -1058,6 +1058,9 @@
             "posse_chips": {}
         },
         "vehicle": {
+            "templates": [
+                "core"
+            ],
             "type": "Steamwagon",
             "show_editor": true,
             "description": "",
@@ -1181,7 +1184,7 @@
             "cost": "$20.00",
             "amount": 1,
             "calibur": ".44",
-            "gun_type": "pistol",
+            "gun_type": "shootin_pistol",
             "speed": 1,
             "range": 10,
             "rof": 1,
@@ -1196,7 +1199,7 @@
                 "description"
             ],
             "cost": "$10.00",
-            "amount": 1,
+            "skill": "fightin",
             "damage": "1d4"
         },
         "miracle": {
@@ -1307,9 +1310,56 @@
             "modifiers": []
         },
         "literature": {
-            "pages": [],
-            "current_page": 0,
-            "template": "page"
+            "templates": [
+                "description"
+            ],
+            "template": "letter",
+            "output":"",
+            "prefab": {
+                "letter": {
+                    "date": "Wed Nov 8th 1876",
+                    "greeting": "Howdy Partner!",
+                    "body": "I am writing to inform you...",
+                    "sign_off": "Kindest regards",
+                    "signature": "Some Person",
+                    "hand_written": true
+                },
+                "telegram": {
+                    "date": "1-1-1875",
+                    "company": "Western Union Telegraph Co.",
+                    "reciever": "Mr J. Doe",
+                    "body": "Telegrams really cool. Watch out for Gremlins.",
+                    "sender": "Guy Incognito",
+                    "hand_written": true
+                },
+                "wanted_poster": {
+                    "date":"Wed Nov 8th 1876",
+                    "crime": "FOR TRAIN ROBBERY",
+                    "name": "Thomas 'Black Jack' Ketchum",
+                    "img": "Images/",
+                    "details": "$5,000.00 for the capture dead or alive of the men who robbed the Atchison Topeka and Santa Fe train near Deming, NM.",
+                    "description": "Believed to be Thomas 'Black Jack' Ketchum and his band.  These men are desperate and dangerous.",
+                    "reward": "$5000.00",
+                    "contact": "Texas Rangers HQ"
+                },
+                "newspaper": {
+                    "date": "Wed Nov 8th 1876",
+                    "paper": "The Tombstone Epitaph",
+                    "price": "$0.05",
+                    "headline": "",
+                    "main_article": "",
+                    "columns": 2,
+                    "sub_articles": 1
+                },
+                "book": {
+                    "url": "None",
+                    "skill_roll": false,
+                    "skill": "cognition",
+                    "tn": 5,
+                    "clue": "Whilst flicking through this book, you realise... Reading is it's own reward!",
+                    "timer": 30
+                }
+            }
         }
     }
 }

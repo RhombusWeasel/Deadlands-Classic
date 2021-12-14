@@ -106,11 +106,11 @@ export default class NPCSheet extends ActorSheet {
         let spirit = dc_utils.char.skill.get(act, 'spirit');
         let vigor = dc_utils.char.skill.get(act, 'vigor');
         let max_wind = spirit.die_sides + vigor.die_sides;
-        act.update({data: {wind: {value: max_wind}}});
-        act.update({data: {wind: {max: max_wind}}});
+        dc_utils.random_update(act, {data: {wind: {value: max_wind}}});
+        dc_utils.random_update(act, {data: {wind: {max: max_wind}}});
 
         let nimbleness = dc_utils.char.skill.get(act, 'nimbleness');
-        act.update({data: {pace: nimbleness.die_sides}});
+        dc_utils.random_update(act, {data: {pace: nimbleness.die_sides}});
     }
 
     _on_ethnicity_select(event) {
@@ -253,7 +253,7 @@ export default class NPCSheet extends ActorSheet {
         }else{
             ChatMessage.create({ content: `Click... Click Click! Looks like you're empty partner`});
         }
-        item.update({ "data.chamber": shots});
+        dc_utils.random_update(item, { "data.chamber": shots});
     }
 
     _on_gun_reload(event) {
@@ -286,7 +286,7 @@ export default class NPCSheet extends ActorSheet {
                 shots = Math.min(shots + 1, max)
             }
         }
-        item.update({ "data.chamber": shots});
+        dc_utils.random_update(item, { "data.chamber": shots});
         ChatMessage.create({ content: reply});
     }
 

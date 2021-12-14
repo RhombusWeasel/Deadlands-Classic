@@ -15,6 +15,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/reuseable/equip.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/fate-chips.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs",
+        "systems/deadlands_classic/templates/partials/reuseable/skill-dropdown.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs",
         "systems/deadlands_classic/templates/partials/reuseable/wound_location.hbs",
@@ -26,6 +27,7 @@ async function preload_handlebars_templates() {
         "systems/deadlands_classic/templates/partials/tabs/goods.hbs",
         "systems/deadlands_classic/templates/partials/tabs/gm.hbs",
         "systems/deadlands_classic/templates/partials/tabs/gm-combat.hbs",
+        "systems/deadlands_classic/templates/partials/tabs/gm-quest.hbs",
         "systems/deadlands_classic/templates/partials/tabs/hexes.hbs",
         "systems/deadlands_classic/templates/partials/tabs/miracles.hbs",
         "systems/deadlands_classic/templates/partials/tabs/science.hbs",
@@ -190,7 +192,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('wound_timer', function (val, options) {
         let date = game.settings.get('deadlands_classic', 'unixtime');
-        return (((((val - date) / 1000)/ 60)/ 60)/ 24);
+        return Math.floor((((((val - date) / 1000)/ 60)/ 60)/ 24));
     });
 
     Handlebars.registerHelper('location_name', function (val, options) {
@@ -203,7 +205,7 @@ Hooks.once("init", function () {
     });
 
     Handlebars.registerHelper('strain_max', function (vig, options) {
-        return vig.die_type.slice(1, vig.die_type.length);
+        return vig.die_type.substring(1, vig.die_type.length);
     });
 
     Handlebars.registerHelper('isGM', function (options) {

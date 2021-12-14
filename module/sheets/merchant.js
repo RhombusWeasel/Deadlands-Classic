@@ -81,7 +81,7 @@ export default class MerchantSheet extends actor_sheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        item.update({data: {will_buy: !item.data.data.will_buy}});
+        dc_utils.random_update(item, {data: {will_buy: !item.data.data.will_buy}});
     }
 
     _on_toggle_sell(event) {
@@ -89,7 +89,7 @@ export default class MerchantSheet extends actor_sheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        item.update({data: {will_sell: !item.data.data.will_sell}});
+        dc_utils.random_update(item, {data: {will_sell: !item.data.data.will_sell}});
     }
 
     _on_toggle_limit(event) {
@@ -97,7 +97,7 @@ export default class MerchantSheet extends actor_sheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.items.get(itemId);
-        item.update({data: {limit_stock: !item.data.data.limit_stock}});
+        dc_utils.random_update(item, {data: {limit_stock: !item.data.data.limit_stock}});
     }
 
     _on_item_sell_remove(event) {

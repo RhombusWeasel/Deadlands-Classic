@@ -139,6 +139,7 @@ export default class GMSheet extends ActorSheet {
         html.find(".select-token").click(this._on_select_token.bind(this));
         html.find(".draw-enemy-cards").click(this._on_draw_cards.bind(this));
         html.find(".toggle-mod").click(this._on_toggle_modifier.bind(this));
+        html.find(".wound-player").click(this._on_wound_player.bind(this));
 
         // Selections
         html.find(".add-posse-select").change(this._on_add_posse_select.bind(this));
@@ -464,7 +465,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_bleeding: !act.data.data.is_bleeding}});
+        dc_utils.random_update(act, {data: {is_bleeding: !act.data.data.is_bleeding}});
         dc_utils.gm.update_sheet();
     }
 
@@ -473,7 +474,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_running: !act.data.data.is_running}});
+        dc_utils.random_update(act, {data: {is_running: !act.data.data.is_running}});
         dc_utils.gm.update_sheet();
     }
 
@@ -482,7 +483,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_mounted: !act.data.data.is_mounted}});
+        dc_utils.random_update(act, {data: {is_mounted: !act.data.data.is_mounted}});
         dc_utils.gm.update_sheet();
     }
 
@@ -491,7 +492,7 @@ export default class GMSheet extends ActorSheet {
         let element = event.currentTarget;
         let name = element.closest(".posse").dataset.name;
         let act = dc_utils.get_actor(name);
-        act.update({data: {is_moved: !act.data.data.is_moved}});
+        dc_utils.random_update(act, {data: {is_moved: !act.data.data.is_moved}});
         dc_utils.gm.update_sheet();
     }
 
@@ -577,6 +578,55 @@ export default class GMSheet extends ActorSheet {
         operations.discard_card(card);
         dc_utils.combat.remove_card(tkn, 0);
         dc_utils.gm.update_sheet();
+    }
+
+    _on_wound_player(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        let tkn  = dc_utils.get_actor(element.closest(".posse").dataset.name);
+        let myDialog = new Dialog({
+            title: `Wound ${tkn.name}?`,
+            content: `
+                <form class="flexcol">
+                    <p class="center">Do you really want to injure ${tkn.name}?</p>
+                    <div class="form-group">
+                        <label for="amt">Amount</label>
+                        <input type="number" name="amt_input" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="loc_select">Location</label>
+                        <select name="loc_select">
+                            <option value="random">Random</option>
+                            <option value="noggin">Noggin</option>
+                            <option value="guts">Guts</option>
+                            <option value="arm_left">Left Arm</option>
+                            <option value="arm_right">Right Arm</option>
+                            <option value="lower_guts">Lower Guts</option>
+                            <option value="gizzards">Gizzards</option>
+                            <option value="leg_left">Left Leg</option>
+                            <option value="leg_right">Right Leg</option>
+                        </select>
+                    </div>
+                </form>
+                `,
+            buttons: {
+                update: {
+                    label: "Yes I do.",
+                    callback: (html) => {
+                        let loc = html.find('[name="loc_select"]').val();
+                        let amt = parseInt(html.find('[name="amt_input"]').val());
+                        if (loc == 'random') {
+                            loc = dc_utils.loc_lookup[Math.floor(Math.random() * dc_utils.loc_lookup.length)]
+                        }
+                        dc_utils.char.wounds.add(tkn, loc, amt);
+                    }
+                }
+            },
+        },
+        {
+            id: 'test'
+        }
+        ).render(true);
     }
 
     _on_toggle_modifier(event) {

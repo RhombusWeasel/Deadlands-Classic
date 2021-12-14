@@ -85,6 +85,7 @@ export default class PlayerSheet extends ActorSheet {
         data.chi_powers    = dc_utils.char.items.get(this.actor, "chi");
         //data.level_headed_available = game.dc.level_headed_available;
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
+        data.documents     = dc_utils.char.items.get(this.actor, "literature");
         data.boons         = dc_utils.char.items.get(this.actor, "boon");
         dc_utils.char.items.calculate_costs(this.actor, data.goods);
         data.cards         = dc_utils.joker_cards;
@@ -139,7 +140,6 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".spend-fate").click(this._on_spend_fate.bind(this));
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".attack").click(this._on_attack.bind(this));
-        html.find(".gun-attack").click(this._on_firearm_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
         html.find(".blueprint").click(this._on_new_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
@@ -237,7 +237,7 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             this.actor.update({data: {traits: {[element.value]: {level: item.data.data.level, die_type: item.data.data.die_type}}}});
         }
-        item.update({data: {trait: element.value}});
+        dc_utils.random_update(item, {data: {trait: element.value}});
     }
 
     _on_skill_roll(event) {
@@ -301,7 +301,7 @@ export default class PlayerSheet extends ActorSheet {
         }
         if (bounty >= cost) {
             this.actor.update({data: {bounty: {value: bounty - cost}}});
-            item.update({'data.level': level + 1});
+            dc_utils.random_update(item, {'data.level': level + 1});
         }
     }
 
@@ -605,7 +605,7 @@ export default class PlayerSheet extends ActorSheet {
             data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', 'Nuthin');
         }else{
             if (item.type == 'melee') {
-                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', 'fightin', itemId);
+                data = dc_utils.roll.new_roll_packet(this.actor, 'melee', item.data.data.skill, itemId);
             }else if (item.type == 'firearm') {
                 let old = ['pistol', 'rifle', 'shotgun', 'automatic']
                 if (old.includes(item.data.data.gun_type)) {
@@ -620,63 +620,6 @@ export default class PlayerSheet extends ActorSheet {
         }else{
             operations.register_attack(data);
         }
-    }
-
-    _on_melee_attack(event) {
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let target = get_target()
-        if (target == false) {
-            console.log('DC:', 'Target not found.');
-            return;
-        }
-        let skl = 'fightin'
-        let skill = dc_utils.char.skill.get(this.actor, skl);
-        let data = {
-            type: 'melee',
-            roller: this.actor.name,
-            target: target.name,
-            attacker: this.actor.name,
-            weapon: itemId,
-            amt: skill.level,
-            dice: skill.die_type,
-            skill_name: skill.name,
-            skill: skl,
-            tn: dc_utils.roll.get_tn(),
-            name: this.actor.name,
-            modifier: skill.modifier
-        }
-        dc_utils.socket.emit("declare_attack", data);
-    }
-
-    _on_firearm_attack(event){
-        event.preventDefault();
-        let element = event.currentTarget;
-        let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.items.get(itemId);
-        let target = get_target()
-        if (target == false) {
-            console.log('DC:', 'Target not found.');
-            return;
-        }
-        let skl = `shootin_${item.data.data.gun_type}`
-        let skill = dc_utils.char.skill.get(this.actor, skl);
-        let data = {
-            type: 'ranged',
-            roller: this.actor.name,
-            target: target.name,
-            attacker: this.actor.name,
-            weapon: itemId,
-            amt: skill.level,
-            dice: skill.die_type,
-            skill_name: skill.name,
-            skill: skl,
-            tn: dc_utils.roll.get_tn(),
-            name: this.actor.name,
-            modifier: skill.modifier
-        }
-       dc_utils.socket.emit("declare_attack", data);
     }
 
     _on_gun_reload(event) {
@@ -716,7 +659,7 @@ export default class PlayerSheet extends ActorSheet {
                     shots += max;
                 }
                 ammo.update({"data.amount": ammo.data.data.amount - max});
-                item.update({"data.chamber": shots});
+                dc_utils.random_update(item, {"data.chamber": shots});
             }else{
                 reply = `Looks like you ain't got no more ammo left, I hope you brought another gun!`
             }
@@ -799,7 +742,10 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
-        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.split(1, this.actor.data.data.traits.vigor.die_type.length));
+        let strain = parseInt(this.actor.data.data.strain);
+        let i_strain = parseInt(item.data.data.strain);
+        let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.substring(1, this.actor.data.data.traits.vigor.die_type.length));
+        console.log('Strain: U/I/M', strain, i_strain, max_strain);
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'chi');
         data.roll = dc_utils.roll.new(data);
         let reply = `
@@ -808,7 +754,7 @@ export default class PlayerSheet extends ActorSheet {
                 <p class="center">${this.actor.name} tries to focus their Chi to perform ${item.name}!</p>
             </div>
         `;
-        if (this.actor.data.data.strain + item.data.data.strain > max_strain) {
+        if (strain + i_strain > max_strain) {
             reply += `
             <div>
                 <p class="center">This would take ${this.actor.name} over their max strain.</p>
@@ -816,6 +762,7 @@ export default class PlayerSheet extends ActorSheet {
             `
         }else{
             reply += `${build_skill_template(data)}`
+            this.actor.update({data: {strain: strain + i_strain}});
         }
         dc_utils.chat.send(reply);
     }
