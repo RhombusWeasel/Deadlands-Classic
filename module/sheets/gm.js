@@ -609,24 +609,24 @@ export default class GMSheet extends ActorSheet {
                     </div>
                 </form>
                 `,
-              buttons: {
+            buttons: {
                 update: {
-                  label: "Yes I do.",
-                  callback: (html) => {
-                  let loc = html.find('[name="loc_select"]').val();
-                  let amt = parseInt(html.find('[name="amt_input"]').val());
-                  if (loc == 'random') {
-                      loc = dc_utils.loc_lookup[Math.floor(Math.random() * dc_utils.loc_lookup.length)]
-                  }
-                  dc_utils.char.wounds.add(tkn, loc, amt);
+                    label: "Yes I do.",
+                    callback: (html) => {
+                        let loc = html.find('[name="loc_select"]').val();
+                        let amt = parseInt(html.find('[name="amt_input"]').val());
+                        if (loc == 'random') {
+                            loc = dc_utils.loc_lookup[Math.floor(Math.random() * dc_utils.loc_lookup.length)]
+                        }
+                        dc_utils.char.wounds.add(tkn, loc, amt);
+                    }
                 }
-                }
-              },
             },
-            {
-              id: 'test'
-            }
-          ).render(true);
+        },
+        {
+            id: 'test'
+        }
+        ).render(true);
     }
 
     _on_toggle_modifier(event) {
