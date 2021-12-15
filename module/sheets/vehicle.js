@@ -24,8 +24,8 @@ export default class VehicleSheet extends ActorSheet {
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
         let vroom          = document.getElementById("handle1");
-        if (vroom.contains('<input type="hidden"')) {
-            let slide = vroom.closest("div input");
+        let slide          = vroom.closest("div input");
+        if (slide) {
             console.log(slide);
         }
         return data;
