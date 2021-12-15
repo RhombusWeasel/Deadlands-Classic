@@ -46,6 +46,19 @@ async function preload_handlebars_templates() {
 }
 
 Hooks.once("init", function () {
+    $("#arc-slider").roundSlider({
+        sliderType: "min-range",
+        circleShape: "custom-quarter",
+        value: 75,
+        startAngle: 45,
+        editableTooltip: true,
+        radius: 350,
+        width: 6,
+        handleSize: "+32",
+        tooltipFormat: function (args) {
+            return args.value + " %";
+        }
+    });
     console.log("DC | Initializing Deadlands Classic.");
 
     CONFIG.dc = dc;
