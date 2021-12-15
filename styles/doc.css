@@ -283,3 +283,36 @@
     grid-area: a2;
     white-space: pre-line;
 }
+
+/* Arc slider from [Citation Needed] */
+#arc-slider {
+    height: 110px !important;
+    width: 500px !important;
+    border: 1px dashed;
+    overflow: hidden;
+    padding: 15px;
+}
+#arc-slider .rs-container {
+    margin-left: -350px; /* here 300 is the radius value */
+    left: 50%;
+}
+#arc-slider .rs-tooltip {
+    top: 60px;
+}
+#arc-slider .rs-tooltip-text {
+    font-size: 25px;
+}
+#arc-slider .rs-border{
+    border-width: 0px;
+}
+
+/* Appearance related changes */
+.rs-control .rs-range-color {
+    background-color: #54BBE0;
+}
+.rs-control .rs-path-color {
+    background-color: #5f5f5f;
+}
+.rs-control .rs-handle {
+    background-color: #51c5cf;
+}
