@@ -1,6 +1,6 @@
 export default class VehicleSheet extends ActorSheet {
-    constructor() {
-        super()
+    constructor(data, context) {
+        super(data, context);
         $("#arc-slider").roundSlider({
             sliderType: "min-range",
             circleShape: "custom-quarter",
