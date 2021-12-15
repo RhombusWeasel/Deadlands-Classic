@@ -342,7 +342,7 @@
 #handle1 .rs-tooltip div  {
     text-align: center;
     background: orange;
-    color: white;
+    color: rgba(255, 255, 255, 0);
     border-radius: 4px;
     padding: 1px 5px 2px;
     margin-top: 4px;
