@@ -23,20 +23,16 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
-        $("#arc-slider").roundSlider({
+        $("#handle1").roundSlider({
             sliderType: "min-range",
-            circleShape: "custom-quarter",
-            min: -180,
-            max: 180,
+            editableTooltip: false,
+            radius: 35,
+            width: 8,
             value: this.actor.data.data.speed,
-            startAngle: 45,
-            editableTooltip: true,
-            radius: 200,
-            width: 4,
-            handleSize: "+16",
-            tooltipFormat: function (args) {
-                return args.value + "°";
-            }
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
         });
         return data;
     }

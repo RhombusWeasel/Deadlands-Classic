@@ -252,17 +252,20 @@
         </div>
     </section>
     <script>
-        
-        $("#handle1").roundSlider({
+        $("#arc-slider").roundSlider({
             sliderType: "min-range",
-            editableTooltip: false,
-            radius: 35,
-            width: 8,
-            value: 100,
-            handleSize: 0,
-            handleShape: "square",
-            circleShape: "pie",
-            startAngle: 315,
+            circleShape: "custom-quarter",
+            min: -180,
+            max: 180,
+            value: 0,
+            startAngle: 45,
+            editableTooltip: true,
+            radius: 200,
+            width: 4,
+            handleSize: "+16",
+            tooltipFormat: function (args) {
+                return args.value + "°";
+            }
         });
     </script>
 </form>
