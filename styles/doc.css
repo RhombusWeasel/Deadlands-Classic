@@ -315,7 +315,9 @@
 .rs-control .rs-handle {
     background-color: #51c5cf;
 }
-
+#handle1 {
+    overflow: hidden;
+}
 #handle1 .rs-handle  {
     background-color: transparent;
     border: 8px solid transparent;
