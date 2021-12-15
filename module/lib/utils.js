@@ -1811,6 +1811,9 @@ const dc_utils = {
             }
             if (target) {
                 let tkn = dc_utils.char.token.get_name(act.name);
+                if (act.data.data.current_vehicle != 'None') {
+                    tkn = dc_utils.char.token.get_name(act.data.data.current_vehicle);
+                }
                 let tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
                     console.log('new_roll_packet: Attacker: ', tkn);
