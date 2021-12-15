@@ -30,7 +30,7 @@ export default class VehicleSheet extends ActorSheet {
         var speedo         =  $("#handle1").data("roundSlider");
         if (speedo) {
             console.log(speedo);
-            speedo.setValue(this.actor.data.data.speed);
+            speedo.setValue(this.actor.data.data.speed, this.actor.data.data.speed);
         }
         return data;
     }
