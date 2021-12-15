@@ -353,3 +353,6 @@
 #handle1 .rs-path-color  {
     background-color: #F0C5C5;
 }
+.rs-control .rs-bg-color {
+    background-color: transparent;
+}
