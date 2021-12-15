@@ -26,6 +26,9 @@ export default class VehicleSheet extends ActorSheet {
             handleShape: "square",
             circleShape: "pie",
             startAngle: 315,
+            valueChange: function(args) {
+                console.log(this, args)
+            }
         });
         return super(data, context);
     }
