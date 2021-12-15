@@ -293,7 +293,7 @@
     padding: 15px;
 }
 #arc-slider .rs-container {
-    margin-left: -350px; /* here 300 is the radius value */
+    margin-left: -100px; /* here 300 is the radius value */
     left: 50%;
 }
 #arc-slider .rs-tooltip {
