@@ -145,20 +145,7 @@
         </div>
         <div class="tab drivin" data-group="vehicle" data-tab="drivin">
             <div class="flexrow">
-                <div>
-                    <h2 class="center">Throttle</h2>
-                    <div class="center">
-                        <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" orient="vertical" name="data.throttle"/>
-                        <p>{{data.data.throttle}}</p>
-                    </div>
-                    <div class="center">
-                    {{#ifCond throttle ">=" 0}}
-                        <a class="apply-throttle">Pedal to the Metal!</a>
-                    {{else}}
-                        <a class="apply-throttle">Hit the Brakes!</a>
-                    {{/ifCond}}
-                    </div>
-                </div>
+                <div id="handle1" name="data.speed"></div>
                 <div id="arc-slider" class="rslider"></div>
             </div>
         </div>
@@ -283,5 +270,27 @@
         $("#arc-slider").on("change", function (e) {
             console.log(e.value);
         });
+        $("#handle1").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 105,
+            width: 16,
+            value: 100,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
+            tooltipFormat: "changeTooltip"
+        });
+
+        function changeTooltip(e) {
+            var val = e.value, speed;
+            if (val < 20) speed = "Slow";
+            else if (val < 40) speed = "Normal";
+            else if (val < 70) speed = "Speed";
+            else speed = "Very Speed";
+
+            return val + " km/h" + "<div>" + speed + "<div>";
+        }
     </script>
 </form>
