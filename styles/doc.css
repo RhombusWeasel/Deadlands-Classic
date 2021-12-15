@@ -328,11 +328,11 @@
     display: block;
     content: " ";
     position: absolute;
-    height: 22px;
-    width: 22px;
+    height: 12px;
+    width: 12px;
     background: black;
-    right: -11px;
-    bottom: -11px;
+    right: -6px;
+    bottom: -6px;
     border-radius: 100px;
 }
 #handle1 .rs-tooltip  {
