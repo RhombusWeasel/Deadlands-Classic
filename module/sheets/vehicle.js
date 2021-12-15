@@ -71,7 +71,7 @@ export default class VehicleSheet extends ActorSheet {
             circleShape: "pie",
             startAngle: 315,
             change: function(args) {
-                console.log(this);
+                console.log(this, args);
                 $("#handle1").roundSlider('setValue', this.actor.data.data.speed);
             }
         });
