@@ -260,7 +260,7 @@
             value: 0,
             startAngle: 45,
             editableTooltip: true,
-            radius: 100,
+            radius: 200,
             width: 4,
             handleSize: "+16",
             tooltipFormat: function (args) {
@@ -285,10 +285,10 @@
 
         function changeTooltip(e) {
             var val = e.value, speed;
-            if (val < 20) speed = "Safe";
-            else if (val < 40) speed = "Unsafe";
-            else if (val < 70) speed = "You sure about this?";
-            else speed = "WE ALL GONNA DIE!";
+            if (val < 30) speed = "Safe";
+            else if (val < 60) speed = "Unsafe";
+            else if (val < 90) speed = "You sure about this?";
+            else speed = "WE GONNA DIE!";
 
             return val + " km/h" + "<div>" + speed + "<div>";
         }
