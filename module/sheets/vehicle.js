@@ -23,7 +23,7 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
-        let vroom          = document.getElementByName("handle1");
+        let vroom          = document.getElementsByName("handle1")[0];
         if (vroom) {
             console.log(vroom);
         }
