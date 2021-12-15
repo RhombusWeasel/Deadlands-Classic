@@ -267,30 +267,16 @@
                 return args.value + "°";
             }
         });
-        $("#arc-slider").on("change", function (e) {
-            console.log(e.value);
-        });
         $("#handle1").roundSlider({
             sliderType: "min-range",
             editableTooltip: false,
             radius: 35,
-            width: 16,
+            width: 8,
             value: 100,
             handleSize: 0,
             handleShape: "square",
             circleShape: "pie",
             startAngle: 315,
-            tooltipFormat: "changeTooltip"
         });
-
-        function changeTooltip(e) {
-            var val = e.value, speed;
-            if (val < 30) speed = "Safe";
-            else if (val < 60) speed = "Unsafe";
-            else if (val < 90) speed = "You sure about this?";
-            else speed = "WE GONNA DIE!";
-
-            return val + " km/h" + "<div>" + speed + "<div>";
-        }
     </script>
 </form>
