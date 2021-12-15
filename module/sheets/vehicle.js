@@ -138,7 +138,7 @@ export default class VehicleSheet extends ActorSheet {
                 return false;
             }
             dc_utils.vehicle.passenger.enter(this.actor, char, index);
-            dc_utils.random_update(game.user.character, {data: {current_vehicle: this.name}});
+            dc_utils.random_update(game.user.character, {data: {current_vehicle: this.actor.name}});
             dc_utils.socket.emit('remove_token', {name: char.name});
         }else{
             dc_utils.chat.send('Missing Token', `Failed to find tokens for ${char.name} and ${this.actor.name}.`, 'Check both tokens exist on the current map.');
