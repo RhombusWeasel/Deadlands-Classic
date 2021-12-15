@@ -1,6 +1,6 @@
 export default class VehicleSheet extends ActorSheet {
     constructor(data, context) {
-        super(data, context);
+        return super(data, context);
     }
 
     static get defaultOptions() {
@@ -27,7 +27,8 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
-        $("#handle1").roundSlider('setValue', this.actor.data.data.speed);
+        var speedo         =  $("#handle1").data("roundSlider");
+        speedo.setValue(this.actor.data.data.speed);
         return data;
     }
 
@@ -71,10 +72,6 @@ export default class VehicleSheet extends ActorSheet {
             handleShape: "square",
             circleShape: "pie",
             startAngle: 315,
-            create: function(args) {
-                console.log(this, args);
-                $("#handle1").roundSlider('setValue', this.actor.data.data.speed);
-            }
         });
         return super.activateListeners(html);
     }
