@@ -1,6 +1,9 @@
 export default class VehicleSheet extends ActorSheet {
     constructor(data, context) {
         super(data, context);
+    }
+
+    static get defaultOptions() {
         $("#arc-slider").roundSlider({
             sliderType: "min-range",
             circleShape: "custom-quarter",
@@ -27,9 +30,6 @@ export default class VehicleSheet extends ActorSheet {
             circleShape: "pie",
             startAngle: 315,
         });
-    }
-
-    static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
             classes: ["player-sheet", "doc"],
