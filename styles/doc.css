@@ -321,7 +321,7 @@
     background-color: transparent;
     border: 8px solid transparent;
     border-right-color: black;
-    margin: -6px 0px 0px 14px !important;
+    margin: -3px 0px 0px 7px !important;
     border-width: 3px 52px 3px 2px;
 }
 #handle1 .rs-handle:before  {
