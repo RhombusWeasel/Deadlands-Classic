@@ -1,5 +1,16 @@
 export default class VehicleSheet extends ActorSheet {
     static get defaultOptions() {
+        $("#handle1").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 35,
+            width: 8,
+            value: 100,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
+        });
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
             classes: ["player-sheet", "doc"],
