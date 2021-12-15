@@ -145,17 +145,19 @@
         </div>
         <div class="tab drivin" data-group="vehicle" data-tab="drivin">
             <div class="flexrow">
-                <h2 class="center">Throttle</h2>
-                <div class="center">
-                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" orient="vertical" name="data.throttle"/>
-                    <p>{{data.data.throttle}}</p>
-                </div>
-                <div class="center">
-                {{#ifCond throttle ">=" 0}}
-                    <a class="apply-throttle">Pedal to the Metal!</a>
-                {{else}}
-                    <a class="apply-throttle">Hit the Brakes!</a>
-                {{/ifCond}}
+                <div>
+                    <h2 class="center">Throttle</h2>
+                    <div class="center">
+                        <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" orient="vertical" name="data.throttle"/>
+                        <p>{{data.data.throttle}}</p>
+                    </div>
+                    <div class="center">
+                    {{#ifCond throttle ">=" 0}}
+                        <a class="apply-throttle">Pedal to the Metal!</a>
+                    {{else}}
+                        <a class="apply-throttle">Hit the Brakes!</a>
+                    {{/ifCond}}
+                    </div>
                 </div>
                 <div id="arc-slider" class="rslider"></div>
             </div>
@@ -266,6 +268,8 @@
         $("#arc-slider").roundSlider({
             sliderType: "min-range",
             circleShape: "custom-quarter",
+            min: -180,
+            max: 180,
             value: 0,
             startAngle: 90,
             editableTooltip: true,
@@ -273,8 +277,11 @@
             width: 6,
             handleSize: "+32",
             tooltipFormat: function (args) {
-                return args.value + " %";
+                return args.value + "°";
             }
+        });
+        $("#arc-slider").on("change", function (e) {
+            console.log(e.value);
         });
     </script>
 </form>
