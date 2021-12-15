@@ -1,35 +1,5 @@
 export default class VehicleSheet extends ActorSheet {
     constructor(data, context) {
-        //JQuery
-        $("#arc-slider").roundSlider({
-            sliderType: "min-range",
-            circleShape: "custom-quarter",
-            min: -180,
-            max: 180,
-            value: 0,
-            startAngle: 45,
-            editableTooltip: true,
-            radius: 200,
-            width: 4,
-            handleSize: "+16",
-            tooltipFormat: function (args) {
-                return args.value + "°";
-            },
-        });
-        $("#handle1").roundSlider({
-            sliderType: "min-range",
-            editableTooltip: false,
-            radius: 35,
-            width: 8,
-            value: 0,
-            handleSize: 0,
-            handleShape: "square",
-            circleShape: "pie",
-            startAngle: 315,
-            valueChange: function(args) {
-                console.log(this, args)
-            }
-        });
         return super(data, context);
     }
 
@@ -79,6 +49,36 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
         //Selector Binds
         html.find(".vehicle-weapon-select").change(this._on_equip_weapon.bind(this));
+        //JQuery
+        $("#arc-slider").roundSlider({
+            sliderType: "min-range",
+            circleShape: "custom-quarter",
+            min: -180,
+            max: 180,
+            value: 0,
+            startAngle: 45,
+            editableTooltip: true,
+            radius: 200,
+            width: 4,
+            handleSize: "+16",
+            tooltipFormat: function (args) {
+                return args.value + "°";
+            },
+        });
+        $("#handle1").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 35,
+            width: 8,
+            value: 0,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
+            valueChange: function(args) {
+                console.log(this, args)
+            }
+        });
         return super.activateListeners(html);
     }
 
