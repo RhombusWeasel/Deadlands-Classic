@@ -8,7 +8,7 @@
   "templateVersion": 1,
   "author": "Rhombus Weasel",
   "esmodules": ["module/deadlands.js"],
-  "scripts":  ["module/socket.js", "module/lib/utils.js", "module/sheets/poker.js"],
+  "scripts":  ["module/socket.js", "module/lib/utils.js", "module/sheets/poker.js", "https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.js"],
   "styles": ["styles/player-sheet.css", "styles/doc.css"],
   "socket": true,
   "packs": [],
