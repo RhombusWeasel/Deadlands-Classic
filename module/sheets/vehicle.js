@@ -25,7 +25,7 @@ export default class VehicleSheet extends ActorSheet {
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
         let vroom          = document.getElementsByName("handle1")[0];
         if (vroom) {
-            vroom.value = this.actor.data.data.speed
+            vroom.setValue(this.actor.data.data.speed);
             console.log(vroom);
         }
         return data;
