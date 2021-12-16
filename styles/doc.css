@@ -284,6 +284,7 @@
     white-space: pre-line;
 }
 
+/* Steering */
 /* Arc slider from https://roundsliderui.com/ */
 #arc-slider {
     height: 100px !important;
@@ -305,25 +306,47 @@
     border-width: 0px;
 }
 
-/* Arc slider from https://roundsliderui.com/ */
+/* Fuel Slider */
 #fuel-slider {
-    height: 100px !important;
-    width: 250px !important;
     overflow: hidden;
-    padding: 15px;
+    place-items: center;
+    grid-area: sp;
 }
-#fuel-slider .rs-container {
-    margin-left: -150px; /* here is the radius value */
-    left: 50%;
+#fuel-slider .rs-handle  {
+    background-color: transparent;
+    border: 8px solid transparent;
+    border-right-color: black;
+    margin: -2px 0px 0px 8px !important;
+    border-width: 2px 52px 2px 2px;
 }
-#fuel-slider .rs-tooltip {
-    top: 60px;
+#fuel-slider .rs-handle:before  {
+    display: block;
+    content: " ";
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background: black;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 100px;
 }
-#fuel-slider .rs-tooltip-text {
-    font-size: 25px;
+#fuel-slider .rs-tooltip  {
+    top: 75%;
+    font-size: 8px;
 }
-#fuel-slider .rs-border{
-    border-width: 0px;
+#fuel-slider .rs-tooltip div  {
+    text-align: center;
+    background: orange;
+    color: rgb(255, 255, 255);
+    border-radius: 4px;
+    padding: 1px 5px 2px;
+    margin-top: 4px;
+}
+#fuel-slider .rs-range-color  {
+    background-color: #DB5959;
+}
+#fuel-slider .rs-path-color  {
+    background-color: #F0C5C5;
 }
 
 /* Appearance related changes */

@@ -1093,6 +1093,7 @@
             "brake": 0,
             "travel": 15,
             "fuel": 0,
+            "fuel_max": 10,
             "reliability": 17,
             "modifier": 2,
             "hit_add": {

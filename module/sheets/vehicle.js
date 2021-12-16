@@ -67,17 +67,28 @@ export default class VehicleSheet extends ActorSheet {
         });
         $("#fuel-slider").roundSlider({
             sliderType: "min-range",
-            circleShape: "custom-quarter",
+            editableTooltip: false,
+            radius: 50,
+            width: 8,
             min: 0,
-            max: 10,
-            value: 0,
-            startAngle: 0,
-            editableTooltip: true,
-            radius: 150,
-            width: 4,
-            handleSize: "+16",
+            max: this.actor.data.data.fuel_max,
+            value: this.actor.data.data.fuel,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "custom-quarter",
+            startAngle: 315,
+            valueChange: function(args) {
+                console.log(this, args)
+            },
             tooltipFormat: function (args) {
-                return args.value + "°";
+                var val = args.value, speed;
+                if (val > 90) speed = "Full";
+                else if (val < 20) speed = "Runnin' Low";
+                else if (val < 40) speed = "Warnin'";
+                else if (val < 70) speed = "Danger";
+                else speed = "WE GONNA DIE!";
+            
+                return val + " km/h" + '<div style="place-items: center">' + speed + "<div>";
             },
         });
         $("#handle1").roundSlider({
