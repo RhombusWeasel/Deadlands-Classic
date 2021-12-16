@@ -364,8 +364,7 @@
     grid: 
     'sp sp sp sp b1 b1 b1 fl fl fl fl'
     'sp sp sp sp b1 b1 b1 fl fl fl fl'
-    'b2 b2 th st st st st st br b3 b3'
-    'b2 b2 th st st st st st br b3 b3';
+    'b2 th b3 st st st st st b4 br b5';
 }
 .speed-box {
     grid-area: sp;
@@ -377,10 +376,19 @@
 }
 .throttle {
     grid-area: th;
-    place-items: center;
 }
 .brake {
     grid-area: br;
-    place-items: center;
-    margin-right: 40px;
+}
+input[type=range]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 12px;
+    width: 12px;
+    border-radius: 2px;
+    background: #c85019;
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -4px;
+    transform: translate(7px, 0px);
 }
