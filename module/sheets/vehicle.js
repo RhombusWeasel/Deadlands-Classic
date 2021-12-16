@@ -81,14 +81,8 @@ export default class VehicleSheet extends ActorSheet {
                 console.log(this, args)
             },
             tooltipFormat: function (args) {
-                var val = args.value, speed;
-                if (val > 90) speed = "Full";
-                else if (val < 20) speed = "Runnin' Low";
-                else if (val < 40) speed = "Warnin'";
-                else if (val < 70) speed = "Danger";
-                else speed = "WE GONNA DIE!";
-            
-                return '<div class="center">Fuel:</div>' + val + '<div class="center">' + speed + "<div>";
+                var val = args.value;
+                return '<div class="center">Fuel:</div>' + val;
             },
         });
         $("#handle1").roundSlider({
@@ -105,14 +99,8 @@ export default class VehicleSheet extends ActorSheet {
                 console.log(this, args)
             },
             tooltipFormat: function (args) {
-                var val = args.value, speed;
-                if (val == 0) speed = "Safe";
-                else if (val < 20) speed = "Unsafe";
-                else if (val < 40) speed = "Warning";
-                else if (val < 70) speed = "Danger";
-                else speed = "WE GONNA DIE!";
-            
-                return '<div class="center">Fuel:</div>' + val + " km/h" + '<div class="center">' + speed + "<div>";
+                var val = args.value;
+                return '<div class="center">Speed:</div>' + val + " m/h";
             },
         });
         return super.activateListeners(html);

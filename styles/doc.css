@@ -408,6 +408,7 @@
     'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
     'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
     'b2 th b3 st st st st st b4 br b5';
+    background-color: lightgoldenrodyellow;
 }
 .speed-box {
     grid-area: sp;
