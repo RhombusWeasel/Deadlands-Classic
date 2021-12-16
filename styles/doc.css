@@ -365,8 +365,8 @@
     grid: 
     'sp sp sp sp b1 b1 b1 fl fl fl fl'
     'sp sp sp sp b1 b1 b1 fl fl fl fl'
-    'b2 th th st st st st st br br b3'
-    'b2 th th st st st st st br br b3';
+    'b2 b2 th st st st st st br b3 b3'
+    'b2 b2 th st st st st st br b3 b3';
 }
 .throttle {
     grid-area: th;
