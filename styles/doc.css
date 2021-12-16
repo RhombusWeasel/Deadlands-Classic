@@ -380,15 +380,24 @@
 .brake {
     grid-area: br;
 }
-input[type=range]::-webkit-slider-thumb {
+input[type=range][orient=vertical]::-webkit-slider-thumb {
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     border: 1px solid #000000;
     height: 12px;
     width: 12px;
     border-radius: 2px;
-    background: #c85019;
+    background: #1051b300;
     cursor: pointer;
     -webkit-appearance: none;
     margin-top: -4px;
     transform: translate(7px, 0px);
+}
+input[type=range][orient=vertical]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: pointer;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #99999900;
+    border-radius: 3px;
+    border: 1px solid #111;
 }
