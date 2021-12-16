@@ -305,6 +305,27 @@
     border-width: 0px;
 }
 
+/* Arc slider from https://roundsliderui.com/ */
+#fuel-slider {
+    height: 100px !important;
+    width: 250px !important;
+    overflow: hidden;
+    padding: 15px;
+}
+#fuel-slider .rs-container {
+    margin-left: -150px; /* here is the radius value */
+    left: 50%;
+}
+#fuel-slider .rs-tooltip {
+    top: 60px;
+}
+#fuel-slider .rs-tooltip-text {
+    font-size: 25px;
+}
+#fuel-slider .rs-border{
+    border-width: 0px;
+}
+
 /* Appearance related changes */
 .rs-control .rs-range-color {
     background-color: #5f5f5f;
@@ -368,6 +389,10 @@
 }
 .speed-box {
     grid-area: sp;
+    place-items: center;
+}
+.fuel-box {
+    grid-area: fl;
     place-items: center;
 }
 .steering {
