@@ -380,6 +380,15 @@
 .brake {
     grid-area: br;
 }
+/* Vertical Sliders */
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 150px;
+    padding: 0 20px;
+}
 input[type=range][orient=vertical]::-webkit-slider-thumb {
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     border: 1px solid #000000;
@@ -398,6 +407,4 @@ input[type=range][orient=vertical]::-webkit-slider-runnable-track {
     cursor: pointer;
     box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
     background: #99999900;
-    border-radius: 3px;
-    border: 1px solid #111;
 }
