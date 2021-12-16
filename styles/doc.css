@@ -362,7 +362,7 @@
 }
 .drivin-box {
     display: grid;
-    grid-row: 
+    grid: 
     'sp sp sp sp bl bl bl fl fl fl fl'
     'sp sp sp sp bl bl bl fl fl fl fl'
     'th th th st st st st st br br br'
