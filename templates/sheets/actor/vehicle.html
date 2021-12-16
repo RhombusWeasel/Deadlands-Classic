@@ -144,16 +144,18 @@
         </div>
         <div class="tab drivin" data-group="vehicle" data-tab="drivin">
             <div class="drivin-box">
-                <div class="acc-box">
+                <div class="speed-box">
                     <div id="handle1" name="data.speed"></div>
                 </div>
-                <div id="arc-slider" class="rslider"></div>
+                <div class="steering">
+                    <div id="arc-slider" class="rslider"></div>
+                </div>
                 <div class="throttle">
-                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider throttle" orient="vertical" name="data.throttle"/>
+                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="throttle" orient="vertical" name="data.throttle"/>
                     <p>{{data.data.throttle}}</p>
                 </div>
                 <div class="brake">
-                    <input type="range" min="0" max="{{data.data.speed}}" value="{{data.data.brake}}" class="slider brake" orient="vertical" name="data.brake"/>
+                    <input type="range" min="0" max="{{data.data.speed}}" value="{{data.data.brake}}" class="brake" orient="vertical" name="data.brake"/>
                     <p>{{data.data.brake}}</p>
                 </div>
             </div>

@@ -367,8 +367,12 @@
     'b2 b2 th st st st st st br b3 b3'
     'b2 b2 th st st st st st br b3 b3';
 }
-.acc-box {
+.speed-box {
     grid-area: sp;
+    place-items: center;
+}
+.steering {
+    grid-area: st;
     place-items: center;
 }
 .throttle {
