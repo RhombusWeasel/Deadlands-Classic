@@ -8,7 +8,7 @@ export default class VehicleSheet extends ActorSheet {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
             classes: ["player-sheet", "doc"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "passengers" }],
-            width: 500,
+            width: 496,
             height: 665
         });
     }
