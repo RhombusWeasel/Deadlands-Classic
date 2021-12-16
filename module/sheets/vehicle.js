@@ -27,36 +27,6 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
-        //JQuery
-        $("#arc-slider").roundSlider({
-            sliderType: "min-range",
-            circleShape: "custom-quarter",
-            min: -180,
-            max: 180,
-            value: 0,
-            startAngle: 45,
-            editableTooltip: true,
-            radius: 200,
-            width: 4,
-            handleSize: "+16",
-            tooltipFormat: function (args) {
-                return args.value + "°";
-            },
-        });
-        $("#handle1").roundSlider({
-            sliderType: "min-range",
-            editableTooltip: false,
-            radius: 35,
-            width: 8,
-            value: 0,
-            handleSize: 0,
-            handleShape: "square",
-            circleShape: "pie",
-            startAngle: 315,
-            valueChange: function(args) {
-                console.log(this, args)
-            }
-        });
         let speedo         =  $("#handle1").data("roundSlider");
         if (speedo) {
             console.log(speedo);
@@ -79,6 +49,36 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
         //Selector Binds
         html.find(".vehicle-weapon-select").change(this._on_equip_weapon.bind(this));
+        //JQuery
+        $("#arc-slider").roundSlider({
+            sliderType: "min-range",
+            circleShape: "custom-quarter",
+            min: -180,
+            max: 180,
+            value: 0,
+            startAngle: 45,
+            editableTooltip: true,
+            radius: 200,
+            width: 4,
+            handleSize: "+16",
+            tooltipFormat: function (args) {
+                return args.value + "°";
+            },
+        });
+        $("#handle1").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 35,
+            width: 8,
+            value: html.find(".speed").value,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
+            valueChange: function(args) {
+                console.log(this, args)
+            }
+        });
         return super.activateListeners(html);
     }
 
