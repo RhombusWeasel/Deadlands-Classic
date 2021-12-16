@@ -362,8 +362,9 @@
 .drivin-box {
     display: grid;
     grid-row: 
-    'sp sp st st st st st st fl fl'
-    'sp sp st st st st st st fl fl'
-    'bl bl bl bl bl bl bl bl br br'
+    'sp sp sp bl bl bl bl fl fl fl'
+    'sp sp sp bl bl bl bl fl fl fl'
+    'th th st st st st st st br br'
+    'th th st st at st st st br br'
     ;
 }
