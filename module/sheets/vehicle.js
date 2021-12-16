@@ -77,7 +77,19 @@ export default class VehicleSheet extends ActorSheet {
             startAngle: 315,
             valueChange: function(args) {
                 console.log(this, args)
-            }
+            },
+            tooltipFormat: function (args) {
+                if (args.value == 0) {
+                    return 'Safe';
+                }else if (args.value < 20) {
+                    return 'Unsafe';
+                }else if (args.value < 40) {
+                    return 'Worrying';
+                }else if (args.value < 60) {
+                    return 'Plaid';
+                }
+                return 'WE GONNA DIE!';
+            },
         });
         return super.activateListeners(html);
     }
