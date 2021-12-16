@@ -286,14 +286,14 @@
 
 /* Arc slider from https://roundsliderui.com/ */
 #arc-slider {
-    height: 110px !important;
-    width: 500px !important;
+    height: 100px !important;
+    width: 400px !important;
     overflow: hidden;
     padding: 15px;
     grid-area: st;
 }
 #arc-slider .rs-container {
-    margin-left: -200px; /* here 300 is the radius value */
+    margin-left: -150px; /* here 300 is the radius value */
     left: 50%;
 }
 #arc-slider .rs-tooltip {
@@ -362,8 +362,8 @@
 .drivin-box {
     display: grid;
     grid-row: 
-    'bl bl st st st st st st bl bl'
-    'sp sp st st st st st st br br'
-    'sp sp bl bl bl bl bl bl br br'
+    'sp sp st st st st st st fl fl'
+    'sp sp st st st st st st fl fl'
+    'bl bl bl bl bl bl bl bl br br'
     ;
 }
