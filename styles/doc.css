@@ -290,7 +290,6 @@
     width: 350px !important;
     overflow: hidden;
     padding: 15px;
-    grid-area: st;
 }
 #arc-slider .rs-container {
     margin-left: -150px; /* here is the radius value */
@@ -367,6 +366,10 @@
     'sp sp sp sp b1 b1 b1 fl fl fl fl'
     'b2 b2 th st st st st st br b3 b3'
     'b2 b2 th st st st st st br b3 b3';
+}
+.acc-box {
+    grid-area: sp;
+    place-items: center;
 }
 .throttle {
     grid-area: th;
