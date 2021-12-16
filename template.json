@@ -1090,6 +1090,7 @@
             "turn": 5,
             "turnin": 0,
             "throttle": 0,
+            "brake": 0,
             "travel": 15,
             "fuel": 0,
             "reliability": 17,
