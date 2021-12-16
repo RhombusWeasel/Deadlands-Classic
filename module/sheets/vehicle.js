@@ -68,7 +68,7 @@ export default class VehicleSheet extends ActorSheet {
         $("#handle1").roundSlider({
             sliderType: "min-range",
             editableTooltip: false,
-            radius: 35,
+            radius: 50,
             width: 8,
             value: this.actor.data.data.speed,
             handleSize: 0,
