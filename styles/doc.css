@@ -287,7 +287,7 @@
 /* Arc slider from https://roundsliderui.com/ */
 #arc-slider {
     height: 100px !important;
-    width: 350px !important;
+    width: 250px !important;
     overflow: hidden;
     padding: 15px;
 }
