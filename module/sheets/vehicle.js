@@ -70,7 +70,7 @@ export default class VehicleSheet extends ActorSheet {
             editableTooltip: false,
             radius: 35,
             width: 8,
-            value: html.find(".speed").value,
+            value: this.actor.data.data.speed,
             handleSize: 0,
             handleShape: "square",
             circleShape: "pie",
