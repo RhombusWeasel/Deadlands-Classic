@@ -65,6 +65,21 @@ export default class VehicleSheet extends ActorSheet {
                 return args.value + "°";
             },
         });
+        $("#fuel-slider").roundSlider({
+            sliderType: "min-range",
+            circleShape: "custom-quarter",
+            min: 0,
+            max: 10,
+            value: 0,
+            startAngle: 0,
+            editableTooltip: true,
+            radius: 150,
+            width: 4,
+            handleSize: "+16",
+            tooltipFormat: function (args) {
+                return args.value + "°";
+            },
+        });
         $("#handle1").roundSlider({
             sliderType: "min-range",
             editableTooltip: false,
@@ -86,7 +101,7 @@ export default class VehicleSheet extends ActorSheet {
                 else if (val < 70) speed = "Danger";
                 else speed = "WE GONNA DIE!";
             
-                return val + " km/h" + "<div>" + speed + "<div>";
+                return val + " km/h" + '<div style="place-items: center">' + speed + "<div>";
             },
         });
         return super.activateListeners(html);
