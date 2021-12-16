@@ -336,10 +336,9 @@
 }
 #fuel-slider .rs-tooltip div  {
     text-align: center;
-    background: orange;
-    color: rgb(255, 255, 255);
-    border-radius: 4px;
-    padding: 1px 5px 2px;
+    background: lightgoldenrodyellow;
+    color: rgb(0, 0, 0);
+    padding: 5px 5px 2px;
     margin-top: 4px;
 }
 #fuel-slider .rs-range-color  {
