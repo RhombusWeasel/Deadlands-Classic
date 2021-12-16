@@ -325,8 +325,8 @@
     background-color: transparent;
     border: 8px solid transparent;
     border-right-color: black;
-    margin: -1px 0px 0px 4px !important;
-    border-width: 1px 26px 1px 1px;
+    margin: -2px 0px 0px 8px !important;
+    border-width: 2px 52px 2px 2px;
 }
 #handle1 .rs-handle:before  {
     display: block;
@@ -371,7 +371,6 @@
 .throttle {
     grid-area: th;
     place-items: center;
-    margin-left: 20px;
 }
 .brake {
     grid-area: br;
