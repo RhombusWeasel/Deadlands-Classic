@@ -424,9 +424,11 @@
 }
 .throttle {
     grid-area: th;
+    text-align: center;
 }
 .brake {
     grid-area: br;
+    text-align: center;
 }
 /* Vertical Sliders */
 input[type=range][orient=vertical]
