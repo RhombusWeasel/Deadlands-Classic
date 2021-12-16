@@ -318,6 +318,7 @@
 }
 #handle1 {
     overflow: hidden;
+    place-items: center;
     grid-area: sp;
 }
 #handle1 .rs-handle  {
@@ -367,5 +368,4 @@
     'th th st st st st st st br br'
     'th th st st at st st st br br'
     ;
-    place-items: center;
 }
