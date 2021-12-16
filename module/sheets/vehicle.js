@@ -79,7 +79,7 @@ export default class VehicleSheet extends ActorSheet {
                 console.log(this, args)
             },
             tooltipFormat: function (args) {
-                var val = e.value, speed;
+                var val = args.value, speed;
                 if (val == 0) speed = "Safe";
                 else if (val < 20) speed = "Unsafe";
                 else if (val < 40) speed = "Warning";
