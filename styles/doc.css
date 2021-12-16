@@ -363,10 +363,10 @@
 .drivin-box {
     display: grid;
     grid: 
-    'sp sp sp sp bl bl bl fl fl fl fl'
-    'sp sp sp sp bl bl bl fl fl fl fl'
-    'th th th st st st st st br br br'
-    'th th th st st at st st br br br';
+    'sp sp sp sp b1 b1 b1 fl fl fl fl'
+    'sp sp sp sp b1 b1 b1 fl fl fl fl'
+    'b2 th th st st st st st br br b3'
+    'b2 th th st st st st st br br b3';
 }
 .throttle {
     grid-area: th;
