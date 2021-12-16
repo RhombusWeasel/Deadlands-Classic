@@ -362,8 +362,8 @@
 .drivin-box {
     display: grid;
     grid: 
-    'sp sp sp sp b1 b1 b1 fl fl fl fl'
-    'sp sp sp sp b1 b1 b1 fl fl fl fl'
+    'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
+    'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
     'b2 th b3 st st st st st b4 br b5';
 }
 .speed-box {
