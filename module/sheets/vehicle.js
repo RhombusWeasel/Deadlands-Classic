@@ -88,7 +88,7 @@ export default class VehicleSheet extends ActorSheet {
                 else if (val < 70) speed = "Danger";
                 else speed = "WE GONNA DIE!";
             
-                return val + " km/h" + '<div style="place-items: center">' + speed + "<div>";
+                return '<div class="center">Fuel:</div>' + val + '<div class="center">' + speed + "<div>";
             },
         });
         $("#handle1").roundSlider({
@@ -112,7 +112,7 @@ export default class VehicleSheet extends ActorSheet {
                 else if (val < 70) speed = "Danger";
                 else speed = "WE GONNA DIE!";
             
-                return val + " km/h" + '<div style="place-items: center">' + speed + "<div>";
+                return '<div class="center">Fuel:</div>' + val + " km/h" + '<div class="center">' + speed + "<div>";
             },
         });
         return super.activateListeners(html);
