@@ -366,8 +366,7 @@
     'sp sp sp sp bl bl bl fl fl fl fl'
     'sp sp sp sp bl bl bl fl fl fl fl'
     'th th th st st st st st br br br'
-    'th th th st st at st st br br br'
-    ;
+    'th th th st st at st st br br br';
 }
 .throttle {
     grid-area: th;
