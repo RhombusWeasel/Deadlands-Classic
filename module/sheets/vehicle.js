@@ -252,7 +252,7 @@ export default class VehicleSheet extends ActorSheet {
     _on_apply_turn(event) {
         event.preventDefault();
         let tkn = dc_utils.get_token(this.actor.name);
-        let turn = $("#slider").roundSlider().getValue()
+        let turn = $("#slider").data('roundSlider').getValue()
         tkn.document.update({rotation: turn})
     }
 }
