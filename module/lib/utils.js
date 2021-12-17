@@ -2557,7 +2557,14 @@ const dc_utils = {
                     }
                 }
                 dc_utils.random_update(act, {data: data});
-            }
+            },
+            check_role: function(act, name, job) {
+                for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
+                    const pgr = act.data.data.passengers.onboard[i];
+                    if (pgr.character == name && pgr[job]) return true;
+                }
+                return false;
+            },
         },
         locations: {
             add_location: function(act, name, min, max, armour, malfunctions) {

@@ -235,18 +235,22 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_throttle(event) {
         event.preventDefault();
-        this.actor.update({data: {
-            speed: this.actor.data.data.speed + this.actor.data.data.throttle,
-            throttle: 0,
-        }});
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+            this.actor.update({data: {
+                speed: this.actor.data.data.speed + this.actor.data.data.throttle,
+                throttle: 0,
+            }});
+        }
     }
 
     _on_apply_brake(event) {
         event.preventDefault();
-        this.actor.update({data: {
-            speed: this.actor.data.data.speed + this.actor.data.data.brake,
-            brake: 0,
-        }});
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+            this.actor.update({data: {
+                speed: this.actor.data.data.speed + this.actor.data.data.brake,
+                brake: 0,
+            }});
+        }
     }
 
     _on_apply_turn(event) {
