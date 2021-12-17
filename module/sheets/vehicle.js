@@ -74,6 +74,7 @@ export default class VehicleSheet extends ActorSheet {
             startAngle: 315,
             actor: this.actor.name,
             valueChange: function(args) {
+                console.log(this.actor, args);
                 let tkn = dc_utils.get_token(this.actor);
                 tkn.update({rotation: args.value});
             },
@@ -92,9 +93,7 @@ export default class VehicleSheet extends ActorSheet {
             handleShape: "square",
             circleShape: "pie",
             startAngle: 315,
-            valueChange: function(args) {
-                console.log(this, args)
-            },
+            valueChange: function(args) {},
             tooltipFormat: function (args) {
                 var val = args.value;
                 return '<div class="center">Speed:</div>' + val + " m/h";
