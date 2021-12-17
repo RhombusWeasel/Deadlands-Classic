@@ -235,8 +235,9 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_throttle(event) {
         event.preventDefault();
-        let element = event.currentTarget;
-        console.log('Throttle', element);
+        let element  = event.currentTarget;
+        let throttle = event.closest('.throttle').value;
+        console.log('Throttle', throttle);
     }
 
     _on_apply_brake(event) {
