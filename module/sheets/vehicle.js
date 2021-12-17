@@ -75,7 +75,7 @@ export default class VehicleSheet extends ActorSheet {
             actor: this.actor.name,
             valueChange: function(args) {
                 console.log(this.actor, args);
-                let tkn = dc_utils.get_token(this.actor);
+                let tkn = dc_utils.get_token(this.options.actor);
                 tkn.update({rotation: args.value});
             },
             tooltipFormat: function (args) {
