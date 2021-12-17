@@ -44,7 +44,7 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_guns       = data.cust_guns.filter(pl_item => data.firearms.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             data.cust_goods      = data.cust_goods.filter(pl_item => data.goods.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             data.cust_components = data.cust_components.filter(pl_item => data.components.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
-            data.cust_lit        = data.cust_lit.filter(pl_item => data.literature.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
+            data.cust_lit        = data.cust_lit.filter(pl_item => data.documents.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             // Filter for items in the current trade
             data.cust_melee      = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_guns       = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
