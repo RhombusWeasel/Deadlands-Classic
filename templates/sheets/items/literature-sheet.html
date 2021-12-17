@@ -11,13 +11,11 @@
                         {{#each documents as |doc|}}
                             {{#ifCond @key '!=' 'data'}}
                                 {{#ifCond @key '!=' 'apply_templates'}}
-                                    <!-- {{#ifCond @key '!=' 'book'}} -->
                                         {{#if (eq @key ../data.data.template)}}
                             <option value="{{@key}}" selected>{{doc.label}}</option>
                                         {{else}}
                             <option value="{{@key}}">{{doc.label}}</option>
                                         {{/if}}
-                                    <!-- {{/ifCond}} -->
                                 {{/ifCond}}
                             {{/ifCond}}
                         {{/each}}
