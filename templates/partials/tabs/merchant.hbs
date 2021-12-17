@@ -53,6 +53,14 @@
             {{/each}}
             </table>
             {{/if}}
+            {{#if documents}}
+            <h3 class="center">Documents</h2>
+            <table>
+            {{#each documents as |doc|}}
+                {{> "systems/deadlands_classic/templates/partials/reuseable/merchant_item.hbs" doc}}
+            {{/each}}
+            </table>
+            {{/if}}
         </div>
     </div>
 </section>

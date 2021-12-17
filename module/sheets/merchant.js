@@ -38,21 +38,25 @@ export default class MerchantSheet extends actor_sheet {
             data.cust_guns       = dc_utils.char.items.get(game.user.character, 'firearm', 'gun_type');
             data.cust_goods      = dc_utils.char.items.get(game.user.character, 'goods');
             data.cust_components = dc_utils.char.items.get(game.user.character, 'components');
+            data.cust_lit        = dc_utils.char.items.get(game.user.character, 'literature');
             // Filter for items the merchant buys
             data.cust_melee      = data.cust_melee.filter(pl_item => data.melee_weapons.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             data.cust_guns       = data.cust_guns.filter(pl_item => data.firearms.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             data.cust_goods      = data.cust_goods.filter(pl_item => data.goods.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             data.cust_components = data.cust_components.filter(pl_item => data.components.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
+            data.cust_lit        = data.cust_lit.filter(pl_item => data.literature.some(buy_itm => pl_item.name == buy_itm.name && buy_itm.data.data.will_buy));
             // Filter for items in the current trade
             data.cust_melee      = data.cust_melee.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_guns       = data.cust_guns.filter(pl_item  => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_goods      = data.cust_goods.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             data.cust_components = data.cust_components.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
+            data.cust_lit        = data.cust_lit.filter(pl_item => !data.current_trade.sell.some(buy_itm => pl_item.id == buy_itm.id));
             // Remove items we don't sell
             data.melee_weapons   = data.melee_weapons.filter(i => i.data.data.will_sell == true);
             data.firearms        = data.firearms.filter(i => i.data.data.will_sell == true);
             data.goods           = data.goods.filter(i => i.data.data.will_sell == true);
             data.components      = data.components.filter(i => i.data.data.will_sell == true);
+            data.documents       = data.documents.filter(i => i.data.data.will_sell == true);
         }
         return data;
     }
