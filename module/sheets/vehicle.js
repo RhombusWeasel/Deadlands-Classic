@@ -65,15 +65,17 @@ export default class VehicleSheet extends ActorSheet {
             editableTooltip: false,
             radius: 50,
             width: 8,
-            min: 0,
-            max: this.actor.data.data.fuel_max,
+            min: -this.actor.data.data.fuel_max,
+            max: 0,
             value: this.actor.data.data.fuel,
             handleSize: 0,
             handleShape: "square",
             circleShape: "custom-quarter",
             startAngle: 315,
+            actor: this.actor.name,
             valueChange: function(args) {
-                console.log(this, args)
+                let tkn = dc_utils.get_token(this.actor);
+                tkn.update({rotation: args.value});
             },
             tooltipFormat: function (args) {
                 var val = args.value;
