@@ -767,6 +767,7 @@ Hooks.on("ready", () => {
         combat_active: false,
         aim_bonus: 0,
         level_headed_available: true,
+        turns_made: 0,
         poker: {
             players: [],
         }
