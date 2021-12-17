@@ -424,7 +424,6 @@
 .steering {
     grid-area: st;
     place-items: center;
-    margin-top: 20px;
 }
 .throttle {
     grid-area: th;
