@@ -22,6 +22,10 @@
                         </select>
                     </td>
                 </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" name="data.cost" value="{{data.data.cost}}"></td>
+                </tr>
                 {{#if (eq data.data.template 'letter')}}
                 <tr>
                     <th>Date</th>
@@ -128,10 +132,6 @@
                 <tr>
                     <th>Paper</th>
                     <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
-                </tr>
-                <tr>
-                    <th>Price</th>
-                    <td><input type="text" name="data.cost" value="{{data.data.cost}}"></td>
                 </tr>
                 <tr>
                     <th>Headline</th>
