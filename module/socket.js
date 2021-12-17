@@ -267,6 +267,7 @@ let operations = {
         game.dc.combat_active = true;
         game.dc.level_headed_available = true;
         game.dc.turns_made = 0;
+        game.dc.dist_travelled = 0;
         if (game.dc.combat_shuffle) {
             game.dc.combat_shuffle = false;
             restore_discard();
@@ -768,6 +769,7 @@ Hooks.on("ready", () => {
         aim_bonus: 0,
         level_headed_available: true,
         turns_made: 0,
+        dist_travelled: 0,
         poker: {
             players: [],
         }
