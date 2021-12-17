@@ -419,10 +419,12 @@
 .fuel-box {
     grid-area: fl;
     place-items: center;
+    margin: 10px;
 }
 .steering {
     grid-area: st;
     place-items: center;
+    margin-top: 20px;
 }
 .throttle {
     grid-area: th;
