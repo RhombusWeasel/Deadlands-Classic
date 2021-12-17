@@ -152,16 +152,19 @@
                 </div>
                 <div class="steering">
                     <div id="arc-slider" class="rslider"></div>
+                    <a class="apply-turn">Execute Turn</a>
                 </div>
                 <div class="throttle">
                     <h3>Throttle</h3>
                     <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="throttle" orient="vertical" name="data.throttle"/>
                     <p>{{data.data.throttle}}</p>
+                    <a class="apply-throttle">Apply Throttle</a>
                 </div>
                 <div class="brake">
                     <h3>Brake</h3>
                     <input type="range" min="-{{data.data.speed}}" max="0" value="{{data.data.brake}}" class="brake" orient="vertical" name="data.brake"/>
                     <p>{{data.data.brake}}</p>
+                    <a class="apply-brakes">Apply Brakes</a>
                 </div>
             </div>
         </div>

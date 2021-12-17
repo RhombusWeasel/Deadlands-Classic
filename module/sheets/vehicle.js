@@ -42,6 +42,9 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".remove-hit-location").click(this._on_hit_location_remove.bind(this));
         html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
+        html.find(".apply-throttle").click(this._on_apply_throttle.bind(this));
+        html.find(".apply-brakes").click(this._on_apply_brake.bind(this));
+        html.find(".apply-turn").click(this._on_apply_turn.bind(this));
         //Selector Binds
         html.find(".vehicle-weapon-select").change(this._on_equip_weapon.bind(this));
         //JQuery
@@ -74,9 +77,7 @@ export default class VehicleSheet extends ActorSheet {
             startAngle: 315,
             actor: this.actor.name,
             valueChange: function(args) {
-                console.log(this.actor, args);
-                let tkn = dc_utils.get_token(this.options.actor);
-                tkn.update({rotation: args.value});
+                
             },
             tooltipFormat: function (args) {
                 var val = args.value;
@@ -184,6 +185,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_enter_vehicle(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         let char = game.user.character;
@@ -204,6 +206,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_exit_vehicle(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         let tkn = dc_utils.char.token.get_name(this.actor.name);
@@ -218,6 +221,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_equip_weapon(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let slot    = element.closest(".item").dataset.itemid;
         let item_id = element.value;
@@ -227,5 +231,23 @@ export default class VehicleSheet extends ActorSheet {
             item_name = wep.name;
         }
         dc_utils.vehicle.weapons.equip(this.actor, slot, item_id, item_name);
+    }
+
+    _on_apply_throttle(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log('Throttle', element);
+    }
+
+    _on_apply_brake(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log('Brake', element);
+    }
+
+    _on_apply_turn(event) {
+        event.preventDefault();
+        let element = event.currentTarget;
+        console.log('Turn', element);
     }
 }
