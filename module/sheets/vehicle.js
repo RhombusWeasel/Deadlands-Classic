@@ -235,20 +235,24 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_throttle(event) {
         event.preventDefault();
-        let element  = event.currentTarget;
-        let throttle = element.closest('.throttle').value;
-        console.log('Throttle', throttle);
+        this.actor.update({data: {
+            speed: this.actor.data.data.speed + this.actor.data.data.throttle,
+            throttle: 0,
+        }});
     }
 
     _on_apply_brake(event) {
         event.preventDefault();
-        let element = event.currentTarget;
-        console.log('Brake', element);
+        this.actor.update({data: {
+            speed: this.actor.data.data.speed + this.actor.data.data.brake,
+            brake: 0,
+        }});
     }
 
     _on_apply_turn(event) {
         event.preventDefault();
-        let element = event.currentTarget;
-        console.log('Turn', element);
+        let tkn = dc_utils.get_token(this.actor.name);
+        let turn = $("#slider").roundSlider().getValue()
+        tkn.document.update({rotation: turn})
     }
 }
