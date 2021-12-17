@@ -414,6 +414,7 @@
 .speed-box {
     grid-area: sp;
     place-items: center;
+    margin: 10px;
 }
 .fuel-box {
     grid-area: fl;
