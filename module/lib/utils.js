@@ -2565,6 +2565,13 @@ const dc_utils = {
                 }
                 return false;
             },
+            get_driver: function(act) {
+                for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
+                    const pgr = act.data.data.passengers.onboard[i];
+                    if (pgr.driver) return pgr.character;
+                }
+                return false;
+            },
         },
         locations: {
             add_location: function(act, name, min, max, armour, malfunctions) {

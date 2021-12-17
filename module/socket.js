@@ -252,13 +252,21 @@ let operations = {
             }
         }
     },
+    //VEHICLE OPERATIONS
+    turn_vehicle: function(data) {
+        if (data.roll.success && game.user.isGM) {
+            let tkn = dc_utils.get_token(data.vehicle);
+            tkn.document.update({rotation: tkn.data.rotation + data.turn});
+        }
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
     },
     roll_quickness: function(data) {
-        game.dc.combat_active = true
-        game.dc.level_headed_available = true
+        game.dc.combat_active = true;
+        game.dc.level_headed_available = true;
+        game.dc.turns_made = 0;
         if (game.dc.combat_shuffle) {
             game.dc.combat_shuffle = false;
             restore_discard();

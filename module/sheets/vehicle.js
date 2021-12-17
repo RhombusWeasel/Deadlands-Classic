@@ -255,9 +255,16 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_turn(event) {
         event.preventDefault();
-        let tkn = dc_utils.get_token(this.actor.name);
-        let turn = $("#arc-slider").data('roundSlider').getValue()
-        tkn.document.update({rotation: tkn.data.rotation + turn});
+        let data = dc_utils.roll.new_roll_packet(game.user.character, 'skill', 'drivin');
+        data.next_op = 'turn_vehicle';
+        data.turn    = $("#arc-slider").data('roundSlider').getValue();
+        data.vehicle = this.actor.name;
+        if (this.actor.data.data.speed < (this.actor.data.data.pace / 2)) data.modifiers.push({label: 'Half pace or less', modifier: 2});
+        if (this.actor.data.data.speed > this.actor.data.data.pace) data.modifiers.push({label: `Moving faster than pace`, modifier: -2});
+        if (Math.abs(data.turn) > 45) data.modifiers.push({label: `More than 45°`, modifier: -2});
+        data.modifiers.push({label: `Previous Turns`, modifier: -(game.dc.turns_made * 2)});
+        game.dc.turns_made += 1
+        operations.skill_roll(data);
         $("#arc-slider").data('roundSlider').setValue(0, 0);
     }
 }
