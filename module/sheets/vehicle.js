@@ -44,7 +44,7 @@ export default class VehicleSheet extends ActorSheet {
                 px += force.x;
                 py += force.y;
             }
-            this.line.lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
+            this.line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
         }
         return data;
     }
