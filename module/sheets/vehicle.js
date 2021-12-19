@@ -1,5 +1,6 @@
 export default class VehicleSheet extends ActorSheet {
     constructor(data, context) {
+        this.line = new PIXI.Graphic()
         return super(data, context);
     }
 
@@ -27,6 +28,23 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
+
+        // Line stuffs for drivin helpers.
+        let tkn = dc_utils.get_token(this.actor.name);
+        let drv = dc_utils.get_actor(data.driver);
+        if (tkn && drv && (game.user.isGM || drv.isOwner)) {
+            let grid_size = canvas.grid.size;
+            let grid_half = grid_size / 2
+            this.line.clear();
+            this.line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
+            let px, py = 0;
+            for (let i = 0; i < this.actor.data.data.forces.length; i++) {
+                const force = this.actor.data.data.forces[i];
+                px += force.x;
+                py += force.y;
+            }
+            this.line.lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
+        }
         return data;
     }
 

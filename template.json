@@ -1108,7 +1108,10 @@
                 }
             },
             "hit_locations": [],
-            "weapons": []
+            "weapons": [],
+            "forces": [
+                {"x": 0, "y": 0}
+            ]
         },
         "merchant": {
             "templates": [
