@@ -1,10 +1,4 @@
 export default class VehicleSheet extends ActorSheet {
-    constructor(data, context) {
-        super(data, context);
-        this.line = new PIXI.Graphics()
-        canvas.app.stage.addChild(this.line);
-    }
-
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
@@ -37,15 +31,16 @@ export default class VehicleSheet extends ActorSheet {
         if (tkn && drv && (game.user.isGM || drv.isOwner)) {
             let grid_size = canvas.grid.size;
             let grid_half = grid_size / 2
-            this.line.clear();
-            this.line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
+            let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
+            line.clear();
+            line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
             let px, py = 0;
             for (let i = 0; i < this.actor.data.data.forces.length; i++) {
                 const force = this.actor.data.data.forces[i];
                 px += force.x;
                 py += force.y;
             }
-            this.line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
+            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
         }
         return data;
     }
