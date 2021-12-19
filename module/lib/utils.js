@@ -3083,7 +3083,7 @@ const dc_utils = {
         add: function(key) {
             if (!(dc_utils.pixi.refs[key])) {
                 dc_utils.pixi.refs[key] = {
-                    object = dc_utils.pixi.new(),
+                    object: dc_utils.pixi.new(),
                 };
             }
             return dc_utils.pixi.refs[key].object;
