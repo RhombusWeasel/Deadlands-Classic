@@ -1,4 +1,8 @@
 export default class VehicleSheet extends ActorSheet {
+    constructor(data, context) {
+        super();
+        this.line = new PIXI.Graphics()
+    }
 
     static get defaultOptions() {
         return mergeObject(super.defaultOptions, {
@@ -26,7 +30,6 @@ export default class VehicleSheet extends ActorSheet {
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
 
         // Line stuffs for drivin helpers.
-        if (!(this.line)) this.line = new PIXI.Graphic();
         let tkn = dc_utils.get_token(this.actor.name);
         let drv = dc_utils.get_actor(data.driver);
         if (tkn && drv && (game.user.isGM || drv.isOwner)) {
