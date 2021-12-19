@@ -31,7 +31,7 @@ export default class VehicleSheet extends ActorSheet {
 
         // Line stuffs for drivin helpers.
         let tkn = dc_utils.get_token(this.actor.name);
-        let drv = dc_utils.get_actor(data.driver);
+        let drv = dc_utils.get_actor(dc_utils.vehicle.passenger.get_driver(this.actor));
         if (tkn && drv && (game.user.isGM || drv.isOwner)) {
             let grid_size = canvas.grid.size;
             let grid_half = grid_size / 2
