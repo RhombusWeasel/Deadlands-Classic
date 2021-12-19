@@ -1,6 +1,6 @@
 export default class VehicleSheet extends ActorSheet {
     constructor(data, context) {
-        super();
+        super(data, context);
         this.line = new PIXI.Graphics()
     }
 
