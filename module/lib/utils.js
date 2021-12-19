@@ -3074,7 +3074,7 @@ const dc_utils = {
         },
     },
     pixi: {
-        refs = {},
+        refs: {},
         new: function() {
             let obj = new PIXI.Graphics();
             canvas.app.stage.addChild(obj);
