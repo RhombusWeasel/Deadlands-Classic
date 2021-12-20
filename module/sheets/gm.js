@@ -324,7 +324,7 @@ export default class GMSheet extends ActorSheet {
             const el = percs[p];
             if (choice >= el.limit){
                 ChatMessage.create({ content: `The Marshal draws a fate chip`});
-                return this.actor.createOwnedItem(chips[el.chip])
+                return this.actor.createEmbeddedDocuments('Item', [chips[el.chip]])
             }
         }
     }

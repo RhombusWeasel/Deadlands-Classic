@@ -1090,9 +1090,7 @@ const dc_utils = {
      */
     get_actor: function(name) {
         let char = game.actors.getName(name);
-        if (char) {
-            return char;
-        }
+        if (char) return char;
         return canvas.tokens.placeables.find(i => i.name == name).document.actor;
     },
     get_token: function(name) {
@@ -1350,7 +1348,7 @@ const dc_utils = {
                         }
                     }
                 }
-                setTimeout(() => {act.createOwnedItem(item)}, Math.random() * 1000);
+                setTimeout(() => {act.createEmbeddedDocuments('Item', [item])}, Math.random() * 1000);
             },
             remove: function(act, item, amt) {
                 if (item.data.data.equippable) {
@@ -1506,7 +1504,7 @@ const dc_utils = {
                     data: item.data.data
                 }
                 i.data.amount = amount;
-                act.createOwnedItem(i);
+                act.createEmbeddedDocuments('Item', [i]);
             },
             pass: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
@@ -1581,7 +1579,7 @@ const dc_utils = {
             },
             apply_wind_damage: function(act, amt) {
                 if (amt > 0) {
-                    let wind_roll = new Roll(`${amt}d6`).roll();
+                    let wind_roll = new Roll(`${amt}d6`).evaluate({async: false});
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
                         let total = parseInt(act.data.data.wind.value) - wind_roll._total;
@@ -1734,7 +1732,7 @@ const dc_utils = {
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
-                    let roll = new Roll(`1d6`).roll();
+                    let roll = new Roll(`1d6`).evaluate({async: false});
                     let wind = act.data.data.wind.value - roll._total;
                     roll.toMessage();
                     dc_utils.char.wind.set(act, wind);
@@ -1946,9 +1944,10 @@ const dc_utils = {
                 results: [],
             };
             data.modifier = modifier
-            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
+            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).evaluate({async: false});
             r_data.total = roll._total;
             let count = 0;
+            console.log(roll);
             roll.terms[0].results.forEach(die => {
                 if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
@@ -2006,7 +2005,7 @@ const dc_utils = {
         location_roll(raises, key) {
             let loc_key
             if (key == 'any') {
-                let loc_roll = new Roll('1d20').roll();
+                let loc_roll = new Roll('1d20').evaluate({async: false});
                 //loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];

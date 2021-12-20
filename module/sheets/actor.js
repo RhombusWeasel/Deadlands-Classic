@@ -222,7 +222,7 @@ export default class PlayerSheet extends ActorSheet {
                     die_type: card.die_type
                 }
             };
-            setTimeout(() => {this.actor.createOwnedItem(item)}, d * 500);
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [item])}, d * 500);
         }
     }
 
@@ -383,7 +383,7 @@ export default class PlayerSheet extends ActorSheet {
         };
         dc_utils.chat.send(`Hex`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
         jk.delete();
-        setTimeout(() => {this.actor.createOwnedItem(card)}, 500);
+        setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [card])}, 500);
     }
 
     _on_item_delete(event) {
@@ -435,7 +435,7 @@ export default class PlayerSheet extends ActorSheet {
             const el = percs[p];
             if (choice >= el.limit){
                 ChatMessage.create({ content: `Draws a ${chips[el.chip].name} fate chip`, whisper: ChatMessage.getWhisperRecipients('GM')});
-                return this.actor.createOwnedItem(chips[el.chip])
+                return this.actor.createEmbeddedDocuments('Item', [chips[el.chip]])
             }
         }
     }
@@ -649,7 +649,7 @@ export default class PlayerSheet extends ActorSheet {
                     roll = `${trait.level}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
                 }
                 reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
-                let r = new Roll(roll).roll()
+                let r = new Roll(roll).evaluate({async: false})
                 r.toMessage({rollMode: 'gmroll'})
                 if(r._total >= 5){
                     reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
@@ -702,14 +702,14 @@ export default class PlayerSheet extends ActorSheet {
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck');
         let roll_str = `${act.data.data.traits[item.data.data.trait].level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`;
-        let r = new Roll(roll_str).roll();
+        let r = new Roll(roll_str).evaluate({async: false});
         let draw = 0;
         if (r._total >= 5) {
-            draw = Math.floor(r._total / 5)
+            draw = Math.floor(r._total / 5);
             reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
-            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500);
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [deck.pop()])}, i * 500);
         }
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Trick', reply);
@@ -717,21 +717,21 @@ export default class PlayerSheet extends ActorSheet {
 
     _on_cast_hex(event) {
         event.preventDefault();
-        let reply = 'You fail in your attempt to contact the Hunting Grounds.'
+        let reply = 'You fail in your attempt to contact the Hunting Grounds.';
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
         let item = this.actor.getOwnedItem(itemId);
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`
-        let r = new Roll(roll_str).roll()
-        let draw = 0
+        let r = new Roll(roll_str).evaluate({async: false});
+        let draw = 0;
         if (r._total >= 5) {
             draw = 5 + (Math.floor(r._total / 5))
             reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
-            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [deck.pop()])}, i * 500);
         }
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Hex', reply);

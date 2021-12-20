@@ -313,7 +313,7 @@ export default class MerchantSheet extends actor_sheet {
                 }
             }
         }
-        setTimeout(() => {act.createOwnedItem(item)}, Math.random() * 1000);
+        setTimeout(() => {act.createEmbeddedDocuments('Item', [item])}, Math.random() * 1000);
     }
 
     remove(act, item, amt) {

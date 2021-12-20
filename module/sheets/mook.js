@@ -277,7 +277,7 @@ export default class NPCSheet extends ActorSheet {
                 roll = `${trait.level}${trait.die_type}ex + ${skill.modifier} + ${trait.modifier}`
             }
             reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
-            let r = new Roll(roll).roll()
+            let r = new Roll(roll).evaluate({async: false})
             r.toMessage()
             if(r._total >= 5){
                 reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
@@ -299,14 +299,14 @@ export default class NPCSheet extends ActorSheet {
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
-        let r = new Roll(roll_str).roll()
+        let r = new Roll(roll_str).evaluate({async: false})
         let draw = 0
         if (r._total >= 5) {
             draw = Math.floor(r._total / 5)
             reply = `You rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
-            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', deck.pop())}, i * 500)
         }
         r.toMessage()
         ChatMessage.create({ content: reply});
@@ -321,14 +321,14 @@ export default class NPCSheet extends ActorSheet {
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
-        let r = new Roll(roll_str).roll()
+        let r = new Roll(roll_str).evaluate({async: false})
         let draw = 0
         if (r._total >= 5) {
             draw = 5 + (Math.floor(r._total / 5))
             reply = `You rolled ${r._total} granting ${draw} cards.`
         }
         for (let i = 0; i < draw; i++) {
-            setTimeout(() => {this.actor.createOwnedItem(deck.pop())}, i * 500)
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', deck.pop())}, i * 500)
         }
         r.toMessage()
         ChatMessage.create({ content: reply});

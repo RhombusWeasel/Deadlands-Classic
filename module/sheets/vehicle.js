@@ -26,15 +26,18 @@ export default class VehicleSheet extends ActorSheet {
 
         // Line stuffs for drivin helpers.
         let tkn = dc_utils.get_token(this.actor.name);
-        let drv = dc_utils.get_actor(dc_utils.vehicle.passenger.get_driver(this.actor));
-        console.log(tkn, drv, (tkn && drv && (game.user.isGM || drv.isOwner)));
+        let drv = dc_utils.vehicle.passenger.get_driver(this.actor);
+        if (drv) {
+            drv = dc_utils.get_actor(drv);
+        }
         if (tkn && drv && (game.user.isGM || drv.isOwner)) {
             let grid_size = canvas.grid.size;
-            let grid_half = grid_size / 2
+            let grid_half = grid_size / 2;
             let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
             line.clear();
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
-            let px, py = 0;
+            let px = 0;
+            let py = 0;
             for (let i = 0; i < this.actor.data.data.forces.length; i++) {
                 const force = this.actor.data.data.forces[i];
                 px += force.x;
