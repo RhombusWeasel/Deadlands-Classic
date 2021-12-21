@@ -1742,10 +1742,10 @@ const dc_utils = {
         },
         token: {
             get: function(act) {
-                let owned = canvas.tokens.placeables.find(i => i.owner == true);
+                let owned = canvas.tokens.placeables.find(i => i.isOwner == true);
                 for (let t = 0; t < owned.length; t++) {
                     let tgt = owned[t]
-                    if (tgt.owner) {
+                    if (tgt.isOwner) {
                         if (tgt.name == act.name){
                             return tgt;
                         }

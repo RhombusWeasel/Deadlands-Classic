@@ -427,7 +427,7 @@ let operations = {
     },
     request_roll: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             operations.skill_roll(data);
         }
     },
@@ -449,14 +449,14 @@ let operations = {
         }else{
             // GM is attacking a player, that player should bounce back the message.
             let act = dc_utils.get_actor(data.target);
-            if (act.owner) {
+            if (act.isOwner) {
                 setTimeout(() => {dc_utils.socket.emit('register_attack', data)}, 500);
             }
         }
     },
     roll_dodge: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             let cards = char.data.data.action_cards;
             if (cards.length > 0) {
                 let card_name = cards[0].name;
@@ -568,7 +568,7 @@ let operations = {
             }
         }else{
             let act = dc_utils.get_actor(data.target);
-            if (act.owner) {
+            if (act.isOwner) {
                 dc_utils.socket.emit('check_hit', data);
             }
         }
@@ -623,7 +623,7 @@ let operations = {
     //prompt turn is sent by the GM to the players.
     prompt_turn: function(data) {
         let char = game.actors.getName(data.char);
-        if (char.owner) {
+        if (char.isOwner) {
             data.roller = data.target;
             let form = new Dialog({
                 title: `Your Turn.`,
@@ -651,7 +651,7 @@ let operations = {
     },
     apply_damage: function(data) {
         let char = game.actors.getName(data.target);
-        if (char.owner) {
+        if (char.isOwner) {
             data.roller = data.target;
             let form = new Dialog({
                 title: `You've been hit!`,
