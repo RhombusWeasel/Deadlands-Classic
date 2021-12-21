@@ -348,7 +348,7 @@ export default class GMSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         ChatMessage.create({ content: `Discarding ${item.type} ${item.name}`});
         return this.actor.deleteOwnedItem(itemId);
     }
