@@ -202,7 +202,7 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let dmg = item.data.data.damage;
         let act = this.getData();
         let trait = act.data.traits.nimbleness;
@@ -224,7 +224,7 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let shots = item.data.data.chamber;
         let dmg = item.data.data.damage;
         let dmg_mod = item.data.data.damage_bonus;
@@ -261,7 +261,7 @@ export default class NPCSheet extends ActorSheet {
         let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let shots = item.data.data.chamber;
         let max = item.data.data.max;
         if (shots >= max) {
@@ -295,7 +295,7 @@ export default class NPCSheet extends ActorSheet {
         let reply = 'You fail in your attempt to contact the Hunting Grounds.'
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
@@ -317,7 +317,7 @@ export default class NPCSheet extends ActorSheet {
         let reply = 'You fail in your attempt to contact the Hunting Grounds.'
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.traits[item.data.data.trait].die_type}ex + ${act.data.traits[item.data.data.trait].modifier}`
@@ -338,7 +338,7 @@ export default class NPCSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let roll_str = `Casts ${item.name}: [[${act.data.traits.spirit.skills.faith.level}${act.data.traits.spirit.die_type}ex + ${act.data.traits.spirit.modifier}]] against a TN of ${item.data.data.tn}`
         ChatMessage.create({ content: roll_str});

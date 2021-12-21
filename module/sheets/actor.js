@@ -291,7 +291,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let name = item.name;
         let level = parseInt(item.data.data.level);
         let bounty = this.actor.data.data.bounty.value;
@@ -627,7 +627,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
         let element = event.currentTarget;
         let itemId = element.dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let shots = parseInt(item.data.data.chamber);
         let max = item.data.data.max;
         let ammo = this.actor.items.find(i => i.name == item.data.data.calibur) ;
@@ -698,7 +698,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = 'You fail in your attempt to contact the Hunting Grounds.'
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck');
         let roll_str = `${act.data.data.traits[item.data.data.trait].level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`;
@@ -720,7 +720,7 @@ export default class PlayerSheet extends ActorSheet {
         let reply = 'You fail in your attempt to contact the Hunting Grounds.';
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let deck = dc_utils.deck.new('huckster_deck')
         let roll_str = `${item.data.data.level}${act.data.data.traits[item.data.data.trait].die_type}ex + ${act.data.data.traits[item.data.data.trait].modifier}`
@@ -741,7 +741,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let strain = parseInt(this.actor.data.data.strain);
         let i_strain = parseInt(item.data.data.strain);
         let max_strain = parseInt(this.actor.data.data.traits.vigor.die_type.substring(1, this.actor.data.data.traits.vigor.die_type.length));
@@ -771,7 +771,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let data = dc_utils.roll.new_roll_packet(this.actor, 'skill', 'faith');
         data.roll = dc_utils.roll.new(data);

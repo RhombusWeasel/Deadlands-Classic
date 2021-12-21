@@ -119,7 +119,7 @@ export default class GeneratorSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let itemId = element.closest(".item").dataset.itemid;
-        let item = this.actor.getOwnedItem(itemId);
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
         return this.actor.deleteOwnedItem(itemId);
     }
 }
