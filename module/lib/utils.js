@@ -1090,9 +1090,7 @@ const dc_utils = {
      */
     get_actor: function(name) {
         let char = game.actors.getName(name);
-        if (char) {
-            return char;
-        }
+        if (char) return char;
         return canvas.tokens.placeables.find(i => i.name == name).document.actor;
     },
     get_token: function(name) {
@@ -1101,7 +1099,7 @@ const dc_utils = {
     random_update: function(ob, data) {
         return setTimeout(() => {
             ob.update(data);
-        }, Math.random() * 1000)
+        }, Math.random() * 500)
     },
     /** PLURALIZE
      * @param {INT} amt The numerical value to check against
@@ -1116,9 +1114,6 @@ const dc_utils = {
     pad: function(str, size) {
         while (str.length < (size || 2)) {str = "0" + str;}
         return str;
-    },
-    stagger: function(func) {
-        setTimeout(func, Math.random * 1000);
     },
     sort: {
         compare: function(object1, object2, key) {
@@ -1173,7 +1168,7 @@ const dc_utils = {
                 setTimeout(() => {
                     game.user.character.sheet.render(false)
                     dc_utils.socket.emit('force_update', {});
-                }, 500);
+                }, 1000);
             }
         },
         update_time: function(act, period, mult) {
@@ -1353,7 +1348,7 @@ const dc_utils = {
                         }
                     }
                 }
-                setTimeout(() => {act.createOwnedItem(item)}, Math.random() * 1000);
+                setTimeout(() => {act.createEmbeddedDocuments('Item', [item])}, Math.random() * 1000);
             },
             remove: function(act, item, amt) {
                 if (item.data.data.equippable) {
@@ -1509,7 +1504,7 @@ const dc_utils = {
                     data: item.data.data
                 }
                 i.data.amount = amount;
-                act.createOwnedItem(i);
+                act.createEmbeddedDocuments('Item', [i]);
             },
             pass: function(act, reciever, item_id, amount) {
                 if (amount <= 0) return false;
@@ -1584,7 +1579,7 @@ const dc_utils = {
             },
             apply_wind_damage: function(act, amt) {
                 if (amt > 0) {
-                    let wind_roll = new Roll(`${amt}d6`).roll();
+                    let wind_roll = new Roll(`${amt}d6`).evaluate({async: false});
                     wind_roll.toMessage({rollMode: 'gmroll'});
                     return setTimeout(() => {
                         let total = parseInt(act.data.data.wind.value) - wind_roll._total;
@@ -1737,7 +1732,7 @@ const dc_utils = {
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
-                    let roll = new Roll(`1d6`).roll();
+                    let roll = new Roll(`1d6`).evaluate({async: false});
                     let wind = act.data.data.wind.value - roll._total;
                     roll.toMessage();
                     dc_utils.char.wind.set(act, wind);
@@ -1747,10 +1742,10 @@ const dc_utils = {
         },
         token: {
             get: function(act) {
-                let owned = canvas.tokens.placeables.find(i => i.owner == true);
+                let owned = canvas.tokens.placeables.find(i => i.isOwner == true);
                 for (let t = 0; t < owned.length; t++) {
                     let tgt = owned[t]
-                    if (tgt.owner) {
+                    if (tgt.isOwner) {
                         if (tgt.name == act.name){
                             return tgt;
                         }
@@ -1814,6 +1809,9 @@ const dc_utils = {
             }
             if (target) {
                 let tkn = dc_utils.char.token.get_name(act.name);
+                if (act.data.data.current_vehicle != 'None') {
+                    tkn = dc_utils.char.token.get_name(act.data.data.current_vehicle);
+                }
                 let tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
                     console.log('new_roll_packet: Attacker: ', tkn);
@@ -1946,9 +1944,10 @@ const dc_utils = {
                 results: [],
             };
             data.modifier = modifier
-            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).roll();
+            let roll = new Roll(`${data.amt}${data.dice}ex + ${modifier}`).evaluate({async: false});
             r_data.total = roll._total;
             let count = 0;
+            console.log(roll);
             roll.terms[0].results.forEach(die => {
                 if (die.result + modifier >= data.tn && count < r_data.amt) {
                     r_data.pass += 1;
@@ -2006,7 +2005,7 @@ const dc_utils = {
         location_roll(raises, key) {
             let loc_key
             if (key == 'any') {
-                let loc_roll = new Roll('1d20').roll();
+                let loc_roll = new Roll('1d20').evaluate({async: false});
                 //loc_roll.toMessage({rollMode: 'gmroll'});
                 let tot = loc_roll._total - 1;
                 let found = [];
@@ -2557,7 +2556,21 @@ const dc_utils = {
                     }
                 }
                 dc_utils.random_update(act, {data: data});
-            }
+            },
+            check_role: function(act, name, job) {
+                for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
+                    const pgr = act.data.data.passengers.onboard[i];
+                    if (pgr.character == name && pgr[job]) return true;
+                }
+                return false;
+            },
+            get_driver: function(act) {
+                for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
+                    const pgr = act.data.data.passengers.onboard[i];
+                    if (pgr.driver) return pgr.character;
+                }
+                return false;
+            },
         },
         locations: {
             add_location: function(act, name, min, max, armour, malfunctions) {
@@ -3057,6 +3070,22 @@ const dc_utils = {
                     </div>
                 `
             },
+        },
+    },
+    pixi: {
+        refs: {},
+        new: function() {
+            let obj = new PIXI.Graphics();
+            canvas.app.stage.addChild(obj);
+            return obj;
+        },
+        add: function(key) {
+            if (!(dc_utils.pixi.refs[key])) {
+                dc_utils.pixi.refs[key] = {
+                    object: dc_utils.pixi.new(),
+                };
+            }
+            return dc_utils.pixi.refs[key].object;
         },
     },
 };

@@ -4,7 +4,7 @@ export default class VehicleSheet extends ActorSheet {
             template: `systems/deadlands_classic/templates/sheets/actor/vehicle.html`,
             classes: ["player-sheet", "doc"],
             tabs: [{ navSelector: ".sheet-tabs", contentSelector: ".sheet-body", initial: "passengers" }],
-            width: 500,
+            width: 496,
             height: 665
         });
     }
@@ -23,6 +23,28 @@ export default class VehicleSheet extends ActorSheet {
         data.melee_weapons = dc_utils.char.items.get(this.actor, "melee");
         data.firearms      = dc_utils.char.items.get(this.actor, "firearm", "gun_type");
         data.goods         = dc_utils.char.items.get(this.actor, "goods");
+
+        // Line stuffs for drivin helpers.
+        let tkn = dc_utils.get_token(this.actor.name);
+        let drv = dc_utils.vehicle.passenger.get_driver(this.actor);
+        if (drv) {
+            drv = dc_utils.get_actor(drv);
+        }
+        if (tkn && drv && (game.user.isGM || drv.isOwner)) {
+            let grid_size = canvas.grid.size;
+            let grid_half = grid_size / 2;
+            let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
+            line.clear();
+            line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
+            let px = 0;
+            let py = 0;
+            for (let i = 0; i < this.actor.data.data.forces.length; i++) {
+                const force = this.actor.data.data.forces[i];
+                px += force.x;
+                py += force.y;
+            }
+            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
+        }
         return data;
     }
 
@@ -38,9 +60,64 @@ export default class VehicleSheet extends ActorSheet {
         html.find(".remove-hit-location").click(this._on_hit_location_remove.bind(this));
         html.find(".enter-vehicle").click(this._on_enter_vehicle.bind(this));
         html.find(".exit-vehicle").click(this._on_exit_vehicle.bind(this));
+        html.find(".apply-throttle").click(this._on_apply_throttle.bind(this));
+        html.find(".apply-brakes").click(this._on_apply_brake.bind(this));
+        html.find(".apply-turn").click(this._on_apply_turn.bind(this));
         //Selector Binds
         html.find(".vehicle-weapon-select").change(this._on_equip_weapon.bind(this));
-
+        //JQuery
+        $("#arc-slider").roundSlider({
+            sliderType: "min-range",
+            circleShape: "custom-quarter",
+            min: -180,
+            max: 180,
+            value: 0,
+            startAngle: 45,
+            editableTooltip: true,
+            radius: 150,
+            width: 4,
+            handleSize: "+16",
+            tooltipFormat: function (args) {
+                return args.value + "°";
+            },
+        });
+        $("#fuel-slider").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 50,
+            width: 8,
+            min: 0,
+            max: this.actor.data.data.fuel_max,
+            value: this.actor.data.data.fuel,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "custom-quarter",
+            startAngle: 315,
+            actor: this.actor.name,
+            valueChange: function(args) {
+                
+            },
+            tooltipFormat: function (args) {
+                var val = args.value;
+                return '<div class="center">Fuel:</div>' + val;
+            },
+        });
+        $("#handle1").roundSlider({
+            sliderType: "min-range",
+            editableTooltip: false,
+            radius: 50,
+            width: 8,
+            value: this.actor.data.data.speed,
+            handleSize: 0,
+            handleShape: "square",
+            circleShape: "pie",
+            startAngle: 315,
+            valueChange: function(args) {},
+            tooltipFormat: function (args) {
+                var val = args.value;
+                return '<div class="center">Speed:</div>' + val + " m/h";
+            },
+        });
         return super.activateListeners(html);
     }
 
@@ -126,6 +203,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_enter_vehicle(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         let char = game.user.character;
@@ -138,7 +216,7 @@ export default class VehicleSheet extends ActorSheet {
                 return false;
             }
             dc_utils.vehicle.passenger.enter(this.actor, char, index);
-            game.user.character.update({data: {current_vehicle: this.name}});
+            dc_utils.random_update(game.user.character, {data: {current_vehicle: this.actor.name}});
             dc_utils.socket.emit('remove_token', {name: char.name});
         }else{
             dc_utils.chat.send('Missing Token', `Failed to find tokens for ${char.name} and ${this.actor.name}.`, 'Check both tokens exist on the current map.');
@@ -146,13 +224,14 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_exit_vehicle(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let index = element.closest(".item").dataset.itemid;
         let tkn = dc_utils.char.token.get_name(this.actor.name);
         let char = game.user.character;
         if (tkn) {
             dc_utils.vehicle.passenger.exit(this.actor, index);
-            game.user.character.update({data: {current_vehicle: 'None'}});
+            dc_utils.random_update(char, {data: {current_vehicle: 'None'}});
             dc_utils.socket.emit('spawn_token', {name: char.name, x: tkn.x + 100, y: tkn.y});
         }else{
             dc_utils.chat.send('Missing Token', `Failed to find token for ${this.actor.name}.`, 'Check the token exists on the current map.');
@@ -160,6 +239,7 @@ export default class VehicleSheet extends ActorSheet {
     }
 
     _on_equip_weapon(event) {
+        event.preventDefault();
         let element = event.currentTarget;
         let slot    = element.closest(".item").dataset.itemid;
         let item_id = element.value;
@@ -169,5 +249,40 @@ export default class VehicleSheet extends ActorSheet {
             item_name = wep.name;
         }
         dc_utils.vehicle.weapons.equip(this.actor, slot, item_id, item_name);
+    }
+
+    _on_apply_throttle(event) {
+        event.preventDefault();
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+            this.actor.update({data: {
+                speed: this.actor.data.data.speed + this.actor.data.data.throttle,
+                throttle: 0,
+            }});
+        }
+    }
+
+    _on_apply_brake(event) {
+        event.preventDefault();
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+            this.actor.update({data: {
+                speed: this.actor.data.data.speed + this.actor.data.data.brake,
+                brake: 0,
+            }});
+        }
+    }
+
+    _on_apply_turn(event) {
+        event.preventDefault();
+        let data = dc_utils.roll.new_roll_packet(game.user.character, 'skill', 'drivin');
+        data.next_op = 'turn_vehicle';
+        data.turn    = $("#arc-slider").data('roundSlider').getValue();
+        data.vehicle = this.actor.name;
+        if (this.actor.data.data.speed < (this.actor.data.data.pace / 2)) data.modifiers.slow = {label: 'Half pace or less', modifier: 2};
+        if (this.actor.data.data.speed > this.actor.data.data.pace) data.modifiers.fast = {label: `Moving faster than pace`, modifier: -2};
+        if (Math.abs(data.turn) > 45) data.modifiers.big_turn = {label: `More than 45°`, modifier: -2};
+        data.modifiers.mo_turns = {label: `Previous Turns`, modifier: -(game.dc.turns_made * 2)};
+        game.dc.turns_made += 1
+        operations.skill_roll(data);
+        $("#arc-slider").data('roundSlider').setValue(0, 0);
     }
 }

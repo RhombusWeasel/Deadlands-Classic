@@ -36,6 +36,14 @@
                     {{/each}}
                 </table>
                 {{/if}}
+                {{#if documents}}
+                <h3 class="center">Documents</h3>
+                <table>
+                    {{#each documents as |item|}}
+                        {{> "systems/deadlands_classic/templates/partials/reuseable/trade-sell.hbs" item}}
+                    {{/each}}
+                </table>
+                {{/if}}
             </div>
         </div>
         <div class="border">
@@ -90,6 +98,10 @@
                 {{#if cust_components}}
                     <h3 class="center">Components</h3>
                     {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_components}}
+                {{/if}}
+                {{#if cust_lit}}
+                    <h3 class="center">Documents</h3>
+                    {{> "systems/deadlands_classic/templates/partials/reuseable/trade-buy.hbs" buy_modifier=buy_modifier list=cust_lit}}
                 {{/if}}
             </div>
         </div>

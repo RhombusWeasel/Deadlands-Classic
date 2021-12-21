@@ -252,13 +252,22 @@ let operations = {
             }
         }
     },
+    //VEHICLE OPERATIONS
+    turn_vehicle: function(data) {
+        if (data.roll.success && game.user.isGM) {
+            let tkn = dc_utils.get_token(data.vehicle);
+            tkn.document.update({rotation: tkn.data.rotation + data.turn});
+        }
+    },
     //COMBAT DECK OPERATIONS
     test_event: function(data) {
         console.log('Test event recieved.');
     },
     roll_quickness: function(data) {
-        game.dc.combat_active = true
-        game.dc.level_headed_available = true
+        game.dc.combat_active = true;
+        game.dc.level_headed_available = true;
+        game.dc.turns_made = 0;
+        game.dc.dist_travelled = 0;
         if (game.dc.combat_shuffle) {
             game.dc.combat_shuffle = false;
             restore_discard();
@@ -329,7 +338,7 @@ let operations = {
     },
     confirm_result: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             let form = new Dialog({
                 title: `Confirm skill roll`,
                 content: build_roll_dialog(data),
@@ -338,7 +347,7 @@ let operations = {
                         label: 'White',
                         callback: () => {
                             if (dc_utils.char.chips.spend(char, 'White')) {
-                                let roll = new Roll(`1${data.roll.dice}ex + ${data.modifier}`).roll();
+                                let roll = new Roll(`1${data.roll.dice}ex + ${data.modifier}`).evaluate({async: false});
                                 let res = roll._total;
                                 data.roll.results.unshift(res);
                                 data.roll.amt += 1;
@@ -352,7 +361,7 @@ let operations = {
                         label: 'Red',
                         callback: () => {
                             if (dc_utils.char.chips.spend(char, 'Red')) {
-                                let roll = new Roll(`1${data.roll.dice}ex`).roll();
+                                let roll = new Roll(`1${data.roll.dice}ex`).evaluate({async: false});
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
                                 data.roll.results[index] += result;
@@ -368,7 +377,7 @@ let operations = {
                         label: 'Blue',
                         callback: () => {
                             if (dc_utils.char.chips.spend(char, 'Blue')) {
-                                let roll = new Roll(`1${data.roll.dice}ex`).roll();
+                                let roll = new Roll(`1${data.roll.dice}ex`).evaluate({async: false});
                                 let result = roll.terms[0].results[0].result;
                                 let index = data.roll.results.indexOf(data.roll.total - data.roll.modifier);
                                 data.roll.results[index] += result;
@@ -418,7 +427,7 @@ let operations = {
     },
     request_roll: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             operations.skill_roll(data);
         }
     },
@@ -440,14 +449,14 @@ let operations = {
         }else{
             // GM is attacking a player, that player should bounce back the message.
             let act = dc_utils.get_actor(data.target);
-            if (act.owner) {
+            if (act.isOwner) {
                 setTimeout(() => {dc_utils.socket.emit('register_attack', data)}, 500);
             }
         }
     },
     roll_dodge: function(data) {
         let char = dc_utils.get_actor(data.roller);
-        if (char.owner) {
+        if (char.isOwner) {
             let cards = char.data.data.action_cards;
             if (cards.length > 0) {
                 let card_name = cards[0].name;
@@ -559,7 +568,7 @@ let operations = {
             }
         }else{
             let act = dc_utils.get_actor(data.target);
-            if (act.owner) {
+            if (act.isOwner) {
                 dc_utils.socket.emit('check_hit', data);
             }
         }
@@ -595,7 +604,7 @@ let operations = {
                     dc_utils.chat.send(`Don't Get 'Im Riled!`, `${act.name} is wounded and angry!`, `They deal ${wound_level}d4 extra damage!`);
                 }
             }
-            let dmg_roll = new Roll(dmg_formula).roll();
+            let dmg_roll = new Roll(dmg_formula).evaluate({async: false});
             dmg_roll.toMessage({rollMode: 'gmroll'});
             data.damage = dmg_roll._total;
             data.wounds = Math.floor(data.damage / parseInt(tgt.data.data.size));
@@ -614,7 +623,7 @@ let operations = {
     //prompt turn is sent by the GM to the players.
     prompt_turn: function(data) {
         let char = game.actors.getName(data.char);
-        if (char.owner) {
+        if (char.isOwner) {
             data.roller = data.target;
             let form = new Dialog({
                 title: `Your Turn.`,
@@ -642,7 +651,7 @@ let operations = {
     },
     apply_damage: function(data) {
         let char = game.actors.getName(data.target);
-        if (char.owner) {
+        if (char.isOwner) {
             data.roller = data.target;
             let form = new Dialog({
                 title: `You've been hit!`,
@@ -759,6 +768,8 @@ Hooks.on("ready", () => {
         combat_active: false,
         aim_bonus: 0,
         level_headed_available: true,
+        turns_made: 0,
+        dist_travelled: 0,
         poker: {
             players: [],
         }

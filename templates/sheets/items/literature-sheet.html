@@ -11,18 +11,20 @@
                         {{#each documents as |doc|}}
                             {{#ifCond @key '!=' 'data'}}
                                 {{#ifCond @key '!=' 'apply_templates'}}
-                                    {{#ifCond @key '!=' 'book'}}
                                         {{#if (eq @key ../data.data.template)}}
                             <option value="{{@key}}" selected>{{doc.label}}</option>
                                         {{else}}
                             <option value="{{@key}}">{{doc.label}}</option>
                                         {{/if}}
-                                    {{/ifCond}}
                                 {{/ifCond}}
                             {{/ifCond}}
                         {{/each}}
                         </select>
                     </td>
+                </tr>
+                <tr>
+                    <th>Price</th>
+                    <td><input type="text" name="data.cost" value="{{data.data.cost}}"></td>
                 </tr>
                 {{#if (eq data.data.template 'letter')}}
                 <tr>
@@ -130,10 +132,6 @@
                 <tr>
                     <th>Paper</th>
                     <td><input type="text" name="data.prefab.newspaper.paper" value="{{data.data.prefab.newspaper.paper}}"></td>
-                </tr>
-                <tr>
-                    <th>Price</th>
-                    <td><input type="text" name="data.cost" value="{{data.data.cost}}"></td>
                 </tr>
                 <tr>
                     <th>Headline</th>

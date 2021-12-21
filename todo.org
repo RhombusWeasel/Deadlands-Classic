@@ -1,4 +1,19 @@
-* System
+* System [1/5]
+** TODO Melee Rules [0/1]:
+*** TODO Add defence bonus to melee attacks.
+** TODO DC-BOT [1/2]
+*** TODO Functions [0/2]
+**** TODO Pass items and cash to players directly from GM sheet
+Needs socket listener setting up to pass the data around.
+*** DONE Misc tasks [3/3]
+**** DONE Add strength roll to melee damage
+**** DONE Add aim bonus to shootin rolls
+**** DONE Move action deck to be persistant data
+** TODO Equipment Update
+I ultimately want the edges and hindrances made to be able to modify any skill/attribute of the sheet
+will need to add a new equippable effects list in the item template and a method of adding new effects
+to the item on the item sheet
+** TODO Movement Rules
 ** DONE Generalize combat rules for websocket [1/1]
 *** Notes
  Need a messaging system to allow for waiting for message passing between hosts for Dodge rolls/Spending Fate chips etc.
@@ -40,24 +55,16 @@ Need to have a dialog open up when a player misses and/or critical fails.
  Armour is now calculated and the die type lowered before any damage rolls are made.
  Marshal's when targeting a player and firing with a weapon from an NPC if the player has action cards left then they will receive a dodge dialog asking if they would like to discard their highest card to dodge.
 
-** DC-BOT [0/2]
-*** TODO Functions [0/2]
-**** TODO Pass items and cash to players directly from GM sheet
-Needs socket listener setting up to pass the data around.
-*** TODO Misc tasks [1/3]
-**** DONE Add strength roll to melee damage
-**** TODO Add aim bonus to shootin rolls
-**** TODO Move action deck to be persistant data
-** Movement Rules
-** Equipment Update
-I ultimately want the edges and hindrances made to be able to modify any skill/attribute of the sheet
-will need to add a new equippable effects list in the item template and a method of adding new effects
-to the item on the item sheet
-* Sheets
-** Character Sheet [1/2]
-*** TODO Display [2/3]
-**** TODO Core [0/1]
-***** TODO remove input boxes from core stats
+* Sheets [1/2]
+** TODO GM Sheet [1/2]
+*** TODO Pass items and cash to players [0/0]
+Add a way of adding player cash/items from the GM sheet.
+*** DONE TN Calculator: [1/1]
+**** DONE Make the sheet for it
+** DONE Character Sheet [2/2]
+*** DONE Display [3/3]
+**** DONE Core [1/1]
+***** DONE remove input boxes from core stats
 **** DONE Sidebar [8/8]
 ***** DONE Add skill increment buttons to Hexes and Tricks as you can spend Bounty on them to improve
 ***** DONE Add global combat modifiers to all die rolls
@@ -84,10 +91,3 @@ to the item on the item sheet
 ***** DONE Get Trait/Die Type/Skill increase buttons to line up properly
 *** DONE Misc [1/1]
 **** DONE Fix scroll position reset on sheet refresh
-** GM Sheet [1/2]
-*** TODO Pass items and cash to players [0/0]
-Add a way of adding player cash/items from the GM sheet.
-*** DONE TN Calculator: [1/1]
-**** DONE Make the sheet for it
-** Mook Sheet
-** NPC Sheet

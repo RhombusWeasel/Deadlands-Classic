@@ -1090,8 +1090,10 @@
             "turn": 5,
             "turnin": 0,
             "throttle": 0,
+            "brake": 0,
             "travel": 15,
             "fuel": 0,
+            "fuel_max": 10,
             "reliability": 17,
             "modifier": 2,
             "hit_add": {
@@ -1106,7 +1108,10 @@
                 }
             },
             "hit_locations": [],
-            "weapons": []
+            "weapons": [],
+            "forces": [
+                {"x": 0, "y": 0}
+            ]
         },
         "merchant": {
             "templates": [
@@ -1166,6 +1171,7 @@
                 "cost": "$0.00",
                 "boxed_multiple": false,
                 "box_amount": 1,
+                "amount": 1,
                 "total_cost": 0,
                 "will_sell": true,
                 "will_buy": true,
@@ -1182,7 +1188,6 @@
                 "description"
             ],
             "cost": "$20.00",
-            "amount": 1,
             "calibur": ".44",
             "gun_type": "shootin_pistol",
             "speed": 1,

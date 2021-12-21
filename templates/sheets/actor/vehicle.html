@@ -1,4 +1,5 @@
 <form>
+    <link href="https://cdn.jsdelivr.net/npm/round-slider@1.6.1/dist/roundslider.min.css" rel="stylesheet" />
     <div>
         <h1 class="center">
             <div data-edit="name" contenteditable="">{{actor.name}}</div>
@@ -46,7 +47,7 @@
                 <td class="perc12 center"><input type="number" name="data.fuel" value="{{data.data.fuel}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.reliability" value="{{data.data.reliability}}"/></td>
                 <td class="perc12 center"><input type="number" name="data.modifier" value="{{data.data.modifier}}"/></td>
-                <td class="perc12 center"><input type="number" name="data.speed" value="{{data.data.speed}}"/></td>
+                <td class="perc12 center"><input type="number" name="data.speed" value="{{data.data.speed}}" class="speed"/></td>
             </tr>
             {{else}}
             <tr>
@@ -142,18 +143,28 @@
             </div>
         </div>
         <div class="tab drivin" data-group="vehicle" data-tab="drivin">
-            <div>
-                <h2 class="center">Throttle</h2>
-                <div class="center">
-                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="slider" orient="vertical" name="data.throttle"/>
-                    <p>{{data.data.throttle}}</p>
+            <div class="drivin-box">
+                <div class="speed-box">
+                    <div id="handle1" name="data.speed"></div>
                 </div>
-                <div class="center">
-                {{#ifCond throttle ">=" 0}}
-                    <a class="apply-throttle">Pedal to the Metal!</a>
-                {{else}}
-                    <a class="apply-throttle">Hit the Brakes!</a>
-                {{/ifCond}}
+                <div class="fuel-box">
+                    <div id="fuel-slider" name="data.fuel"></div>
+                </div>
+                <div class="steering">
+                    <div id="arc-slider" class="rslider"></div>
+                    <a class="apply-turn">Execute Turn</a>
+                </div>
+                <div class="throttle">
+                    <h3>Throttle</h3>
+                    <input type="range" min="-{{data.data.pace}}" max="{{data.data.pace}}" value="{{data.data.throttle}}" class="throttle" orient="vertical" name="data.throttle"/>
+                    <p>{{data.data.throttle}}</p>
+                    <a class="apply-throttle">Apply Throttle</a>
+                </div>
+                <div class="brake">
+                    <h3>Brake</h3>
+                    <input type="range" min="-{{data.data.speed}}" max="0" value="{{data.data.brake}}" class="brake" orient="vertical" name="data.brake"/>
+                    <p>{{data.data.brake}}</p>
+                    <a class="apply-brakes">Apply Brakes</a>
                 </div>
             </div>
         </div>

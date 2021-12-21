@@ -112,7 +112,7 @@ export default class GeneratorSheet extends ActorSheet {
                     die_type: card.die_type
                 }
             };
-            setTimeout(() => {this.actor.createOwnedItem(item)}, d * 500);
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', item)}, d * 500);
         }
     }
     _on_item_delete(event) {

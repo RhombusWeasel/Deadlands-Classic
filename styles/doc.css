@@ -283,3 +283,182 @@
     grid-area: a2;
     white-space: pre-line;
 }
+
+/* Steering */
+/* Arc slider from https://roundsliderui.com/ */
+#arc-slider {
+    height: 100px !important;
+    width: 250px !important;
+    overflow: hidden;
+    padding: 15px;
+}
+#arc-slider .rs-container {
+    margin-left: -150px; /* here is the radius value */
+    left: 50%;
+}
+#arc-slider .rs-tooltip {
+    top: 60px;
+}
+#arc-slider .rs-tooltip-text {
+    font-size: 25px;
+}
+#arc-slider .rs-border{
+    border-width: 0px;
+}
+
+/* Fuel Slider */
+#fuel-slider {
+    overflow: hidden;
+    place-items: center;
+    grid-area: sp;
+}
+#fuel-slider .rs-handle  {
+    background-color: transparent;
+    border: 8px solid transparent;
+    border-right-color: black;
+    margin: -2px 0px 0px 8px !important;
+    border-width: 2px 52px 2px 2px;
+}
+#fuel-slider .rs-handle:before  {
+    display: block;
+    content: " ";
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background: black;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 100px;
+}
+#fuel-slider .rs-tooltip  {
+    top: 75%;
+    font-size: 8px;
+}
+#fuel-slider .rs-tooltip div  {
+    text-align: center;
+    background: lightgoldenrodyellow;
+    color: rgb(0, 0, 0);
+    padding: 5px 5px 2px;
+    margin-top: 4px;
+}
+#fuel-slider .rs-range-color  {
+    background-color: #1ef35a;
+}
+#fuel-slider .rs-path-color  {
+    background-color: #92e29d;
+}
+
+/* Appearance related changes */
+.rs-control .rs-range-color {
+    background-color: #5f5f5f;
+}
+.rs-control .rs-path-color {
+    background-color: #5f5f5f;
+}
+.rs-control .rs-handle {
+    background-color: #51c5cf;
+}
+#handle1 {
+    overflow: hidden;
+    place-items: center;
+    grid-area: sp;
+}
+#handle1 .rs-handle  {
+    background-color: transparent;
+    border: 8px solid transparent;
+    border-right-color: black;
+    margin: -2px 0px 0px 8px !important;
+    border-width: 2px 52px 2px 2px;
+}
+#handle1 .rs-handle:before  {
+    display: block;
+    content: " ";
+    position: absolute;
+    height: 12px;
+    width: 12px;
+    background: black;
+    right: -6px;
+    bottom: -6px;
+    border-radius: 100px;
+}
+#handle1 .rs-tooltip  {
+    top: 75%;
+    font-size: 8px;
+}
+#handle1 .rs-tooltip div  {
+    text-align: center;
+    background: lightgoldenrodyellow;
+    color: rgb(0, 0, 0);
+    border-radius: 4px;
+    padding: 1px 5px 2px;
+    margin-top: 4px;
+}
+#handle1 .rs-range-color  {
+    background-color: #DB5959;
+}
+#handle1 .rs-path-color  {
+    background-color: #F0C5C5;
+}
+.rs-control .rs-bg-color {
+    background-color: lightgoldenrodyellow;
+}
+.drivin-box {
+    display: grid;
+    grid: 
+    'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
+    'sp sp sp b1 b1 b1 b1 b1 fl fl fl'
+    'b2 th b3 st st st st st b4 br b5';
+    background-color: lightgoldenrodyellow;
+    margin-left: 3px;
+}
+.speed-box {
+    grid-area: sp;
+    place-items: center;
+    margin: 10px;
+}
+.fuel-box {
+    grid-area: fl;
+    place-items: center;
+    margin: 10px;
+}
+.steering {
+    grid-area: st;
+    place-items: center;
+    text-align: center;
+}
+.throttle {
+    grid-area: th;
+    text-align: center;
+}
+.brake {
+    grid-area: br;
+    text-align: center;
+}
+/* Vertical Sliders */
+input[type=range][orient=vertical]
+{
+    writing-mode: bt-lr; /* IE */
+    -webkit-appearance: slider-vertical; /* WebKit */
+    width: 8px;
+    height: 150px;
+    padding: 0 20px;
+}
+input[type=range][orient=vertical]::-webkit-slider-thumb {
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    border: 1px solid #000000;
+    height: 12px;
+    width: 12px;
+    border-radius: 2px;
+    background: #1051b300;
+    cursor: grab;
+    -webkit-appearance: none;
+    margin-top: -4px;
+    transform: translate(7px, 0px);
+}
+input[type=range][orient=vertical]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 6px;
+    cursor: grab;
+    box-shadow: 1px 1px 1px #000000, 0px 0px 1px #0d0d0d;
+    background: #99999900;
+}
