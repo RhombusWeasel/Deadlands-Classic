@@ -1229,13 +1229,19 @@ const dc_utils = {
                     let act = dc_utils.get_actor(entry.name);
                     let traits = act?.data?.data?.traits;
                     if (traits) {
-                        traits.forEach(trait => {
-                            trait.skills.forEach(skill => {
-                                if (parseInt(skill.level) == 0) {
-                                    skill.modifier = parseInt(skill.modifier) + 8
+                        for (const t in traits) {
+                            if (Object.hasOwnProperty.call(traits, t)) {
+                                const trait = traits[t];
+                                for (const s in trait.skills) {
+                                    if (Object.hasOwnProperty.call(trait.skills, s)) {
+                                        const skill = trait.skills[s];
+                                        if (parseInt(skill.level) == 0) {
+                                            skill.modifier = parseInt(skill.modifier) + 8
+                                        }
+                                    }
                                 }
-                            });
-                        });
+                            }
+                        }
                         dc_utils.random_update(act, {data: {traits: traits}});
                         return;
                     }
