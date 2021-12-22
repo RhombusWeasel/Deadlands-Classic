@@ -64,7 +64,7 @@ Hooks.once("init", function () {
     game.settings.register('deadlands_classic', 'combat_active', {
         name: 'Combat Active',
         scope: 'world',     // "world" = sync to db, "client" = local storage 
-        config: true,       // false if you dont want it to show in module config
+        config: false,       // false if you dont want it to show in module config
         type: Boolean,       // Number, Boolean, String,  
         default: false,
         onChange: value => {
@@ -73,7 +73,8 @@ Hooks.once("init", function () {
     });
 
     game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
-        name: 'Revised unskilled checks (1 trait die, -4)',
+        name: 'Revised Skill Checks',
+        name: 'Unskilled checks (1 trait die, -4)',
         scope: 'world',
         config: true,
         type: Boolean,  
@@ -83,10 +84,22 @@ Hooks.once("init", function () {
         }
     });
 
+    game.settings.register('deadlands_classic', 'chip_bounty', {
+        name: 'Bounty:',
+        hint: 'Fate chips can be traded by players for Bounty Points.',
+        scope: 'world',
+        config: true,
+        type: Boolean,  
+        default: false,
+        onChange: value => {
+            console.log('Fate chips give Bounty Points: ', value);
+        }
+    });
+
     game.settings.register('deadlands_classic', 'unixtime', {
         name: 'Unix time for the campaign.',
         scope: 'world',
-        config: true,
+        config: false,
         type: Number,
         default: -299790720000,
         onChange: value => {
