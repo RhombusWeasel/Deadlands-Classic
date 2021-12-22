@@ -1253,7 +1253,7 @@ const dc_utils = {
                             }
                         }else{
                             let smod = -8;
-                            let lvl = parseInt(skill.level);
+                            let lvl = parseInt(trait.level);
                             if (game.settings.get('deadlands_classic', 'updated_unskilled_checks')) {
                                 smod = -4;
                                 lvl = 1;
@@ -1262,11 +1262,11 @@ const dc_utils = {
                                 name:      skill.name,
                                 key:       skill_name,
                                 trait:     trait_name,
-                                level:     parseInt(trait.level),
+                                level:     lvl,
                                 die_type:  trait.die_type,
                                 die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
                                 trait_fb:  true,
-                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier) + smod
                             }
                         }
                     }
