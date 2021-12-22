@@ -1241,15 +1241,21 @@ const dc_utils = {
                     }else if (Object.hasOwnProperty.call(trait.skills, skill_name)) {
                         const skill = act.data.data.traits[trait_name].skills[skill_name];
                         if (parseInt(skill.level) > 0) {
+                            let smod = -8;
+                            let lvl = parseInt(skill.level);
+                            if (game.settings.get('deadlands_classic', 'updated_unskilled_checks')) {
+                                smod = -4;
+                                lvl = 1;
+                            }
                             return {
                                 name:      skill.name,
                                 key:       skill_name,
                                 trait:     trait_name,
-                                level:     parseInt(skill.level),
+                                level:     lvl,
                                 die_type:  trait.die_type,
                                 die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
                                 trait_fb:  false,
-                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier) + smod
                             }
                         }else{
                             return {

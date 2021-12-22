@@ -73,7 +73,7 @@ Hooks.once("init", function () {
     });
 
     game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
-        name: '20th Anniversary Skill checks (1 trait die, drops the -8)',
+        name: 'Revised unskilled checks (1 trait die, -4)',
         scope: 'world',
         config: true,
         type: Boolean,  
