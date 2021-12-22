@@ -111,6 +111,7 @@ Hooks.once("init", function () {
         if (game.settings.get('deadlands_classic', 'chip_bounty')) {
             return options.fn(this);
         }
+        return options.inverse(this);
     });
 
     Handlebars.registerHelper('if_has', function (type, val, options) {
