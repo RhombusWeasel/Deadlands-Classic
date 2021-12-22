@@ -107,7 +107,7 @@ Hooks.once("init", function () {
         }
     });
 
-    Handlebars.registerHelper('revised_skills', function (options) {
+    Handlebars.registerHelper('chip_bounty', function (options) {
         if (game.settings.get('deadlands_classic', 'chip_bounty')) {
             return options.fn(this);
         }
