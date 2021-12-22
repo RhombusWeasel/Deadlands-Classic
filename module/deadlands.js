@@ -107,6 +107,12 @@ Hooks.once("init", function () {
         }
     });
 
+    Handlebars.registerHelper('revised_skills', function (options) {
+        if (game.settings.get('deadlands_classic', 'chip_bounty')) {
+            return options.fn(this);
+        }
+    });
+
     Handlebars.registerHelper('if_has', function (type, val, options) {
         let act = game.actors.get(options.data.root.id);
         if (dc_utils.char.has(act, type, val)) {
