@@ -1243,7 +1243,6 @@ const dc_utils = {
                             }
                         }
                         dc_utils.random_update(act, {data: {traits: traits}});
-                        return;
                     }
                 });
             },
