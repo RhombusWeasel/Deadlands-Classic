@@ -74,7 +74,7 @@ Hooks.once("init", function () {
 
     game.settings.register('deadlands_classic', 'updated_unskilled_checks', {
         name: 'Revised Skill Checks',
-        name: 'Unskilled checks (1 trait die, -4)',
+        hint: 'Unskilled checks (1 trait die, -4)',
         scope: 'world',
         config: true,
         type: Boolean,  
