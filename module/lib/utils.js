@@ -1224,6 +1224,23 @@ const dc_utils = {
             },
         },
         skill: {
+            update_modifiers: function() {
+                game.actors.forEach(entry => {
+                    let act = dc_utils.get_actor(entry.name);
+                    let traits = act?.data?.data?.traits;
+                    if (traits) {
+                        traits.forEach(trait => {
+                            trait.skills.forEach(skill => {
+                                if (parseInt(skill.level) == 0) {
+                                    skill.modifier = parseInt(skill.modifier) + 8
+                                }
+                            });
+                        });
+                        dc_utils.random_update(act, {data: {traits: traits}});
+                        return;
+                    }
+                });
+            },
             get: function(act, skill_name) {
                 for (const trait_name in act.data.data.traits) {
                     const trait = act.data.data.traits[trait_name];
