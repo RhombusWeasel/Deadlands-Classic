@@ -1109,9 +1109,15 @@
             },
             "hit_locations": [],
             "weapons": [],
-            "forces": [
-                {"x": 0, "y": 0}
-            ]
+            "forces": {
+                "vel": {"x":0, "y":0},
+                "acc": {"x":0, "y":0},
+                "brk": {"x":0, "y":0}
+            },
+            "turn_point": 0,
+            "driver_actions": 1,
+            "friction": 0.9,
+            "round_distance": 0
         },
         "merchant": {
             "templates": [
@@ -1141,6 +1147,7 @@
             "chi",
             "favor",
             "goods",
+            "consumeable",
             "components",
             "boon",
             "edge",
@@ -1365,6 +1372,10 @@
                     "timer": 30
                 }
             }
+        },
+        "consumeable": {
+            "uses": 1,
+            "reuseable": false
         }
     }
 }

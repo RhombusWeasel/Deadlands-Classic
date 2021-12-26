@@ -38,10 +38,18 @@ export default class VehicleSheet extends ActorSheet {
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
             let px = 0;
             let py = 0;
+            let f_col = [
+                0xFF0000,
+                0x0000FF,
+                0xFFFF00,
+                0xFF00FF,
+                0x00FFFF,
+            ]
             for (let i = 0; i < this.actor.data.data.forces.length; i++) {
                 const force = this.actor.data.data.forces[i];
                 px += force.x;
                 py += force.y;
+                line.moveTo(0, 0).lineStyle(5, f_col[i]).lineTo(force.x * grid_size, force.y * grid_size);
             }
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
         }
