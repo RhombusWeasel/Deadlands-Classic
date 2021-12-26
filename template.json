@@ -1116,7 +1116,7 @@
             },
             "turn_point": 0,
             "driver_actions": 1,
-            "friction": 0.9,
+            "friction": 0.98,
             "round_distance": 0
         },
         "merchant": {
