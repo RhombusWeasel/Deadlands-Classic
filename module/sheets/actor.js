@@ -651,14 +651,16 @@ export default class PlayerSheet extends ActorSheet {
                 reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
                 let r = new Roll(roll).evaluate({async: false})
                 r.toMessage({rollMode: 'gmroll'})
-                if(r._total >= 5){
-                    reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
-                    shots += max
+                if (r._total >= 11) {
+                    shots += Math.min( shots + 3, max)
+                }else if (r._total >= 9) {
+                    shots += Math.min( shots + 2, max)
                 }else{
                     max = 1;
                     shots += max;
                 }
-                ammo.update({"data.amount": ammo.data.data.amount - max});
+                reply = `You manage to cram ${shots} bullets into your gun.`
+                ammo.update({"data.amount": ammo.data.data.amount - shots});
                 dc_utils.random_update(item, {"data.chamber": shots});
             }else{
                 reply = `Looks like you ain't got no more ammo left, I hope you brought another gun!`
