@@ -36,10 +36,7 @@ export default class VehicleSheet extends ActorSheet {
             let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
             line.clear();
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
-            let px = 0;
-            let py = 0;
             let forces = this.actor.data.data.forces;
-            line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo((forces.acc.x + forces.vel.x) * grid_size, (forces.acc.y + forces.vel.y) * grid_size);
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(forces.vel.x * grid_size, forces.vel.y * grid_size);
         }
         return data;
@@ -251,7 +248,8 @@ export default class VehicleSheet extends ActorSheet {
     _on_apply_throttle(event) {
         event.preventDefault();
         if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
-            let angle = this.actor.data.token.rotation;
+            let tkn = dc_utils.get_token(this.actor.name);
+            let angle = tkn.rotation;
             console.log(angle);
             let speed = this.actor.data.data.speed + this.actor.data.data.throttle
             let accel = {
