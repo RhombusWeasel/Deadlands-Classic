@@ -265,7 +265,8 @@ export default class VehicleSheet extends ActorSheet {
                 speed: speed,
                 throttle: 0,
                 forces: {
-                    vel: vel
+                    vel: vel,
+                    acc: accel
                 }
             }});
         }
