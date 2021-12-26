@@ -1140,16 +1140,16 @@
             "hex",
             "chi",
             "favor",
-            "edge",
-            "hinderance",
-            "chip",
-            "huckster_deck",
-            "action_deck",
-            "blueprint_deck",
             "goods",
             "components",
             "boon",
-            "literature"
+            "edge",
+            "hinderance",
+            "literature",
+            "chip",
+            "huckster_deck",
+            "action_deck",
+            "blueprint_deck"
         ],
         "templates": {
             "description": {

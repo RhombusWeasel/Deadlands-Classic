@@ -27,6 +27,7 @@ export default class VehicleSheet extends ActorSheet {
         // Line stuffs for drivin helpers.
         let tkn = dc_utils.get_token(this.actor.name);
         let drv = dc_utils.vehicle.passenger.get_driver(this.actor);
+        console.log(this._tabs[0].active);
         if (drv) {
             drv = dc_utils.get_actor(drv);
         }
