@@ -39,8 +39,8 @@ export default class VehicleSheet extends ActorSheet {
             let px = 0;
             let py = 0;
             let forces = this.actor.data.data.forces;
+            line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo((forces.acc.x + forces.vel.x) * grid_size, (forces.acc.y + forces.vel.y) * grid_size);
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(forces.vel.x * grid_size, forces.vel.y * grid_size);
-            line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo(forces.acc.x * grid_size, forces.acc.y * grid_size);
         }
         return data;
     }
