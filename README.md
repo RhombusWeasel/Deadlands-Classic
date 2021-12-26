@@ -1,7 +1,7 @@
 # Deadlands-Classic
 A system for playing Deadlands Classic in Foundry VTT.
 
-# Updated for 0.8.x
+# Updated for V9!
 
 Install by copy/pasting this link into the manifest URL textbox in the install system screen in foundry.
 https://raw.githubusercontent.com/RhombusWeasel/Deadlands-Classic/main/system.json
