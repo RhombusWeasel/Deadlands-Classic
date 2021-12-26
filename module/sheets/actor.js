@@ -656,7 +656,7 @@ export default class PlayerSheet extends ActorSheet {
                 }else if (r._total >= 9) {
                     shots += Math.min( shots + 2, max)
                 }else{
-                    shots += max;
+                    shots += 1;
                 }
                 reply = `You manage to cram ${dc_utils.pluralize(shots, 'bullet', 'bullets')} into your gun.`
                 ammo.update({"data.amount": ammo.data.data.amount - shots});
