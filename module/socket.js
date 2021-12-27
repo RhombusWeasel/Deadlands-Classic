@@ -257,6 +257,7 @@ let operations = {
         if (data.roll.success && game.user.isGM) {
             let tkn = dc_utils.get_token(data.vehicle);
             tkn.document.update({rotation: tkn.data.rotation + data.turn});
+            tkn.data.rotation += data.turn;
             dc_utils.vehicle.drivin.calculate_turn(tkn);
         }
     },
