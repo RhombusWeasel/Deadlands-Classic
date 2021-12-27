@@ -2626,6 +2626,20 @@ const dc_utils = {
                 });
             },
         },
+        drivin: {
+            calculate_turn: function(tkn) {
+                let ang = tkn.data.rotation + 90;
+                let spd = this.actor.data.data.speed;
+                let acc = dc_utils.vector.from_ang(ang);
+                let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, dc_utils.vector.mul(acc, spd));
+                dc_utils.vector.lmt(vel, spd);
+                this.actor.update({data: {
+                    forces: {
+                        vel: vel
+                    }
+                }});
+            },
+        },
         weapons: {
             add_slot: function(act, index) {
                 let weapons = act.data.data.weapons;
@@ -3114,6 +3128,38 @@ const dc_utils = {
                 };
             }
             return dc_utils.pixi.refs[key].object;
+        },
+    },
+    vector = {
+        new: function(x, y) {
+            return {x: x, y: y};
+        },
+        add: function(v1, v2) {
+            return {x: v1.x + v2.x, y: v1.y + v2.y};
+        },
+        sub: function(v1, v2) {
+            return {x: v1.x - v2.x, y: v1.y - v2.y};
+        },
+        mul: function(v, scalar) {
+            return {x: v.x * scalar, y: v.y * scalar};
+        },
+        div: function(v, scalar) {
+            return {x: v.x / scalar, y: v.y / scalar};
+        },
+        mag: function(v) {
+            return Math.sqrt((v.x * v.x)  + (v.y * v.y));
+        },
+        nrm: function(v) {
+            return dc_utils.vector.div(v, dc_utils.vector.mag(v));
+        },
+        lmt: function(v, scalar) {
+            return dc_utils.vector.mul(dc_utils.vector.nrm(v), scalar);
+        },
+        to_ang: function(v) {
+            return Math.atan2(v.y, v.x);
+        },
+        from_ang: function(a) {
+            return dc_utils.vector.new(Math.cos(Math.toRadians(a)), Math.sin(Math.toRadians(a)));
         },
     },
 };

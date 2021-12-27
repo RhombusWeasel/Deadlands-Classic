@@ -41,6 +41,7 @@ export default class VehicleSheet extends ActorSheet {
             let forces = this.actor.data.data.forces;
             let actions = this.actor.data.data.driver_actions;
             let round_dist = this.actor.data.data.round_distance;
+            dc_utils.vehicle.drivin.calculate_turn(tkn);
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo((forces.vel.x / actions) * grid_size, (forces.vel.y / actions) * grid_size);
             line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo(forces.acc.x * grid_size, forces.acc.y * grid_size);
         }else{
@@ -256,23 +257,17 @@ export default class VehicleSheet extends ActorSheet {
         event.preventDefault();
         if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
             let tkn = dc_utils.get_token(this.actor.name);
-            let angle = Math.toRadians(tkn.data.rotation + 90);
-            let throttle = this.actor.data.data.throttle;
-            let speed = this.actor.data.data.speed + throttle;
-            let accel = {
-                x: throttle * Math.cos(angle),
-                y: throttle * Math.sin(angle),
-            };
-            let vel   = {
-                x: this.actor.data.data.forces.vel.x + accel.x,
-                y: this.actor.data.data.forces.vel.y + accel.y,
-            };
+            let ang = tkn.data.rotation + 90;
+            let thr = this.actor.data.data.throttle;
+            let spd = this.actor.data.data.speed + thr;
+            let acc = dc_utils.vector.from_ang(ang);
+            let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, acc);
             this.actor.update({data: {
-                speed: speed,
+                speed: spd,
                 throttle: 0,
                 forces: {
                     vel: vel,
-                    acc: accel
+                    acc: acc
                 }
             }});
         }
