@@ -36,6 +36,7 @@ export default class VehicleSheet extends ActorSheet {
             let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
             line.clear();
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
+            line.rotation = tkn.rotation;
             let forces = this.actor.data.data.forces;
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(forces.vel.x * grid_size, forces.vel.y * grid_size);
         }
