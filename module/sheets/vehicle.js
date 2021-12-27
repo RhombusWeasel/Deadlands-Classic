@@ -41,7 +41,6 @@ export default class VehicleSheet extends ActorSheet {
             let forces = this.actor.data.data.forces;
             let actions = this.actor.data.data.driver_actions;
             let round_dist = this.actor.data.data.round_distance;
-            dc_utils.vehicle.drivin.calculate_turn(tkn);
             line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo((forces.vel.x / actions) * grid_size, (forces.vel.y / actions) * grid_size);
             line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo(forces.acc.x * grid_size, forces.acc.y * grid_size);
         }else{
@@ -262,6 +261,7 @@ export default class VehicleSheet extends ActorSheet {
             let spd = this.actor.data.data.speed + thr;
             let acc = dc_utils.vector.from_ang(ang);
             let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, acc);
+            dc_utils.vehicle.drivin.calculate_turn(tkn);
             this.actor.update({data: {
                 speed: spd,
                 throttle: 0,
