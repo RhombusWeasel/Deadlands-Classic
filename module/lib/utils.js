@@ -2633,7 +2633,7 @@ const dc_utils = {
                 let spd = act.data.data.speed;
                 let acc = dc_utils.vector.from_ang(ang);
                 let vel = dc_utils.vector.add(act.data.data.forces.vel, dc_utils.vector.mul(acc, spd));
-                dc_utils.vector.lmt(vel, spd);
+                vel = dc_utils.vector.lmt(vel, spd);
                 dc_utils.random_update(act, {data: {
                     forces: {
                         vel: vel

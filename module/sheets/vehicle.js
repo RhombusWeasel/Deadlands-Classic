@@ -254,7 +254,7 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_throttle(event) {
         event.preventDefault();
-        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_role(this.actor, game.user.character.name, 'driver')) {
             let tkn = dc_utils.get_token(this.actor.name);
             let ang = tkn.data.rotation + 90;
             let thr = this.actor.data.data.throttle;
@@ -262,6 +262,7 @@ export default class VehicleSheet extends ActorSheet {
             let acc = dc_utils.vector.from_ang(ang);
             let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, acc);
             dc_utils.vehicle.drivin.calculate_turn(tkn);
+            vel = dc_utils.vector.lmt(vel, spd);
             this.actor.update({data: {
                 speed: spd,
                 throttle: 0,
