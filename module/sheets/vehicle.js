@@ -249,9 +249,9 @@ export default class VehicleSheet extends ActorSheet {
         event.preventDefault();
         if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
             let tkn = dc_utils.get_token(this.actor.name);
-            let angle = tkn.rotation;
+            let angle = tkn.rotation + 90;
             console.log(angle);
-            let speed = this.actor.data.data.speed + this.actor.data.data.throttle
+            let speed = this.actor.data.data.speed + this.actor.data.data.throttle;
             let accel = {
                 x: speed * Math.cos(angle),
                 y: speed * Math.sin(angle),
@@ -259,7 +259,7 @@ export default class VehicleSheet extends ActorSheet {
             let vel   = {
                 x: this.actor.data.data.forces.vel.x + accel.x,
                 y: this.actor.data.data.forces.vel.y + accel.y,
-            }
+            };
             this.actor.update({data: {
                 speed: speed,
                 throttle: 0,
