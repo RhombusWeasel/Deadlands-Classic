@@ -3130,7 +3130,7 @@ const dc_utils = {
             return dc_utils.pixi.refs[key].object;
         },
     },
-    vector = {
+    vector: {
         new: function(x, y) {
             return {x: x, y: y};
         },
