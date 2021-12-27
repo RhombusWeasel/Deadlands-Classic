@@ -2628,12 +2628,13 @@ const dc_utils = {
         },
         drivin: {
             calculate_turn: function(tkn) {
+                let act = dc_utils.get_actor(tkn.name);
                 let ang = tkn.data.rotation + 90;
-                let spd = this.actor.data.data.speed;
+                let spd = act.data.data.speed;
                 let acc = dc_utils.vector.from_ang(ang);
-                let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, dc_utils.vector.mul(acc, spd));
+                let vel = dc_utils.vector.add(act.data.data.forces.vel, dc_utils.vector.mul(acc, spd));
                 dc_utils.vector.lmt(vel, spd);
-                this.actor.update({data: {
+                dc_utils.random_update(act, {data: {
                     forces: {
                         vel: vel
                     }
