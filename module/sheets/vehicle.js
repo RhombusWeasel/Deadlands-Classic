@@ -39,7 +39,9 @@ export default class VehicleSheet extends ActorSheet {
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
             line.rotation = Math.toRadians(0);
             let forces = this.actor.data.data.forces;
-            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(forces.vel.x * grid_size, forces.vel.y * grid_size);
+            let actions = this.actor.data.data.driver_actions;
+            let round_dist = this.actor.data.data.round_distance;
+            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo((forces.vel.x / actions) * grid_size, (forces.vel.y / actions) * grid_size);
             line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo(forces.acc.x * grid_size, forces.acc.y * grid_size);
         }else{
             line.visible = false;

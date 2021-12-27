@@ -1236,7 +1236,7 @@ const dc_utils = {
                                     if (Object.hasOwnProperty.call(trait.skills, s)) {
                                         const skill = trait.skills[s];
                                         if (parseInt(skill.level) == 0) {
-                                            skill.modifier = parseInt(skill.modifier) + 8
+                                            skill.modifier = 0
                                         }
                                     }
                                 }
