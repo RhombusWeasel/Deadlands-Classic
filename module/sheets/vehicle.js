@@ -32,6 +32,7 @@ export default class VehicleSheet extends ActorSheet {
             drv = dc_utils.get_actor(drv);
         }
         if (tkn && drv && (game.user.isGM || drv.isOwner) && this._tabs[0].active == 'drivin') {
+            line.visible = true;
             let grid_size = canvas.grid.size;
             let grid_half = grid_size / 2;
             line.clear();
