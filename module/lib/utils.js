@@ -2595,7 +2595,7 @@ const dc_utils = {
             get_driver: function(act) {
                 for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
                     const pgr = act.data.data.passengers.onboard[i];
-                    if (pgr.driver) return pgr.character;
+                    if (pgr.driver && pgr.character != 'Empty') return pgr.character;
                 }
                 return false;
             },
