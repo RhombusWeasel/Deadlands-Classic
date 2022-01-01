@@ -28,7 +28,7 @@ export default class VehicleSheet extends ActorSheet {
         let tkn = dc_utils.get_token(this.actor.name);
         let drv = dc_utils.vehicle.passenger.get_driver(this.actor);
         let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
-        if (drv) {
+        if (drv != false) {
             drv = dc_utils.get_actor(drv);
         }
         if (tkn && drv && (game.user.isGM || drv.isOwner) && this._tabs[0].active == 'drivin') {
