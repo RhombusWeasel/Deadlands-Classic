@@ -1079,7 +1079,14 @@
                 "value": 0,
                 "max": 2,
                 "driver": "None",
-                "onboard": []
+                "onboard": [
+                    {
+                        "name": "Driver",
+                        "driver": true,
+                        "gunner": false,
+                        "character": "Empty"
+                    }
+                ]
             },
             "pace": 10,
             "climb": {
