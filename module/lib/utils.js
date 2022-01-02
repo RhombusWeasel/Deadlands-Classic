@@ -2899,7 +2899,7 @@ const dc_utils = {
                 `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?  We need to get back to family values!`,
                 `I think we all can come together tonight and add {{city}} to our collective prayers, and I for one will be donating to all the various charities that spring from this tragic event that has befallen our brothers and sisters in {{state}}.`
             ],
-            animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
+            animals: ['Badger', 'Bat', 'Beaver', 'Bear', 'Bighorn', 'Bison', 'Buck', 'Bullfrog', 'Cat', 'Chicken', 'Chipmunk', 'Cobra', 'Crocodile', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale', 'Wolverine'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
             captures:['bags', 'gets', 'catches', 'nabs', 'traps', 'brings in', 'apprehends'],
             captured: ['caught', 'apprehended', 'captured', 'arrested', 'caught in the act', 'caught red handed'],

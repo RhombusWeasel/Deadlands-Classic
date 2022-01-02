@@ -217,9 +217,11 @@ let operations = {
         if (game.user.isGM) {
             let tkn = dc_utils.get_token(data.name);
             tkn.update({
-                brightLight: data.bright_light,
-                dimLight: data.dim_light,
-                lightAngle: data.light_angle
+                light: {
+                    bright: data.bright_light,
+                    dim: data.dim_light,
+                    angle: data.light_angle
+                }
             });
         }
     },

@@ -78,6 +78,9 @@ export default class VehicleSheet extends ActorSheet {
             radius: 150,
             width: 4,
             handleSize: "+16",
+            valueChange: function(args) {
+                
+            },
             tooltipFormat: function (args) {
                 return args.value + "°";
             },
