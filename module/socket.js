@@ -216,7 +216,7 @@ let operations = {
     toggle_light: function(data) {
         if (game.user.isGM) {
             let tkn = dc_utils.get_token(data.name);
-            tkn.update({
+            dc_utils.random_update(tkn, {
                 light: {
                     bright: data.bright_light,
                     dim: data.dim_light,
