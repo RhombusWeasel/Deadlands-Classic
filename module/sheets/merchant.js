@@ -128,14 +128,18 @@ export default class MerchantSheet extends actor_sheet {
         let trade    = this.actor.data.data.customers[game.user.character.id];
         let item     = this.actor.items.get(itemId);
         let parseAmt = (item?.data?.data?.is_float) && parseInt || parseFloat;
+        let found    = false;
         if (trade.current.trade.buy.length > 0) {
             trade.current.trade.buy.forEach(existing => {
                 if (existing.name == item.name) {
                     existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
                     existing.total  = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
+                    found = true;
+                    break;
                 }
             });
-        }else{
+        }
+        if(found == false) {
             trade.current.trade.buy.push({
                 id: item.id,
               name: item.name,
@@ -143,7 +147,7 @@ export default class MerchantSheet extends actor_sheet {
             amount: parseAmt(item.data.data.amount),
              total: (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * parseAmt(item.data.data.amount),
               data: item.data.data
-        });
+            });
         }
         trade.current.trade.total = this._calculate_trade(trade);
         this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
