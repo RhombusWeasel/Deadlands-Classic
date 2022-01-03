@@ -134,19 +134,23 @@ export default class MerchantSheet extends actor_sheet {
                 if (found == false) {
                     if (existing.name == item.name) {
                         existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
-                        existing.total  = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
+                        let t = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
+                        let total = `$${t.toFixed(2)}`
+                        existing.total  = total;
                         found = true;
                     }
                 }
             });
         }
         if(found == false) {
+            let t = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * parseAmt(item.data.data.amount);
+            let total = `$${t.toFixed(2)}`
             trade.current.trade.buy.push({
                 id: item.id,
               name: item.name,
               type: item.type,
             amount: parseAmt(item.data.data.amount),
-             total: (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * parseAmt(item.data.data.amount),
+             total: total,
               data: item.data.data
             });
         }
