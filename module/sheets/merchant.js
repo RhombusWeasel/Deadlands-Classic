@@ -132,7 +132,6 @@ export default class MerchantSheet extends actor_sheet {
             trade.current.trade.buy.forEach(existing => {
                 if (existing.name == item.name) {
                     existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
-                    existing.total = `${(parseFloat(existing.data.cost.slice(1, existing.data.cost.length)) / existing.data.box_amount) * existing.amount}`
                 }
             });
         }else{
