@@ -305,11 +305,13 @@ export default class MerchantSheet extends actor_sheet {
         }
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
+            let price = 0;
             if (item.data.boxed_multiple) {
-                t += (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
+                price = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
             }else{
-                t += parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
+                price = parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
             }
+            t += (price * this.actor.data.data.sell_modifier);
         }
         return `$${t.toFixed(2)}`;
     }
