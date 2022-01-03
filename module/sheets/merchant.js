@@ -130,7 +130,7 @@ export default class MerchantSheet extends actor_sheet {
         if (trade.current.trade.buy.length > 0) {
             trade.current.trade.buy.forEach(existing => {
                 if (existing.name == item.name) {
-                    existing.amount += item.amount;
+                    existing.amount += item.data.data.amount;
                 }
             });    
         }else{
