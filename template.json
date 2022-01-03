@@ -1137,6 +1137,7 @@
             "customers": {},
             "sale_list": [],
             "buy_modifier": 0.5,
+            "sell_modifier": 1,
             "global_price_modifier": 1,
             "friendly_price_modifier": 1,
             "hostile_price_modifier": 1,

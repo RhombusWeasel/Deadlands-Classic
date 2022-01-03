@@ -134,7 +134,7 @@ export default class MerchantSheet extends actor_sheet {
                 if (found == false) {
                     if (existing.name == item.name) {
                         existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
-                        let t = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
+                        let t = ((parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * this.actor.data.data.sell_modifier) * existing.amount;
                         let total = `$${t.toFixed(2)}`
                         existing.total  = total;
                         found = true;
@@ -143,7 +143,7 @@ export default class MerchantSheet extends actor_sheet {
             });
         }
         if(found == false) {
-            let t = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * parseAmt(item.data.data.amount);
+            let t = ((parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * this.actor.data.data.sell_modifier) * parseAmt(item.data.data.amount);
             let total = `$${t.toFixed(2)}`
             trade.current.trade.buy.push({
                 id: item.id,
