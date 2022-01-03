@@ -123,22 +123,24 @@ export default class MerchantSheet extends actor_sheet {
     _on_buy_item(event) {
         // Player clicks buy button so we add this to the merchants trade BUY list
         event.preventDefault();
-        let element = event.currentTarget;
-        let itemId  = element.closest(".item").dataset.id;
-        let trade   = this.actor.data.data.customers[game.user.character.id];
-        let item    = this.actor.items.get(itemId);
+        let element  = event.currentTarget;
+        let itemId   = element.closest(".item").dataset.id;
+        let trade    = this.actor.data.data.customers[game.user.character.id];
+        let item     = this.actor.items.get(itemId);
+        let parseAmt = (item?.data?.data?.is_float) && parseInt || parseFloat;
         if (trade.current.trade.buy.length > 0) {
             trade.current.trade.buy.forEach(existing => {
                 if (existing.name == item.name) {
-                    existing.amount += item.data.data.amount;
+                    existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
+                    existing.total = `${(parseFloat(existing.data.cost.slice(1, existing.data.cost.length)) / existing.data.box_amount) * existing.amount}`
                 }
-            });    
+            });
         }else{
             trade.current.trade.buy.push({
                 id: item.id,
               name: item.name,
               type: item.type,
-            amount: item.data.data.amount,
+            amount: parseAmt(item.data.data.amount),
              total: item.data.data.cost,
               data: item.data.data
         });
