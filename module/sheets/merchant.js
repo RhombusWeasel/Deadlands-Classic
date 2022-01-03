@@ -56,7 +56,7 @@ export default class MerchantSheet extends actor_sheet {
             data.components      = data.components.filter(i => i.data.data.will_sell == true);
             data.documents       = data.documents.filter(i => i.data.data.will_sell == true);
             // Remove limited items that are in the current trade
-            data.documents       = data.documents.filter(tr_item => tr_item.data.data.limit_stock == false && data.current_trade.sell.some(sell_item => tr_item.id == sell_item.id));
+            data.documents       = data.documents.filter(tr_item => data.current_trade.sell.some(sell_item => tr_item.id == sell_item.id && tr_item.data.data.limit_stock));
         }
         return data;
     }
