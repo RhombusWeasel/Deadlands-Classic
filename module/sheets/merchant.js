@@ -131,11 +131,12 @@ export default class MerchantSheet extends actor_sheet {
         let found    = false;
         if (trade.current.trade.buy.length > 0) {
             trade.current.trade.buy.forEach(existing => {
-                if (existing.name == item.name) {
-                    existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
-                    existing.total  = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
-                    found = true;
-                    break;
+                if (found == false) {
+                    if (existing.name == item.name) {
+                        existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
+                        existing.total  = (parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * existing.amount;
+                        found = true;
+                    }
                 }
             });
         }
