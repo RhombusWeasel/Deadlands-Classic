@@ -791,19 +791,9 @@ Hooks.on("ready", () => {
             game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
         }
         // Initialize roll tracking
-        let rolls = game.journal.getName('roll_data');
-        if (rolls) {
-            game.dc.rolls = dc_utils.journal.load('roll_data');
-        }else{
-            game.dc.rolls = dc_utils.journal.load('roll_data', {});
-        }
+        game.dc.rolls = dc_utils.journal.load('roll_data', {});
         // Initialize combat action tracking
-        let ca = game.journal.getName('combat_actions');
-        if (ca) {
-            game.dc.combat_actions = dc_utils.journal.load('combat_actions');
-        }else{
-            game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
-        }
+        game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {
