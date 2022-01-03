@@ -2,7 +2,6 @@ import actor_sheet from "./actor.js"
 export default class MerchantSheet extends actor_sheet {
     static get defaultOptions() {
         if (!(game.user.isGM)) {
-            console.log('merchant.js: User is NOT GM, launching Merchant Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/merchant.html`,
                 classes: ["player-sheet", "doc"],
@@ -10,7 +9,6 @@ export default class MerchantSheet extends actor_sheet {
                 height: 670
             });
         }else{
-            console.log('merchant.js: User is GM, launching Player Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
                 classes: ["player-sheet", "doc"],
@@ -129,7 +127,14 @@ export default class MerchantSheet extends actor_sheet {
         let itemId  = element.closest(".item").dataset.id;
         let trade   = this.actor.data.data.customers[game.user.character.id];
         let item    = this.actor.items.get(itemId);
-        trade.current.trade.buy.push({
+        if (trade.current.trade.buy.length > 0) {
+            trade.current.trade.buy.forEach(existing => {
+                if (existing.name == item.name) {
+                    existing.amount += item.amount;
+                }
+            });    
+        }else{
+            trade.current.trade.buy.push({
                 id: item.id,
               name: item.name,
               type: item.type,
@@ -137,6 +142,7 @@ export default class MerchantSheet extends actor_sheet {
              total: item.data.data.cost,
               data: item.data.data
         });
+        }
         trade.current.trade.total = this._calculate_trade(trade);
         this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
