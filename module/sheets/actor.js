@@ -480,6 +480,7 @@ export default class PlayerSheet extends ActorSheet {
                     <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
                 `});
                 dc_utils.random_update(this.actor, chip._id);
+                dc_utils.char.items.delete(this.actor, chip._id);
                 break;
             }
         }
