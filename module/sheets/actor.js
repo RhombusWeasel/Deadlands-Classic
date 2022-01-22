@@ -455,10 +455,7 @@ export default class PlayerSheet extends ActorSheet {
                 if (bounty == '1') {
                     suffix = 'point'
                 }
-                ChatMessage.create({ content: `
-                    <h3 style="text-align:center">Bounty: ${chip_type}</h3>
-                    <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
-                `});
+                dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.`);
                 dc_utils.random_update(this.actor, {data: {bounty: {value: new_val, max: new_max}}});
                 dc_utils.char.items.delete(this.actor, chip.id);
                 break;
@@ -474,7 +471,7 @@ export default class PlayerSheet extends ActorSheet {
         let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.`)
+                dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.`);
                 dc_utils.char.items.delete(this.actor, chip.id);
                 break;
             }
