@@ -445,23 +445,19 @@ export default class PlayerSheet extends ActorSheet {
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
         let bounty = element.closest(".fate-data").dataset.bounty;
-        let act = this.getData();
-        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                let new_val = parseInt(act.data.data.bounty.value) + parseInt(bounty);
-                let new_max = parseInt(act.data.data.bounty.max) + parseInt(bounty);
-                let suffix = 'points';
-                if (bounty == '1') {
-                    suffix = 'point'
-                }
-                ChatMessage.create({ content: `
-                    <h3 style="text-align:center">Bounty: ${chip_type}</h3>
-                    <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
-                `});
-                this.actor.update({data: {bounty: {value: new_val}}});
-                this.actor.update({data: {bounty: {max: new_max}}});
-                this.actor.deleteOwnedItem(chip._id);
+                let new_val = parseInt(this.actor.data.data.bounty.value) + parseInt(bounty);
+                let new_max = parseInt(this.actor.data.data.bounty.max) + parseInt(bounty);
+                let suffix = dc_utils.pluralize(bounty, 'point', 'points');
+                dc_utils.chat.send(
+                    'Bounty',
+                    `${chip_type}`,
+                    `${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.`
+                );
+                dc_utils.char.items.delete(this.actor, chip.id);
+                dc_utils.random_update(this.actor, {data: {bounty: {value: new_val, max: new_max}}});
                 break;
             }
         }
@@ -471,15 +467,11 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = dc_utils.get_actor(this.actor.name);
-        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
-                ChatMessage.create({ content: `
-                    <h3 style="text-align:center">Fate</h3>
-                    <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
-                `});
-                this.actor.deleteOwnedItem(chip._id);
+                dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.`);
+                dc_utils.char.items.delete(this.actor, chip.id);
                 break;
             }
         }
@@ -651,14 +643,15 @@ export default class PlayerSheet extends ActorSheet {
                 reply = 'You failed your speed load skill check and manage to get 1 bullet into the gun.'
                 let r = new Roll(roll).evaluate({async: false})
                 r.toMessage({rollMode: 'gmroll'})
-                if(r._total >= 5){
-                    reply = 'You passed your speed load skill check and manage to cram your gun full of bullets!'
-                    shots += max
+                if (r._total >= 11) {
+                    shots += Math.min( shots + 3, max)
+                }else if (r._total >= 9) {
+                    shots += Math.min( shots + 2, max)
                 }else{
-                    max = 1;
-                    shots += max;
+                    shots += 1;
                 }
-                ammo.update({"data.amount": ammo.data.data.amount - max});
+                reply = `You manage to cram ${dc_utils.pluralize(shots, 'bullet', 'bullets')} into your gun.`
+                ammo.update({"data.amount": ammo.data.data.amount - shots});
                 dc_utils.random_update(item, {"data.chamber": shots});
             }else{
                 reply = `Looks like you ain't got no more ammo left, I hope you brought another gun!`

@@ -152,7 +152,13 @@
                 </div>
                 <div class="steering">
                     <div id="arc-slider" class="rslider"></div>
+                    <h3>Turn Point</h3>
+                    <input type="range" name="data.turn_point" min="0" max="{{round_distance}}" value="{{data.data.turn_point}}">
                     <a class="apply-turn">Execute Turn</a>
+                </div>
+                <div class="actions-box">
+                    <h3>Actions</h3>
+                    <input type="number" name="data.driver_actions" value="{{data.data.driver_actions}}">
                 </div>
                 <div class="throttle">
                     <h3>Throttle</h3>

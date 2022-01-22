@@ -2,7 +2,6 @@ import actor_sheet from "./actor.js"
 export default class MerchantSheet extends actor_sheet {
     static get defaultOptions() {
         if (!(game.user.isGM)) {
-            console.log('merchant.js: User is NOT GM, launching Merchant Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/merchant.html`,
                 classes: ["player-sheet", "doc"],
@@ -10,7 +9,6 @@ export default class MerchantSheet extends actor_sheet {
                 height: 670
             });
         }else{
-            console.log('merchant.js: User is GM, launching Player Sheet')
             return mergeObject(super.defaultOptions, {
                 template: `systems/deadlands_classic/templates/sheets/actor/player-sheet.html`,
                 classes: ["player-sheet", "doc"],
@@ -125,18 +123,37 @@ export default class MerchantSheet extends actor_sheet {
     _on_buy_item(event) {
         // Player clicks buy button so we add this to the merchants trade BUY list
         event.preventDefault();
-        let element = event.currentTarget;
-        let itemId  = element.closest(".item").dataset.id;
-        let trade   = this.actor.data.data.customers[game.user.character.id];
-        let item    = this.actor.items.get(itemId);
-        trade.current.trade.buy.push({
+        let element  = event.currentTarget;
+        let itemId   = element.closest(".item").dataset.id;
+        let trade    = this.actor.data.data.customers[game.user.character.id];
+        let item     = this.actor.items.get(itemId);
+        let parseAmt = (item?.data?.data?.is_float) && parseInt || parseFloat;
+        let found    = false;
+        if (trade.current.trade.buy.length > 0) {
+            trade.current.trade.buy.forEach(existing => {
+                if (found == false) {
+                    if (existing.name == item.name) {
+                        existing.amount = parseAmt(item.data.data.amount) + parseAmt(existing.amount);
+                        let t = ((parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * this.actor.data.data.sell_modifier) * existing.amount;
+                        let total = `$${t.toFixed(2)}`
+                        existing.total  = total;
+                        found = true;
+                    }
+                }
+            });
+        }
+        if(found == false) {
+            let t = ((parseFloat(item.data.data.cost.slice(1, item.data.data.cost.length)) / item.data.data.box_amount) * this.actor.data.data.sell_modifier) * parseAmt(item.data.data.amount);
+            let total = `$${t.toFixed(2)}`
+            trade.current.trade.buy.push({
                 id: item.id,
               name: item.name,
               type: item.type,
-            amount: item.data.data.amount,
-             total: item.data.data.cost,
+            amount: parseAmt(item.data.data.amount),
+             total: total,
               data: item.data.data
-        });
+            });
+        }
         trade.current.trade.total = this._calculate_trade(trade);
         this.actor.update({data: {customers: {[game.user.character.id]: trade}}});
     }
@@ -288,11 +305,13 @@ export default class MerchantSheet extends actor_sheet {
         }
         for (let i = 0; i < trade.current.trade.buy.length; i++) {
             const item = trade.current.trade.buy[i];
+            let price = 0;
             if (item.data.boxed_multiple) {
-                t += (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
+                price = (parseFloat(item.data.cost.slice(1, item.data.cost.length)) / item.data.box_amount) * item.amount;
             }else{
-                t += parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
+                price = parseFloat(item.data.cost.slice(1, item.data.cost.length)) * item.amount;
             }
+            t += (price * this.actor.data.data.sell_modifier);
         }
         return `$${t.toFixed(2)}`;
     }

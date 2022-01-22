@@ -27,23 +27,24 @@ export default class VehicleSheet extends ActorSheet {
         // Line stuffs for drivin helpers.
         let tkn = dc_utils.get_token(this.actor.name);
         let drv = dc_utils.vehicle.passenger.get_driver(this.actor);
-        if (drv) {
+        let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
+        if (drv != false) {
             drv = dc_utils.get_actor(drv);
         }
-        if (tkn && drv && (game.user.isGM || drv.isOwner)) {
+        if (tkn && drv && (game.user.isGM || drv.isOwner) && this._tabs[0].active == 'drivin') {
+            line.visible = true;
             let grid_size = canvas.grid.size;
             let grid_half = grid_size / 2;
-            let line = dc_utils.pixi.add(`${this.actor.id}_drive_helper`);
             line.clear();
             line.position.set(tkn.data.x + grid_half, tkn.data.y + grid_half);
-            let px = 0;
-            let py = 0;
-            for (let i = 0; i < this.actor.data.data.forces.length; i++) {
-                const force = this.actor.data.data.forces[i];
-                px += force.x;
-                py += force.y;
-            }
-            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo(px * grid_size, py * grid_size);
+            line.rotation = Math.toRadians(0);
+            let forces = this.actor.data.data.forces;
+            let actions = this.actor.data.data.driver_actions;
+            let round_dist = this.actor.data.data.round_distance;
+            line.moveTo(0, 0).lineStyle(5, 0x00FF00).lineTo((forces.vel.x / actions) * grid_size, (forces.vel.y / actions) * grid_size);
+            line.moveTo(0, 0).lineStyle(5, 0x0000FF).lineTo(forces.acc.x * grid_size, forces.acc.y * grid_size);
+        }else{
+            line.visible = false;
         }
         return data;
     }
@@ -77,6 +78,9 @@ export default class VehicleSheet extends ActorSheet {
             radius: 150,
             width: 4,
             handleSize: "+16",
+            valueChange: function(args) {
+                
+            },
             tooltipFormat: function (args) {
                 return args.value + "°";
             },
@@ -253,17 +257,29 @@ export default class VehicleSheet extends ActorSheet {
 
     _on_apply_throttle(event) {
         event.preventDefault();
-        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_role(this.actor, game.user.character.name, 'driver')) {
+            let tkn = dc_utils.get_token(this.actor.name);
+            let ang = tkn.data.rotation + 90;
+            let thr = this.actor.data.data.throttle;
+            let spd = this.actor.data.data.speed + thr;
+            let acc = dc_utils.vector.from_ang(ang);
+            let vel = dc_utils.vector.add(this.actor.data.data.forces.vel, acc);
+            dc_utils.vehicle.drivin.calculate_turn(tkn);
+            vel = dc_utils.vector.lmt(vel, spd);
             this.actor.update({data: {
-                speed: this.actor.data.data.speed + this.actor.data.data.throttle,
+                speed: spd,
                 throttle: 0,
+                forces: {
+                    vel: vel,
+                    acc: acc
+                }
             }});
         }
     }
 
     _on_apply_brake(event) {
         event.preventDefault();
-        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) {
+        if (game.user.isGM || dc_utils.vehicle.passenger.check_job(this.actor, game.user.character.name, 'driver')) { 
             this.actor.update({data: {
                 speed: this.actor.data.data.speed + this.actor.data.data.brake,
                 brake: 0,

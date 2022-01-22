@@ -421,6 +421,11 @@
     place-items: center;
     margin: 10px;
 }
+.actions-box {
+    grid-area: b1;
+    place-items: center;
+    text-align: center;
+}
 .steering {
     grid-area: st;
     place-items: center;

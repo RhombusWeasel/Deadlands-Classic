@@ -110,17 +110,17 @@
                             "artillery": {
                                 "name": "Artillery",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "art": {
                                 "name": "Art",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "scrutinize": {
                                 "name": "Scrutinize",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "search": {
                                 "name": "Search",
@@ -130,7 +130,7 @@
                             "trackin": {
                                 "name": "Trackin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -143,52 +143,52 @@
                             "bow": {
                                 "name": "Bow",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "filchin": {
                                 "name": "Filchin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "lockpickin": {
                                 "name": "Lockpickin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "shootin_pistol": {
                                 "name": "Shootin Pistol",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "shootin_rifle": {
                                 "name": "Shootin Rifle",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "shootin_shotgun": {
                                 "name": "Shootin Shotgun",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "shootin_automatic": {
                                 "name": "Shootin Automatic",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "sleight_o_hand": {
                                 "name": "Sleight o Hand",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "speed_load": {
                                 "name": "Speed Load",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "throwin": {
                                 "name": "Throwin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -201,82 +201,82 @@
                             "academia": {
                                 "name": "Academia",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "academia_1": {
                                 "name": "Academia II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "academia_2": {
                                 "name": "Academia III",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "area_knowledge": {
                                 "name": "Area Knowledge",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "demolition": {
                                 "name": "Demolition",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "disguise": {
                                 "name": "Disguise",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "mad_science": {
                                 "name": "Mad Science",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "medicine": {
                                 "name": "Medicine",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "professional": {
                                 "name": "Professional",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "professional_2": {
                                 "name": "Professional II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "science": {
                                 "name": "Science",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "science_2": {
                                 "name": "Science II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "science_3": {
                                 "name": "Science III",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "science_4": {
                                 "name": "Science IV",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "trade": {
                                 "name": "Trade",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "trade_2": {
                                 "name": "Trade II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -289,37 +289,37 @@
                             "animal_wranglin": {
                                 "name": "Animal Wranglin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "leadership": {
                                 "name": "Leadership",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "overawe": {
                                 "name": "Overawe",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "performin": {
                                 "name": "Performin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "performin_2": {
                                 "name": "Performin II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "persuasion": {
                                 "name": "Persuasion",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "tale_tellin": {
                                 "name": "Tale Tellin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -337,27 +337,27 @@
                             "dodge": {
                                 "name": "Dodge",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "drivin": {
                                 "name": "Drivin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "fightin": {
                                 "name": "Fightin (Brawlin)",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "fightin_2": {
                                 "name": "Fightin II",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "horse_ridin": {
                                 "name": "Horse Ridin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "sneak": {
                                 "name": "Sneak",
@@ -367,12 +367,12 @@
                             "swimmin": {
                                 "name": "Swimmin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "teamster": {
                                 "name": "Teamster",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -385,7 +385,7 @@
                             "quick_draw": {
                                 "name": "Quick Draw",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -398,37 +398,37 @@
                             "bluff": {
                                 "name": "Bluff",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "gamblin": {
                                 "name": "Gamblin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "ridicule": {
                                 "name": "Ridicule",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "scroungin": {
                                 "name": "Scroungin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "streetwise": {
                                 "name": "Streetwise",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "survival": {
                                 "name": "Survival",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "tinkerin": {
                                 "name": "Tinkerin",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -441,12 +441,12 @@
                             "faith": {
                                 "name": "Faith",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             },
                             "guts": {
                                 "name": "Guts",
                                 "level": 0,
-                                "modifier": -8
+                                "modifier": 0
                             }
                         }
                     },
@@ -488,17 +488,17 @@
                         "artillery": {
                             "name": "Artillery",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "art": {
                             "name": "Art",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "scrutinize": {
                             "name": "Scrutinize",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "search": {
                             "name": "Search",
@@ -508,7 +508,7 @@
                         "trackin": {
                             "name": "Trackin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -521,52 +521,52 @@
                         "bow": {
                             "name": "Bow",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "filchin": {
                             "name": "Filchin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "lockpickin": {
                             "name": "Lockpickin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "shootin_pistol": {
                             "name": "Shootin Pistol",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "shootin_rifle": {
                             "name": "Shootin Rifle",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "shootin_shotgun": {
                             "name": "Shootin Shotgun",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "shootin_automatic": {
                             "name": "Shootin Automatic",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "sleight_o_hand": {
                             "name": "Sleight o Hand",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "speed_load": {
                             "name": "Speed Load",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "throwin": {
                             "name": "Throwin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -579,82 +579,82 @@
                         "academia": {
                             "name": "Academia",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "academia_1": {
                             "name": "Academia II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "academia_2": {
                             "name": "Academia III",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "area_knowledge": {
                             "name": "Area Knowledge",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "demolition": {
                             "name": "Demolition",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "disguise": {
                             "name": "Disguise",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "mad_science": {
                             "name": "Mad Science",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "medicine": {
                             "name": "Medicine",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "professional": {
                             "name": "Professional",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "professional_2": {
                             "name": "Professional II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "science": {
                             "name": "Science",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "science_2": {
                             "name": "Science II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "science_3": {
                             "name": "Science III",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "science_4": {
                             "name": "Science IV",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "trade": {
                             "name": "Trade",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "trade_2": {
                             "name": "Trade II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -667,37 +667,37 @@
                         "animal_wranglin": {
                             "name": "Animal Wranglin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "leadership": {
                             "name": "Leadership",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "overawe": {
                             "name": "Overawe",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "performin": {
                             "name": "Performin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "performin_2": {
                             "name": "Performin II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "persuasion": {
                             "name": "Persuasion",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "tale_tellin": {
                             "name": "Tale Tellin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -715,27 +715,27 @@
                         "dodge": {
                             "name": "Dodge",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "drivin": {
                             "name": "Drivin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "fightin": {
                             "name": "Fightin (Brawlin)",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "fightin_2": {
                             "name": "Fightin II",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "horse_ridin": {
                             "name": "Horse Ridin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "sneak": {
                             "name": "Sneak",
@@ -745,12 +745,12 @@
                         "swimmin": {
                             "name": "Swimmin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "teamster": {
                             "name": "Teamster",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -763,7 +763,7 @@
                         "quick_draw": {
                             "name": "Quick Draw",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -776,37 +776,37 @@
                         "bluff": {
                             "name": "Bluff",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "gamblin": {
                             "name": "Gamblin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "ridicule": {
                             "name": "Ridicule",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "scroungin": {
                             "name": "Scroungin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "streetwise": {
                             "name": "Streetwise",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "survival": {
                             "name": "Survival",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "tinkerin": {
                             "name": "Tinkerin",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -819,22 +819,22 @@
                         "faith": {
                             "name": "Faith",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "rituals": {
                             "name": "Rituals",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "chi": {
                             "name": "Chi",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         },
                         "guts": {
                             "name": "Guts",
                             "level": 0,
-                            "modifier": -8
+                            "modifier": 0
                         }
                     }
                 },
@@ -1079,7 +1079,14 @@
                 "value": 0,
                 "max": 2,
                 "driver": "None",
-                "onboard": []
+                "onboard": [
+                    {
+                        "name": "Driver",
+                        "driver": true,
+                        "gunner": false,
+                        "character": "Empty"
+                    }
+                ]
             },
             "pace": 10,
             "climb": {
@@ -1109,9 +1116,15 @@
             },
             "hit_locations": [],
             "weapons": [],
-            "forces": [
-                {"x": 0, "y": 0}
-            ]
+            "forces": {
+                "vel": {"x":0, "y":0},
+                "acc": {"x":0, "y":0},
+                "brk": {"x":0, "y":0}
+            },
+            "turn_point": 0,
+            "driver_actions": 1,
+            "friction": 0.98,
+            "round_distance": 0
         },
         "merchant": {
             "templates": [
@@ -1124,6 +1137,7 @@
             "customers": {},
             "sale_list": [],
             "buy_modifier": 0.5,
+            "sell_modifier": 1,
             "global_price_modifier": 1,
             "friendly_price_modifier": 1,
             "hostile_price_modifier": 1,
@@ -1140,16 +1154,17 @@
             "hex",
             "chi",
             "favor",
+            "goods",
+            "consumeable",
+            "components",
+            "boon",
             "edge",
             "hinderance",
+            "literature",
             "chip",
             "huckster_deck",
             "action_deck",
-            "blueprint_deck",
-            "goods",
-            "components",
-            "boon",
-            "literature"
+            "blueprint_deck"
         ],
         "templates": {
             "description": {
@@ -1365,6 +1380,10 @@
                     "timer": 30
                 }
             }
+        },
+        "consumeable": {
+            "uses": 1,
+            "reuseable": false
         }
     }
 }

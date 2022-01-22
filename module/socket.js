@@ -216,10 +216,12 @@ let operations = {
     toggle_light: function(data) {
         if (game.user.isGM) {
             let tkn = dc_utils.get_token(data.name);
-            tkn.update({
-                brightLight: data.bright_light,
-                dimLight: data.dim_light,
-                lightAngle: data.light_angle
+            tkn.document.update({
+                light: {
+                    bright: data.bright_light,
+                    dim: data.dim_light,
+                    angle: data.light_angle
+                }
             });
         }
     },
@@ -257,6 +259,8 @@ let operations = {
         if (data.roll.success && game.user.isGM) {
             let tkn = dc_utils.get_token(data.vehicle);
             tkn.document.update({rotation: tkn.data.rotation + data.turn});
+            tkn.data.rotation += data.turn;
+            dc_utils.vehicle.drivin.calculate_turn(tkn);
         }
     },
     //COMBAT DECK OPERATIONS
@@ -787,19 +791,9 @@ Hooks.on("ready", () => {
             game.dc.action_deck = dc_utils.journal.load('action_deck', deck);
         }
         // Initialize roll tracking
-        let rolls = game.journal.getName('roll_data');
-        if (rolls) {
-            game.dc.rolls = dc_utils.journal.load('roll_data');
-        }else{
-            game.dc.rolls = dc_utils.journal.load('roll_data', {});
-        }
+        game.dc.rolls = dc_utils.journal.load('roll_data', {});
         // Initialize combat action tracking
-        let ca = game.journal.getName('combat_actions');
-        if (ca) {
-            game.dc.combat_actions = dc_utils.journal.load('combat_actions');
-        }else{
-            game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
-        }
+        game.dc.combat_actions = dc_utils.journal.load('combat_actions', {});
     };
     console.log("DC | Initializing socket listeners...")
     game.socket.on(`system.deadlands_classic`, (data) => {

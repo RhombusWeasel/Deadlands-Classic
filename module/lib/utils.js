@@ -1224,6 +1224,28 @@ const dc_utils = {
             },
         },
         skill: {
+            update_modifiers: function() {
+                game.actors.forEach(entry => {
+                    let act = dc_utils.get_actor(entry.name);
+                    let traits = act?.data?.data?.traits;
+                    if (traits) {
+                        for (const t in traits) {
+                            if (Object.hasOwnProperty.call(traits, t)) {
+                                const trait = traits[t];
+                                for (const s in trait.skills) {
+                                    if (Object.hasOwnProperty.call(trait.skills, s)) {
+                                        const skill = trait.skills[s];
+                                        if (parseInt(skill.level) == 0) {
+                                            skill.modifier = 0
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        dc_utils.random_update(act, {data: {traits: traits}});
+                    }
+                });
+            },
             get: function(act, skill_name) {
                 for (const trait_name in act.data.data.traits) {
                     const trait = act.data.data.traits[trait_name];
@@ -1252,15 +1274,21 @@ const dc_utils = {
                                 modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
                             }
                         }else{
+                            let smod = -8;
+                            let lvl = parseInt(trait.level);
+                            if (game.settings.get('deadlands_classic', 'updated_unskilled_checks')) {
+                                smod = -4;
+                                lvl = 1;
+                            }
                             return {
                                 name:      skill.name,
                                 key:       skill_name,
                                 trait:     trait_name,
-                                level:     parseInt(trait.level),
+                                level:     lvl,
                                 die_type:  trait.die_type,
                                 die_sides: parseInt(trait.die_type.slice(1, trait.die_type.length)),
                                 trait_fb:  true,
-                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier)
+                                modifier:  parseInt(skill.modifier) + parseInt(trait.modifier) + smod
                             }
                         }
                     }
@@ -2567,7 +2595,7 @@ const dc_utils = {
             get_driver: function(act) {
                 for (let i = 0; i < act.data.data.passengers.onboard.length; i++) {
                     const pgr = act.data.data.passengers.onboard[i];
-                    if (pgr.driver) return pgr.character;
+                    if (pgr.driver && pgr.character != 'Empty') return pgr.character;
                 }
                 return false;
             },
@@ -2596,6 +2624,21 @@ const dc_utils = {
                         hit_locations: locs
                     }
                 });
+            },
+        },
+        drivin: {
+            calculate_turn: function(tkn) {
+                let act = dc_utils.get_actor(tkn.name);
+                let ang = tkn.data.rotation + 90;
+                let spd = act.data.data.speed;
+                let acc = dc_utils.vector.from_ang(ang);
+                let vel = dc_utils.vector.add(act.data.data.forces.vel, dc_utils.vector.mul(acc, spd));
+                vel = dc_utils.vector.lmt(vel, spd);
+                dc_utils.random_update(act, {data: {
+                    forces: {
+                        vel: vel
+                    }
+                }});
             },
         },
         weapons: {
@@ -2856,7 +2899,7 @@ const dc_utils = {
                 `I don't know what this world is coming to these days, I mean if it's not {{crime}} then it's another heinous act.  What the hell happened to common decency people?  We need to get back to family values!`,
                 `I think we all can come together tonight and add {{city}} to our collective prayers, and I for one will be donating to all the various charities that spring from this tragic event that has befallen our brothers and sisters in {{state}}.`
             ],
-            animals: ['Bat', 'Beaver', 'Bear', 'Bison', 'Bullfrog', 'Cat', 'Chipmunk', 'Cobra', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale'],
+            animals: ['Badger', 'Bat', 'Beaver', 'Bear', 'Bighorn', 'Bison', 'Buck', 'Bullfrog', 'Cat', 'Chicken', 'Chipmunk', 'Cobra', 'Crocodile', 'Donkey', 'Dog', 'Dolphin', 'Fox', 'Gopher', 'Hare', 'Jackelope', 'Lynx', 'Monkey', 'Narwhal', 'Otter', 'Porcupine', 'Possum', 'Quail', 'Rabbit', 'Snake', 'Turtle', 'Vole', 'Whale', 'Wolverine'],
             buildings: ['City Hall', 'Bridge', 'Bank', 'General store', '{{a subject product}} Factory', 'Gunsmith', `Tailor's Shop`],
             captures:['bags', 'gets', 'catches', 'nabs', 'traps', 'brings in', 'apprehends'],
             captured: ['caught', 'apprehended', 'captured', 'arrested', 'caught in the act', 'caught red handed'],
@@ -3086,6 +3129,38 @@ const dc_utils = {
                 };
             }
             return dc_utils.pixi.refs[key].object;
+        },
+    },
+    vector: {
+        new: function(x, y) {
+            return {x: x, y: y};
+        },
+        add: function(v1, v2) {
+            return {x: v1.x + v2.x, y: v1.y + v2.y};
+        },
+        sub: function(v1, v2) {
+            return {x: v1.x - v2.x, y: v1.y - v2.y};
+        },
+        mul: function(v, scalar) {
+            return {x: v.x * scalar, y: v.y * scalar};
+        },
+        div: function(v, scalar) {
+            return {x: v.x / scalar, y: v.y / scalar};
+        },
+        mag: function(v) {
+            return Math.sqrt((v.x * v.x)  + (v.y * v.y));
+        },
+        nrm: function(v) {
+            return dc_utils.vector.div(v, dc_utils.vector.mag(v));
+        },
+        lmt: function(v, scalar) {
+            return dc_utils.vector.mul(dc_utils.vector.nrm(v), scalar);
+        },
+        to_ang: function(v) {
+            return Math.atan2(v.y, v.x);
+        },
+        from_ang: function(a) {
+            return dc_utils.vector.new(Math.cos(Math.toRadians(a)), Math.sin(Math.toRadians(a)));
         },
     },
 };
