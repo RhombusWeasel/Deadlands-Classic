@@ -455,9 +455,9 @@ export default class PlayerSheet extends ActorSheet {
                 if (bounty == '1') {
                     suffix = 'point'
                 }
-                dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.`);
-                dc_utils.random_update(this.actor, {data: {bounty: {value: new_val, max: new_max}}});
+                dc_utils.chat.send('Bounty', `${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.`);
                 dc_utils.char.items.delete(this.actor, chip.id);
+                dc_utils.random_update(this.actor, {data: {bounty: {value: new_val, max: new_max}}});
                 break;
             }
         }
@@ -467,8 +467,7 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let element = event.currentTarget;
         let chip_type = element.closest(".fate-data").dataset.chip;
-        let act = dc_utils.get_actor(this.actor.name);
-        let fate_chips = act.items.filter(function (item) {return item.type == "chip"});
+        let fate_chips = this.actor.items.filter(function (item) {return item.type == "chip"});
         for (let chip of fate_chips) {
             if (chip.name == chip_type) {
                 dc_utils.chat.send('Fate', `${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.`);
