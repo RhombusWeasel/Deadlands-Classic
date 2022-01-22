@@ -459,9 +459,9 @@ export default class PlayerSheet extends ActorSheet {
                     <h3 style="text-align:center">Bounty: ${chip_type}</h3>
                     <p style="text-align:center">${this.actor.name.split(' ')[0]} gains ${bounty} bounty ${suffix}.</p>
                 `});
-                this.actor.update({data: {bounty: {value: new_val}}});
-                this.actor.update({data: {bounty: {max: new_max}}});
-                this.actor.deleteOwnedItem(chip._id);
+                dc_utils.random_update(this.actor, {data: {bounty: {value: new_val}}});
+                dc_utils.random_update(this.actor, {data: {bounty: {max: new_max}}});
+                dc_utils.char.items.delete(this.actor, chip._id);
                 break;
             }
         }
@@ -479,7 +479,7 @@ export default class PlayerSheet extends ActorSheet {
                     <h3 style="text-align:center">Fate</h3>
                     <p style="text-align:center">${this.actor.name.split(' ')[0]} uses a ${chip_type} fate chip.</p>
                 `});
-                this.actor.deleteOwnedItem(chip._id);
+                dc_utils.random_update(this.actor, chip._id);
                 break;
             }
         }
