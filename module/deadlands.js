@@ -151,7 +151,7 @@ Hooks.once("init", function () {
 
     Handlebars.registerHelper('lvl_head', function (options) {
         if (!(game.user.isGM)) {
-            let act_data = game.actors.get(game.user.data.character);
+            let act_data = dc_utils.get_actor(options.data.root.actor.name);
             if (act_data.items.filter(function (item) {return item.type == "edge" && item.name == "Level Headed"}).length > 0){
                 if (act_data.data.data.perks.level_headed == true) {
                     return options.fn(this);
@@ -168,7 +168,7 @@ Hooks.once("init", function () {
             if (type == 'trait' || (type == 'skill' && v >= 5)){
                 cost = cost * 2
             }
-            let act_data = game.actors.get(game.user.data.character);
+            let act_data = game.actors.get(options.data.root.actor.name);
             if (act_data.data.data.bounty.value >= cost){
                 return options.fn(this);
             }
@@ -187,7 +187,7 @@ Hooks.once("init", function () {
                 d12: {next: "d12+2", cost: 40},
             };
             let cost = upgrades[val].cost
-            let act_data = game.actors.get(game.user.data.character);
+            let act_data = game.actors.get(options.data.root.actor.name);
             if (act_data.data.data.bounty.value >= cost){
                 return options.fn(this);
             }
@@ -202,7 +202,7 @@ Hooks.once("init", function () {
             if(v >= 5){
                 cost *= 2;
             }
-            let act_data = game.actors.get(game.user.data.character);
+            let act_data = game.actors.get(options.data.root.actor.name);
             if (act_data.data.data.bounty.value >= cost){
                 return options.fn(this);
             }
