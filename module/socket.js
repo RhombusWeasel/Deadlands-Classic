@@ -603,7 +603,7 @@ let operations = {
                 dmg[0] = parseInt(dmg[0]) + 1
             }
             let amt = parseInt(dmg[0]);
-            let die = Math.max(parseInt(dmg[1]) - (armour_val - armour_pen), 4);
+            let die = Math.max(parseInt(dmg[1]) - (armour_val - (armour_pen * 2)), 4);
             let dmg_mod = wep?.data?.data?.damage_bonus || 0;
             let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
             if (data.type == 'melee') {
