@@ -1891,13 +1891,11 @@ const dc_utils = {
                 let boon = boons[i].data.data;
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
-                    if (mod.type == 'skill_mod' && boon.active) {
-                        if (mod.target == skl) {
-                            data.modifiers[`boon_${i}`] = {
-                                label: boons[i].name,
-                                modifier: parseInt(mod.modifier)
-                            };
-                        }
+                    if (mod.type == 'skill_mod' && boon.active && mod.target == skl) {
+                        data.modifiers[`boon_${i}`] = {
+                            label: boons[i].name,
+                            modifier: parseInt(mod.modifier)
+                        };
                     }
                 }
             }
@@ -1943,6 +1941,13 @@ const dc_utils = {
                 let tgt_loc = act.data.data.called_shot
                 if (tgt_loc != 'any') {
                     data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                }
+            }
+            if (type == 'melee') {
+                let db = dc_utils.char.skill.get(tkn.document.actor, 'fightin');
+                data.modifiers.opponent_skill = {
+                    label: "Defensive Bonus",
+                    modifier: db
                 }
             }
             return data;
