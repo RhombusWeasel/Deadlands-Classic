@@ -1954,7 +1954,7 @@ const dc_utils = {
                 }
             }
             if (type == 'melee') {
-                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin').modifier;
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin').level;
                 data.modifiers.opponent_skill = {
                     label: "Defensive Bonus",
                     modifier: db
