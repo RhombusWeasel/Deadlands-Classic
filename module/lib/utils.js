@@ -1945,8 +1945,8 @@ const dc_utils = {
                     data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
                 }
             }
-            if (type == 'melee') {
-                let db = dc_utils.char.skill.get(tkn.document.actor, 'fightin');
+            if (type == 'melee' && tgt != null) {
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
                 data.modifiers.opponent_skill = {
                     label: "Defensive Bonus",
                     modifier: db
