@@ -1953,6 +1953,17 @@ const dc_utils = {
                     data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
                 }
             }
+            if (type == 'melee' && dist > 2) {
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
+                data.modifiers.opponent_skill = {
+                    label: "Defensive Bonus",
+                    modifier: db
+                }
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
+                }
+            }
             return data;
         },
         new: function(data) {
