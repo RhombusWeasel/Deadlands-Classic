@@ -1138,7 +1138,7 @@ const dc_utils = {
     },
     gm: {
         get_online_users: function() {
-            return game.users.contents.filter(function(i) {return i.active});
+            return game.users.contents.filter(function(i) {return i.active && i.isGM == false});
         },
         get_player_owned_actors: function() {
             return game.actors.contents.filter(function(i) {return i.hasPlayerOwner && i.type == 'player'});
@@ -1146,18 +1146,12 @@ const dc_utils = {
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();
             let pcs   = dc_utils.gm.get_player_owned_actors();
-            let r_tab = [
-                //{
-                //    name: "Empty"
-                //}
-            ]
+            let r_tab = []
             for (let i = 0; i < users.length; i++) {
-                if (!(users[i].isGM)) {
-                    for (let p = 0; p < pcs.length; p++) {
-                        let char = pcs[p];
-                        if ('permission' in char.data.data && users[i].id in char.data.data.permission) {
-                            r_tab.push(char);
-                        }
+                for (let p = 0; p < pcs.length; p++) {
+                    let char = pcs[p];
+                    if ('permission' in char.data.data && users[i].id in char.data.data.permission) {
+                        r_tab.push(char);
                     }
                 }
             }
