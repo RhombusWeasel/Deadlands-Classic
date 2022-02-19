@@ -1759,7 +1759,7 @@ const dc_utils = {
                     let wind = 0
                     for (const loc in act.data.data.wounds) {
                         if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined' && act.data.data.wounds[loc] > 2) {
-                            wind += (2 - (4 - act.data.data.wounds[loc]))
+                            wind += Math.max(act.data.data.wounds[loc] - 2, 0);
                         }
                     }
                     dc_utils.char.wind.set(act, act.data.data.wind - wind);
