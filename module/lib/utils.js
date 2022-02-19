@@ -1822,7 +1822,6 @@ const dc_utils = {
             let item = dc_utils.char.weapon.find(act, wep);
             let dist = 1
             let tkn
-            let tgt
             if (!(item)) {
                 wep = 'unarmed'
             }
