@@ -1756,11 +1756,14 @@ const dc_utils = {
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
-                    let roll = new Roll(`1d6`).evaluate({async: false});
-                    let wind = act.data.data.wind.value - roll._total;
-                    roll.toMessage();
-                    dc_utils.char.wind.set(act, wind);
-                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${roll._total} wind!`);
+                    let wind = 0
+                    for (const loc in act.data.data.wounds) {
+                        if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined' && act.data.data.wounds[loc] > 2) {
+                            wind += (2 - (4 - act.data.data.wounds[loc]))
+                        }
+                    }
+                    dc_utils.char.wind.set(act, act.data.data.wind - wind);
+                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${wind} wind!`);
                 }
             },
         },
