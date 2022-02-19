@@ -588,7 +588,7 @@ export default class GMSheet extends ActorSheet {
         dc_utils.combat.deal_cards(tkn, 1);
         dc_utils.gm.update_sheet();
     }
-
+    
     _on_wound_player(event) {
         event.preventDefault();
         let element = event.currentTarget;

@@ -1146,11 +1146,7 @@ const dc_utils = {
         get_online_actors: function(act) {
             let users = dc_utils.gm.get_online_users();
             let pcs   = dc_utils.gm.get_player_owned_actors();
-            let r_tab = [
-                //{
-                //    name: "Empty"
-                //}
-            ]
+            let r_tab = []
             for (let i = 0; i < users.length; i++) {
                 if (!(users[i].isGM)) {
                     for (let p = 0; p < pcs.length; p++) {
@@ -1760,11 +1756,14 @@ const dc_utils = {
             },
             bleed: function(act) {
                 if (act.data.data.is_bleeding) {
-                    let roll = new Roll(`1d6`).evaluate({async: false});
-                    let wind = act.data.data.wind.value - roll._total;
-                    roll.toMessage();
-                    dc_utils.char.wind.set(act, wind);
-                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${roll._total} wind!`);
+                    let wind = 0
+                    for (const loc in act.data.data.wounds) {
+                        if (Object.hasOwnProperty.call(act.data.data.wounds, loc) && loc != 'undefined' && act.data.data.wounds[loc] > 2) {
+                            wind += Math.max(act.data.data.wounds[loc] - 2, 0);
+                        }
+                    }
+                    dc_utils.char.wind.set(act, act.data.data.wind - wind);
+                    dc_utils.chat.send('Bleeding', `${act.name} bleeds out for ${wind} wind!`);
                 }
             },
         },
@@ -1825,6 +1824,7 @@ const dc_utils = {
         new_roll_packet: function(act, type, skl, wep, tgt) {
             let item = dc_utils.char.weapon.find(act, wep);
             let dist = 1
+            let tkn
             if (!(item)) {
                 wep = 'unarmed'
             }
@@ -1836,11 +1836,11 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                let tkn = dc_utils.char.token.get_name(act.name);
+                tkn = dc_utils.char.token.get_name(act.name);
                 if (act.data.data.current_vehicle != 'None') {
                     tkn = dc_utils.char.token.get_name(act.data.data.current_vehicle);
                 }
-                let tgt = dc_utils.char.token.get_name(target.name);
+                tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
                     console.log('new_roll_packet: Attacker: ', tkn);
                     if (tgt) {
@@ -1851,10 +1851,6 @@ const dc_utils = {
                     }
                 }else{
                     throw `ERROR Attacker token for ${act.name} not found`
-                }
-                if (type == 'melee' && dist > 2) {
-                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
-                    return false;
                 }
             }
             let skill = dc_utils.char.skill.get(act, skl);
@@ -1884,6 +1880,17 @@ const dc_utils = {
             }else{
                 mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
             }
+            if (type == 'melee' && dist > 2) {
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
+                data.modifiers.opponent_skill = {
+                    label: "Defensive Bonus",
+                    modifier: db
+                }
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
+                }
+            }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     data.modifiers[key] = {
@@ -1897,13 +1904,11 @@ const dc_utils = {
                 let boon = boons[i].data.data;
                 for (let m = 0; m < boon.modifiers.length; m++) {
                     const mod = boon.modifiers[m];
-                    if (mod.type == 'skill_mod' && boon.active) {
-                        if (mod.target == skl) {
-                            data.modifiers[`boon_${i}`] = {
-                                label: boons[i].name,
-                                modifier: parseInt(mod.modifier)
-                            };
-                        }
+                    if (mod.type == 'skill_mod' && boon.active && mod.target == skl) {
+                        data.modifiers[`boon_${i}`] = {
+                            label: boons[i].name,
+                            modifier: parseInt(mod.modifier)
+                        };
                     }
                 }
             }
@@ -1924,6 +1929,14 @@ const dc_utils = {
                     }
                     if (act.data.data.is_mounted) {
                         data.modifiers.mounted = {label: 'Mounted', modifier: -2};
+                    }
+                }else if (data.type == 'melee') {
+                    let tgt_wep = dc_utils.char.items.get_equipped(tgt.document.actor, 'dominant');
+                    if (tgt_wep) {
+                        data.modifiers.weapon_defensive_bonus = {
+                            label: `${tgt_wep.name} bonus`,
+                            modifier: -tgt_wep.data.data.defensive_bonus
+                        };
                     }
                 }
                 if (act.data.data.equipped.off == item.id) {
@@ -1949,6 +1962,17 @@ const dc_utils = {
                 let tgt_loc = act.data.data.called_shot
                 if (tgt_loc != 'any') {
                     data.modifiers.called = {label: `${dc_utils.called_shots[tgt_loc].name} shot.`, modifier: dc_utils.called_shots[tgt_loc].mod};
+                }
+            }
+            if (type == 'melee') {
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin').level;
+                data.modifiers.opponent_skill = {
+                    label: "Defensive Bonus",
+                    modifier: -db
+                }
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
                 }
             }
             return data;

@@ -1176,6 +1176,7 @@
                 "equipped_off": false,
                 "slot": "hand",
                 "multi_slot": false,
+                "armour_piercing": 0,
                 "reliability": false,
                 "reliability_value": 20,
                 "type_select": "skill_mod",
@@ -1220,6 +1221,7 @@
             ],
             "cost": "$10.00",
             "skill": "fightin",
+            "defensive_bonus": 0,
             "damage": "1d4"
         },
         "miracle": {
