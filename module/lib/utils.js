@@ -1930,6 +1930,11 @@ const dc_utils = {
                     if (act.data.data.is_mounted) {
                         data.modifiers.mounted = {label: 'Mounted', modifier: -2};
                     }
+                }else if (data.type == 'melee' && wep?.data?.data?.defensive_bonus) {
+                    data.modifiers.weapon_defensive_bonus = {
+                        label: `${wep.name} bonus`,
+                        modifier: -wep.data.data.defensive_bonus
+                    };
                 }
                 if (act.data.data.equipped.off == item.id) {
                     if (dc_utils.char.has(act, 'edge', 'Two Fisted') && data.type == 'ranged') {
