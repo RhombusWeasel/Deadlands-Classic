@@ -1821,6 +1821,8 @@ const dc_utils = {
         new_roll_packet: function(act, type, skl, wep, tgt) {
             let item = dc_utils.char.weapon.find(act, wep);
             let dist = 1
+            let tkn
+            let tgt
             if (!(item)) {
                 wep = 'unarmed'
             }
@@ -1832,11 +1834,11 @@ const dc_utils = {
                 return false;
             }
             if (target) {
-                let tkn = dc_utils.char.token.get_name(act.name);
+                tkn = dc_utils.char.token.get_name(act.name);
                 if (act.data.data.current_vehicle != 'None') {
                     tkn = dc_utils.char.token.get_name(act.data.data.current_vehicle);
                 }
-                let tgt = dc_utils.char.token.get_name(target.name);
+                tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
                     console.log('new_roll_packet: Attacker: ', tkn);
                     if (tgt) {
@@ -1847,17 +1849,6 @@ const dc_utils = {
                     }
                 }else{
                     throw `ERROR Attacker token for ${act.name} not found`
-                }
-                if (type == 'melee' && dist > 2) {
-                    let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
-                    data.modifiers.opponent_skill = {
-                        label: "Defensive Bonus",
-                        modifier: db
-                    }
-                    if (dist > 2) {
-                        dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
-                        return false;
-                    }
                 }
             }
             let skill = dc_utils.char.skill.get(act, skl);
@@ -1886,6 +1877,17 @@ const dc_utils = {
                 mods = game.user.character.data.data.modifiers;
             }else{
                 mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
+            }
+            if (type == 'melee' && dist > 2) {
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
+                data.modifiers.opponent_skill = {
+                    label: "Defensive Bonus",
+                    modifier: db
+                }
+                if (dist > 2) {
+                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                    return false;
+                }
             }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
