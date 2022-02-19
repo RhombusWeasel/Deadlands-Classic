@@ -436,7 +436,7 @@ let operations = {
             operations.skill_roll(data);
         }
     },
-    
+
     register_attack: function(data) {
         if (game.user.isGM) {
             let attack = dc_utils.combat.new_attack(data.attacker, data.target, data.type, data.skill, data.weapon);
@@ -595,6 +595,7 @@ let operations = {
             let tgt = dc_utils.get_actor(data.target);
             let wep = act.items.filter(function (item) {return item.id == data.weapon})[0];
             let armour_val =  (tgt.data.data.armour[data.location] || 0) * 2;
+            let armour_pen = (wep?.data?.data?.armour_piercing || 0);
             let dmg = wep?.data?.data?.damage?.split('d') || ['0', '0'];
             if (data.location == 'noggin') {
                 dmg[0] = parseInt(dmg[0]) + 2
@@ -602,7 +603,7 @@ let operations = {
                 dmg[0] = parseInt(dmg[0]) + 1
             }
             let amt = parseInt(dmg[0]);
-            let die = Math.max(parseInt(dmg[1]) - armour_val, 4);
+            let die = Math.max(parseInt(dmg[1]) - (armour_val - armour_pen), 4);
             let dmg_mod = wep?.data?.data?.damage_bonus || 0;
             let dmg_formula = `${amt}d${die}x= + ${dmg_mod}`;
             if (data.type == 'melee') {
