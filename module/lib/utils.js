@@ -1921,7 +1921,7 @@ const dc_utils = {
                     }
                 }else if (data.type == 'melee') {
                     let tgt_wep = dc_utils.char.items.get_equipped(tgt.document.actor, 'dominant');
-                    if (tgt_wep && tgt_wep.type == 'melee') {
+                    if (tgt_wep) {
                         data.modifiers.weapon_defensive_bonus = {
                             label: `${tgt_wep.name} bonus`,
                             modifier: -tgt_wep.data.data.defensive_bonus
