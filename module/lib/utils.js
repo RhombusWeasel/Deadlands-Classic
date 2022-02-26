@@ -1881,15 +1881,8 @@ const dc_utils = {
                 mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
             }
             if (type == 'melee' && dist > 2) {
-                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
-                data.modifiers.opponent_skill = {
-                    label: "Defensive Bonus",
-                    modifier: db
-                }
-                if (dist > 2) {
-                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
-                    return false;
-                }
+                dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
+                return false;
             }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
