@@ -1842,9 +1842,9 @@ const dc_utils = {
                 }
                 tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
-                    console.log('new_roll_packet: Attacker: ', tkn);
+                    console.log('new_roll_packet: Attacker: ', type, tkn);
                     if (tgt) {
-                        console.log('new_roll_packet: Target: ', tgt);
+                        console.log('new_roll_packet: Target: ', type, tgt);
                         dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                     }else{
                         throw `ERROR Target token for ${target.name} not found`
