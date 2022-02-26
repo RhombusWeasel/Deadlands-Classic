@@ -1966,7 +1966,7 @@ const dc_utils = {
             }
             if (type == 'melee') {
                 let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
-                let mod = dc.level
+                let mod = db.level;
                 if (db.trait_fb) {
                     mod = 0
                 }
