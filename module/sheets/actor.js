@@ -737,7 +737,6 @@ export default class PlayerSheet extends ActorSheet {
         event.preventDefault();
         let reply = 'You fail in your attempt to create the blueprint.';
         let element = event.currentTarget;
-        let item = this.actor.getEmbeddedDocument('Item', itemId);
         let act = this.getData();
         let skill = dc_utils.char.skill.get(this.actor, 'mad_science');
         let deck = dc_utils.deck.new('blueprint_deck')
