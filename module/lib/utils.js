@@ -1965,10 +1965,14 @@ const dc_utils = {
                 }
             }
             if (type == 'melee') {
-                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin').level;
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
+                let mod = dc.level
+                if (db.trait_fb) {
+                    mod = 0
+                }
                 data.modifiers.opponent_skill = {
                     label: "Defensive Bonus",
-                    modifier: -db
+                    modifier: -mod
                 }
                 if (dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
