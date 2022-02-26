@@ -1,4 +1,7 @@
 <section>
+    {{#if blueprint_deck}}
+        {{> systems/deadlands_classic/templates/partials/reuseable/deck.hbs deck=blueprint_deck deck_type='blueprint_deck' hand=blueprint_hand}}
+    {{/if}}
     <div class="flexrow">
         <div>
             {{!-- Components --}}
@@ -24,7 +27,7 @@
                     <td class="perc50 center">{{bp.name}}</td>
                     <td class="perc10 center">{{bp.data.data.reliability_value}}</td>
                     <td class="perc20 center">{{bp.data.data.hand}}</td>
-                    <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
+                    <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{bp.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>

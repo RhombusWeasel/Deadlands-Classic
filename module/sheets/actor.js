@@ -97,6 +97,8 @@ export default class PlayerSheet extends ActorSheet {
         data.gms           = game.actors.filter(i => i.type == 'gm');
         data.huckster_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "huckster_deck"));
         if (data.huckster_deck.length > 0) data.huckster_hand = dc_utils.deck.evaluate_hand(data.huckster_deck);
+        data.blueprint_deck = dc_utils.deck.sort(dc_utils.char.items.get(this.actor, "blueprint_deck"));
+        if (data.blueprint_deck.length > 0) data.blueprint_hand = dc_utils.deck.evaluate_hand(data.blueprint_deck);
         data.action_deck   = this.actor.data.data.action_cards;
         let fate_chips     = dc_utils.char.items.get(this.actor, "chip");
         data.targets       = dc_utils.called_shots;
@@ -142,7 +144,7 @@ export default class PlayerSheet extends ActorSheet {
         html.find(".use-fate").click(this._on_use_fate.bind(this));
         html.find(".attack").click(this._on_attack.bind(this));
         html.find(".gun-reload").click(this._on_gun_reload.bind(this));
-        html.find(".blueprint").click(this._on_new_blueprint.bind(this));
+        html.find(".blueprint").click(this._on_create_blueprint.bind(this));
         html.find(".sling-trick").click(this._on_cast_trick.bind(this));
         html.find(".sling-hex").click(this._on_cast_hex.bind(this));
         html.find(".use-chi").click(this._on_use_chi.bind(this));
@@ -729,6 +731,28 @@ export default class PlayerSheet extends ActorSheet {
         }
         r.toMessage({rollMode: 'gmroll'});
         dc_utils.chat.send('Hex', reply);
+    }
+
+    _on_create_blueprint(event) {
+        event.preventDefault();
+        let reply = 'You fail in your attempt to create the blueprint.';
+        let element = event.currentTarget;
+        let item = this.actor.getEmbeddedDocument('Item', itemId);
+        let act = this.getData();
+        let skill = dc_utils.char.skill.get(this.actor, 'mad_science');
+        let deck = dc_utils.deck.new('blueprint_deck')
+        let roll_str = `${skill.level}${skill.die_type}ex + ${skill.modifier}`
+        let r = new Roll(roll_str).evaluate({async: false});
+        let draw = 0;
+        if (r._total >= 5) {
+            draw = 5 + (Math.floor(r._total / 5))
+            reply = `${this.actor.name} rolled ${r._total} granting ${draw} cards.`
+        }
+        for (let i = 0; i < draw; i++) {
+            setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [deck.pop()])}, i * 500);
+        }
+        r.toMessage({rollMode: 'gmroll'});
+        dc_utils.chat.send('Blueprint', reply);
     }
 
     _on_use_chi(event) {
