@@ -380,7 +380,7 @@ export default class PlayerSheet extends ActorSheet {
     _on_joker_wild_hex(event) {
         event.preventDefault();
         let element = event.currentTarget;
-        let deck = element.closest(".item").dataset.deckType;
+        let deck = element.dataset.type;
         let jk = dc_utils.char.items.get_card(this.actor, 'Jo', deck);
         let card = {
             name: `${this.actor.data.data.joker_value}${this.actor.data.data.joker_suit}`,
