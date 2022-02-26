@@ -80,6 +80,7 @@ export default class PlayerSheet extends ActorSheet {
         data.hexes         = dc_utils.char.items.get(this.actor, "hex");
         data.favors        = dc_utils.char.items.get(this.actor, "favor");
         data.components    = dc_utils.char.items.get(this.actor, "components");
+        data.blueprints    = dc_utils.char.items.get(this.actor, "blueprint");
         data.hinderances   = dc_utils.char.items.get(this.actor, "hinderance");
         data.edges         = dc_utils.char.items.get(this.actor, "edge");
         data.chi_powers    = dc_utils.char.items.get(this.actor, "chi");
