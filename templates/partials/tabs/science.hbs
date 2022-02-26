@@ -21,8 +21,9 @@
             {{#each blueprints as |bp|}}
                 <tr class="center item" data-itemId="{{bp.id}}">
                     <td>{{bp.name}}</td>
-                    <td>{{bp.data.data.reliability}}</td>
+                    <td>{{bp.data.data.reliability_value}}</td>
                     <td>{{bp.data.data.hand}}</td>
+                    <td><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>
