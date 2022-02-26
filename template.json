@@ -1196,7 +1196,8 @@
                 "bright_light": 0,
                 "dim_light": 0,
                 "light_angle": 360,
-                "is_timepiece": false
+                "is_timepiece": false,
+                "defensive_bonus": 0
             }
         },
         "firearm": {
@@ -1221,7 +1222,6 @@
             ],
             "cost": "$10.00",
             "skill": "fightin",
-            "defensive_bonus": 0,
             "damage": "1d4"
         },
         "miracle": {

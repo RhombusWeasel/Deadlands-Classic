@@ -1842,9 +1842,9 @@ const dc_utils = {
                 }
                 tgt = dc_utils.char.token.get_name(target.name);
                 if(tkn) {
-                    console.log('new_roll_packet: Attacker: ', tkn);
+                    console.log('new_roll_packet: Attacker: ', type, tkn);
                     if (tgt) {
-                        console.log('new_roll_packet: Target: ', tgt);
+                        console.log('new_roll_packet: Target: ', type, tgt);
                         dist = Math.floor(canvas.grid.measureDistance(tkn, tgt));
                     }else{
                         throw `ERROR Target token for ${target.name} not found`
@@ -1879,17 +1879,6 @@ const dc_utils = {
                 mods = game.user.character.data.data.modifiers;
             }else{
                 mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
-            }
-            if (type == 'melee' && dist > 2) {
-                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
-                data.modifiers.opponent_skill = {
-                    label: "Defensive Bonus",
-                    modifier: db
-                }
-                if (dist > 2) {
-                    dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
-                    return false;
-                }
             }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
@@ -1965,10 +1954,14 @@ const dc_utils = {
                 }
             }
             if (type == 'melee') {
-                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin').level;
+                let db = dc_utils.char.skill.get(tgt.document.actor, 'fightin');
+                let mod = db.level;
+                if (db.trait_fb) {
+                    mod = 0
+                }
                 data.modifiers.opponent_skill = {
                     label: "Defensive Bonus",
-                    modifier: -db
+                    modifier: -mod
                 }
                 if (dist > 2) {
                     dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
