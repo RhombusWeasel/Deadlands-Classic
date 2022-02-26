@@ -1164,7 +1164,8 @@
             "chip",
             "huckster_deck",
             "action_deck",
-            "blueprint_deck"
+            "blueprint_deck",
+            "blueprint"
         ],
         "templates": {
             "description": {
@@ -1386,6 +1387,11 @@
         "consumeable": {
             "uses": 1,
             "reuseable": false
+        },
+        "blueprint": {
+            "templates": ["description"],
+            "components": [],
+            "hand": "Jacks"
         }
     }
 }

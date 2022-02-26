@@ -1,0 +1,28 @@
+<form>
+    <header class="sheet-header">
+        <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
+        <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
+    </header>
+    <div>
+        <h2 class="center">Theory</h2>
+        <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
+    </div>
+    <div>
+        <h2 class="center">Components</h2>
+        <div class="center">
+            <a class="add-component">+ Add Component +</a>
+        </div>
+        <table>
+            <tr class="center">
+                <th>Name</th>
+                <th>Amt</th>
+            </tr>
+            {{#each components as |comp|}}
+            <tr class="center">
+                <td>{{comp.name}}</td>
+                <td>{{comp.amount}}</td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</form>
