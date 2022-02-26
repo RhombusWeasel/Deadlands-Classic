@@ -3,6 +3,16 @@
         <img src="{{item.img}}" data-edit="img" title="{{item.name}}" height="64" width="64"/>
         <h1><input name="name" type="text" value="{{item.name}}" placeholder="Name"/></h1>
     </header>
+    <div class="flexrow">
+        <div>
+            <label for="data.reliability">Reliability</label>
+            <input type="number" name="data.reliability" value="{{data.data.reliability}}">
+        </div>
+        <div>
+            <label for="data.hand">Hand</label>
+            <input type="number" name="data.hand" value="{{data.data.hand}}">
+        </div>
+    </div>
     <div>
         <h2 class="center">Theory</h2>
         <textarea name="data.description" style="height: 200px;">{{data.data.description}}</textarea>
