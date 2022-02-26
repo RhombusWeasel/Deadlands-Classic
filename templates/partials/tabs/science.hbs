@@ -17,6 +17,15 @@
             {{!-- Blueprints --}}
             <h2 class="center">Blueprints</h2>
             <div class="center"><a class="blueprint">Create Blueprint</a></div>
+            <table>
+            {{#each blueprints as |bp|}}
+                <tr class="center item" data-itemId="{{bp.id}}">
+                    <td>{{bp.name}}</td>
+                    <td>{{bp.data.data.reliability}}</td>
+                    <td>{{bp.data.data.hand}}</td>
+                </tr>
+            {{/each}}
+            </table>
         </div>
     </div>
 </section>
