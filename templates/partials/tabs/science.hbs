@@ -20,10 +20,11 @@
             <table>
             {{#each blueprints as |bp|}}
                 <tr class="center item" data-itemId="{{bp.id}}">
-                    <td>{{bp.name}}</td>
-                    <td>{{bp.data.data.reliability_value}}</td>
-                    <td>{{bp.data.data.hand}}</td>
-                    <td><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
+                    <td class="perc10 center"><a class="info-button"><i class="fas fa-info-circle"></i></a></td>
+                    <td class="perc50 center">{{bp.name}}</td>
+                    <td class="perc10 center">{{bp.data.data.reliability_value}}</td>
+                    <td class="perc20 center">{{bp.data.data.hand}}</td>
+                    <td class="perc10 center"><a class="item-delete"><i class="fas fa-trash" title="Remove {{comp.name}}"></i></a></td>
                 </tr>
             {{/each}}
             </table>
