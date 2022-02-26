@@ -1880,10 +1880,6 @@ const dc_utils = {
             }else{
                 mods = game.actors.getName(act.data.data.marshal).data.data.modifiers;
             }
-            if (type == 'melee' && dist > 2) {
-                dc_utils.chat.send('Out of range!', `You'll need to haul ass if you want to get there this round.`);
-                return false;
-            }
             for (const [key, mod] of Object.entries(mods)){
                 if (mod.active) {
                     data.modifiers[key] = {
@@ -1925,7 +1921,7 @@ const dc_utils = {
                     }
                 }else if (data.type == 'melee') {
                     let tgt_wep = dc_utils.char.items.get_equipped(tgt.document.actor, 'dominant');
-                    if (tgt_wep) {
+                    if (tgt_wep && tgt_wep.type == 'melee') {
                         data.modifiers.weapon_defensive_bonus = {
                             label: `${tgt_wep.name} bonus`,
                             modifier: -tgt_wep.data.data.defensive_bonus
