@@ -24,8 +24,8 @@
         </tr>
     </table>
     <div class="center flexrow">
-        {{#if (eq deck_type 'huckster_deck')}}
-            {{#has_joker "huckster_deck"}}
+        {{#if (ne deck_type 'action_deck')}}
+            {{#has_joker deck_type}}
         <div class="flexrow">
             <p class="center">Joker's are Wild!</p>
             <select class="small-drop" name="data.joker_value" id="joker-value-select">
@@ -51,7 +51,7 @@
             <a class="wild-joker-hex">Set Card</a>
         </div>
             {{/has_joker}}
-        <a class="center discard-hand" data-type="huckster_deck">Play {{hand}}</a>
+        <a class="center discard-hand" data-type="{{deck_type}}">Play {{hand}}</a>
         {{/if}}
     </div>
 </div>
