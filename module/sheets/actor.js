@@ -542,7 +542,8 @@ export default class PlayerSheet extends ActorSheet {
             card_str += ` ${card.name}`
             setTimeout(() => {dc_utils.char.items.delete(this.actor, card.id)}, i * 500);
         }
-        dc_utils.chat.send('Hex', `${this.actor.name} plays ${hand}`, card_str);
+        let deck_type = deck == 'huckster_deck' && 'Hex' || 'Blueprint';
+        dc_utils.chat.send(deck_type, `${this.actor.name} plays ${hand}`, card_str);
     }
 
     _on_aim(event) {
