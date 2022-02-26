@@ -386,7 +386,8 @@ export default class PlayerSheet extends ActorSheet {
             name: `${this.actor.data.data.joker_value}${this.actor.data.data.joker_suit}`,
             type: deck
         };
-        dc_utils.chat.send(`Hex`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
+        console.log('on_wild_joker', deck, jk, card);
+        dc_utils.chat.send(`Wild Card!`, `${this.actor.name} uses the ${jk.name} as ${card.name}`);
         jk.delete();
         setTimeout(() => {this.actor.createEmbeddedDocuments('Item', [card])}, 500);
     }
